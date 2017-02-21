@@ -50,7 +50,7 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{url('admin')}}"><i class="fa fa-th-large"></i> <span class="nav-label"> Dashboards</span></a>
+                    <a href="{{url('admin'.'home')}}"><i class="fa fa-th-large"></i> <span class="nav-label"> Dashboards</span></a>
                 </li>
                 <li>
                     <a href="{{url('')}}"><i class="fa fa-diamond"></i> <span class="nav-label">Penata Jasa</span> </a>
@@ -72,11 +72,12 @@
                     <ul class="nav nav-second-level">
                         <li><a href="{{url('')}}">Invoice</a></li>
                     </ul>
-                </li> <li>
+                </li>
+                <li>
                     <a href="{{url('')}}"><i class="fa fa-edit"></i> <span class="nav-label">Apotek</span></a>
                 </li>
                 <li>
-                    <a href="{{url('')}}"><i class="fa fa-desktop"></i> <span class="nav-label">Iventory</span> <span class="fa arrow"></a>
+                    <a href="{{url('')}}"><i class="fa fa-desktop"></i> <span class="nav-label">Inventory</span> <span class="fa arrow"></a>
                     <ul class="nav nav-second-level">
                         <li><a href="{{url('')}}">obat</a></li>
                         <li><a href="{{url('')}}">Suntikan</a></li>
@@ -90,6 +91,9 @@
                         <li><a href="{{url('')}}">Master poli</a></li>
                         <li><a href="{{url('')}}">Invoice</a></li>
                     </ul>
+                </li>
+                <li>
+                    <a href="{{url('')}}"><i class="fa fa-edit"></i> <span class="nav-label">Agit ntrian</span></a>
                 </li>
             </ul>
 

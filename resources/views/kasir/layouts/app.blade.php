@@ -36,7 +36,7 @@
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ Auth::user()->name }}</strong>
-                             </span> <span class="text-muted text-xs block">Administrator <b class="caret"></b></span> </span> </a>
+                             </span> <span class="text-muted text-xs block">Kasir <b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="{{url('') }}">Profile</a></li>
                             <li><a href="{{url('') }}">Contacts</a></li>
@@ -50,7 +50,7 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{url('admin')}}"><i class="fa fa-th-large"></i> <span class="nav-label"> Dashboards</span></a>
+                    <a href="{{url('kasir')}}"><i class="fa fa-th-large"></i> <span class="nav-label"> Dashboards</span></a>
                 </li>
                 <li>
                     <a href="{{url('')}}"><i class="fa fa-diamond"></i> <span class="nav-label">Penata Jasa</span> </a>

@@ -36,7 +36,7 @@
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ Auth::user()->name }}</strong>
-                             </span> <span class="text-muted text-xs block">Administrator <b class="caret"></b></span> </span> </a>
+                             </span> <span class="text-muted text-xs block">Loket <b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="{{url('') }}">Profile</a></li>
                             <li><a href="{{url('') }}">Contacts</a></li>
