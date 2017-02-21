@@ -15,9 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/kiosk', 'FrontController@getKiosk');
+Route::post('/kiosk/add', 'FrontController@postKiosk');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'view.finder.admin', 'role:admin']], function (){
     Route::get('/', 'AdminController@index');
