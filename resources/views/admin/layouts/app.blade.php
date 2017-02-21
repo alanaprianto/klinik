@@ -32,7 +32,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="img/profile_small.jpg" />
+                            <img alt="image" class="img-circle" src="img/a8.jpg" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ Auth::user()->name }}</strong>
@@ -50,13 +50,13 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{url('admin'.'home')}}"><i class="fa fa-th-large"></i> <span class="nav-label"> Dashboards</span></a>
+                    <a href="{{url('')}}"><i class="fa fa-th-large"></i> <span class="nav-label"> Dashboards</span></a>
                 </li>
                 <li>
                     <a href="{{url('')}}"><i class="fa fa-diamond"></i> <span class="nav-label">Penata Jasa</span> </a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Poli</span><span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Rawat Jalan </span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="{{url('')}}">Poli Klinik </a></li>
                         <li><a href="{{url('')}}">Poli Umum </a></li>
@@ -65,16 +65,31 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="{{url('')}}"><i class="fa fa-flask"></i> <span class="nav-label">Laboratorium</span> </a>
+                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Rawat Inap </span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="{{url('')}}">Poli Klinik </a></li>
+                        <li><a href="{{url('')}}">Poli Umum </a></li>
+                        <li><a href="{{url('')}}">Poli Gigi</a></li>
+                        <li><a href="{{url('')}}">Poli Spesialis</a></li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="{{url('')}}"><i class="fa fa-edit"></i> <span class="nav-label">Kasir</span></a>
+                    <a href="{{url('')}}"><i class="fa fa-flask"></i> <span class="nav-label">Laboratorium</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="{{url('')}}">Radiologi </a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{url('')}}"><i class="fa fa-windows"></i> <span class="nav-label">Kasir</span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="{{url('')}}">Invoice</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="{{url('')}}"><i class="fa fa-edit"></i> <span class="nav-label">Apotek</span></a>
+                </li>
+                <li>
+                    <a href="{{url('')}}"><i class="fa fa-book" aria-hidden="true"></i> <span class="nav-label">Antrian</span></a>
                 </li>
                 <li>
                     <a href="{{url('')}}"><i class="fa fa-desktop"></i> <span class="nav-label">Inventory</span> <span class="fa arrow"></a>
@@ -92,9 +107,7 @@
                         <li><a href="{{url('')}}">Invoice</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="{{url('')}}"><i class="fa fa-edit"></i> <span class="nav-label">Agit ntrian</span></a>
-                </li>
+
             </ul>
 
         </div>
@@ -148,7 +161,7 @@
                             <li class="divider"></li>
                             <li>
                                 <div class="dropdown-messages-box">
-                                    <a href="profile.html" class="pull-left">
+                                    <a href="" class="pull-left">
                                         <img alt="image" class="img-circle" src="img/profile.jpg">
                                     </a>
                                     <div class="media-body ">
@@ -223,8 +236,14 @@
 
         </div>
         <div class="row  border-bottom white-bg dashboard-header">
-            @yield('content')
+            <div class="col-lg-10">
+                <h2>Dasboard</h2>
+            </div>
         </div>
+            <div class="wrapper wrapper-content animated fadeInRight">
+            @yield('content')
+            </div>
+
                 <div class="footer">
                     <div class="pull-right">
                         Sistem Informasi Manajemen  <strong>Klinik </strong>
@@ -304,152 +323,7 @@
         });
     });
 </script>
-
-
-<script>
-    $(document).ready(function() {
-        setTimeout(function() {
-            toastr.options = {
-                closeButton: true,
-                progressBar: true,
-                showMethod: 'slideDown',
-                timeOut: 4000
-            }; toastr.success('SIM Klinik, Pekerjaan Jadi mudah ');
-
-
-        }, 1300);
-
-
-        var data1 = [
-            [0,4],[1,8],[2,5],[3,10],[4,4],[5,16],[6,5],[7,11],[8,6],[9,11],[10,30],[11,10],[12,13],[13,4],[14,3],[15,3],[16,6]
-        ];
-        var data2 = [
-            [0,1],[1,0],[2,2],[3,0],[4,1],[5,3],[6,1],[7,5],[8,2],[9,3],[10,2],[11,1],[12,0],[13,2],[14,8],[15,0],[16,0]
-        ];
-        $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [
-                data1, data2
-            ],
-            {
-                series: {
-                    lines: {
-                        show: false,
-                        fill: true
-                    },
-                    splines: {
-                        show: true,
-                        tension: 0.4,
-                        lineWidth: 1,
-                        fill: 0.4
-                    },
-                    points: {
-                        radius: 0,
-                        show: true
-                    },
-                    shadowSize: 2
-                },
-                grid: {
-                    hoverable: true,
-                    clickable: true,
-                    tickColor: "#d5d5d5",
-                    borderWidth: 1,
-                    color: '#d5d5d5'
-                },
-                colors: ["#1ab394", "#464f88"],
-                xaxis:{
-                },
-                yaxis: {
-                    ticks: 4
-                },
-                tooltip: false
-            }
-        );
-
-        var doughnutData = [
-            {
-                value: 300,
-                color: "#a3e1d4",
-                highlight: "#1ab394",
-                label: "App"
-            },
-            {
-                value: 50,
-                color: "#dedede",
-                highlight: "#1ab394",
-                label: "Software"
-            },
-            {
-                value: 100,
-                color: "#b5b8cf",
-                highlight: "#1ab394",
-                label: "Laptop"
-            }
-        ];
-
-        var doughnutOptions = {
-            segmentShowStroke: true,
-            segmentStrokeColor: "#fff",
-            segmentStrokeWidth: 2,
-            percentageInnerCutout: 45, // This is 0 for Pie charts
-            animationSteps: 100,
-            animationEasing: "easeOutBounce",
-            animateRotate: true,
-            animateScale: false,
-        };
-
-        var ctx = document.getElementById("doughnutChart").getContext("2d");
-        var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
-
-        var polarData = [
-            {
-                value: 300,
-                color: "#a3e1d4",
-                highlight: "#1ab394",
-                label: "App"
-            },
-            {
-                value: 140,
-                color: "#dedede",
-                highlight: "#1ab394",
-                label: "Software"
-            },
-            {
-                value: 200,
-                color: "#b5b8cf",
-                highlight: "#1ab394",
-                label: "Laptop"
-            }
-        ];
-
-        var polarOptions = {
-            scaleShowLabelBackdrop: true,
-            scaleBackdropColor: "rgba(255,255,255,0.75)",
-            scaleBeginAtZero: true,
-            scaleBackdropPaddingY: 1,
-            scaleBackdropPaddingX: 1,
-            scaleShowLine: true,
-            segmentShowStroke: true,
-            segmentStrokeColor: "#fff",
-            segmentStrokeWidth: 2,
-            animationSteps: 100,
-            animationEasing: "easeOutBounce",
-            animateRotate: true,
-            animateScale: false,
-        };
-        var ctx = document.getElementById("polarChart").getContext("2d");
-        var Polarchart = new Chart(ctx).PolarArea(polarData, polarOptions);
-
-    });
-</script>
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-4625583-2', 'webapplayers.com');
-    ga('send', 'pageview');
-
-</script>
+@yield('script');
 </body>
 
 <!-- Site: HackForums.Ru | E-mail: abuse@hackforums.ru | Skype: h2osancho -->

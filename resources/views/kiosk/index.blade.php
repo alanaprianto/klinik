@@ -1,20 +1,36 @@
-@extends('layouts.app')
-@section('css')
-@endsection
+<!DOCTYPE html>
+<html>
 
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Kiosk</div>
+
+<!-- Site: HackForums.Ru | E-mail: abuse@hackforums.ru | Skype: h2osancho -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>SIM Klinik | Login </title>
+
+    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+
+    <link href="{{asset('css/animate.css')}}" rel="stylesheet">
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+
+</head>
+<body class="white-bg">
+<div class=" text-center">
+                    <h1 style="margin-top: 100px">KIOSK </h1>
+                    <h3>Terima kasih telah menggunakan fasilitas kiosk untuk melakukan pendaftaran pelayanan laboratorium.</h3>
                     <div class="panel-body">
-                        <button class="btn btn-primary btn-print" data-type="bpjs">BPJS</button>
-                        <button class="btn btn-primary btn-print" data-type="non-bpjs">NON BPJS</button>
-                        <button class="btn btn-primary btn-print" data-type="mcu">MCU</button>
-                        <button class="btn btn-primary btn-print" data-type="poli-umum">Poli Umum</button>
-                        <button class="btn btn-primary btn-print" data-type="cito">CITO</button>
+                        <a class="btn btn-print" type="button" data-type="bpjs" href="javascript:;"><img src="img/icon-bpjs.png" style="height: 200px"></a>
+                        <a class="btn  btn-print"  type="button" href="javascript:;" data-type="non-bpjs"><img src="img/icon-nonbpjs.png" style="height: 200px"></a>
+                        <a class="btn  btn-print" type="button" href="javascript:;" data-type="mcu"><img src="img/icon-umum.png" style="height: 200px"></a>
+                        <a class="btn btn-print" type="button" href="javascript:;" data-type="poli-umum"><img src="img/icon-mcu.png" style="height: 200px"></a>
+                        <a class="btn  btn-print" type="button" href="javascript:;" data-type="cito"><img src="img/icon-cito.png" style="height: 200px"></a>
                     </div>
+    <h1></h1>
+                    <h3>Struk antrian akan dicetak secara otomatis</h3>
                 </div>
             </div>
         </div>
@@ -28,9 +44,7 @@
             </div>
         </div>
     </div>
-@endsection
 
-@section('scripts')
     <script type="text/javascript">
         $(document).ready(function () {
             $('.btn-print').on('click', function () {
@@ -53,4 +67,11 @@
             });
         });
     </script>
-@endsection
+    <script src="{{asset('js/jquery-2.1.1.js')}}"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
+
+</body>
+
+
+<!-- Site: HackForums.Ru | E-mail: abuse@hackforums.ru | Skype: h2osancho -->
+</html>
