@@ -19,6 +19,15 @@
             </div>
         </div>
     </div>
+
+    <!-- Small modal -->
+    <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+         aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -30,9 +39,15 @@
                 $.ajax({
                     url: '/kiosk/add',
                     type: 'POST',
-                    data: {type : type},
+                    data: {type: type},
                     success: function (data) {
-                        console.log(data);
+                        $('.modal-content').html();
+                        var h3 = '<h3> Nomor Antrian Anda Adalah ' + data.message.queue_number + '</h3>';
+                        $('.modal-content').html(h3);
+                        $('#myModal').modal('show');
+                        setTimeout(function(){
+                            $('#myModal').modal('hide');
+                        }, 1000);
                     }
                 })
             });
