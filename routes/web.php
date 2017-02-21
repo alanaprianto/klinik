@@ -29,6 +29,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
 
 Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['auth', 'view.finder.loket', 'role:loket']], function (){
     Route::get('/', 'LoketController@index');
+    Route::get('/antrian', 'QueueController@index');
+    Route::post('/antrian-list', 'QueueController@getList');
 });
 
 Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:penata-jasa']], function (){

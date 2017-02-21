@@ -38,4 +38,5 @@ class FrontController extends Controller
         return collect($respone);
 
     }
+
 }
