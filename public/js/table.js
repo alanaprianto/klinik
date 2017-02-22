@@ -31,7 +31,7 @@
                 }
             ],
             columns: [
-                {data: 'queue_number', name: 'queue_number',},
+                {data: 'queue_number', name: 'queue_number'},
                 {data: 'status', name: 'status'},
                 {data: 'type', name: 'type'},
                 {
@@ -41,7 +41,7 @@
                     "searchable": false,
                     "mRender": function (data, type, row) {
                         var btn = '<a class="btn btn-default btn-play" data-sound="'+row.sound+'">Panggil</a>';
-                        var process = '<a href="/loket/register?id='+row.id+'" class="btn btn-default btn-process">Register</a>';
+                        var process = '<a href="/loket/register?id='+row.id+'" class="btn btn-default btn-process" id="'+row.queue_number+'_'+row.type+'">Register</a>';
                         return btn + ' | ' + process;
                     }
                 }
@@ -60,8 +60,15 @@
     }
 
     $(document).ready(function () {
+        var socket = io.connect('http://localhost:8890');
+
         var $QueueTable = rs.QueueTable($('#table-queue'), '/loket/antrian-list', $('meta[name="csrf-token"]').attr('content'));
 
+        socket.on('message', function (data) {
+            $QueueTable.row( $('#'+data).parents('tr') )
+                .remove()
+                .draw();
+        });
     });
 
 })(jQuery, window);

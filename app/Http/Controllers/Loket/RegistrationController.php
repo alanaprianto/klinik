@@ -19,7 +19,7 @@ class RegistrationController extends Controller
             ]);
 
             $redis = LRedis::connection();
-            $redis->publish('message', $kiosk->id);
+            $redis->publish('message', $kiosk->queue_number.'_'.$kiosk->type);
         }
 
         return view('registration.create');

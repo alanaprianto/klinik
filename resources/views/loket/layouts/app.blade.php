@@ -390,6 +390,8 @@
 <script type="text/javascript" src="{{'/js/dataTables.buttons.min.js'}}"></script>
 <script type="text/javascript" src="{{'/js/moment-with-locales.min.js'}}"></script>
 <script type="text/javascript" src="{{'/js/buttons.print.min.js'}}"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
 <script type="text/javascript" src="{{'/js/table.js'}}"></script>
 @yield('scripts')
 </body>
