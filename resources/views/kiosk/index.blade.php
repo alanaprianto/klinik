@@ -18,16 +18,14 @@
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
 </head>
-<body class="white-bg">
+<body class="white-bg"  style="background-image: url('css/patterns/shattered.png')">
 <div class=" text-center">
                     <h1 style="margin-top: 100px">KIOSK </h1>
                     <h3>Terima kasih telah menggunakan fasilitas kiosk untuk melakukan pendaftaran pelayanan laboratorium.</h3>
                     <div class="panel-body">
                         <a class="btn btn-print" type="button" data-type="bpjs" href="javascript:;"><img src="img/icon-bpjs.png" style="height: 200px"></a>
-                        <a class="btn  btn-print"  type="button" href="javascript:;" data-type="non-bpjs"><img src="img/icon-nonbpjs.png" style="height: 200px"></a>
-                        <a class="btn  btn-print" type="button" href="javascript:;" data-type="mcu"><img src="img/icon-umum.png" style="height: 200px"></a>
-                        <a class="btn btn-print" type="button" href="javascript:;" data-type="poli-umum"><img src="img/icon-mcu.png" style="height: 200px"></a>
-                        <a class="btn  btn-print" type="button" href="javascript:;" data-type="cito"><img src="img/icon-cito.png" style="height: 200px"></a>
+                        <a class="btn btn-print" type="button" href="javascript:;" data-type="poli-umum"><img src="img/icon-umum.png" style="height: 200px"></a>
+                        <a class="btn  btn-print" type="button" href="javascript:;" data-type="contractor"><img src="img/icon-contractor.png" style="height: 200px"></a>
                     </div>
     <h1></h1>
                     <h3>Struk antrian akan dicetak secara otomatis</h3>
