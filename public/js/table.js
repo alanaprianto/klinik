@@ -40,8 +40,9 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        var btn = '<button class="btn btn-default btn-play" data-sound="'+row.sound+'">Panggil</button>';
-                        return btn
+                        var btn = '<a class="btn btn-default btn-play" data-sound="'+row.sound+'">Panggil</a>';
+                        var process = '<a href="/loket/register?id='+row.id+'" class="btn btn-default btn-process">Register</a>';
+                        return btn + ' | ' + process;
                     }
                 }
             ]

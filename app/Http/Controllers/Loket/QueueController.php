@@ -14,7 +14,7 @@ class QueueController extends Controller
     }
 
     public function getList(){
-        $kiosk = Kiosk::get();
+        $kiosk = Kiosk::where('status', 'open')->get();
         $datatable = Datatables::of($kiosk);
         return $datatable->make(true);
     }

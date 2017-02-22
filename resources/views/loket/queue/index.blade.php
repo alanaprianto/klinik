@@ -41,6 +41,8 @@
 @endsection
 
 @section('scripts')
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
     <script type="text/javascript">
         var getUrl = window.location;
         var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
@@ -48,6 +50,13 @@
             var antrian = new Audio(baseUrl + sound);
             antrian.play();
         }
+
+        var socket = io.connect('http://localhost:8890');
+        socket.on('message', function (data) {
+            $('.ibox-content').remove()
+        });
+
+
 
         $(document).ready(function () {
             $(document).on('click', '.btn-play', function () {
