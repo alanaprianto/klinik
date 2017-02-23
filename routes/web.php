@@ -25,6 +25,8 @@ Route::post('/kiosk/add', 'FrontController@postKiosk');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'view.finder.admin', 'role:admin']], function (){
     Route::get('/', 'AdminController@index');
+
+    Route::get('/user/{param}', 'UserController@createEdit');
 });
 
 Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['auth', 'view.finder.loket', 'role:loket']], function (){

@@ -261,18 +261,7 @@
 <!-- Mainly scripts -->
 <script src="{{asset('js/jquery-2.1.1.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
-<script src="{{asset('js/jquery.metisMenu.js')}}"></script>
-<script src="{{asset('js/jquery.slimscroll.min.js')}}"></script>
 
-<!-- Flot -->
-<script src="{{asset('js/jquery.flot.js')}}"></script>
-<script src="{{asset('js/jquery.flot.tooltip.min.js')}}"></script>
-<script src="{{asset('js/jquery.flot.spline.js')}}"></script>
-<script src="{{asset('js/jquery.flot.resize.js')}}"></script>
-<script src="{{asset('js/jquery.flot.pie.js')}}"></script>
-
-<!-- Peity -->
-<script src="{{asset('js/jquery.peity.min.js')}}"></script>
 <script src="{{asset('js/peity-demo.js')}}"></script>
 
 <!-- Custom and plugin javascript -->
@@ -323,7 +312,7 @@
         });
     });
 </script>
-@yield('script');
+@yield('scripts');
 </body>
 
 <!-- Site: HackForums.Ru | E-mail: abuse@hackforums.ru | Skype: h2osancho -->
