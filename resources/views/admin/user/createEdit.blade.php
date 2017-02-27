@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<<<<<<< HEAD
 
     <section id="main-content">
         <section class="wrapper">
@@ -127,4 +128,7 @@
             });
         });
     </script>
+=======
+    adfasdfsdf
+>>>>>>> f8d92ffe69393f49a37790db003f4f051d4575e9
 @endsection

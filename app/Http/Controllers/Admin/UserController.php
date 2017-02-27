@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+<<<<<<< HEAD
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -69,3 +70,18 @@ class UserController extends Controller
     }
 }
 
+=======
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class UserController extends Controller
+{
+    public function index(){
+        return view('');
+    }
+
+    public function createEdit(Request $request,$param){
+        return view('user.createEdit');
+    }
+}
+>>>>>>> f8d92ffe69393f49a37790db003f4f051d4575e9

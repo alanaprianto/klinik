@@ -4,23 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Registration extends Model
+class Visit extends Model
 {
-    /*belong*/
-    public function kiosk(){
-        return $this->belongsTo('App\Kiosk', 'kiosk_id', 'id');
-    }
+    protected $fillable = [
+        'date'
+    ];
 
+    /*belong*/
     public function patient(){
         return $this->belongsTo('App\Patient', 'patient_id', 'id');
     }
 
-    public function staff(){
-        return $this->belongsTo('App\Staff', 'staff_id', 'id');
+    public function poly(){
+        return $this->belongsTo('App\Visit', 'poly_id', 'id');
     }
-    
+
     public function history(){
         return $this->hasOne('App\History');
     }
-
 }

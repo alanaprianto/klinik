@@ -58,6 +58,10 @@
                     <a href="{{url('/loket/antrian')}}"><i class="fa fa-th-large"></i> <span
                                 class="nav-label"> Antrian</span></a>
                 </li>
+                <li>
+                    <a href="{{url('/loket/pendaftaran')}}"><i class="fa fa-th-large"></i> <span
+                                class="nav-label"> Pendaftaran</span></a>
+                </li>
             </ul>
 
         </div>

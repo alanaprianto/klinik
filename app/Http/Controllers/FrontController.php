@@ -15,8 +15,9 @@ class FrontController extends Controller
     public function postKiosk(Request $request){
         $respone = array();
         try{
+            $this_day = Carbon::now()->format('Y-m-d');
             $now = Carbon::now();
-            $kiosk = Kiosk::where('type', $request['type'])->get()->last();
+            $kiosk = Kiosk::where('type', $request['type'])->whereDate('date', $this_day)->get()->last();
             $queue = 1;
             if($kiosk){
                 $queue = $kiosk->queue_number + 1;

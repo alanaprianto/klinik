@@ -265,6 +265,7 @@
 <!-- Mainly scripts -->
 <script src="{{asset('js/jquery-2.1.1.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
+<<<<<<< HEAD
 <script src="{{asset('js/jquery.metisMenu.js')}}"></script>
 <script type="text/javascript" src="{{'/js/datatables.min.js'}}"></script>
 <script type="text/javascript" src="{{'/js/jquery.dataTables.js'}}"></script>
@@ -274,13 +275,26 @@
 
 
 
+=======
+
+<script src="{{asset('js/peity-demo.js')}}"></script>
+>>>>>>> f8d92ffe69393f49a37790db003f4f051d4575e9
 
 <!-- Custom and plugin javascript -->
 <script src="{{asset('js/inspinia.js')}}"></script>
 
 <script type="text/javascript" src="{{asset('js/table.js')}}"></script>
 
+<<<<<<< HEAD
 @yield('scripts')
+=======
+            $('body').append($form);
+            $form.submit();
+        });
+    });
+</script>
+@yield('scripts');
+>>>>>>> f8d92ffe69393f49a37790db003f4f051d4575e9
 </body>
 
 <!-- Site: HackForums.Ru | E-mail: abuse@hackforums.ru | Skype: h2osancho -->

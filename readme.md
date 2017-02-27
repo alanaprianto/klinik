@@ -47,6 +47,8 @@ port redis 6379
 
 
 wajib install node js di lokal untuk install dan jalankan socket.ionya
+#npm install
+
 jalankan file di public/js/server.js
 # node server.js
 
