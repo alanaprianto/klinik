@@ -25,16 +25,12 @@ Route::post('/kiosk/add', 'FrontController@postKiosk');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'view.finder.admin', 'role:admin']], function (){
     Route::get('/', 'AdminController@index');
-<<<<<<< HEAD
     Route::get('/user', 'UserController@Index');
     Route::get('/user/{param}', 'UserController@getUser');
     Route::post('/user/modify', 'UserController@postUser');
     Route::post('/user/delete', 'UserController@deleteUser');
     Route::post('/user-list', 'UserController@getList');
-=======
-
     Route::get('/user/{param}', 'UserController@createEdit');
->>>>>>> f8d92ffe69393f49a37790db003f4f051d4575e9
 });
 
 Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['auth', 'view.finder.loket', 'role:loket']], function (){

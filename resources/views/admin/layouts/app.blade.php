@@ -102,7 +102,7 @@
                 </li>
                 <li>
                     <a href="{{url('')}}"><i class="fa fa-desktop"></i> <span class="nav-label">Inventory</span> <span
-                                class="fa arrow"></a>
+                                class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="{{url('')}}">obat</a></li>
                         <li><a href="{{url('')}}">Suntikan</a></li>
