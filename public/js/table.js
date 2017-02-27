@@ -17,7 +17,7 @@
                 }
             },
             dom: 'lBfrtip',
-            buttons : ['print'],
+            buttons: ['print'],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             columns: [
                 {
@@ -38,8 +38,8 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        var btn = '<a class="btn btn-default btn-play" data-sound="'+row.location+'">Panggil</a>';
-                        var process = '<a href="/loket/pendaftaran/tambah?id='+row.id+'" class="btn btn-default btn-process" id="'+row.queue_number+'_'+row.type+'">Register</a>';
+                        var btn = '<a class="btn btn-default btn-play" data-sound="' + row.location + '">Panggil</a>';
+                        var process = '<a href="/loket/pendaftaran/tambah?id=' + row.id + '" class="btn btn-default btn-process" id="' + row.queue_number + '_' + row.type + '">Register</a>';
                         return btn + ' | ' + process;
                     }
                 }
@@ -62,7 +62,7 @@
                 }
             },
             dom: 'lBfrtip',
-            buttons : ['print'],
+            buttons: ['print'],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             columns: [
                 {
@@ -128,7 +128,8 @@
                 {data: 'email', name: 'email'},
                 // {data: 'display_name', name: 'display_name'},
                 {
-                    data: 'roles[0].display_name', name: 'roles[0].display_name'  },
+                    data: 'roles[0].display_name', name: 'roles[0].display_name'
+                },
                 {
                     "data": '',
                     "defaultContent": '',
@@ -154,9 +155,6 @@
     }
 
     $(document).ready(function () {
-<<<<<<< HEAD
-
-        // var socket = io.connect('http://localhost:8890');
 
         var $QueueTable = rs.QueueTable($('#table-queue'), '/loket/antrian-list', $('meta[name="csrf-token"]').attr('content'));
         // socket.on('message', function (data) {
@@ -168,7 +166,6 @@
         if ($UserTable) {
             orderNumber($UserTable);
         }
-=======
         var socket = io.connect('http://localhost:8890');
         /*queue table*/
         var bpjs = rs.QueueTable($('#table-queue-bpjs'), '/loket/antrian-list?type=bpjs', $('meta[name="csrf-token"]').attr('content'));
@@ -177,32 +174,31 @@
 
         /*registration table*/
         var registration = rs.RegistrationTable($('#table-registration'), '/loket/pendaftaran-list', $('meta[name="csrf-token"]').attr('content'));
-        if(registration){
+        if (registration) {
             orderNumber(registration);
         }
 
         //socket message delete antrian yang close
         socket.on('message', function (data) {
             var result = data.split("_");
-            switch (result[1]){
+            switch (result[1]) {
                 case 'bpjs':
-                    bpjs.row( $('#'+result[0]).parents('tr') )
+                    bpjs.row($('#' + result[0]).parents('tr'))
                         .remove()
                         .draw();
                     break;
                 case 'umum':
-                    umum.row( $('#'+result[0]).parents('tr') )
+                    umum.row($('#' + result[0]).parents('tr'))
                         .remove()
                         .draw();
                     break;
                 case 'contractor':
-                    contractor.row( $('#'+result[0]).parents('tr') )
+                    contractor.row($('#' + result[0]).parents('tr'))
                         .remove()
                         .draw();
                     break;
             }
         });
->>>>>>> f8d92ffe69393f49a37790db003f4f051d4575e9
     });
 
 })(jQuery, window);

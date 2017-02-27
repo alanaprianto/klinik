@@ -14,9 +14,22 @@ class CreateStaffTable extends Migration
     public function up()
     {
         Schema::create('staff', function (Blueprint $table) {
+
             $table->increments('id');
-            $table->string('name');
-            $table->text('address');
+            $table->string('nik')->nullable();
+            $table->string('full_name')->nullable();
+            $table->string('place')->nullable();
+            $table->timestamp('birth')->nullable();
+            $table->string('age')->nullable();
+            $table->text('address')->nullable();
+            $table->string('religion')->nullable();
+            $table->string('province')->nullable();
+            $table->string('city')->nullable();
+            $table->string('district')->nullable();
+            $table->string('sub_district')->nullable();
+            $table->text('rt_rw')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('last_education')->nullable();
             $table->enum('gender', ['male','female']);
             $table->integer('hospital_id')->unsigned();
             $table->foreign('hospital_id')->references('id')->on('hospitals')->onDelete('cascade');

@@ -4,6 +4,16 @@
         .form-group > label.control-label {
             text-align: left;
         }
+
+        .coloum-clinic, .coloum-clinic-next {
+            border: 1px solid #e7eaec;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .coloum-clinic button, .coloum-clinic-next button {
+            float: right;
+        }
     </style>
 @endsection
 
@@ -198,28 +208,30 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Klinik</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control m-b" name="poly">
-                                                <option>-</option>
-                                            </select>
-                                        </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Klinik</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control m-b" name="poly">
+                                            @foreach($polies as $poly)
+                                                <option value="{{$poly->id}}">{{$poly->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Nama Dokter</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control m-b" name="doctor">
-                                                <option>-</option>
-                                            </select>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Nama Dokter</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control m-b" name="doctor">
+                                            @foreach($doctors as $doctor)
+                                                <option value="{{$doctor->id}}">{{$doctor->full_name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">Diagnosa Awal</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="first_diagnose">
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Diagnosa Awal</label>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-control" name="first_diagnose"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -256,6 +268,22 @@
             scrollbar: true
         });
         $(document).ready(function () {
+            /*            $(document).on('click', '.btn-add' ,function () {
+             var coloum = $('.coloum-clinic').clone();
+             coloum.removeClass('coloum-clinic').addClass('coloum-clinic-next');
+             coloum.find('button').removeClass('btn-add').addClass('btn-minus');
+             coloum.find('i').removeClass('fa-plus').addClass('fa-minus');
+             coloum.find('textarea').val('');
+             coloum.find('.poly').html('');
+             var count = $('.poly').length + 1;
+             coloum.find('.poly').html('Poli '+count);
+             $('.row-coloum').append(coloum);
+             });
+
+             $(document).on('click', '.btn-minus' ,function (e) {
+             $this = $(this);
+             $this.closest('.coloum-clinic-next').remove();
+             })*/
         });
     </script>
 @endsection

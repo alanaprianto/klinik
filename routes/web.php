@@ -40,7 +40,7 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
 
     Route::get('/pendaftaran', 'RegistrationController@index');
     Route::get('/pendaftaran/tambah', 'RegistrationController@getCreateEdit');
-    Route::get('/pendaftaran/post', 'RegistrationController@postCreateEdit');
+    Route::post('/pendaftaran/post', 'RegistrationController@postCreateEdit');
 });
 
 Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:penata-jasa']], function (){

@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class StaffJob extends Model
 {
     protected $fillable = [
-        'name'
+        'name',
+        'desc'
     ];
 
     public function staffs(){

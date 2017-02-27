@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PolyTableSeeder extends Seeder
+class PoliesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,5 +21,6 @@ class PolyTableSeeder extends Seeder
         $poli_bedah = ['name' => 'Poli Bedah', 'desc' => 'Poli Bedah'];
 
         \Illuminate\Support\Facades\DB::table('polies')->insert([$poli_umum, $poli_kebidanan, $poli_anak, $poli_gigi, $poli_penyakit_dalam, $poli_mata, $poli_tht, $poli_bedah]);
+
     }
 }

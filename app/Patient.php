@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Patient extends Model
 {
     protected $fillable = [
-        'register_number',
         'number_medical_record',
         'full_name',
         'place',

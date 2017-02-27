@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class StaffPosition extends Model
 {
     protected $fillable = [
-        'name'
+        'name',
+        'desc'
     ];
     public function staff(){
         return $this->belongsTo('App\Staff', 'staff_id', 'id');
