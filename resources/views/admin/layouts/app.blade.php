@@ -22,7 +22,10 @@
 
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
-
+    <link href="{{asset('css/datatables.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/dataTables.bootstrap.css')}}" rel="stylesheet">
+    <link href="{{asset('css/buttons.dataTables.min.css')}}" rel="stylesheet">
+    @yield('css')
 </head>
 
 <body>
@@ -67,7 +70,7 @@
                 <li>
                     <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Rawat Inap </span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="{{url('')}}">Poli Klinik </a></li>
+                        <li><a href="{{url('admin/poli/umum')}}">Poli Klinik </a></li>
                         <li><a href="{{url('')}}">Poli Umum </a></li>
                         <li><a href="{{url('')}}">Poli Gigi</a></li>
                         <li><a href="{{url('')}}">Poli Spesialis</a></li>
@@ -100,9 +103,9 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">Mater</span><span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">Master</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="{{url('')}}">Master Pegawai</a></li>
+                        <li><a href="{{url('/admin/user')}}">Master Pegawai</a></li>
                         <li><a href="{{url('')}}">Master poli</a></li>
                         <li><a href="{{url('')}}">Invoice</a></li>
                     </ul>
@@ -241,6 +244,7 @@
             </div>
         </div>
             <div class="wrapper wrapper-content animated fadeInRight">
+
             @yield('content')
             </div>
 
@@ -262,68 +266,21 @@
 <script src="{{asset('js/jquery-2.1.1.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/jquery.metisMenu.js')}}"></script>
-<script src="{{asset('js/jquery.slimscroll.min.js')}}"></script>
+<script type="text/javascript" src="{{'/js/datatables.min.js'}}"></script>
+<script type="text/javascript" src="{{'/js/jquery.dataTables.js'}}"></script>
+<script type="text/javascript" src="{{'/js/dataTables.buttons.min.js'}}"></script>
+<script type="text/javascript" src="{{'/js/moment-with-locales.min.js'}}"></script>
+<script type="text/javascript" src="{{'/js/buttons.print.min.js'}}"></script>
 
-<!-- Flot -->
-<script src="{{asset('js/jquery.flot.js')}}"></script>
-<script src="{{asset('js/jquery.flot.tooltip.min.js')}}"></script>
-<script src="{{asset('js/jquery.flot.spline.js')}}"></script>
-<script src="{{asset('js/jquery.flot.resize.js')}}"></script>
-<script src="{{asset('js/jquery.flot.pie.js')}}"></script>
 
-<!-- Peity -->
-<script src="{{asset('js/jquery.peity.min.js')}}"></script>
-<script src="{{asset('js/peity-demo.js')}}"></script>
+
 
 <!-- Custom and plugin javascript -->
 <script src="{{asset('js/inspinia.js')}}"></script>
-<script src="{{asset('js/pace.min.js')}}"></script>
 
-<!-- jQuery UI -->
-<script src="{{asset('js/jquery-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/table.js')}}"></script>
 
-<!-- GITTER -->
-<script src="{{asset('js/jquery.gritter.min.js')}}"></script>
-
-<!-- Sparkline -->
-<script src="{{asset('js/jquery.sparkline.min.js')}}"></script>
-
-<!-- Sparkline demo data  -->
-<script src="{{asset('js/sparkline-demo.js')}}"></script>
-
-<!-- ChartJS-->
-<script src="{{asset('js/Chart.min.js')}}"></script>
-
-<!-- Toastr -->
-<script src="{{asset('js/toastr.min.js')}}"></script>
-{{--logout js--}}
-<script type="text/javascript">
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $(document).ready(function () {
-        $('#btn-logout').on('click', function () {
-            var $form = $('<form />');
-            $form.attr('action', '/logout');
-            $form.attr('method', 'post');
-            $form.css({
-                'display': 'none'
-            });
-
-            var csrf = $('<input />');
-            csrf.attr('type', 'hidden');
-            csrf.attr('name', '_token');
-            csrf.val($('meta[name="csrf-token"]').attr('content'));
-            $form.append(csrf);
-
-            $('body').append($form);
-            $form.submit();
-        });
-    });
-</script>
-@yield('script');
+@yield('scripts')
 </body>
 
 <!-- Site: HackForums.Ru | E-mail: abuse@hackforums.ru | Skype: h2osancho -->
