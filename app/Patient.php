@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Patient extends Model
 {
     protected $fillable = [
+        'register_number',
         'number_medical_record',
         'full_name',
         'place',
@@ -25,15 +26,12 @@ class Patient extends Model
         'job',
         'responsible_person',
         'responsible_person_state',
-        'responsible_person_last_education',
-        'responsible_person_job',
         'askes_number',
         'cause_pain',
-        'service_type',
-        'time_attend',
         'how_visit',
-        'payment_method',
-        'kiosk_id'
+        'time_attend',
+        'service_type',
+        'first_diagnose',
     ];
 
     /*belong*/

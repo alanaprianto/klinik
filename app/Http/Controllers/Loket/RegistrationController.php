@@ -16,10 +16,10 @@ class RegistrationController extends Controller
         return view('registration.index');
     }
 
-    public function create(Request $request){
-        $id = $request->query('id');
-        if ($id) {
-            $kiosk = Kiosk::find($id);
+    public function getCreateEdit(Request $request){
+        $kiosk_id = $request->query('id');
+        if ($kiosk_id) {
+            $kiosk = Kiosk::find($kiosk_id);
             $kiosk->update([
                 'status' => 'close'
             ]);
@@ -30,6 +30,11 @@ class RegistrationController extends Controller
             File::delete($filename);
         }
 
-        return view('registration.create');
+
+        return view('registration.createEdit');
+    }
+
+    public function postCreateEdit(Request $request){
+        dd($request);
     }
 }

@@ -261,30 +261,10 @@
 <!-- Mainly scripts -->
 <script src="{{asset('js/jquery-2.1.1.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
-
-<script src="{{asset('js/peity-demo.js')}}"></script>
-
 <!-- Custom and plugin javascript -->
+{{--
 <script src="{{asset('js/inspinia.js')}}"></script>
-<script src="{{asset('js/pace.min.js')}}"></script>
-
-<!-- jQuery UI -->
-<script src="{{asset('js/jquery-ui.min.js')}}"></script>
-
-<!-- GITTER -->
-<script src="{{asset('js/jquery.gritter.min.js')}}"></script>
-
-<!-- Sparkline -->
-<script src="{{asset('js/jquery.sparkline.min.js')}}"></script>
-
-<!-- Sparkline demo data  -->
-<script src="{{asset('js/sparkline-demo.js')}}"></script>
-
-<!-- ChartJS-->
-<script src="{{asset('js/Chart.min.js')}}"></script>
-
-<!-- Toastr -->
-<script src="{{asset('js/toastr.min.js')}}"></script>
+--}}
 {{--logout js--}}
 <script type="text/javascript">
     $.ajaxSetup({

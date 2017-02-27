@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Registration extends Model
 {
+    protected $fillable = [
+        'number_registration'
+    ];
     /*belong*/
     public function kiosk(){
         return $this->belongsTo('App\Kiosk', 'kiosk_id', 'id');

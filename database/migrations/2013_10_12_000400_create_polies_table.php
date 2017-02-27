@@ -16,6 +16,7 @@ class CreatePoliesTable extends Migration
         Schema::create('polies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('desc');
             $table->timestamps();
         });
     }

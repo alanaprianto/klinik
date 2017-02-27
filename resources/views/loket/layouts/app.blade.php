@@ -25,7 +25,9 @@
     <link href="{{asset('css/datatables.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/dataTables.bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('css/buttons.dataTables.min.css')}}" rel="stylesheet">
-
+    <link href="{{asset('css/datepicker3.css')}}" rel="stylesheet">
+    <link href="{{asset('css/jquery.timepicker.min.css')}}" rel="stylesheet">
+    @yield('css')
 </head>
 
 <body>
@@ -394,6 +396,8 @@
 <script type="text/javascript" src="{{'/js/dataTables.buttons.min.js'}}"></script>
 <script type="text/javascript" src="{{'/js/moment-with-locales.min.js'}}"></script>
 <script type="text/javascript" src="{{'/js/buttons.print.min.js'}}"></script>
+<script type="text/javascript" src="{{asset('js/bootstrap-datepicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/jquery.timepicker.min.js')}}"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
 <script type="text/javascript" src="{{'/js/table.js'}}"></script>
