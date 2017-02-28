@@ -53,7 +53,7 @@
                     <div class="logo-element">
                         SIM+
                     </div>
-                </li>
+                </li>d
                 <li>
                     <a href="{{url('')}}"><i class="fa fa-th-large"></i> <span class="nav-label"> Dashboards</span></a>
                 </li>
@@ -297,6 +297,14 @@
             $form.css({
                 'display': 'none'
             });
+
+
+            var csrf = $('<input />');
+            csrf.attr('type', 'hidden');
+            csrf.attr('name', '_token');
+            csrf.val($('meta[name="csrf-token"]').attr('content'));
+            $form.append(csrf);
+
             $('body').append($form);
             $form.submit();
         });

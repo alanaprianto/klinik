@@ -40,7 +40,13 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
 
     Route::get('/pendaftaran', 'RegistrationController@index');
     Route::get('/pendaftaran/tambah', 'RegistrationController@getCreateEdit');
-    Route::post('/pendaftaran/post', 'RegistrationController@postCreateEdit');
+    Route::post('/pendaftaran/store', 'RegistrationController@store');
+    Route::post('/pendaftaran-list', 'RegistrationController@getList');
+    Route::get('/pendaftaran/{id}/tambah-rujukan', 'RegistrationController@getReference');
+    Route::post('/pendaftaran/tambah-rujukan', 'RegistrationController@postReference');
+
+    Route::post('/check-medical-report', 'RegistrationController@getInfoMedicalReport');
+
 });
 
 Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:penata-jasa']], function (){

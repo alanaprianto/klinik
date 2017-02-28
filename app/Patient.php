@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model
@@ -23,14 +24,7 @@ class Patient extends Model
         'phone_number',
         'last_education',
         'job',
-        'responsible_person',
-        'responsible_person_state',
         'askes_number',
-        'cause_pain',
-        'how_visit',
-        'time_attend',
-        'service_type',
-        'first_diagnose',
     ];
 
     /*belong*/
@@ -38,16 +32,21 @@ class Patient extends Model
         return $this->belongsTo('App\Hospital', 'hospital_id', 'id');
     }
 
-    /*main*/
     public function register(){
-        return $this->hasMany('App\Registration');
+        return $this->hasMany('App\Register');
     }
 
-    public function visits(){
-        return $this->hasMany('App\Visit');
+    /*mutator set*/
+    public function setBirthAttribute($value)
+    {
+        if ($value) {
+            $this->attributes['birth'] = Carbon::createFromFormat('d/m/Y', $value);
+        }
     }
 
-    public function histories(){
-        return $this->hasMany('App\History');
+    public function getBirthAttribute($value)
+    {
+        return Carbon::parse($value)->format('m/d/Y');
     }
+
 }

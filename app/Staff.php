@@ -25,9 +25,6 @@ class Staff extends Model
         'staff_job_id'
     ];
 
-    public function registration(){
-        return $this->hasMany('App\Registration');
-    }
 
     public function hospital(){
         return $this->belongsTo('App\Hospital', 'hospital_id', 'id');
@@ -39,6 +36,14 @@ class Staff extends Model
 
     public function staffPosition(){
         return $this->hasOne('App\StaffPosition');
+    }
+
+    public function register(){
+        return $this->hasMany('App\Register');
+    }
+
+    public function references(){
+        return $this->hasMany('App\Reference');
     }
 
 }

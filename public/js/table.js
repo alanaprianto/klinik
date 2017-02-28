@@ -71,20 +71,32 @@
                     "orderable": false,
                     "searchable": false
                 },
-                {data: 'number_medical_record', name: 'number_medical_record'},
-                {data: 'full_name', name: 'full_name'},
-                {data: 'address', name: 'address'},
-                {data: 'address', name: 'address'},
-                {data: 'age', name: 'age'},
-                {data: 'payment_method', name: 'payment_method'},
-                {data: 'doctor_name', name: 'doctor_name'},
+                {data: 'register_number', name: 'register_number'},
+                {data: 'patient.number_medical_record', name: 'patient.number_medical_record'},
+                {data: 'patient.full_name', name: 'patient.full_name'},
+                {data: 'patient.age', name: 'patient.age'},
+                {
+                    "data": 'status',
+                    "defaultContent": '',
+                    "orderable": true,
+                    "searchable": false,
+                    "mRender": function (data, type, row) {
+                        var status = '';
+                        if(data == 1 || data == "1"){
+                            status = '<span class="alert-success">Open</span>'
+                        }
+
+                        return status;
+                    }
+                },
                 {
                     "data": '',
                     "defaultContent": '',
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        return '-';
+                        var reference = '<a href="/loket/pendaftaran/'+row.id+'/tambah-rujukan"><i class="fa fa-plus"></i> Rujukan</a>';
+                        return reference;
                     }
                 }
             ]
@@ -180,22 +192,18 @@
 
         //socket message delete antrian yang close
         socket.on('message', function (data) {
-            var result = data.split("_");
-            switch (result[1]) {
+            switch (data) {
                 case 'bpjs':
-                    bpjs.row($('#' + result[0]).parents('tr'))
-                        .remove()
-                        .draw();
+                    bpjs.ajax.reload();
                     break;
                 case 'umum':
-                    umum.row($('#' + result[0]).parents('tr'))
-                        .remove()
-                        .draw();
+                    umum.ajax.reload();
                     break;
                 case 'contractor':
-                    contractor.row($('#' + result[0]).parents('tr'))
-                        .remove()
-                        .draw();
+                    contractor.ajax.reload();
+                    break;
+                case 'registration':
+                    registration.ajax.reload();
                     break;
             }
         });

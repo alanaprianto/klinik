@@ -42,14 +42,30 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form method="post" class="form-horizontal" action="/loket/pendaftaran/post">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <form class="form-inline form-rm">
+                                {{csrf_field()}}
+                                <div class="form-group">
+                                    <label>Cari Nomor RM</label>
+                                    <input type="text" class="form-control" name="number_mr"
+                                           placeholder="0123456789">
+                                </div>
+                                <button type="submit" class="btn btn-default">Cari</button>
+                            </form>
+                        </div>
+                    </div>
+                    <hr/>
+                    <form method="post" class="form-horizontal" action="/loket/pendaftaran/store">
                         {{csrf_field()}}
+                        <input type="hidden" name="patient_number_id">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">No RM</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="number_medical_record">
+                                        <input type="text" class="form-control" name="number_medical_record"
+                                               id="number_medical_record">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -156,6 +172,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-4 control-label">No Jamkesmas / Jamkesda / ASKES
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="askes_number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label class="col-sm-4 control-label">Nama Penanggung Jawab</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" name="responsible_person">
@@ -167,15 +192,6 @@
                                         <input type="text" class="form-control" name="responsible_person_state">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">No Jamkesmas / Jamkesda / ASKES
-                                    </label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="askes_number">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Sebab Sakit</label>
                                     <div class="col-sm-8">
@@ -228,18 +244,18 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Diagnosa Awal</label>
-                                    <div class="col-sm-8">
-                                        <textarea class="form-control" name="first_diagnose"></textarea>
-                                    </div>
-                                </div>
+                                {{--                                <div class="form-group">
+                                                                    <label class="col-sm-4 control-label">Diagnosa Awal</label>
+                                                                    <div class="col-sm-8">
+                                                                        <textarea class="form-control" name="first_diagnose"></textarea>
+                                                                    </div>
+                                                                </div>--}}
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-5">
-                                    <button class="btn btn-primary" type="submit">Save changes</button>
+                                    <button class="btn btn-primary" type="submit">Daftar</button>
                                     <button class="btn btn-white" type="submit">Cancel</button>
                                 </div>
                             </div>
@@ -284,6 +300,35 @@
              $this = $(this);
              $this.closest('.coloum-clinic-next').remove();
              })*/
+
+            $('.form-rm').on('submit', function (e) {
+                e.preventDefault();
+                $this = $(this);
+                var data = $this.serialize();
+                $.ajax({
+                    url: '/loket/check-medical-report',
+                    data: data,
+                    type: 'post',
+                    success: function (data) {
+                        if (data.is_success) {
+                            if (data.data) {
+                                $('input[name="patient_number_id"]').val(data.data.id);
+                                $.each(data['data'], function (key, value) {
+                                    if (key != 'cause_pain' && key != 'how_visit' && key != 'time_attend' && key != 'service_type' && key != 'responsible_person' && key != 'responsible_person_state') {
+                                        $('input[name="' + key + '"]').val(value).prop('disabled', true);
+                                        $('select[name="' + key + '"]').val(value).prop('disabled', true);
+                                        $('textarea[name="' + key + '"]').html(value).prop('disabled', true);
+                                    }
+                                });
+                            } else {
+                                alert(data.message);
+                            }
+                        } else {
+                            alert(data.message + 'please refresh your browser');
+                        }
+                    }
+                })
+            });
         });
     </script>
 @endsection
