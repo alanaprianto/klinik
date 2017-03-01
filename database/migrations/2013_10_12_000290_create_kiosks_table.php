@@ -17,9 +17,9 @@ class CreateKiosksTable extends Migration
             $table->increments('id');
             $table->integer('queue_number')->unsigned()->nullable();
             $table->timestamp('date')->nullable();
-            $table->string('status')->nullable();
-            $table->string('registration_number')->nullable();
+            $table->integer('status')->nullable();
             $table->string('type')->nullable();
+            $table->integer('staff_id')->nullable();
             $table->timestamps();
         });
     }

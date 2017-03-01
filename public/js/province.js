@@ -44,8 +44,8 @@ $(document).ready(function () {
         var cities = getCities($this.val());
         $('#city').html('');
         $.each(cities, function (index, value) {
-            var option = '<option value="' + value + '">' + value + '</option>'
-            $('#city').append(option)
+            var option = '<option value="' + value + '">' + value + '</option>';
+            $('#city').append(option);
         })
 
     });
