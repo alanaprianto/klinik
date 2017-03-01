@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <table class="table" id="table-queue-bpjs" data-user="{{Auth::user()->id}}">
+                    <table class="table" id="table-queue-polies" data-user="{{Auth::user()->id}}">
                         <thead>
                         <tr>
                             <td style="width: 50px">Antrian</td>

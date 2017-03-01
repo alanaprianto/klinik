@@ -206,7 +206,7 @@
             orderNumber(registration);
         }
         /*queue table polies*/
-        var polies = rs.QueueTable($('#table-polies'), '/penata-jasa/antrian-list?type='+$('#table-polies').data('poly'), $('meta[name="csrf-token"]').attr('content'), $('#table-polies').data('user'));
+        var polies = rs.QueueTable($('#table-queue-polies'), '/penata-jasa/antrian-list', $('meta[name="csrf-token"]').attr('content'), $('#table-polies').data('user'));
 
 
         //socket message delete antrian yang close
