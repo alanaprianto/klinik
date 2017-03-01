@@ -288,7 +288,7 @@
 
 <script>
     $(document).ready(function () {
-        setTimeout(function () {
+/*        setTimeout(function () {
             toastr.options = {
                 closeButton: true,
                 progressBar: true,
@@ -298,7 +298,7 @@
             toastr.success('SIM Klinik, Pekerjaan Jadi mudah ');
 
 
-        }, 1300);
+        }, 1300);*/
 
 
         var data1 = [
@@ -386,7 +386,7 @@
 <script type="text/javascript" src="{{asset('js/bootstrap-datepicker.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.timepicker.min.js')}}"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+<script src="{{asset('js/socket.io.js')}}"></script>
 <script type="text/javascript" src="{{'/js/table.js'}}"></script>
 @yield('scripts')
 </body>
