@@ -31,6 +31,25 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/user/delete', 'UserController@deleteUser');
     Route::post('/user-list', 'UserController@getList');
     Route::get('/user/{param}', 'UserController@createEdit');
+
+    Route::get('/poli', 'poliController@Index');
+    Route::get('/poli/{param}', 'poliController@getPoli');
+    Route::post('/poli/modify', 'poliController@postPoli');
+    Route::post('/poli/delete', 'poliController@deletePoli');
+    Route::post('/poli-list', 'poliController@getList');
+
+    Route::get('/staffposition', 'StaffpositionController@Index');
+    Route::get('/staffposition/{param}', 'staffpositionController@getStaffposition');
+    Route::post('/staffposition/modify', 'staffpositionController@postStaffposition');
+    Route::post('/staffposition/delete', 'StaffpositionController@deleteStaffposition');
+    Route::post('/staffposition-list', 'StaffpositionController@getList');
+
+    Route::get('/staffjob', 'StaffjobController@Index');
+    Route::get('/staffjob/{param}', 'staffjobController@getStaffjob');
+    Route::post('/staffjob/modify', 'staffjobController@postStaffjob');
+    Route::post('/staffjob/delete', 'StaffjobController@deleteStaffjob');
+    Route::post('/staffjob-list', 'StaffjobController@getList');
+
 });
 
 Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['auth', 'view.finder.loket', 'role:loket']], function (){

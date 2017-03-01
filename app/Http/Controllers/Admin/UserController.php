@@ -32,12 +32,12 @@ class UserController extends Controller
 
     public function postUser(Request $request)
     {
-//        dd($request->all());
-//        $this->validate($request, [
-//            'name' => 'required|max:255',
-//            'email' => 'required|email|max:255|unique:users',
-//            'password' => 'required|min:6|confirmed',
-//        ]);
+
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
         $input = $request->except(['_token']);
         $role = Role::find($input['role']);
 

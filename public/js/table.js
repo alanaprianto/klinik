@@ -178,7 +178,60 @@
         });
     };
 
-    /*order function*/
+
+    rs.PoliTable = function ($element, listUrl, csrf) {
+        if (!$element.length) return null;
+        return $element.DataTable({
+            processing: true,
+            serverSide: true,
+            "deferRender": true,
+            responsive: true,
+            ajax: {
+                'url': listUrl,
+                'type': 'POST',
+                'headers': {
+                    'X-CSRF-TOKEN': csrf
+                }
+            },
+            dom: 'lBfrtip',
+            "order": [[1, 'asc']],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    title: $('.print-datatable').attr('title')
+                }
+            ],
+            columns: [
+                {
+                    data: 'id',
+                    name: 'id',
+                    "orderable": false,
+                    "searchable": false
+                },
+                {data: 'name', name: 'name'},
+                {data: 'desc', name: 'desc'},
+                 {
+                    "data": '',
+                    "defaultContent": '',
+                    "orderable": false,
+                    "searchable": false,
+                    "mRender": function (data, type, row) {
+                        console.log(row)
+                        var edit = '<a href="/admin/poli/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
+                        var remove = '<a href="javascript:;" class="btn-remove" data-id="' + row.id + '"><i class="fa fa-remove"></i></a>';
+                        return edit + ' | ' + remove;
+                    }
+                }
+            ]
+        });
+    };
+
+
+
     function orderNumber($datatable) {
         $datatable.on('order.dt search.dt draw.dt', function () {
             var page = $datatable.page.info().page;
@@ -190,10 +243,21 @@
 
     $(document).ready(function () {
         var socket = io.connect('http://localhost:8890');
+
+        var $QueueTable = rs.QueueTable($('#table-queue'), '/loket/antrian-list', $('meta[name="csrf-token"]').attr('content'));
+
+
         var $UserTable = rs.UserTable($('#table-user'), '/admin/user-list', $('meta[name="csrf-token"]').attr('content'));
         if ($UserTable) {
             orderNumber($UserTable);
         }
+
+
+        var $PoliTable = rs.PoliTable($('#table-poli'), '/admin/poli-list', $('meta[name="csrf-token"]').attr('content'));
+        if ($PoliTable) {
+            orderNumber($PoliTable);aavv
+        }
+
         /*queue table*/
         var $QueueTable = rs.QueueTable($('#table-queue'), '/loket/antrian-list', $('meta[name="csrf-token"]').attr('content'), $('#table-queue').data('user'));
         var bpjs = rs.QueueTable($('#table-queue-bpjs'), '/loket/antrian-list?type=bpjs', $('meta[name="csrf-token"]').attr('content'), $('#table-queue-bpjs').data('user'));
