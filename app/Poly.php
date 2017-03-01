@@ -11,7 +11,11 @@ class Poly extends Model
         'desc'
     ];
 
-    public function visits(){
-        return $this->hasMany('App\Visit');
+    public function histories(){
+        return $this->hasMany('App\History');
+    }
+
+    public function references(){
+        return $this->hasMany('App\Reference');
     }
 }

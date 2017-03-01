@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVisitsTable extends Migration
+class CreateReferencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,16 @@ class CreateVisitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create('references', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamp('date');
-            $table->integer('patient_id')->unsigned()->nullable();
-            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
+            $table->integer('status')->nullable();
+            $table->text('notes')->nullable();
+            $table->integer('register_id')->unsigned()->nullable();
+            $table->foreign('register_id')->references('id')->on('registers')->onDelete('cascade');
             $table->integer('poly_id')->unsigned()->nullable();
             $table->foreign('poly_id')->references('id')->on('polies')->onDelete('cascade');
+            $table->integer('staff_id')->unsigned()->nullable();
+            $table->foreign('staff_id')->references('id')->on('staff')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +34,6 @@ class CreateVisitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('references');
     }
 }

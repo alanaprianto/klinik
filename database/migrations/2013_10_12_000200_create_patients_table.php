@@ -31,14 +31,7 @@ class CreatePatientsTable extends Migration
             $table->string('phone_number')->nullable();
             $table->string('last_education')->nullable();
             $table->string('job')->nullable();
-            $table->string('responsible_person')->nullable();
-            $table->string('responsible_person_state')->nullable();
             $table->string('askes_number')->nullable();
-            $table->text('cause_pain')->nullable();
-            $table->string('how_visit')->nullable();
-            $table->time('time_attend')->nullable();
-            $table->string('service_type')->nullable();
-            $table->text('first_diagnose')->nullable();
             $table->integer('hospital_id')->unsigned()->nullable();
             $table->foreign('hospital_id')->references('id')->on('hospitals')->onDelete('cascade');
             $table->timestamps();

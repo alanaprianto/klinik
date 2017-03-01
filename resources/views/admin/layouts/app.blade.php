@@ -55,7 +55,7 @@
                     <div class="logo-element">
                         SIM+
                     </div>
-                </li>
+                </li>d
                 <li>
                     <a href="{{url('/loket/antrian')}}"><i class="fa fa-th-large"></i> <span
                                 class="nav-label"> Antrian</span></a>

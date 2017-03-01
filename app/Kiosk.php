@@ -13,9 +13,4 @@ class Kiosk extends Model
         'type',
         'locket'
     ];
-
-    /*main relation*/
-    public function registration(){
-        return $this->hasOne('App\Registration');
-    }
 }

@@ -7,7 +7,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Antrian BPJS</h5>
+                    <h5>Data Pendaftar</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -27,17 +27,17 @@
                     </div>
                 </div>
                 <div class="ibox-content">
+                    <a href="{{url('/loket/pendaftaran/tambah')}}" class="btn btn-primary">Tambah</a>
+
                     <table class="table" id="table-registration">
                         <thead>
                         <tr>
                             <td>No</td>
-                            <td>No.Rm</td>
-                            <td>Nama</td>
-                            <td>Alamat</td>
+                            <td>Nomor Pendaftaran</td>
+                            <td>No RM</td>
+                            <td>Nama Pasien</td>
                             <td>Umur</td>
-                            <td>Tanggal</td>
-                            <td>Cara Bayar</td>
-                            <td>Dokter</td>
+                            <td>Status Pendaftaran</td>
                             <td>Action</td>
                         </tr>
                         </thead>
