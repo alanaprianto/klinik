@@ -82,17 +82,24 @@ function getJobs()
     return ["Arsitek", "Administratur", "Apoteker", "Akuntan", "Akuntan", "Astronaut", "Aktor", "Aktris", "Atlet", "Bidan", "Buruh", "Blogger", "Camat", "Calo", "Dokter", "Dosen", "Direktur", "Desainer", "Editor", "Fotografer", "Guru", "Gamer", "Guide", "Hakim", "Hacker", "Ilustrator", "Ilmuwan", "Insinyur", "Inspektur", "Jaksa", "Jurnalis", "Kasir", "Kondektur", "Koki", "Kiai", "Komikus", "Karyawan", "Lurah", "Manajer", "Masinis", "Model", "Nelayan", "Novelis", "Nakhoda", "Operator", "Pastur", "Pegawai Negeri", "", "Pelukis", "Pendeta", "Penyanyi", "Pemahat", "Pengacara", "Perancang Grafis", "Politikus", "Programmer", "Peneliti", "Polisi", "Psikolog", "Psikiater", "Peretas", "Pengusaha", "Perminyakan", "Pramugari", "Programmer", "Perawat", "Penerjemah", "Pelaut", "Penulis", "Pilot", "Pramusaji", "Pramugara", "Presiden", "Penari", "Pemadam Kebakaran", "Pelayan", "Petani", "Raja", "Resepsionis", "Satpam", "Seniman", "Supir", "Sekretaris", "Selebritis", "Tengkulak", "Tukang", "TNI", "Ustad / Ulama", "Wartawan", "Wiraswastawan", "Wirausahawan", "Youtubers", "Lainnya"];
 }
 
-function getVisitType(){
+function getVisitType()
+{
     return [
         'Diantar',
         'Datang Sendiri'
     ];
 }
 
-function getServiceType(){
+function getServiceType()
+{
     return [
         'Regular',
         'VIP',
         'VVIP'
     ];
+}
+
+function getRoleName()
+{
+    $user = \Illuminate\Support\Facades\Auth::user();
 }

@@ -89,15 +89,20 @@ class QueueController extends Controller
 
     public function getList(Request $request)
     {
+        /*
+         * 1 = open
+         * 2 = on process
+         * 3 = close
+         * */
         switch ($request->query('type')) {
             case 'bpjs':
-                $kiosks = Kiosk::where('type', 'bpjs')->where('status', 'open')->get();
+                $kiosks = Kiosk::where('type', 'bpjs')->whereIn('status', [1,2])->get();
                 break;
             case 'umum':
-                $kiosks = Kiosk::where('type', 'umum')->where('status', 'open')->get();
+                $kiosks = Kiosk::where('type', 'umum')->whereIn('status', [1,2])->get();
                 break;
             case 'contractor' :
-                $kiosks = Kiosk::where('type', 'contractor')->where('status', 'open')->get();
+                $kiosks = Kiosk::where('type', 'contractor')->whereIn('status', [1,2])->get();
                 break;
             default:
                 $kiosks = Kiosk::get();

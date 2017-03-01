@@ -89,7 +89,7 @@
                             @foreach($register->references as $index => $reference)
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <hr />
+                                        <hr/>
                                         <h3>Rujukan {{$index+1}}</h3>
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">Klinik</label>
@@ -135,8 +135,10 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Klinik</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control m-b" name="poly">
-                                            @foreach($polies as $poly)
+                                        <select class="form-control m-b" name="poly" id="clinic">
+                                            <option>-</option>
+
+                                        @foreach($polies as $poly)
                                                 <option value="{{$poly->id}}">{{$poly->name}}</option>
                                             @endforeach
                                         </select>
@@ -145,10 +147,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Nama Dokter</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control m-b" name="doctor">
-                                            @foreach($doctors as $doctor)
-                                                <option value="{{$doctor->id}}">{{$doctor->full_name}}</option>
-                                            @endforeach
+                                        <select class="form-control m-b" name="doctor" id="doctors">
+                                            <option>-</option>
                                         </select>
                                     </div>
                                 </div>
@@ -163,4 +163,26 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on('change', '#clinic', function () {
+                $this = $(this);
+                $.ajax({
+                    url: '/loket/pendaftaran/pilih-poli',
+                    type: 'POST',
+                    data: {_token: $('meta[name="csrf-token"]').attr('content'), id : $this.val()},
+                    success: function (data) {
+                        var respone = JSON.parse(data.data);
+                        $('#doctors').html('');
+                        $.each(respone.doctors, function (key, value) {
+                            var option = '<option value="' + value.id + '">' + value.full_name + '</option>';
+                            $('#doctors').append(option);
+                        });
+                    }
+                })
+            });
+        });
+    </script>
 @endsection

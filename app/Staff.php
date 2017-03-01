@@ -46,4 +46,8 @@ class Staff extends Model
         return $this->hasMany('App\Reference');
     }
 
+    public function polies(){
+        return $this->belongsToMany('App\Poly', 'doctors_polies', 'polies_id', 'staff_id');
+    }
+
 }

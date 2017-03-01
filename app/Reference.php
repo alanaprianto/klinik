@@ -10,7 +10,8 @@ class Reference extends Model
         'register_id',
         'poly_id',
         'status',
-        'notes'
+        'notes',
+        'staff_id'
     ];
 
     public function register(){

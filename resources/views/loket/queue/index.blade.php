@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <table class="table" id="table-queue-bpjs">
+                    <table class="table" id="table-queue-bpjs" data-user="{{Auth::user()->id}}">
                         <thead>
                         <tr>
                             <td style="width: 50px">Antrian</td>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <table class="table" id="table-queue-umum">
+                    <table class="table" id="table-queue-umum" data-user="{{Auth::user()->id}}">
                         <thead>
                         <tr>
                             <td style="width: 50px">Antrian</td>
@@ -101,7 +101,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <table class="table" id="table-queue-contractor">
+                    <table class="table" id="table-queue-contractor" data-user="{{Auth::user()->id}}">
                         <thead>
                         <tr>
                             <td style="width: 50px">Antrian</td>

@@ -3,7 +3,7 @@
     moment.locale('id');
 
     /*queue table*/
-    rs.QueueTable = function ($element, listUrl, csrf) {
+    rs.QueueTable = function ($element, listUrl, csrf, userId) {
         if (!$element.length) return null;
         return $element.DataTable({
             processing: true,
@@ -30,7 +30,17 @@
                     data: 'status',
                     name: 'status',
                     "orderable": false,
-                    "searchable": false
+                    "searchable": false,
+                    "mRender" : function (data) {
+                        var status;
+                        if(data == 1){
+                            status = '<span class="alert-success">Open</span>';
+                        } else {
+                            status = '<span class="alert-warning">On Process</span>';
+                        }
+
+                        return status;
+                    }
                 },
                 {
                     "data": '',
@@ -38,9 +48,19 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        var btn = '<a class="btn btn-default btn-play" data-sound="' + row.location + '">Panggil</a>';
-                        var process = '<a href="/loket/pendaftaran/tambah?id=' + row.id + '" class="btn btn-default btn-process" id="' + row.queue_number + '_' + row.type + '">Register</a>';
-                        return btn + ' | ' + process;
+                        if(row.status == 1) {
+                            var btn = '<a class="btn btn-primary btn-play" data-sound="' + row.location + '">Panggil</a>';
+                            var process = '<a href="/loket/pendaftaran/tambah?id=' + row.id + '" class="btn btn-primary btn-process" id="' + row.queue_number + '_' + row.type + '">Register</a>';
+                            return btn + ' | ' + process;
+                        } else{
+                            if(row.staff_id == userId){
+                                var btn = '<a class="btn btn-primary btn-play" data-sound="' + row.location + '">Panggil</a>';
+                                var process = '<a href="/loket/pendaftaran/tambah?id=' + row.id + '" class="btn btn-primary btn-process" id="' + row.queue_number + '_' + row.type + '">Register</a>';
+                                return btn + ' | ' + process;
+                            } else{
+                                return '-'
+                            }
+                        }
                     }
                 }
             ]
@@ -103,6 +123,7 @@
         });
     };
 
+    /*usertable*/
     rs.UserTable = function ($element, listUrl, csrf) {
         if (!$element.length) return null;
         return $element.DataTable({
@@ -148,7 +169,6 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        console.log(row)
                         var edit = '<a href="/admin/user/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
                         var remove = '<a href="javascript:;" class="btn-remove" data-id="' + row.id + '"><i class="fa fa-remove"></i></a>';
                         return edit + ' | ' + remove;
@@ -157,6 +177,7 @@
             ]
         });
     };
+
 
     rs.PoliTable = function ($element, listUrl, csrf) {
         if (!$element.length) return null;
@@ -209,6 +230,8 @@
         });
     };
 
+
+
     function orderNumber($datatable) {
         $datatable.on('order.dt search.dt draw.dt', function () {
             var page = $datatable.page.info().page;
@@ -219,34 +242,36 @@
     }
 
     $(document).ready(function () {
+        var socket = io.connect('http://localhost:8890');
 
         var $QueueTable = rs.QueueTable($('#table-queue'), '/loket/antrian-list', $('meta[name="csrf-token"]').attr('content'));
-        socket.on('message', function (data) {
-            $QueueTable.row( $('#'+data).parents('tr') )
-                .remove()
-                .draw();
-        });
+
+
         var $UserTable = rs.UserTable($('#table-user'), '/admin/user-list', $('meta[name="csrf-token"]').attr('content'));
         if ($UserTable) {
             orderNumber($UserTable);
         }
+
 
         var $PoliTable = rs.PoliTable($('#table-poli'), '/admin/poli-list', $('meta[name="csrf-token"]').attr('content'));
         if ($PoliTable) {
             orderNumber($PoliTable);aavv
         }
 
-        var socket = io.connect('http://localhost:8890');
         /*queue table*/
-        var bpjs = rs.QueueTable($('#table-queue-bpjs'), '/loket/antrian-list?type=bpjs', $('meta[name="csrf-token"]').attr('content'));
-        var umum = rs.QueueTable($('#table-queue-umum'), '/loket/antrian-list?type=umum', $('meta[name="csrf-token"]').attr('content'));
-        var contractor = rs.QueueTable($('#table-queue-contractor'), '/loket/antrian-list?type=contractor', $('meta[name="csrf-token"]').attr('content'));
+        var $QueueTable = rs.QueueTable($('#table-queue'), '/loket/antrian-list', $('meta[name="csrf-token"]').attr('content'), $('#table-queue').data('user'));
+        var bpjs = rs.QueueTable($('#table-queue-bpjs'), '/loket/antrian-list?type=bpjs', $('meta[name="csrf-token"]').attr('content'), $('#table-queue-bpjs').data('user'));
+        var umum = rs.QueueTable($('#table-queue-umum'), '/loket/antrian-list?type=umum', $('meta[name="csrf-token"]').attr('content'), $('#table-queue-umum').data('user'));
+        var contractor = rs.QueueTable($('#table-queue-contractor'), '/loket/antrian-list?type=contractor', $('meta[name="csrf-token"]').attr('content'), $('#table-queue-contractor').data('user'));
 
         /*registration table*/
         var registration = rs.RegistrationTable($('#table-registration'), '/loket/pendaftaran-list', $('meta[name="csrf-token"]').attr('content'));
         if (registration) {
             orderNumber(registration);
         }
+        /*queue table polies*/
+        var polies = rs.QueueTable($('#table-polies'), '/penata-jasa/antrian-list?type='+$('#table-polies').data('poly'), $('meta[name="csrf-token"]').attr('content'), $('#table-polies').data('user'));
+
 
         //socket message delete antrian yang close
         socket.on('message', function (data) {

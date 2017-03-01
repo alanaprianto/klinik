@@ -58,6 +58,7 @@
                     <hr/>
                     <form method="post" class="form-horizontal" action="/loket/pendaftaran/store">
                         {{csrf_field()}}
+                        <input type="hidden" name="kiosk_id" value="{{$kiosk_id ? $kiosk_id : ''}}">
                         <input type="hidden" name="patient_number_id">
                         <div class="row">
                             <div class="col-md-6">
@@ -227,7 +228,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Klinik</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control m-b" name="poly">
+                                        <select class="form-control m-b" name="poly" id="clinic">
+                                            <option>-</option>
                                             @foreach($polies as $poly)
                                                 <option value="{{$poly->id}}">{{$poly->name}}</option>
                                             @endforeach
@@ -237,26 +239,18 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Nama Dokter</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control m-b" name="doctor">
-                                            @foreach($doctors as $doctor)
-                                                <option value="{{$doctor->id}}">{{$doctor->full_name}}</option>
-                                            @endforeach
+                                        <select class="form-control m-b" name="doctor" id="doctors">
+                                            <option>-</option>
                                         </select>
                                     </div>
                                 </div>
-                                {{--                                <div class="form-group">
-                                                                    <label class="col-sm-4 control-label">Diagnosa Awal</label>
-                                                                    <div class="col-sm-8">
-                                                                        <textarea class="form-control" name="first_diagnose"></textarea>
-                                                                    </div>
-                                                                </div>--}}
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-5">
                                     <button class="btn btn-primary" type="submit">Daftar</button>
-                                    <button class="btn btn-white" type="submit">Cancel</button>
+                                    <a href="/loket/pendaftaran" class="btn btn-white" type="button">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -284,23 +278,6 @@
             scrollbar: true
         });
         $(document).ready(function () {
-            /*            $(document).on('click', '.btn-add' ,function () {
-             var coloum = $('.coloum-clinic').clone();
-             coloum.removeClass('coloum-clinic').addClass('coloum-clinic-next');
-             coloum.find('button').removeClass('btn-add').addClass('btn-minus');
-             coloum.find('i').removeClass('fa-plus').addClass('fa-minus');
-             coloum.find('textarea').val('');
-             coloum.find('.poly').html('');
-             var count = $('.poly').length + 1;
-             coloum.find('.poly').html('Poli '+count);
-             $('.row-coloum').append(coloum);
-             });
-
-             $(document).on('click', '.btn-minus' ,function (e) {
-             $this = $(this);
-             $this.closest('.coloum-clinic-next').remove();
-             })*/
-
             $('.form-rm').on('submit', function (e) {
                 e.preventDefault();
                 $this = $(this);
@@ -326,6 +303,23 @@
                         } else {
                             alert(data.message + 'please refresh your browser');
                         }
+                    }
+                })
+            });
+
+            $(document).on('change', '#clinic', function () {
+                $this = $(this);
+                $.ajax({
+                    url: '/loket/pendaftaran/pilih-poli',
+                    type: 'POST',
+                    data: {_token: $('meta[name="csrf-token"]').attr('content'), id : $this.val()},
+                    success: function (data) {
+                        var respone = JSON.parse(data.data);
+                        $('#doctors').html('');
+                        $.each(respone.doctors, function (key, value) {
+                            var option = '<option value="' + value.id + '">' + value.full_name + '</option>';
+                            $('#doctors').append(option);
+                        });
                     }
                 })
             });
