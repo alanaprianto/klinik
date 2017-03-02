@@ -181,7 +181,6 @@
         });
     };
 
-
     rs.PoliTable = function ($element, listUrl, csrf) {
         if (!$element.length) return null;
         return $element.DataTable({
@@ -232,6 +231,175 @@
         });
     };
 
+    rs.StaffjobTable = function ($element, listUrl, csrf) {
+        if (!$element.length) return null;
+        return $element.DataTable({
+            processing: true,
+            serverSide: true,
+            "deferRender": true,
+            responsive: true,
+            ajax: {
+                'url': listUrl,
+                'type': 'POST',
+                'headers': {
+                    'X-CSRF-TOKEN': csrf
+                }
+            },
+            dom: 'lBfrtip',
+            "order": [[1, 'asc']],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    title: $('.print-datatable').attr('title')
+                }
+            ],
+            columns: [
+                {
+                    data: 'id',
+                    name: 'id',
+                    "orderable": false,
+                    "searchable": false
+                },
+                {data: 'name', name: 'name'},
+                {data: 'desc', name: 'desc'},
+                {
+                    "data": '',
+                    "defaultContent": '',
+                    "orderable": false,
+                    "searchable": false,
+                    "mRender": function (data, type, row) {
+                        console.log(row)
+                        var edit = '<a href="/admin/staffjob/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
+                        var remove = '<a href="javascript:;" class="btn-remove" data-id="' + row.id + '"><i class="fa fa-remove"></i></a>';
+                        return edit + ' | ' + remove;
+                    }
+                }
+            ]
+        });
+    };
+
+
+    rs.StaffpositionTable = function ($element, listUrl, csrf) {
+        if (!$element.length) return null;
+        return $element.DataTable({
+            processing: true,
+            serverSide: true,
+            "deferRender": true,
+            responsive: true,
+            ajax: {
+                'url': listUrl,
+                'type': 'POST',
+                'headers': {
+                    'X-CSRF-TOKEN': csrf
+                }
+            },
+            dom: 'lBfrtip',
+            "order": [[1, 'asc']],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    title: $('.print-datatable').attr('title')
+                }
+            ],
+            columns: [
+                {
+                    data: 'id',
+                    name: 'id',
+                    "orderable": false,
+                    "searchable": false
+                },
+                {data: 'name', name: 'name'},
+                {data: 'desc', name: 'desc'},
+                {
+                    "data": '',
+                    "defaultContent": '',
+                    "orderable": false,
+                    "searchable": false,
+                    "mRender": function (data, type, row) {
+                        console.log(row)
+                        var edit = '<a href="/admin/staffposition/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
+                        var remove = '<a href="javascript:;" class="btn-remove" data-id="' + row.id + '"><i class="fa fa-remove"></i></a>';
+                        return edit + ' | ' + remove;
+                    }
+                }
+            ]
+        });
+    };
+
+    rs.StaffTable = function ($element, listUrl, csrf) {
+        if (!$element.length) return null;
+        return $element.DataTable({
+            processing: true,
+            serverSide: true,
+            "deferRender": true,
+            responsive: true,
+            ajax: {
+                'url': listUrl,
+                'type': 'POST',
+                'headers': {
+                    'X-CSRF-TOKEN': csrf
+                }
+            },
+            dom: 'lBfrtip',
+            "order": [[1, 'asc']],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    title: $('.print-datatable').attr('title')
+                }
+            ],
+            columns: [
+                {
+                    data: 'id',
+                    name: 'id',
+                    "orderable": false,
+                    "searchable": false
+                },
+                {data: 'nik', name: 'nik'},
+                {data: 'full_name', name: 'full_name'},
+                {data: 'gender', name: 'gender'},
+                {data: 'place', name: 'place'},
+                {data: 'birth', name: 'birth'},
+                {data: 'age', name: 'age'},
+                {data: 'address', name: 'address'},
+                {data: 'religion', name: 'religion'},
+                {data: 'province', name: 'province'},
+                {data: 'city', name: 'city'},
+                {data: 'district', name: 'district'},
+                {data: 'sub_district', name: 'sub_district'},
+                {data: 'rt_rw', name: 'rt_rw'},
+                {data: 'phone_number', name: 'phone_number'},
+                {data: 'last_education', name: 'last_education'},
+                {data: 'staffjob[0].name', name: 'staffjob[0].name'},
+                {data: 'staffposition[0].name', name: 'staffposition[0].name'},
+
+                {
+                    "data": '',
+                    "defaultContent": '',
+                    "orderable": false,
+                    "searchable": false,
+                    "mRender": function (data, type, row) {
+                        console.log(row)
+                        var edit = '<a href="/admin/staff/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
+                        var remove = '<a href="javascript:;" class="btn-remove" data-id="' + row.id + '"><i class="fa fa-remove"></i></a>';
+                        return edit + ' | ' + remove;
+                    }
+                }
+            ]
+        });
+    };
 
     function orderNumber($datatable) {
         $datatable.on('order.dt search.dt draw.dt', function () {
@@ -257,7 +425,21 @@
         var $PoliTable = rs.PoliTable($('#table-poli'), '/admin/poli-list', $('meta[name="csrf-token"]').attr('content'));
         if ($PoliTable) {
             orderNumber($PoliTable);
-            aavv
+        }
+
+        var $StaffjobTable = rs.StaffjobTable($('#table-staffjob'), '/admin/staffjob-list', $('meta[name="csrf-token"]').attr('content'));
+        if ($StaffjobTable) {
+            orderNumber($StaffjobTable);
+        }
+
+        var $StaffpositionTable = rs.StaffpositionTable($('#table-staffposition'), '/admin/staffposition-list', $('meta[name="csrf-token"]').attr('content'));
+        if ($StaffpositionTable) {
+            orderNumber($StaffpositionTable);
+        }
+
+        var $StaffTable = rs.StaffTable($('#table-staff'), '/admin/staff-list', $('meta[name="csrf-token"]').attr('content'));
+        if ($StaffTable) {
+            orderNumber($StaffTable);
         }
 
         /*queue table*/

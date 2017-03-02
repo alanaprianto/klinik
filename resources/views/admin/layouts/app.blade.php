@@ -55,7 +55,7 @@
                     <div class="logo-element">
                         SIM+
                     </div>
-                </li>d
+                </li>
                 <li>
                     <a href="{{url('/loket/antrian')}}"><i class="fa fa-th-large"></i> <span
                                 class="nav-label"> Antrian</span></a>
@@ -65,21 +65,25 @@
                                 class="nav-label"> Pendaftaran</span></a>
                 </li>
                 <li>
-                    <a href=""><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/admin/poli')}}"><i class="fa fa-medkit"></i> <span
+                                class="nav-label"> Poli</span></a>
+                </li>
+                <li>
+                    <a href="{{url('/admin/staff')}}"><i class="fa fa-user-md"></i> <span
                                 class="nav-label"> Staff</span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{url('/admin/staffjob')}}"><i class="fa fa-th-large"></i> <span
+                            <a href="{{url('/admin/staffjob')}}"><i class="fa fa-user-md"></i> <span
                                         class="nav-label"> Staff Job</span></a>
                         </li>
                         <li>
-                            <a href="{{url('/admin/staffposition')}}"><i class="fa fa-th-large"></i> <span
+                            <a href="{{url('/admin/staffposition')}}"><i class="fa fa-user-md"></i> <span
                                         class="nav-label"> Staff Position </span></a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="{{url('/admin/user')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/admin/user')}}"><i class="fa fa-user"></i> <span
                                 class="nav-label"> User</span></a>
                 </li>
             </ul>
@@ -252,7 +256,8 @@
 <!-- Mainly scripts -->
 <script src="{{asset('js/jquery-2.2.4.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
-{{--<script src="{{asset('js/jquery.metisMenu.js')}}"></script>--}}
+<script src="{{asset('js/jquery.metisMenu.js')}}"></script>
+
 
 
 <!-- Custom and plugin javascript -->

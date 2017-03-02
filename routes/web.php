@@ -29,7 +29,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/user/modify', 'UserController@postUser');
     Route::post('/user/delete', 'UserController@deleteUser');
     Route::post('/user-list', 'UserController@getList');
-    Route::get('/user/{param}', 'UserController@createEdit');
+
 
     Route::get('/poli', 'poliController@Index');
     Route::get('/poli/{param}', 'poliController@getPoli');
@@ -48,6 +48,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/staffjob/modify', 'staffjobController@postStaffjob');
     Route::post('/staffjob/delete', 'StaffjobController@deleteStaffjob');
     Route::post('/staffjob-list', 'StaffjobController@getList');
+
+    Route::get('/staff', 'StaffController@Index');
+    Route::get('/staff/{param}', 'staffController@getStaff');
+    Route::post('/staff/modify', 'staffController@postStaff');
+    Route::post('/staff/delete', 'StaffController@deleteStaff');
+    Route::post('/staff-list', 'StaffController@getList');
+
 
 });
 
