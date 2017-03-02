@@ -76,7 +76,7 @@ class QueueController extends Controller
                 $type_sound = 'sounds/c5.mp3';
                 break;
             default :
-                $type_sound = '-';
+                $type_sound = 'sounds/c5.mp3';
                 break;
         }
         return $type_sound;

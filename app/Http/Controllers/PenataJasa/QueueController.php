@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\PenataJasa;
 
+use App\Kiosk;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Facades\Datatables;
 
 class QueueController extends Controller
 {
@@ -12,26 +14,9 @@ class QueueController extends Controller
         return view('queue.index');
     }
 
-    public function getList(Request $request){
-        $type = $request->query('type');
-        switch ($type){
-            case '':
-                break;
-            case 'poly':
-                break;
-            case '':
-                break;
-            case '':
-                break;
-            case '':
-                break;
-            case '':
-                break;
-            case '':
-                break;
-            case '':
-                break;
-        }
-
+    public function getList(){
+        $kiosk = Kiosk::whereNotNull('reference_id')->get();
+        $datatable = Datatables::of($kiosk);
+        return $datatable->make(true);
     }
 }

@@ -25,4 +25,8 @@ class Reference extends Model
     public function doctor(){
         return $this->belongsTo('App\Staff', 'staff_id', 'id');
     }
+
+    public function medicalRecord(){
+        return $this->hasOne('App\MedicalRecord');
+    }
 }

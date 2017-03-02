@@ -12,6 +12,8 @@ class Kiosk extends Model
         'status',
         'type',
         'locket',
-        'staff_id'
+        'staff_id',
+        'reference_id'
     ];
+
 }

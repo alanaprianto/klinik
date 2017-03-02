@@ -50,4 +50,9 @@ class Staff extends Model
         return $this->belongsToMany('App\Poly', 'doctors_polies', 'polies_id', 'staff_id');
     }
 
+    public function medicalRecords()
+    {
+        return $this->belongsToMany('App\MedicalRecord', 'staff_medical_records', 'medical_records_id', 'staff_id');
+    }
+
 }

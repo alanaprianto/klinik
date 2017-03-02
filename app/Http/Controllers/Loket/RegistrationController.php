@@ -80,11 +80,11 @@ class RegistrationController extends GeneralController
         $register = Register::create($input);
 
         /*add reference /  tambah rujukan*/
-        $this->addReference($input, $register, 'create');
+        $reference = $this->addReference($input, $register, 'create');
 
         /*add kiosk queue*/
         $poly = Poly::find($request['poly']);
-        $this->getKioskQueue($poly->name);
+        $this->getKioskQueue($poly->name, $reference->id);
 
         $redis = $this->LRedis;
         $redis->publish('message', 'registration');
@@ -114,9 +114,9 @@ class RegistrationController extends GeneralController
     public function postReference(Request $request)
     {
         $input = $request->except('_token');
-        $this->addReference($input, '', 'add');
+        $reference = $this->addReference($input, '', 'add');
         $poly = Poly::find($input['poly']);
-        $this->getKioskQueue($poly->name);
+        $this->getKioskQueue($poly->name, $reference->id);
         return redirect('/loket/pendaftaran')->with('status', 'berhasil menambahkan rujukan');
     }
 

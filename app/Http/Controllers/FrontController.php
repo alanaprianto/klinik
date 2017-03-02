@@ -15,7 +15,7 @@ class FrontController extends GeneralController
     public function postKiosk(Request $request){
         $respone = array();
         try{
-            $addKiosk =  $this->getKioskQueue($request->type);
+            $addKiosk =  $this->getKioskQueue($request->type, null);
             $respone = array('is_success' => true, 'message'  => $addKiosk);
         }catch (\Exception $e){
             $respone = array('is_success' => false, 'message' => $e->getMessage());

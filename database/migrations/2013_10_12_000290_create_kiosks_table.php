@@ -20,6 +20,7 @@ class CreateKiosksTable extends Migration
             $table->integer('status')->nullable();
             $table->string('type')->nullable();
             $table->integer('staff_id')->nullable();
+            $table->integer('reference_id')->nullable();
             $table->timestamps();
         });
     }

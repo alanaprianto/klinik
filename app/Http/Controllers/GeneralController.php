@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class GeneralController extends Controller
 {
-    protected function getKioskQueue($type)
+    protected function getKioskQueue($type, $reference_id)
     {
         $this_day = Carbon::now()->format('Y-m-d');
         $now = Carbon::now();
@@ -23,6 +23,7 @@ class GeneralController extends Controller
             'date' => $now,
             'status' => 1,
             'type' => $type,
+            'reference_id' => $reference_id
         ];
         $addKiosk = Kiosk::create($input);
         return $addKiosk;

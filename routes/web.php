@@ -71,8 +71,10 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
 Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:penata-jasa']], function (){
     Route::get('/', 'PenataJasaController@index');
     Route::get('/antrian', 'QueueController@index');
-    Route::get('/antrian-list', 'QueueController@getList');
+    Route::post('/antrian-list', 'QueueController@getList');
 
+    Route::get('/periksa/{id}', 'CheckUpController@getCreate');
+    Route::post('/select-service', 'CheckUpController@getService');
 });
 
 Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['auth', 'view.finder.kasir', 'role:kasir']], function (){
