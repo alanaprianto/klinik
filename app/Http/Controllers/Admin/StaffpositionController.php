@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\StaffPosition;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Yajra\Datatables\Facades\Datatables;
 
 class StaffpositionController extends Controller
 {
@@ -35,14 +36,14 @@ class StaffpositionController extends Controller
             $staffposition = StaffPosition::find($input['staffposition_id']);
             $staffposition->update($input);
         } else {
-            $staffjob = StaffJob::create($input);
+            $staffposition= StaffPosition::create($input);
         }
-        return redirect('admin/staffjob')->with('status', 'Success / Berhasil');
+        return redirect('admin/staffpostion')->with('status', 'Success / Berhasil');
     }
 
     public function getList(){
-        $staffjob = StaffJob::get();
-        $datatable = Datatables::of($staffjob);
+        $staffposition = StaffPosition::get();
+        $datatable = Datatables::of($staffposition);
         return $datatable->make(true);
     }
 

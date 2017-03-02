@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Poly;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Yajra\Datatables\Facades\Datatables;
 
 class poliController extends Controller
 {

@@ -34,7 +34,7 @@
                                 <div class="form-group{{ $errors->has('desc') ? ' has-error' : '' }}">
                                     <label for="desc" class="col-md-4 control-label">Description </label>
                                     <div class="col-md-6">
-                                        <textarea name="desc">{{$staffjob ?  $staffjob->desc : ''}}</textarea>
+                                        <textarea class="form-control" rows="5"  name="desc">{{$staffjob ?  $staffjob->desc : ''}}</textarea>
 
                                         @if ($errors->has('desc'))
                                             <span class="help-block">

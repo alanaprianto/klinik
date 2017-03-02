@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\StaffJob;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Yajra\Datatables\Facades\Datatables;
 
 class StaffjobController extends Controller
 {
