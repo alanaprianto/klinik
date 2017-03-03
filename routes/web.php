@@ -61,6 +61,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/tindakan/delete', 'ServiceController@deleteService');
     Route::post('/tindakan-list', 'ServiceController@getList');
 
+    Route::get('/setting', 'SettingController@Index');
+    Route::get('/setting/{param}', 'SettingController@getSetting');
+    Route::post('/setting/modify', 'SettingController@postSetting');
+    Route::post('/setting/delete', 'SettingController@deleteSetting');
+    Route::post('/setting-list', 'SettingController@getList');
+
 
 });
 

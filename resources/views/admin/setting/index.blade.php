@@ -10,9 +10,6 @@
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
                         <a class="close-link">
                             <i class="fa fa-times"></i>
                         </a>
@@ -24,7 +21,7 @@
                             <a href="{{url('/admin/setting/create')}}" type="button"  class="btn btn-primary">Setting</a>
                         </div>
 
-                        <table class="table table-stripped" id="table-service" data-token="{{csrf_token()}}">
+                        <table class="table table-stripped" id="table-setting" data-token="{{csrf_token()}}">
                             <thead>
                             <tr>
                                 <th>No</th>

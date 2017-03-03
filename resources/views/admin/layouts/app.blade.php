@@ -65,6 +65,11 @@
                                 class="nav-label"> Tindakan</span></a>
                 </li>
                 <li>
+                    <a href="{{url('/admin/setting')}}"><i class="fa    fa-wrench"></i> <span
+                                class="nav-label"> Setting</span></a>
+                </li>
+
+                <li>
                     <a href="{{url('/admin/staff')}}"><i class="fa fa-user-md"></i> <span
                                 class="nav-label"> Staff</span></a>
                     <ul class="nav nav-second-level">
