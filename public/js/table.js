@@ -272,7 +272,6 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        console.log(row)
                         var edit = '<a href="/admin/staffjob/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
                         var remove = '<a href="javascript:;" class="btn-remove" data-id="' + row.id + '"><i class="fa fa-remove"></i></a>';
                         return edit + ' | ' + remove;
@@ -324,7 +323,6 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        console.log(row)
                         var edit = '<a href="/admin/staffposition/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
                         var remove = '<a href="javascript:;" class="btn-remove" data-id="' + row.id + '"><i class="fa fa-remove"></i></a>';
                         return edit + ' | ' + remove;
@@ -391,7 +389,6 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        console.log(row)
                         var edit = '<a href="/admin/staff/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
                         var remove = '<a href="javascript:;" class="btn-remove" data-id="' + row.id + '"><i class="fa fa-remove"></i></a>';
                         return edit + ' | ' + remove;

@@ -81,6 +81,7 @@ Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middlewar
     Route::post('/antrian-list', 'QueueController@getList');
 
     Route::get('/periksa/{id}', 'CheckUpController@getCreate');
+    Route::post('/periksa', 'CheckUpController@postCreate');
     Route::post('/select-service', 'CheckUpController@getService');
 });
 
