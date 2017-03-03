@@ -25,10 +25,10 @@ class StaffController extends Controller
 
         if (($param == 'edit') && $query['id']) {
 
-            $staff =Staff::with('staffjobs','staffposition')->find($query['id']);
+            $staff =Staff::with(['staffjobs','staffposition'])->find($query['id']);
 
         }
-        return view('staff.createEdit', compact(['staff']));
+        return view('staff.createEdit', compact(['staff','staffjobs','staffpositions']));
     }
 
     public function postStaff(Request $request)
