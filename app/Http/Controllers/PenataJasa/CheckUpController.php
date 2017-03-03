@@ -27,4 +27,8 @@ class CheckUpController extends Controller
         }
         return collect($respone);
     }
+
+    public function postCreate(Request $request){
+        dd($request->all());
+    }
 }

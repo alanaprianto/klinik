@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('css')
+    <style type="text/css">
+        #service-table{
+            table-layout: fixed;
+            word-wrap: break-word;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -27,6 +33,8 @@
                     </div>
                 </div>
                 <div class="ibox-content">
+                    <form method="post" action="{{url('/penata-jasa/periksa')}}">
+                        {{csrf_field()}}
                     <table class="table">
                         <tbody>
                         <tr>
@@ -77,7 +85,7 @@
 
                     <h3>Tambah Tindakan</h3>
                     <button class="btn btn-primary btn-plus" type="button"><i class="fa fa-plus"></i></button>
-                    <table class="table service-table">
+                    <table class="table service-table" id="service-table">
                         <thead>
                         <tr>
                             <th>No</th>
@@ -91,7 +99,7 @@
                         <tr class="clone">
                             <td>1</td>
                             <td>
-                                <select name="service" class="select-service">
+                                <select name="service[]" class="select-service">
                                     <option>-</option>
                                     @foreach($services as $service)
                                         <option value="{{$service->id}}">{{$service->name}}</option>
@@ -99,7 +107,7 @@
                                 </select>
                             </td>
                             <td class="cost"></td>
-                            <td><input type="text" placeholder="jumlah" name="amount" class="amount"></td>
+                            <td><input type="text" placeholder="jumlah" name="amount[]" class="amount"></td>
                             <td class="total-amount"></td>
                         </tr>
                         </tbody>
@@ -110,6 +118,11 @@
                         </tr>
                         </tfoot>
                     </table>
+
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

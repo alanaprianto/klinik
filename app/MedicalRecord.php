@@ -9,6 +9,7 @@ class MedicalRecord extends Model
     protected $fillable = [
         'reference_id',
         'patient_id',
+        'cost'
     ];
 
     public function reference()
