@@ -451,7 +451,7 @@
             orderNumber(registration);
         }
         /*queue table polies*/
-        var polies = rs.QueueTable($('#table-queue-polies'), '/penata-jasa/antrian-list', $('meta[name="csrf-token"]').attr('content'), $('#table-polies').data('user'), 'penata-jasa');
+        var polies = rs.QueueTable($('#table-queue-polies'), '/penata-jasa/antrian-list', $('meta[name="csrf-token"]').attr('content'), $('#table-queue-polies').data('user'), 'penata-jasa');
 
 
         //socket message delete antrian yang close
@@ -468,6 +468,9 @@
                     break;
                 case 'registration':
                     registration.ajax.reload();
+                    break;
+                case 'Poli Umum':
+                    polies.ajax.reload();
                     break;
             }
         });

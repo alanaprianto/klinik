@@ -26,7 +26,7 @@ class Reference extends Model
         return $this->belongsTo('App\Staff', 'staff_id', 'id');
     }
 
-    public function medicalRecord(){
-        return $this->hasOne('App\MedicalRecord');
+    public function medicalRecords(){
+        return $this->hasMany('App\MedicalRecord');
     }
 }
