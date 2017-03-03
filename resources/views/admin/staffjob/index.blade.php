@@ -2,13 +2,20 @@
 
 @section('content')
     {{--<script type="text/javascript" href="{{asset('/js/table.js')}}"></script>--}}
-    <section id="main-content">
-        <section class="wrapper">
-            <h3><i class="fa fa-angle-right"></i> Staff JOB</h3>
-
-            <!-- BASIC FORM ELELEMNTS -->
-            <div class="row mt">
-                <div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>  <i class="fa fa-angle-right"></i> Staff JOB</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                    <div class="ibox-content">
                     <div class="form-panel">
                         <div class="action" style="margin-bottom: 10px">
                             <a href="{{url('/admin/staffjob/create')}}" type="button"  class="btn btn-primary">Tambah Staffjob </a>

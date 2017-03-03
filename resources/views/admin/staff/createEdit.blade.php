@@ -18,10 +18,20 @@
 @endsection
 
 @section('content')
-    <section id="main-content">
-        <section class="wrapper">
-            <h3><i class="fa fa-angle-right"></i> Staff  <i class="fa fa-angle-right"></i> {{$staff ? "Edit" : "Create"}}</h3>
-                        <div class="row">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5> <i class="fa fa-angle-right"></i>  Staff  <i class="fa fa-angle-right"></i> {{$staff ? "Edit" : "Create"}}</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                    <div class="ibox-content">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Nama Lengkap</label>
                                     <div class="col-sm-8">
@@ -117,10 +127,9 @@
                                     </div>
                                 </div>
                             <div class="form-group">
-                                <label for="staffjob" class="col-md-4 control-label">Staff Jobs</label>
-                                <div class="col-md-6">
+                                <label class="col-md-4 control-label">Staff Jobs</label>
+                                <div class="col-md-8">
                                     <select id="staffjob" name="staffjob">
-
                                         @foreach($staffjobs as $staffjob)
                                             <option value="{{$staffjob->id}}" {{$staff && ($staff->staffjob[0]->id == $staffjob->id) ? 'selected' : ''}}>{{$staffjob->name}}</option>
                                             {{--<option value="{{$role->id}}">{{$role->display_name}}</option>--}}
@@ -128,25 +137,20 @@
                                         @if ($errors->has('staffjob'))
 
                                             <strong>{{ $errors->first('staffjob') }}</strong>
-
                                         @endif
-
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="staffposition" class="col-md-4 control-label">staffposition</label>
-                                <div class="col-md-6">
+                                <label  class="col-md-4 control-label">Staff Position</label>
+                                <div class="col-md-8">
                                     <select id="staffposition" name="staffposition">
-
                                         @foreach($staffpositions as $staffposition)
                                             <option value="{{$staffposition->id}}" {{$staff && ($staff->staffposition[0]->id == $staffposition->id) ? 'selected' : ''}}>{{$staffposition->name}}</option>
                                             {{--<option value="{{$role->id}}">{{$role->display_name}}</option>--}}
                                         @endforeach
                                         @if ($errors->has('staffposition'))
-
                                             <strong>{{ $errors->first('staffposition') }}</strong>
-
                                         @endif
 
                                     </select>
@@ -165,8 +169,7 @@
             </div>
         </div>
     </div>
-        </section>
-    </section>
+    </div>
 @endsection
 
 @section('scripts')

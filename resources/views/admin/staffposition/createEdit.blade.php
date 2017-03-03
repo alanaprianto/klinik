@@ -1,14 +1,19 @@
 @extends('layouts.app')
 @section('content')
-    <section id="main-content">
-        <section class="wrapper">
-            <h3><i class="fa fa-angle-right"></i> Staff Position <i class="fa fa-angle-right"></i> {{$staffposition? "Edit" : "Create"}}
-            </h3>
-
-            <!-- BASIC FORM ELELEMNTS -->
-            <div class="row mt">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>  <i class="fa fa-angle-right"></i> Staff Position<i class="fa fa-angle-right"></i> {{$staffposition? "Edit" : "Create"}}</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                    <div class="ibox-content">
                         <div class="panel-body">
                             <form class="form-horizontal" role="form" method="POST"
                                   action="{{url('/admin/staffposition/modify')}}"
@@ -54,11 +59,10 @@
                             </form>
                         </div>
                     </div>
-
+                </div>
                 </div>
             </div>
-        </section>
-    </section>
+    </div>
 @endsection
 @section('scripts')
     <script type="text/javascript">

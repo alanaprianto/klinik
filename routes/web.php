@@ -56,9 +56,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/staff-list', 'StaffController@getList');
 
     Route::get('/tindakan', 'ServiceController@Index');
-    Route::get('/tindakan/{param}', 'ServiceController@getStaff');
-    Route::post('/tindakan/modify', 'staffController@postStaff');
-    Route::post('/tindakan/delete', 'ServiceController@deleteStaff');
+    Route::get('/tindakan/{param}', 'ServiceController@getService');
+    Route::post('/tindakan/modify', 'ServiceController@postService');
+    Route::post('/tindakan/delete', 'ServiceController@deleteService');
     Route::post('/tindakan-list', 'ServiceController@getList');
 
 

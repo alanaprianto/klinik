@@ -126,7 +126,7 @@
         });
     };
 
-    /*usertable*/
+       /*usertable*/
     rs.UserTable = function ($element, listUrl, csrf) {
         if (!$element.length) return null;
         return $element.DataTable({
@@ -230,6 +230,60 @@
             ]
         });
     };
+
+    /*tindakantable*/
+    rs.ServiceTable = function ($element, listUrl, csrf) {
+        if (!$element.length) return null;
+        return $element.DataTable({
+            processing: true,
+            serverSide: true,
+            "deferRender": true,
+            responsive: true,
+            ajax: {
+                'url': listUrl,
+                'type': 'POST',
+                'headers': {
+                    'X-CSRF-TOKEN': csrf
+                }
+            },
+            dom: 'lBfrtip',
+            "order": [[1, 'asc']],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    title: $('.print-datatable').attr('title')
+                }
+            ],
+            columns: [
+                {
+                    data: 'id',
+                    name: 'id',
+                    "orderable": false,
+                    "searchable": false
+                },
+                {data: 'name', name: 'name'},
+                {data: 'cost', name: 'cost'},
+                {data: 'desc', name: 'desc'},
+                // {data: 'display_name', name: 'display_name'},
+                {
+                    "data": '',
+                    "defaultContent": '',
+                    "orderable": false,
+                    "searchable": false,
+                    "mRender": function (data, type, row) {
+                        var edit = '<a href="/admin/tindakan/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
+                        // var remove = '<a href="javascript:;" class="btn-remove" data-id="' + row.id + '"><i class="fa fa-remove"></i></a>';
+                        return edit + '' ;
+                    }
+                }
+            ]
+        });
+    };
+
 
     rs.StaffjobTable = function ($element, listUrl, csrf) {
         if (!$element.length) return null;
@@ -404,6 +458,11 @@
         var $UserTable = rs.UserTable($('#table-user'), '/admin/user-list', $('meta[name="csrf-token"]').attr('content'));
         if ($UserTable) {
             orderNumber($UserTable);
+        }
+
+        var $ServiceTable = rs.ServiceTable($('#table-service'), '/admin/tindakan-list', $('meta[name="csrf-token"]').attr('content'));
+        if ($ServiceTable) {
+            orderNumber($ServiceTable);
         }
 
 
