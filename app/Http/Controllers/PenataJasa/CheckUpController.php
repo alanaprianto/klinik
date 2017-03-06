@@ -79,8 +79,9 @@ class CheckUpController extends GeneralController
         $services = Service::get();
         $medical_record = MedicalRecord::get();
 
-        /*kalau di rujuk tanpa chek kesini*/
-        if(($input['service'] ==  array(null)) && $input['condition'] == 'Dirujuk' && isset($input['poly'])){
+
+        if (($input['service'] == array(null)) && $input['condition'] == 'Dirujuk' && isset($input['poly'])) {
+            /*kalau tidak ada tindakan dan di rujuk kesini*/
             /*add reference dan antrian kiosk*/
             $input['doctor'] = null;
             $reference = $this->addReference($input, $reference->register, 'create');
@@ -89,10 +90,12 @@ class CheckUpController extends GeneralController
 
             $reference->update([
                 'status' => 2,
-                'notes'=> 'Dirujuk ke '.$poly->name
+                'notes' => 'Dirujuk ke ' . $poly->name
             ]);
-
-        }else{
+        } elseif (($input['service'] != array(null)) && $input['condition'] == 'Dirujuk' && isset($input['poly'])) {
+            /*kalau ada tindakan dan dirujuk kesini*/
+        } else {
+            /*selain diatas ke sini*/
             foreach ($input['service'] as $index => $item) {
                 if ($item) {
                     $service = $services->find($item);
