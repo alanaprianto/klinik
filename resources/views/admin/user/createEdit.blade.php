@@ -1,15 +1,24 @@
 @extends('layouts.app')
 @section('content')
-    <section id="main-content">
-        <section class="wrapper">
-            <h3><i class="fa fa-angle-right"></i> User <i class="fa fa-angle-right"></i> {{$user ? "Edit" : "Create"}}
-            </h3>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><i class="fa fa-angle-right"></i> User <i class="fa fa-angle-right"></i> {{$user ? "Edit" : "Create"}}</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
 
-            <!-- BASIC FORM ELELEMNTS -->
-            <div class="row mt">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
                             <form class="form-horizontal" role="form" method="POST"
                                   action="{{url('/admin/user/modify')}}"
                                   enctype="multipart/form-data">
@@ -110,8 +119,6 @@
 
                 </div>
             </div>
-        </section>
-    </section>
 @endsection
 @section('scripts')
     <script type="text/javascript">

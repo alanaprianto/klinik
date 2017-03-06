@@ -2,13 +2,24 @@
 
 @section('content')
     <script type="text/javascript" href="{{asset('/js/table.js')}}"></script>
-    <section id="main-content">
-        <section class="wrapper">
-            <h3><i class="fa fa-angle-right"></i> User</h3>
-
-            <!-- BASIC FORM ELELEMNTS -->
-            <div class="row mt">
-                <div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5> <i class="fa fa-angle-right"></i> User</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
                     <div class="form-panel">
                         <div class="action" style="margin-bottom: 10px">
                             <a href="{{url('/admin/user/create')}}" type="button"  class="btn btn-primary">Tambah User </a>
@@ -28,8 +39,8 @@
                     </div>
                 </div>
             </div>
-        </section>
-    </section>
+        </div>
+    </div>
 @endsection
 @section('scripts')
     <script type="text/javascript">
