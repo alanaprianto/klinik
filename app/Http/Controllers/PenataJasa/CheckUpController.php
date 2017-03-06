@@ -102,14 +102,15 @@ class CheckUpController extends GeneralController
         $services = Service::get();
         $medical_record = MedicalRecord::get();
 
+
+
         if (($input['service'] == array(null)) && $input['final_result'] == 'Dirujuk' && isset($input['poly'])) {
             /*dirujuk tanpa ada tidakan*/
             $poly = Poly::find($input['poly']);
-
             /*doktor di null kan*/
             $input['doctor'] = null;
             /*update referensi yang sedang dipakai*/
-            $this->updateReference($reference, 'Dirujuk ke poly ' . $poly->name, false, $input['final_result']);
+            $this->updateReference($reference, $input['notes'], false, $input['final_result']);
             /*tambah referensi ketika dirujuk kembali*/
             $reference = $this->addReference($input, $reference->register, 'create');
             /*tambah antrian di poly yang di rujuk*/
@@ -154,6 +155,15 @@ class CheckUpController extends GeneralController
             } else{
                 $this->updateReference($reference, $input['notes'], false, $input['final_result']);
             }
+            /*add reference kalau dirujuk   */
+            if($input['final_result'] == 'Dirujuk'){
+                $poly = Poly::find($input['poly']);
+                /*tambah referensi ketika dirujuk kembali*/
+                $reference = $this->addReference($input, $reference->register, 'create');
+                /*tambah antrian di poly yang di rujuk*/
+                $this->getKioskQueue($poly->name, $reference->id);
+            }
+
         }
 
         return redirect()->back()->with('status', 'Berhasil / Success');

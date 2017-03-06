@@ -5,6 +5,9 @@
             table-layout: fixed;
             word-wrap: break-word;
         }
+        table.table-condition tbody tr td{
+            border:none;
+        }
     </style>
 @endsection
 
@@ -75,7 +78,7 @@
                                 <td>Dokter</td>
                                 <td>:</td>
                                 <td>
-                                    <select name="doctor">
+                                    <select name="doctor" class="form-control">
                                         @foreach($reference->poly->doctors as $doctor)
                                             <option value="{{$doctor->id}}" {{$doctor->id == $reference->staff_id ? 'selected' : ''}}>{{$doctor->full_name}}</option>
                                         @endforeach
@@ -167,6 +170,11 @@
                                             <option value="{{$poly->id}}">{{$poly->name}}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Catatan :
+                                    <textarea name="notes" class="form-control"></textarea>
                                 </td>
                             </tr>
                             </tbody>
