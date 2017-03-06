@@ -30,7 +30,7 @@
                                 <th>No</th>
                                 <th>Tindakan</th>
                                 <th>Harga</th>
-                                <th>Deskrition</th>
+                                <th>Deskripsion</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
