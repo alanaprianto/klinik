@@ -11,8 +11,8 @@ class Service extends Model
         'cost',
         'desc'
     ];
-    public function medicalRecords()
-    {
-        return $this->belongsToMany('App\MedicalRecord', 'medical_records_services', 'medical_records_id', 'services_id');
+
+    public function medicalRecords(){
+        return $this->hasMany('App\MedicalRecord');
     }
 }

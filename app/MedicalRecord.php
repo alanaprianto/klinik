@@ -9,7 +9,16 @@ class MedicalRecord extends Model
     protected $fillable = [
         'reference_id',
         'patient_id',
-        'cost'
+        'service_id',
+        'quantity',
+        'cost',
+        'subsidy',
+        'total_sum',
+        'total_payment',
+        'is_checked',
+        'final_result',
+        'notes'
+
     ];
 
     public function reference()
@@ -27,8 +36,7 @@ class MedicalRecord extends Model
         return $this->belongsToMany('App\Staff', 'staff_medical_records', 'staff_id', 'medical_records_id');
     }
 
-    public function services()
-    {
-        return $this->belongsToMany('App\Service', 'medical_records_services', 'services_id', 'medical_records_id');
+    public function service(){
+        return $this->belongsTo('App\Service', 'service_id', 'id');
     }
 }

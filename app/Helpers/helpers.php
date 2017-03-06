@@ -99,7 +99,10 @@ function getServiceType()
     ];
 }
 
-function getRoleName()
-{
-    $user = \Illuminate\Support\Facades\Auth::user();
+function getConditions(){
+    return [
+        'Dirujuk',
+        'Dirawat',
+        'Selesai Diperiksa'
+    ];
 }
