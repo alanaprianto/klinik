@@ -19,16 +19,21 @@
             dom: 'lBfrtip',
             buttons: ['print'],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "columnDefs": [
+                {"className": "dt-center", "targets": "_all"}
+            ],
             columns: [
                 {
                     data: 'queue_number',
                     name: 'queue_number',
                     "orderable": false,
-                    "searchable": false
+                    "searchable": false,
+                    "width": "5%"
                 },
                 {
                     data: 'status',
                     name: 'status',
+                    "width": "50%",
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data) {
@@ -572,6 +577,11 @@
                 case 'Poli Umum':
                     polies.ajax.reload();
                     break;
+                case 'Poli Anak':
+                    polies.ajax.reload();
+                    break;
+                default:
+                    polies.ajax.reload();
             }
         });
     });

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Staff extends Model
@@ -25,6 +26,9 @@ class Staff extends Model
         'staff_job_id'
     ];
 
+    public function user(){
+        return $this->belongsTo('App\User', 'user_id', 'id');
+    }
 
     public function hospital(){
         return $this->belongsTo('App\Hospital', 'hospital_id', 'id');
@@ -55,4 +59,11 @@ class Staff extends Model
         return $this->belongsToMany('App\MedicalRecord', 'staff_medical_records', 'medical_records_id', 'staff_id');
     }
 
+    /*mutator*/
+    public function setBirthAttribute($value)
+    {
+        if ($value) {
+            $this->attributes['birth'] = Carbon::createFromFormat('d/m/Y', $value);
+        }
+    }
 }

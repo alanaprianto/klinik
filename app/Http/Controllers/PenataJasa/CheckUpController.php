@@ -47,7 +47,7 @@ class CheckUpController extends GeneralController
         foreach ($reference->medicalRecords as $medicalRecord) {
             $total_payment += $medicalRecord->quantity * $medicalRecord->cost;
         }
-        return view('checkUp.create', compact(['reference', 'services', 'total_payment', 'polies']));
+        return view('checkUp.create', compact(['reference', 'services', 'total_payment', 'polies', 'id']));
     }
 
     public function getService(Request $request)
@@ -87,6 +87,23 @@ class CheckUpController extends GeneralController
 
     public function postCreate(Request $request)
     {
+        $kiosk = Kiosk::where('reference_id', $request['kiosk_id'])->first();
+        if ($kiosk) {
+            $kiosk->update([
+                'status' => 3,
+                'staff_id' => Auth::user()->id
+            ]);
+
+            $redis = $this->LRedis;
+            $redis->publish('message', $kiosk->type);
+            $filename = 'sounds/temp/' . $kiosk->queue_number . '_' . $kiosk->type . '.mp3';
+            if (file_exists($filename)) {
+                File::delete($filename);
+            }
+
+        }
+
+
         $input = $request->except('_token');
         /*remove*/
         if ($input['remove_ids']) {
@@ -166,6 +183,6 @@ class CheckUpController extends GeneralController
 
         }
 
-        return redirect()->back()->with('status', 'Berhasil / Success');
+        return redirect('/penata-jasa/antrian')->with('status', 'Berhasil / Success');
     }
 }

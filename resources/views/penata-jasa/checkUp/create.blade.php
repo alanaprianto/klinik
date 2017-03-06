@@ -40,6 +40,7 @@
                         {{csrf_field()}}
                         <input type="hidden" name="reference_id" value="{{$reference->id}}">
                         <input type="hidden" name="remove_ids" id="remove-ids">
+                        <input type="hidden" name="kiosk_id" value="{{$id}}">
                         <table class="table">
                             <tbody>
                             <tr>
@@ -117,7 +118,7 @@
                                         </select>
                                     </td>
                                     <td class="cost">{{$medicalRecord->cost}}</td>
-                                    <td><input type="number" placeholder="jumlah" name="quantity[]" class="amount"
+                                    <td><input type="number" placeholder="jumlah" name="quantity[]" class="amount form-control"
                                                value="{{$medicalRecord->quantity}}">
                                     </td>
                                     <td class="total-amount">{{$medicalRecord->cost * $medicalRecord->quantity}}</td>
@@ -136,7 +137,7 @@
                                     </td>
                                     <td class="cost"></td>
                                     <td><input type="number" min="0" placeholder="jumlah" name="quantity[]"
-                                               class="amount">
+                                               class="amount form-control">
                                     </td>
                                     <td class="total-amount"></td>
                                 </tr>

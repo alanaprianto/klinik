@@ -45,7 +45,7 @@
                              </span> <span class="text-muted text-xs block">Loket <b class="caret"></b></span> </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="{{url('') }}">Profile</a></li>
+                            <li><a href="{{url('/loket/profil') }}">Profile</a></li>
                             <li><a href="{{url('') }}">Contacts</a></li>
                             <li><a href="{{url('') }}">Mailbox</a></li>
                             <li class="divider"></li>

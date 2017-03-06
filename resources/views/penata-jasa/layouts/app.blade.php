@@ -60,6 +60,10 @@
                     <a href="{{url('/penata-jasa/antrian')}}"><i class="fa fa-th-large"></i> <span
                                 class="nav-label"> Antrian</span></a>
                 </li>
+                <li>
+                    <a href="{{url('/penata-jasa/kunjungan')}}"><i class="fa fa-th-large"></i> <span
+                                class="nav-label"> Kunjungan Pasien</span></a>
+                </li>
             </ul>
 
         </div>

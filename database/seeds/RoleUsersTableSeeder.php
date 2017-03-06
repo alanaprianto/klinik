@@ -14,17 +14,20 @@ class RoleUsersTableSeeder extends Seeder
         $admin = \App\User::where('username', 'admin')->first();
         $loket = \App\User::where('username', 'loket')->first();
         $poli_umum = \App\User::where('username', 'poli_umum')->first();
+        $poli_anak = \App\User::where('username', 'poli_anak')->first();
         $kasir = \App\User::where('username', 'kasir')->first();
 
         $admin_role = \App\Role::where('name', 'admin')->first();
         $loket_role = \App\Role::where('name', 'loket')->first();
-        $penata_jasa_role = \App\Role::where('name', 'penata-jasa')->first();
+        $poli_umum_role = \App\Role::where('name', 'poli_umum')->first();
+        $poli_anak_role = \App\Role::where('name', 'poli_anak')->first();
         $kasir_role = \App\Role::where('name', 'kasir')->first();
 
 
         $admin->attachRole($admin_role);
         $loket->attachRole($loket_role);
-        $poli_umum->attachRole($penata_jasa_role);
+        $poli_umum->attachRole($poli_umum_role);
+        $poli_anak->attachRole($poli_anak_role);
         $kasir->attachRole($kasir_role);
     }
 }

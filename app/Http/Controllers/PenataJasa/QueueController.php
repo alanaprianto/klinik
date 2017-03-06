@@ -15,7 +15,12 @@ class QueueController extends Controller
     }
 
     public function getList(){
-        $kiosk = Kiosk::whereNotNull('reference_id')->get();
+        $user = Auth::user();
+        if($user->hasRole('poli_umum')){
+            $kiosk = Kiosk::where('type', 'Poli Umum')->whereNotNull('reference_id')->whereIn('status', [1,2])->get();
+        } elseif ($user->hasRole('poli_anak')){
+            $kiosk = Kiosk::where('type', 'Poli Anak')->whereNotNull('reference_id')->whereIn('status', [1,2])->get();
+        }
         $datatable = Datatables::of($kiosk);
         return $datatable->make(true);
     }

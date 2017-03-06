@@ -85,9 +85,13 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
     Route::post('/check-medical-report', 'RegistrationController@getInfoMedicalReport');
     Route::post('/pendaftaran/pilih-poli','RegistrationController@selectPoly');
 
+    /*common user*/
+    Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
+    Route::post('/profil', '\App\Http\Controllers\ProfileController@postUpdate');
+
 });
 
-Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:penata-jasa']], function (){
+Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:poli_umum|poli_anak']], function (){
     Route::get('/', 'PenataJasaController@index');
     Route::get('/antrian', 'QueueController@index');
     Route::post('/antrian-list', 'QueueController@getList');
@@ -95,6 +99,8 @@ Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middlewar
     Route::get('/periksa/{id}', 'CheckUpController@getCreate');
     Route::post('/periksa', 'CheckUpController@postCreate');
     Route::post('/select-service', 'CheckUpController@getService');
+
+    Route::get('/kunjungan', 'ReferenceController@index');
 });
 
 Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['auth', 'view.finder.kasir', 'role:kasir']], function (){
