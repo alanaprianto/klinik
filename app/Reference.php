@@ -11,22 +11,28 @@ class Reference extends Model
         'poly_id',
         'status',
         'notes',
-        'staff_id'
+        'staff_id',
+        'is_checked',
+        'final_result'
     ];
 
-    public function register(){
-        return $this->belongsTo('App\Register','register_id', 'id');
+    public function register()
+    {
+        return $this->belongsTo('App\Register', 'register_id', 'id');
     }
 
-    public function poly(){
+    public function poly()
+    {
         return $this->belongsTo('App\Poly', 'poly_id', 'id');
     }
 
-    public function doctor(){
+    public function doctor()
+    {
         return $this->belongsTo('App\Staff', 'staff_id', 'id');
     }
 
-    public function medicalRecords(){
+    public function medicalRecords()
+    {
         return $this->hasMany('App\MedicalRecord');
     }
 }

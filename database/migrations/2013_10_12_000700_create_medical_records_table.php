@@ -20,8 +20,6 @@ class CreateMedicalRecordsTable extends Migration
             $table->double('subsidy')->nullable();
             $table->double('total_sum')->nullable();
             $table->double('total_payment')->nullable();
-            $table->boolean('is_checked')->default(0);
-            $table->string('final_result')->nullable();
             $table->text('notes')->nullable();
             $table->integer('reference_id')->unsigned()->nullable();
             $table->foreign('reference_id')->references('id')->on('references')->onDelete('cascade');

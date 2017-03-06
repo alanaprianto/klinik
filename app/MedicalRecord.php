@@ -15,8 +15,6 @@ class MedicalRecord extends Model
         'subsidy',
         'total_sum',
         'total_payment',
-        'is_checked',
-        'final_result',
         'notes'
 
     ];

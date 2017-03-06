@@ -62,6 +62,29 @@ class CheckUpController extends GeneralController
         return collect($respone);
     }
 
+    private function updateReference($reference, $note, $is_checked, $final_result)
+    {
+        switch ($final_result) {
+            case 'Dirujuk':
+                $status = 2;
+                break;
+            case 'Dirawat':
+                $status = 3;
+                break;
+            case 'Selesai Diperiksa':
+                $status = 4;
+                break;
+            default :
+                $status = 4;
+        }
+        $reference->update([
+            'status' => $status,
+            'notes' => $note,
+            'is_checked' => $is_checked,
+            'final_result' => $final_result,
+        ]);
+    }
+
     public function postCreate(Request $request)
     {
         $input = $request->except('_token');
@@ -79,23 +102,20 @@ class CheckUpController extends GeneralController
         $services = Service::get();
         $medical_record = MedicalRecord::get();
 
-
-        if (($input['service'] == array(null)) && $input['condition'] == 'Dirujuk' && isset($input['poly'])) {
-            /*kalau tidak ada tindakan dan di rujuk kesini*/
-            /*add reference dan antrian kiosk*/
-            $input['doctor'] = null;
-            $reference = $this->addReference($input, $reference->register, 'create');
+        if (($input['service'] == array(null)) && $input['final_result'] == 'Dirujuk' && isset($input['poly'])) {
+            /*dirujuk tanpa ada tidakan*/
             $poly = Poly::find($input['poly']);
-            $this->getKioskQueue($poly->name, $reference->id);
 
-            $reference->update([
-                'status' => 2,
-                'notes' => 'Dirujuk ke ' . $poly->name
-            ]);
-        } elseif (($input['service'] != array(null)) && $input['condition'] == 'Dirujuk' && isset($input['poly'])) {
-            /*kalau ada tindakan dan dirujuk kesini*/
+            /*doktor di null kan*/
+            $input['doctor'] = null;
+            /*update referensi yang sedang dipakai*/
+            $this->updateReference($reference, 'Dirujuk ke poly ' . $poly->name, false, $input['final_result']);
+            /*tambah referensi ketika dirujuk kembali*/
+            $reference = $this->addReference($input, $reference->register, 'create');
+            /*tambah antrian di poly yang di rujuk*/
+            $this->getKioskQueue($poly->name, $reference->id);
         } else {
-            /*selain diatas ke sini*/
+            /*foreach medical record*/
             foreach ($input['service'] as $index => $item) {
                 if ($item) {
                     $service = $services->find($item);
@@ -112,8 +132,6 @@ class CheckUpController extends GeneralController
                                 'cost' => $service->cost,
                                 'subsidy' => null,
                                 'total_sum' => $total_bill,
-                                'is_checked' => true,
-                                'final_result' => $input['final_result']
                             ]);
                         }
                     } else {
@@ -128,6 +146,13 @@ class CheckUpController extends GeneralController
                         ]);
                     }
                 }
+            }
+
+            /*update referensi*/
+            if(($input['service'] != array(null))){
+                $this->updateReference($reference, $input['notes'], true, $input['final_result']);
+            } else{
+                $this->updateReference($reference, $input['notes'], false, $input['final_result']);
             }
         }
 
