@@ -26,7 +26,7 @@ class StaffpositionController extends Controller
         return view('staffposition.createEdit', compact(['staffposition']));
     }
 
-    public function postStaffjob(Request $request)
+    public function postStaffposition(Request $request)
     {
         $input = $request->except(['_token']);
 
@@ -38,7 +38,7 @@ class StaffpositionController extends Controller
         } else {
             $staffposition= StaffPosition::create($input);
         }
-        return redirect('admin/staffpostion')->with('status', 'Success / Berhasil');
+        return redirect('admin/staffposition')->with('status', 'Success / Berhasil');
     }
 
     public function getList(){
@@ -47,10 +47,10 @@ class StaffpositionController extends Controller
         return $datatable->make(true);
     }
 
-    public function deleteUser(Request $request)
+    public function deleteStaffposition(Request $request)
     {
-        $staffjob = StaffJob::find($request['id']);
-        $staffjob->delete();
+        $staffposition = StaffPosition::find($request['id']);
+        $staffposition->delete();
         return redirect()->back()->with('status', 'Berhasil menghapus service');
     }
 }

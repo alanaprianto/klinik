@@ -127,8 +127,8 @@
                                     </div>
                                 </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Staff Jobs</label>
-                                <div class="col-md-8">
+                                <label class="col-md-4 control-label">Staff Jobs </label>
+                                <div class="col-md-4">
                                     <select id="staffjob" name="staffjob">
                                         @foreach($staffjobs as $staffjob)
                                             <option value="{{$staffjob->id}}" {{$staff && ($staff->staffjob[0]->id == $staffjob->id) ? 'selected' : ''}}>{{$staffjob->name}}</option>
@@ -140,22 +140,21 @@
                                         @endif
                                     </select>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label  class="col-md-4 control-label">Staff Position</label>
-                                <div class="col-md-8">
-                                    <select id="staffposition" name="staffposition">
-                                        @foreach($staffpositions as $staffposition)
-                                            <option value="{{$staffposition->id}}" {{$staff && ($staff->staffposition[0]->id == $staffposition->id) ? 'selected' : ''}}>{{$staffposition->name}}</option>
-                                            {{--<option value="{{$role->id}}">{{$role->display_name}}</option>--}}
-                                        @endforeach
-                                        @if ($errors->has('staffposition'))
-                                            <strong>{{ $errors->first('staffposition') }}</strong>
-                                        @endif
+                                <hiden><div class="col-md-4"><label> Staff Position</label>
+                                        <select id="staffposition" name="staffposition">
+                                            @foreach($staffpositions as $staffposition)
+                                                <option value="{{$staffposition->id}}" {{$staff && ($staff->staffposition[0]->id == $staffposition->id) ? 'selected' : ''}}>{{$staffposition->name}}</option>
+                                                {{--<option value="{{$role->id}}">{{$role->display_name}}</option>--}}
+                                            @endforeach
+                                            @if ($errors->has('staffposition'))
+                                                <strong>{{ $errors->first('staffposition') }}</strong>
+                                            @endif
 
-                                    </select>
-                                </div>
+                                        </select>
+                                    </div>
+                                </hiden>
                             </div>
+
                         <div class="row">
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-5">

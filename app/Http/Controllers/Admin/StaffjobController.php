@@ -47,7 +47,7 @@ class StaffjobController extends Controller
         return $datatable->make(true);
     }
 
-    public function deleteUser(Request $request)
+    public function deleteStaffjob(Request $request)
     {
         $staffjob = StaffJob::find($request['id']);
         $staffjob->delete();
