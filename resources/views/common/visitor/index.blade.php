@@ -4,7 +4,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>List Kunjungan Pasien ke Poli</h5>
+                    <h5>Pengunjung</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -24,14 +24,13 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <table class="table" id="table-reference">
+                    <table class="table" id="table-visitor">
                         <thead>
                         <tr>
-                            <th>No</th>
-                            <th>No RM</th>
-                            <th>Nama Pasien</th>
-                            <th>Kesimpulan Akhir</th>
-                            <th>Action</th>
+                            <td>No</td>
+                            <td>No Medical Record</td>
+                            <td>Nama Pasien</td>
+                            <td>Action</td>
                         </tr>
                         </thead>
                     </table>
@@ -42,6 +41,4 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript">
-    </script>
 @endsection

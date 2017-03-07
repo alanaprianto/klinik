@@ -2,7 +2,6 @@
     var rs = {};
     moment.locale('id');
 
-    /*queue table*/
     rs.QueueTable = function ($element, listUrl, csrf, userId, role) {
         if (!$element.length) return null;
         return $element.DataTable({
@@ -56,8 +55,8 @@
                         var btn = '<a class="btn btn-primary btn-play" data-sound="' + row.location + '">Panggil</a>';
                         var process = '<a href="/loket/pendaftaran/tambah?id=' + row.id + '" class="btn btn-primary btn-process">Register</a>';
 
-                        if(role == 'penata-jasa'){
-                            process = '<a href="/penata-jasa/periksa/' + row.reference_id + '" class="btn btn-primary btn-process"  >Periksa</a>';
+                        if (role == 'penata-jasa') {
+                            process = '<a href="/penata-jasa/periksa/' + row.reference_id + '" class="btn btn-primary btn-process">Periksa</a>';
                         }
 
                         if (row.status == 1) {
@@ -75,7 +74,6 @@
         });
     };
 
-    /*registration table*/
     rs.RegistrationTable = function ($element, listUrl, csrf) {
         if (!$element.length) return null;
         return $element.DataTable({
@@ -131,7 +129,6 @@
         });
     };
 
-       /*usertable*/
     rs.UserTable = function ($element, listUrl, csrf) {
         if (!$element.length) return null;
         return $element.DataTable({
@@ -236,7 +233,6 @@
         });
     };
 
-    /*tindakantable*/
     rs.ServiceTable = function ($element, listUrl, csrf) {
         if (!$element.length) return null;
         return $element.DataTable({
@@ -282,7 +278,7 @@
                     "mRender": function (data, type, row) {
                         var edit = '<a href="/admin/tindakan/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
                         // var remove = '<a href="javascript:;" class="btn-remove" data-id="' + row.id + '"><i class="fa fa-remove"></i></a>';
-                        return edit + '' ;
+                        return edit + '';
                     }
                 }
             ]
@@ -389,7 +385,6 @@
         });
     };
 
-
     rs.StaffpositionTable = function ($element, listUrl, csrf) {
         if (!$element.length) return null;
         return $element.DataTable({
@@ -494,6 +489,115 @@
         });
     };
 
+    rs.ReferenseTable = function ($element, listUrl, csrf) {
+        if (!$element.length) return null;
+        return $element.DataTable({
+            processing: true,
+            serverSide: true,
+            "deferRender": true,
+            responsive: true,
+            ajax: {
+                'url': listUrl,
+                'type': 'POST',
+                'headers': {
+                    'X-CSRF-TOKEN': csrf
+                }
+            },
+            dom: 'lBfrtip',
+            "order": [[1, 'asc']],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    title: $('.print-datatable').attr('title')
+                }
+            ],
+            columns: [
+                {data: 'id', name: 'id', "orderable": false,
+                    "searchable": false,},
+                {data: 'register.patient.number_medical_record', name: 'register.patient.number_medical_record'},
+                {data: 'register.patient.full_name', name: 'register.patient.full_name'},
+                {
+                    data: 'status', name: 'status', "mRender": function (data) {
+                    var status;
+                    switch (data) {
+                        case "1":
+                            status = '<span class="alert-danger">Belum Diperiksa</span>';
+                            break;
+                        case "2":
+                            status = '<span class="alert-warning">Dirujuk</span>';
+                            break;
+                        case "3":
+                            status = '<span class="alert-info">Dirawat</span>';
+                            break;
+                        case "4":
+                            status = '<span class="alert-success">Selesai di Periksa</span>';
+                            break;
+                    }
+                    return status;
+                }
+                },
+                {
+                    "data": '',
+                    "defaultContent": '',
+                    "orderable": false,
+                    "searchable": false,
+                    "mRender": function (data, type, row) {
+                        var detail = '<a href="/penata-jasa/kunjungan/detail/'+row.id+'"><i class="fa fa-info"></i></a>';
+                        return detail;
+                    }
+                }
+            ]
+        });
+    };
+
+    rs.VisitorTable = function ($element, listUrl, csrf) {
+        if (!$element.length) return null;
+        return $element.DataTable({
+            processing: true,
+            serverSide: true,
+            "deferRender": true,
+            responsive: true,
+            ajax: {
+                'url': listUrl,
+                'type': 'POST',
+                'headers': {
+                    'X-CSRF-TOKEN': csrf
+                }
+            },
+            dom: 'lBfrtip',
+            "order": [[1, 'asc']],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    title: $('.print-datatable').attr('title')
+                }
+            ],
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'number_medical_record', name: 'number_medical_record'},
+                {data: 'full_name', name: 'full_name'},
+                {
+                    "data": '',
+                    "defaultContent": '',
+                    "orderable": false,
+                    "searchable": false,
+                    "mRender": function (data, type, row) {
+                        var detail = '<a href="/penata-jasa/pengunjung/detail/'+row.id+'"><i class="fa fa-info"></i></a>';
+                        return detail;
+                    }
+                }
+            ]
+        });
+    };
+
     function orderNumber($datatable) {
         $datatable.on('order.dt search.dt draw.dt', function () {
             var page = $datatable.page.info().page;
@@ -557,6 +661,16 @@
         }
         /*queue table polies*/
         var polies = rs.QueueTable($('#table-queue-polies'), '/penata-jasa/antrian-list', $('meta[name="csrf-token"]').attr('content'), $('#table-queue-polies').data('user'), 'penata-jasa');
+        /*kunjungan pasien di poly*/
+        var reference = rs.ReferenseTable($('#table-reference'), '/penata-jasa/kunjungan-list', $('meta[name="csrf-token"]').attr('content'));
+        if (reference) {
+            orderNumber(reference);
+        }
+
+        var visitor = rs.VisitorTable($('#table-visitor'), '/penata-jasa/pengunjung-list', $('meta[name="csrf-token"]').attr('content'));
+        if (visitor) {
+            orderNumber(visitor);
+        }
 
 
         //socket message delete antrian yang close

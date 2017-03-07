@@ -101,6 +101,12 @@ Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middlewar
     Route::post('/select-service', 'CheckUpController@getService');
 
     Route::get('/kunjungan', 'ReferenceController@index');
+    Route::post('/kunjungan-list', 'ReferenceController@getList');
+    Route::get('/kunjungan/detail/{id}', 'ReferenceController@getDetail');
+
+    Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
+    Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
+    Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
 });
 
 Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['auth', 'view.finder.kasir', 'role:kasir']], function (){
