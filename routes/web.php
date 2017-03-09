@@ -67,7 +67,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/setting/delete', 'SettingController@deleteSetting');
     Route::post('/setting-list', 'SettingController@getList');
 
+    Route::get('/jasa-dokter', 'DoctorServiceController@index');
+    Route::post('/jasa-dokter-list', 'DoctorServiceController@getList');
+    Route::get('/jasa-dokter/edit/{id}', 'DoctorServiceController@getEdit');
+    Route::post('/jasa-dokter/post', 'DoctorServiceController@postEdit');
 
+    /*common used*/
+    Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
+    Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
+    Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
 });
 
 Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['auth', 'view.finder.loket', 'role:loket']], function (){
@@ -85,9 +93,12 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
     Route::post('/check-medical-report', 'RegistrationController@getInfoMedicalReport');
     Route::post('/pendaftaran/pilih-poli','RegistrationController@selectPoly');
 
-    /*common user*/
+    /*common used*/
     Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
     Route::post('/profil', '\App\Http\Controllers\ProfileController@postUpdate');
+    Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
+    Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
+    Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
 
 });
 
@@ -111,4 +122,8 @@ Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middlewar
 
 Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['auth', 'view.finder.kasir', 'role:kasir']], function (){
     Route::get('/', 'KasirController@index');
+    Route::get('/pembayaran', 'PaymentController@index');
+    Route::post('/pembayaran-list', 'PaymentController@getList');
+    Route::get('/pembayaran/detail/{id}', 'PaymentController@getPayment');
+    Route::post('/pembayaran', 'PaymentController@postPayment');
 });

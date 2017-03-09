@@ -59,6 +59,10 @@ class Staff extends Model
         return $this->belongsToMany('App\MedicalRecord', 'staff_medical_records', 'medical_records_id', 'staff_id');
     }
 
+    public function doctorService(){
+        return $this->hasOne('App\DoctorService');
+    }
+
     /*mutator*/
     public function setBirthAttribute($value)
     {

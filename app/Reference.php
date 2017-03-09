@@ -35,4 +35,8 @@ class Reference extends Model
     {
         return $this->hasMany('App\MedicalRecord');
     }
+
+    public function payments(){
+        return $this->hasMany('App\Payment');
+    }
 }

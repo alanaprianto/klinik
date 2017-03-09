@@ -1,10 +1,13 @@
 @extends('layouts.app')
+@section('css')
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Pengunjung</h5>
+                    <h5>Data Pendaftar</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -24,13 +27,15 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <table class="table" id="table-visitor" data-role="{{$role}}">
+                    <table class="table" id="table-payment">
                         <thead>
                         <tr>
-                            <th>No</th>
-                            <th>No Medical Record</th>
-                            <th>Nama Pasien</th>
-                            <th>Action</th>
+                            <td>No</td>
+                            <td>No RM</td>
+                            <td>Nama Pasien</td>
+                            <td>Tanggal Pendaftaran</td>
+                            <td>Status</td>
+                            <td>Action</td>
                         </tr>
                         </thead>
                     </table>

@@ -79,8 +79,15 @@ class RegistrationController extends GeneralController
         /*create type registration*/
         $register = Register::create($input);
 
+
         /*add reference /  tambah rujukan*/
         $reference = $this->addReference($input, $register, 'create');
+        $doctor = Staff::with('doctorService')->find($input['doctor']);
+        $register->payments()->create([
+            'status' => 1,
+            'total' => $doctor->doctorService->cost,
+            'type' => 'doctor_service',
+        ]);
 
         /*add kiosk queue*/
         $poly = Poly::find($request['poly']);
@@ -88,6 +95,8 @@ class RegistrationController extends GeneralController
 
         $redis = $this->LRedis;
         $redis->publish('message', 'registration');
+
+
 
         return redirect('/loket/pendaftaran')->with('status', 'Berhasil menambkan / mengubah data pasien');
     }

@@ -81,11 +81,19 @@
                             <a href="{{url('/admin/staffposition')}}"><i class="fa fa-user-md"></i> <span
                                         class="nav-label"> Staff Position </span></a>
                         </li>
+                        <li>
+                            <a href="{{url('/admin/jasa-dokter')}}"><i class="fa fa-user-md"></i> <span
+                                        class="nav-label"> Jasa Dokter </span></a>
+                        </li>
                     </ul>
                 </li>
                 <li>
                     <a href="{{url('/admin/user')}}"><i class="fa fa-user"></i> <span
                                 class="nav-label"> User</span></a>
+                </li>
+                <li>
+                    <a href="{{url('/admin/pengunjung')}}"><i class="fa fa-user"></i> <span
+                                class="nav-label"> Pengunjung</span></a>
                 </li>
             </ul>
 
