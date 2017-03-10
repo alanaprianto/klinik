@@ -57,6 +57,6 @@ class PaymentController extends Controller
                 'status' => 2
             ]);
         }
-        return redirect()->back()->with('status', 'Berhasil memperbarui pembayaran');
+        return redirect('/kasir/pembayaran')->with('status', 'Berhasil memperbarui pembayaran');
     }
 }

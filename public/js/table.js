@@ -8,6 +8,11 @@
             processing: true,
             serverSide: true,
             "deferRender": true,
+            bFilter: false,
+            bInfo: false,
+            "ordering": false,
+            "lengthChange": false,
+            bPaginate: false,
             ajax: {
                 'url': listUrl,
                 'type': 'POST',
@@ -16,7 +21,7 @@
                 }
             },
             dom: 'lBfrtip',
-            buttons: ['print'],
+            buttons: [],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "columnDefs": [
                 {"className": "dt-center", "targets": "_all"}
@@ -25,16 +30,12 @@
                 {
                     data: 'queue_number',
                     name: 'queue_number',
-                    "orderable": false,
-                    "searchable": false,
                     "width": "5%"
                 },
                 {
                     data: 'status',
                     name: 'status',
-                    "width": "50%",
-                    "orderable": false,
-                    "searchable": false,
+                    "width": "30%",
                     "mRender": function (data) {
                         var status;
                         if (data == 1) {
@@ -49,14 +50,12 @@
                 {
                     "data": '',
                     "defaultContent": '',
-                    "orderable": false,
-                    "searchable": false,
                     "mRender": function (data, type, row) {
-                        var btn = '<a class="btn btn-primary btn-play" data-sound="' + row.location + '">Panggil</a>';
-                        var process = '<a href="/loket/pendaftaran/tambah?id=' + row.id + '" class="btn btn-primary btn-process">Register</a>';
+                        var btn = '<a class="btn btn-primary btn-play" data-sound="' + row.location + '"><i class="fa fa-play"></i></a>';
+                        var process = '<a href="/loket/pendaftaran/tambah?id=' + row.id + '" class="btn btn-primary btn-process"><i class="fa fa-sign-in"></i></a>';
 
                         if (role == 'penata-jasa') {
-                            process = '<a href="/penata-jasa/periksa/' + row.reference_id + '" class="btn btn-primary btn-process">Periksa</a>';
+                            process = '<a href="/penata-jasa/periksa/' + row.reference_id + '" class="btn btn-primary btn-process"><i class="fa fa-check-square"></i></a>';
                         }
 
                         if (row.status == 1) {
@@ -631,8 +630,6 @@
                 {
                     "data": '',
                     "defaultContent": '',
-                    "orderable": false,
-                    "searchable": false,
                     "mRender": function (data, type, row) {
                         var status;
                         switch (row.full_payment_status){
@@ -791,7 +788,7 @@
 
 
 
-        //socket message delete antrian yang close
+        //socket message
         socket.on('message', function (data) {
             switch (data) {
                 case 'bpjs':

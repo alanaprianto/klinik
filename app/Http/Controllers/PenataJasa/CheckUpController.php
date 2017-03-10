@@ -10,7 +10,7 @@ use App\Poly;
 use App\Reference;
 use App\Service;
 use App\Staff;
-use Faker\Provider\File;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +46,7 @@ class CheckUpController extends GeneralController
         $services = Service::get();
         $polies = Poly::get();
         $total_payment = 0;
-        foreach ($reference->medicalRecords as $medicalRecord) {
+        foreach ($reference->medicalRecords->where('type', Auth::user()->roles()->first()->name) as $medicalRecord) {
             $total_payment += $medicalRecord->quantity * $medicalRecord->cost;
         }
         return view('checkUp.create', compact(['reference', 'services', 'total_payment', 'polies', 'id']));
@@ -89,6 +89,7 @@ class CheckUpController extends GeneralController
 
     public function postCreate(Request $request)
     {
+        /*remove file anda kiosk queue*/
         $kiosk = Kiosk::where('reference_id', $request['kiosk_id'])->first();
         if ($kiosk) {
             $kiosk->update([
@@ -105,29 +106,30 @@ class CheckUpController extends GeneralController
 
         }
 
-
         $input = $request->except('_token');
-        /*remove*/
+        $reference = Reference::with(['register', 'register.patient', 'register.payments', 'doctor', 'doctor.doctorService', 'medicalRecords'])->find($input['reference_id']);
+        $services = Service::get();
+        $medical_record = MedicalRecord::get();
+
+        /*remove medical record*/
         if ($input['remove_ids']) {
             $ids = explode(',', $input['remove_ids']);
             $mr_remove = DB::table('medical_records')->whereIn('id', $ids)->delete();
         }
+        /*-------------------------------*/
 
-        $reference = Reference::with(['register', 'register.patient', 'register.payments', 'doctor', 'doctor.doctorService'])->find($input['reference_id']);
+        /*update payment doctor if doctor change*/
         $reference->update([
             'staff_id' => $input['doctor']
         ]);
         $doctor = Staff::with(['doctorService'])->find($input['doctor']);
-
         $payment_doctor = $reference->register->payments->where('type', 'doctor_service')->first();
         $payment_doctor->update([
             'cost' => $doctor->doctorService->cost
         ]);
+        /*-------------------------------*/
 
-        $services = Service::get();
-        $medical_record = MedicalRecord::get();
-
-
+        /*main logic*/
         if (($input['service'] == array(null)) && $input['final_result'] == 'Dirujuk' && isset($input['poly'])) {
             /*dirujuk tanpa ada tidakan*/
             $poly = Poly::find($input['poly']);
@@ -136,7 +138,7 @@ class CheckUpController extends GeneralController
             /*update referensi yang sedang dipakai*/
             $this->updateReference($reference, $input['notes'], false, $input['final_result']);
             /*tambah referensi ketika dirujuk kembali*/
-            $reference = $this->addReference($input, $reference->register, 'create');
+            $this->addReference($input, $reference->register, 'create');
             /*tambah antrian di poly yang di rujuk*/
             $this->getKioskQueue($poly->name, $reference->id);
         } else {
@@ -157,6 +159,7 @@ class CheckUpController extends GeneralController
                                 'cost' => $service->cost,
                                 'subsidy' => null,
                                 'total_sum' => $total_bill,
+                                'type' => Auth::user()->roles()->first()->name
                             ]);
                         }
                     } else {
@@ -167,7 +170,8 @@ class CheckUpController extends GeneralController
                             'quantity' => $input['quantity'][$index],
                             'cost' => $service->cost,
                             'subsidy' => null,
-                            'total_sum' => $total_bill
+                            'total_sum' => $total_bill,
+                            'type' => Auth::user()->roles()->first()->name
                         ]);
                     }
                 }
@@ -179,23 +183,25 @@ class CheckUpController extends GeneralController
             } else {
                 $this->updateReference($reference, $input['notes'], false, $input['final_result']);
             }
+
             /*add reference kalau dirujuk   */
             if ($input['final_result'] == 'Dirujuk') {
                 $poly = Poly::find($input['poly']);
                 /*tambah referensi ketika dirujuk kembali*/
-                $reference = $this->addReference($input, $reference->register, 'create');
+                $this->addReference($input, $reference->register, 'create');
                 /*tambah antrian di poly yang di rujuk*/
                 $this->getKioskQueue($poly->name, $reference->id);
             }
 
         }
 
+        $reference_exist = Reference::with(['medicalRecords'])->find($reference->id);
         /*create payment*/
         $total_payment = 0;
-        foreach ($reference->medicalRecords as $medicalRecord) {
+        foreach ($reference_exist->medicalRecords->where('type', Auth::user()->roles()->first()->name) as $medicalRecord) {
             $total_payment += $medicalRecord->total_sum;
         }
-        $reference->payments()->create([
+        $reference_exist->payments()->create([
             'status' => 1,
             'total' => $total_payment,
             'type' => 'medical_record',

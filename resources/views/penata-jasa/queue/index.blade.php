@@ -45,6 +45,7 @@
         var baseUrl = getUrl.protocol + "//" + getUrl.host + "/sounds/temp/";
         function fileAndPlay(sound) {
             var antrian = new Audio(baseUrl + sound);
+            antrian.playbackRate = 1.2;
             antrian.play();
         }
 

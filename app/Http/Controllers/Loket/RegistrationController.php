@@ -96,7 +96,8 @@ class RegistrationController extends GeneralController
         $redis = $this->LRedis;
         $redis->publish('message', 'registration');
 
-
+        $redis = $this->LRedis;
+        $redis->publish('message', 'polies');
 
         return redirect('/loket/pendaftaran')->with('status', 'Berhasil menambkan / mengubah data pasien');
     }

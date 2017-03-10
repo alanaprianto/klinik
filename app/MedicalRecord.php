@@ -15,7 +15,8 @@ class MedicalRecord extends Model
         'subsidy',
         'total_sum',
         'total_payment',
-        'notes'
+        'notes',
+        'type'
 
     ];
 

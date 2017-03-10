@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\PenataJasa;
 
+use App\Http\Controllers\GeneralController;
 use App\Kiosk;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Facades\Datatables;
 
-class QueueController extends Controller
+class QueueController extends GeneralController
 {
     public function index(){
         return view('queue.index');
@@ -17,11 +16,12 @@ class QueueController extends Controller
     public function getList(){
         $user = Auth::user();
         if($user->hasRole('poli_umum')){
-            $kiosk = Kiosk::where('type', 'Poli Umum')->whereNotNull('reference_id')->whereIn('status', [1,2])->get();
+            $kiosks = Kiosk::where('type', 'Poli Umum')->whereNotNull('reference_id')->whereIn('status', [1,2])->get();
         } elseif ($user->hasRole('poli_anak')){
-            $kiosk = Kiosk::where('type', 'Poli Anak')->whereNotNull('reference_id')->whereIn('status', [1,2])->get();
+            $kiosks = Kiosk::where('type', 'Poli Anak')->whereNotNull('reference_id')->whereIn('status', [1,2])->get();
         }
-        $datatable = Datatables::of($kiosk);
+        $kiosk_final = $this->eachKiosK($kiosks, 'checkup');
+        $datatable = Datatables::of($kiosk_final);
         return $datatable->make(true);
     }
 }

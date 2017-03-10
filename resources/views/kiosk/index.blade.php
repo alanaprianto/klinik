@@ -18,7 +18,7 @@
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
 </head>
-<body class="white-bg"  style="background-image: url('css/patterns/shattered.png')">
+<body class="white-bg"  style="background-image: url('{{url('/css/patterns/shattered.png')}}')">
 <div class=" text-center">
                     <h1 style="margin-top: 100px">KIOSK </h1>
                     <h3>Terima kasih telah menggunakan fasilitas kiosk untuk melakukan pendaftaran pelayanan laboratorium.</h3>

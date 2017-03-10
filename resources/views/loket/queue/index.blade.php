@@ -1,8 +1,11 @@
 @extends('layouts.app')
+@section('css')
+
+@endsection
 @section('content')
     {{--BPJS--}}
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Antrian BPJS</h5>
@@ -28,19 +31,16 @@
                     <table class="table" id="table-queue-bpjs" data-user="{{Auth::user()->id}}">
                         <thead>
                         <tr>
-                            <td style="width: 50px">Antrian</td>
-                            <td>Status</td>
-                            <td>Action</td>
+                            <th>Antrian</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
-    {{--Umum--}}
-    <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Antrian Umum</h5>
@@ -66,19 +66,16 @@
                     <table class="table" id="table-queue-umum" data-user="{{Auth::user()->id}}">
                         <thead>
                         <tr>
-                            <td style="width: 50px">Antrian</td>
-                            <td>Status</td>
-                            <td>Action</td>
+                            <th>Antrian</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
-    {{--contractor--}}
-    <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Antrian Kontraktor</h5>
@@ -104,9 +101,9 @@
                     <table class="table" id="table-queue-contractor" data-user="{{Auth::user()->id}}">
                         <thead>
                         <tr>
-                            <td style="width: 50px">Antrian</td>
-                            <td>Status</td>
-                            <td>Action</td>
+                            <th>Antrian</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                     </table>
@@ -122,6 +119,7 @@
         var baseUrl = getUrl.protocol + "//" + getUrl.host + "/sounds/temp/";
         function fileAndPlay(sound) {
             var antrian = new Audio(baseUrl + sound);
+            antrian.playbackRate = 1.2;
             antrian.play();
         }
 

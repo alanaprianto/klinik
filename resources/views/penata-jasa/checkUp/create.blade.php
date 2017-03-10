@@ -102,7 +102,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($reference->medicalRecords as $index => $medicalRecord)
+                            @forelse($reference->medicalRecords->where('type', \Illuminate\Support\Facades\Auth::user()->roles()->first()->name) as $index => $medicalRecord)
                                 <tr class="{{$index == 0 ? 'clone' : ''}}">
                                     <input type="hidden" name="mr_id[]" value="{{$medicalRecord->id}}">
                                     <td>{{$index + 1}} @if($index != 0) <a href="javascript:;" type="button"
@@ -165,7 +165,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select name="poly" class="form-control poly" style="display: none" disabled>
+                                    <select name="poly" class="form-control poly" style="display: none" required disabled>
                                         <option></option>
                                         @foreach($polies as $poly)
                                             <option value="{{$poly->id}}">{{$poly->name}}</option>
@@ -245,7 +245,7 @@
                 })
             });
 
-            $(document).on('keyup', '.amount', function () {
+            $(document).on('keyup mouseup', '.amount', function () {
                 $this = $(this);
                 var row = $this.closest('tr');
                 var cost = row.find('td:eq(2)').text();
