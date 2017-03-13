@@ -470,8 +470,15 @@
                 {data: 'nik', name: 'nik'},
                 {data: 'full_name', name: 'full_name'},
                 {data: 'gender', name: 'gender'},
-                {data: 'staffjob[0].name', name: 'staffjob[0].name'},
-                {data: 'staffposition[0].name', name: 'staffposition[0].name'},
+                {data: 'staff_job.name', name: 'staff_job.name'},
+                {
+                    data: 'staff_position.name', name: 'staff_position.name', 'mRender': function (data) {
+                        if(!data){
+                            return '-';
+                        }
+                        return data;
+                }
+                },
 
                 {
                     "data": '',
@@ -481,7 +488,7 @@
                     "mRender": function (data, type, row) {
                         var edit = '<a href="/admin/staff/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
                         var remove = '<a href="javascript:;" class="btn-remove" data-id="' + row.id + '"><i class="fa fa-remove"></i></a>';
-                        return edit + ' | ' + remove;
+                        return edit;
                     }
                 }
             ]
@@ -515,8 +522,10 @@
                 }
             ],
             columns: [
-                {data: 'id', name: 'id', "orderable": false,
-                    "searchable": false,},
+                {
+                    data: 'id', name: 'id', "orderable": false,
+                    "searchable": false,
+                },
                 {data: 'register.patient.number_medical_record', name: 'register.patient.number_medical_record'},
                 {data: 'register.patient.full_name', name: 'register.patient.full_name'},
                 {
@@ -545,7 +554,7 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        var detail = '<a href="/penata-jasa/kunjungan/detail/'+row.id+'"><i class="fa fa-info"></i></a>';
+                        var detail = '<a href="/penata-jasa/kunjungan/detail/' + row.id + '"><i class="fa fa-info"></i></a>';
                         return detail;
                     }
                 }
@@ -589,7 +598,7 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        var detail = '<a href="/'+role+'/pengunjung/detail/'+row.id+'"><i class="fa fa-info"></i></a>';
+                        var detail = '<a href="/' + role + '/pengunjung/detail/' + row.id + '"><i class="fa fa-info"></i></a>';
                         return detail;
                     }
                 }
@@ -632,7 +641,7 @@
                     "defaultContent": '',
                     "mRender": function (data, type, row) {
                         var status;
-                        switch (row.full_payment_status){
+                        switch (row.full_payment_status) {
                             case "1" :
                                 status = '<span class="alert-warning">Belum Membayar / Ada Tunggakan</span>';
                                 break;
@@ -650,7 +659,7 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        var detail = '<a href="/kasir/pembayaran/detail/'+row.id+'"><i class="fa fa-dollar"></i></a>';
+                        var detail = '<a href="/kasir/pembayaran/detail/' + row.id + '"><i class="fa fa-dollar"></i></a>';
                         return detail;
                     }
                 }
@@ -692,7 +701,7 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        var edit = '<a href="/admin/jasa-dokter/edit/'+row.id+'"><i class="fa fa-edit"></i></a>';
+                        var edit = '<a href="/admin/jasa-dokter/edit/' + row.id + '"><i class="fa fa-edit"></i></a>';
                         return edit;
                     }
                 }
@@ -770,7 +779,7 @@
             orderNumber(reference);
         }
 
-        var visitor = rs.VisitorTable($('#table-visitor'), '/'+$('#table-visitor').data('role')+'/pengunjung-list', $('meta[name="csrf-token"]').attr('content'), $('#table-visitor').data('role'));
+        var visitor = rs.VisitorTable($('#table-visitor'), '/' + $('#table-visitor').data('role') + '/pengunjung-list', $('meta[name="csrf-token"]').attr('content'), $('#table-visitor').data('role'));
         if (visitor) {
             orderNumber(visitor);
         }
@@ -784,8 +793,6 @@
         if (doctorService) {
             orderNumber(doctorService);
         }
-
-
 
 
         //socket message

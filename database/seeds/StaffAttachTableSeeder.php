@@ -23,12 +23,5 @@ class StaffAttachTableSeeder extends Seeder
         \Illuminate\Support\Facades\DB::table('doctor_services')->insert(['cost' => 130000, 'allowance' => 1300000, 'staff_id' => $four->id]);
         \Illuminate\Support\Facades\DB::table('doctor_services')->insert(['cost' => 140000, 'allowance' => 1400000, 'staff_id' => $fifth->id]);
 
-
-        \Illuminate\Support\Facades\DB::table('staff_positions')->insert(['name' => 'Direktur', 'desc' => 'Direktur', 'staff_id' => $alan->id]);
-        \Illuminate\Support\Facades\DB::table('staff_positions')->insert(['name' => 'Wakil', 'desc' => 'Wakil Direktur', 'staff_id' => $syahril->id]);
-        \Illuminate\Support\Facades\DB::table('staff_positions')->insert(['name' => 'Staff Dokter', 'desc' => 'Dokter Biasa', 'staff_id' => $lucky->id]);
-        \Illuminate\Support\Facades\DB::table('staff_positions')->insert(['name' => 'Staff Dokter', 'desc' => 'Dokter Biasa', 'staff_id' => $four->id]);
-        \Illuminate\Support\Facades\DB::table('staff_positions')->insert(['name' => 'Staff Dokter', 'desc' => 'Dokter Biasa', 'staff_id' => $fifth->id]);
-
     }
 }

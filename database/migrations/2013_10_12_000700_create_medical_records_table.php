@@ -22,6 +22,10 @@ class CreateMedicalRecordsTable extends Migration
             $table->double('total_payment')->nullable();
             $table->text('notes')->nullable();
             $table->string('type')->nullable();
+            $table->text('anamnesa')->nullable();
+            $table->text('diagnosis')->nullable();
+            $table->text('explain')->nullable();
+            $table->text('therapy')->nullable();
             $table->integer('reference_id')->unsigned()->nullable();
             $table->foreign('reference_id')->references('id')->on('references')->onDelete('cascade');
             $table->integer('patient_id')->unsigned()->nullable();

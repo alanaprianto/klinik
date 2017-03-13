@@ -5,6 +5,11 @@
             table-layout: fixed;
             word-wrap: break-word;
         }
+
+        .hiddenRow {
+            padding: 0 !important;
+            background-color: #ececec;
+        }
     </style>
 @endsection
 
@@ -74,11 +79,55 @@
                                             <td>{{$index +1}}</td>
                                             <td>{{$payment->type == 'doctor_service' ? 'Jasa Dokter' : 'Pembayaran Jasa '.$payment->reference->poly->name}}</td>
                                             <td class="amount">{{$payment->total}}</td>
-                                            <td><input type="checkbox"
+                                            <td>
+                                                <input type="checkbox"
                                                        class="check-payment"
                                                        name="{{$payment->id}}" {{$payment->status == 2 ? 'checked disabled' : ''}}>Dibayar
+                                                @if($payment->reference)
+                                                    | <button type="button"
+                                                            class="btn btn-primary btn-sm accordion-toggle"
+                                                            data-toggle="collapse" data-target=".demo{{$index}}"><i
+                                                                class="fa fa-info"></i></button>
+                                                @endif
                                             </td>
                                         </tr>
+                                        @if($payment->reference)
+                                            <tr>
+                                                <th class="hiddenRow">
+                                                    <div class="accordian-body collapse demo{{$index}}"></div>
+                                                </th>
+                                                <th class="hiddenRow">
+                                                    <div class="accordian-body collapse demo{{$index}}">Nama Tindakan
+                                                    </div>
+                                                </th>
+                                                <th class="hiddenRow">
+                                                    <div class="accordian-body collapse demo{{$index}}">Jumlah Tindakan
+                                                        / Harga Per Tindakan
+                                                    </div>
+                                                </th>
+                                                <th class="hiddenRow">
+                                                    <div class="accordian-body collapse demo{{$index}}">Total</div>
+                                                </th>
+                                            </tr>
+                                            @foreach($payment->reference->medicalRecords as $index_mr => $medicalRecord)
+                                                <tr>
+                                                    <td class="hiddenRow">
+                                                        <div class="accordian-body collapse demo{{$index}}"></div>
+                                                    </td>
+                                                    <td class="hiddenRow">
+                                                        <div class="accordian-body collapse demo{{$index}}">{{$medicalRecord->service->name}}</div>
+                                                    </td>
+                                                    <td class="hiddenRow">
+                                                        <div class="accordian-body collapse demo{{$index}}">{{$medicalRecord->quantity}}
+                                                            x Tindakan / Rp.{{$medicalRecord->service->cost}}</div>
+                                                    </td>
+                                                    <td class="hiddenRow">
+                                                        <div class="accordian-body collapse demo{{$index}}">
+                                                            Rp.{{$medicalRecord->total_sum}}</div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                     @endforeach
                                     <tfoot>

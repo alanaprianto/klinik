@@ -34,7 +34,7 @@ class PaymentController extends Controller
 
     public function getPayment($id)
     {
-        $payments = Payment::with(['reference', 'reference.poly', 'register', 'register.patient'])->where('register_id', $id)->get();
+        $payments = Payment::with(['reference', 'reference.medicalRecords','reference.medicalRecords.service' ,'reference.poly', 'register', 'register.patient'])->where('register_id', $id)->get();
         $patient = Patient::whereHas('registers', function ($q) use ($id) {
             $q->where('id', $id);
         })->first();

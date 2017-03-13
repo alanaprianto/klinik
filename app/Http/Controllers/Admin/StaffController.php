@@ -21,11 +21,11 @@ class StaffController extends Controller
         $query = $request->query();
 
         $staffjobs = StaffJob::get();
-        $staffpositions = StaffPosition::get();
+        $staffpositions = StaffPosition::has('staff', '<', 1)->get();
 
         if (($param == 'edit') && $query['id']) {
 
-            $staff =Staff::with(['staffjobs','staffposition'])->find($query['id']);
+            $staff = Staff::with(['staffJob','staffposition'])->find($query['id']);
 
         }
         return view('staff.createEdit', compact(['staff','staffjobs','staffpositions']));
@@ -34,22 +34,18 @@ class StaffController extends Controller
     public function postStaff(Request $request)
     {
         $input = $request->except(['_token']);
-
-        $staffjob = StaffJob::find($input['staffjob']);
-        $staffposition = StaffPosition::find($input['staffposition']);
-
-        if (isset($input['staff_id'])) {
-            ;
+        if($input['staff_id']){
             $staff = Staff::find($input['staff_id']);
             $staff->update($input);
-        } else {
+        }else{
             $staff = Staff::create($input);
         }
+
         return redirect('admin/staff')->with('status', 'Success / Berhasil');
     }
 
     public function getList(){
-        $staff = Staff::get();
+        $staff = Staff::with(['staffJob', 'staffPosition'])->get();
         $datatable = Datatables::of($staff);
         return $datatable->make(true);
     }

@@ -49,10 +49,10 @@ class SettingController extends Controller
         return $datatable->make(true);
     }
 
-    public function deleteService(Request $request)
+    public function deleteSetting(Request $request)
     {
         $setting = Setting::find($request['id']);
         $setting->delete();
-        return redirect()->back()->with('status', 'Berhasil menghapus service');
+        return redirect()->back()->with('status', 'Berhasil menghapus setting');
     }
 }

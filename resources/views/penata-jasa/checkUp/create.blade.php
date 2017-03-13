@@ -5,8 +5,13 @@
             table-layout: fixed;
             word-wrap: break-word;
         }
-        table.table-condition tbody tr td{
-            border:none;
+
+        table.table-condition tbody tr td {
+            border: none;
+        }
+
+        span.select2-container {
+            z-index:10050;
         }
     </style>
 @endsection
@@ -17,22 +22,10 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Form Pemeriksaan</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#">Config option 1</a>
-                            </li>
-                            <li><a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
+                    <div class="text-right">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                            Medical Record Pasien
+                        </button>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -118,7 +111,8 @@
                                         </select>
                                     </td>
                                     <td class="cost">{{$medicalRecord->cost}}</td>
-                                    <td><input type="number" placeholder="jumlah" name="quantity[]" class="amount form-control"
+                                    <td><input type="number" placeholder="jumlah" name="quantity[]"
+                                               class="amount form-control"
                                                value="{{$medicalRecord->quantity}}">
                                     </td>
                                     <td class="total-amount">{{$medicalRecord->cost * $medicalRecord->quantity}}</td>
@@ -165,7 +159,8 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select name="poly" class="form-control poly" style="display: none" required disabled>
+                                    <select name="poly" class="form-control poly" style="display: none" required
+                                            disabled>
                                         <option></option>
                                         @foreach($polies as $poly)
                                             <option value="{{$poly->id}}">{{$poly->name}}</option>
@@ -190,6 +185,64 @@
             </div>
         </div>
     </div>
+
+
+    {{--modal--}}
+    <div class="modal fade" tabindex="-1" role="dialog" id="myModal" style="overflow:hidden;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel">Medical Record Pasien</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        {{csrf_field()}}
+                        <input type="hidden" name="reference_id" value="{{$reference->id}}">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Anamnesa</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="anamnesa"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Diagnosa</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="diagnosis"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Keterangan</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="explain"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Terapi/Resep</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="therapy"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">ICD10</label>
+                            <div class="col-sm-10">
+                                <select class=" idc10" name="idc10">
+                                    @foreach($idc10s as $idc10)
+                                        <option value="{{$idc10->id}}">{{$idc10->name}} - {{$idc10->desc}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
+                    <button type="button" class="btn btn-primary" id="btn-submit">Simpan</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 @endsection
 
 @section('scripts')
@@ -212,6 +265,9 @@
 
 
         $(document).ready(function () {
+            $('.idc10').select2({
+                dropdownParent: $("#myModal")
+            });
             $(document).on('click', '.btn-plus', function () {
                 var count_row = $('.service-table tbody').find('tr').length + 1;
                 var tr = $('.clone').clone(true);
@@ -287,11 +343,30 @@
             $('.condition').on('change', function () {
                 $this = $(this);
                 var value = $this.val();
-                if(value === "Dirujuk"){
+                if (value === "Dirujuk") {
                     $('.poly').prop('disabled', false).css('display', 'block');
-                } else{
+                } else {
                     $('.poly').css('display', 'none').prop('disabled', true);
                 }
+            });
+
+
+            $(document).on('click', '#btn-submit', function () {
+                $this = $(this);
+                $.ajax({
+                    url: '/penata-jasa/tambah/medical-record',
+                    data: $this.parent().prev().find('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.isSuccess) {
+
+                        } else {
+                            alert(data.message);
+                        }
+
+                        $('#myModal').modal('hide')
+                    }
+                })
             });
         });
     </script>

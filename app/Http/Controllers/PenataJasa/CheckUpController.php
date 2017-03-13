@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PenataJasa;
 
 use App\Http\Controllers\GeneralController;
+use App\Idc10;
 use App\Kiosk;
 use App\MedicalRecord;
 use App\Payment;
@@ -14,6 +15,7 @@ use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use League\Flysystem\Exception;
 use LRedis;
 
 class CheckUpController extends GeneralController
@@ -45,11 +47,12 @@ class CheckUpController extends GeneralController
         $reference = Reference::with(['register', 'register.patient', 'poly', 'poly.doctors', 'doctor', 'medicalRecords'])->find($id);
         $services = Service::get();
         $polies = Poly::get();
+        $idc10s = Idc10::get();
         $total_payment = 0;
         foreach ($reference->medicalRecords->where('type', Auth::user()->roles()->first()->name) as $medicalRecord) {
             $total_payment += $medicalRecord->quantity * $medicalRecord->cost;
         }
-        return view('checkUp.create', compact(['reference', 'services', 'total_payment', 'polies', 'id']));
+        return view('checkUp.create', compact(['reference', 'services', 'total_payment', 'polies', 'id', 'idc10s']));
     }
 
     public function getService(Request $request)
@@ -209,5 +212,20 @@ class CheckUpController extends GeneralController
         ]);
 
         return redirect('/penata-jasa/antrian')->with('status', 'Berhasil / Success');
+    }
+
+    public function postAjax(Request $request){
+        $message = [];
+        try{
+            $input = $request->except('_token');
+            $input['type'] = 'medical_record';
+            $reference = Reference::find($input['reference_id']);
+            $reference->medicalRecords()->create($input);
+            $message = ['isSuccess' => true, 'message' => 'Berhasil Menambah medical record'];
+        } catch (Exception $e){
+            $message = ['isSuccess' => false, 'message' => $e->getMessage()];
+        }
+
+        return $message;
     }
 }

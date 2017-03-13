@@ -16,7 +16,11 @@ class MedicalRecord extends Model
         'total_sum',
         'total_payment',
         'notes',
-        'type'
+        'type',
+        'anamnesa',
+        'diagnosis',
+        'explain',
+        'therapy'
 
     ];
 

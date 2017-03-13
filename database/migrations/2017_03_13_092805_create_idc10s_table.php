@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStaffPositionsTable extends Migration
+class CreateIdc10sTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateStaffPositionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('staff_positions', function (Blueprint $table) {
+        Schema::create('idc10s', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->text('desc');
-            $table->integer('staff_id')->unsigned()->nullable();
-            $table->foreign('staff_id')->references('id')->on('staff')->onDelete('cascade');
+            $table->string('name')->nullable();
+            $table->text('desc')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateStaffPositionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('staff_positions');
+        Schema::dropIfExists('idc10s');
     }
 }

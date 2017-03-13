@@ -23,7 +23,8 @@ class Staff extends Model
         'rt_rw',
         'phone_number',
         'last_education',
-        'staff_job_id'
+        'staff_job_id',
+        'staff_position_id'
     ];
 
     public function user(){
@@ -39,7 +40,7 @@ class Staff extends Model
     }
 
     public function staffPosition(){
-        return $this->hasOne('App\StaffPosition');
+        return $this->belongsTo('App\StaffPosition', 'staff_position_id', 'id');
     }
 
     public function register(){
@@ -67,7 +68,13 @@ class Staff extends Model
     public function setBirthAttribute($value)
     {
         if ($value) {
-            $this->attributes['birth'] = Carbon::createFromFormat('d/m/Y', $value);
+            $this->attributes['birth'] = Carbon::createFromFormat('m/d/Y', $value);
         }
+    }
+
+    public function getBirthAttribute($value)
+    {
+        $birth = Carbon::parse($value)->format('m/d/Y');
+        return $birth;
     }
 }

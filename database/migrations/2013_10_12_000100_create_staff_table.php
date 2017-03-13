@@ -37,6 +37,8 @@ class CreateStaffTable extends Migration
             $table->foreign('hospital_id')->references('id')->on('hospitals')->onDelete('cascade');
             $table->integer('staff_job_id')->unsigned()->nullable();
             $table->foreign('staff_job_id')->references('id')->on('staff_jobs')->onDelete('cascade');
+            $table->integer('staff_position_id')->unsigned()->nullable();
+            $table->foreign('staff_position_id')->references('id')->on('staff_positions')->onDelete('cascade');
             $table->timestamps();
         });
     }
