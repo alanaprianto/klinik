@@ -109,7 +109,7 @@
                                                     <div class="accordian-body collapse demo{{$index}}">Total</div>
                                                 </th>
                                             </tr>
-                                            @foreach($payment->reference->medicalRecords as $index_mr => $medicalRecord)
+                                            @foreach($payment->reference->medicalRecords->where('type', '!=', 'medical_record') as $index_mr => $medicalRecord)
                                                 <tr>
                                                     <td class="hiddenRow">
                                                         <div class="accordian-body collapse demo{{$index}}"></div>

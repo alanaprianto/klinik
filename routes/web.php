@@ -22,6 +22,10 @@ Route::get('/home', 'HomeController@index');
 Route::get('/kiosk', 'FrontController@getKiosk');
 Route::post('/kiosk/add', 'FrontController@postKiosk');
 
+Route::get('/print', function (){
+   return view('penata-jasa.checkUp.print');
+});
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'view.finder.admin', 'role:admin']], function (){
     Route::get('/', 'AdminController@index');
     Route::get('/user', 'UserController@Index');
@@ -111,6 +115,7 @@ Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middlewar
     Route::post('/periksa', 'CheckUpController@postCreate');
     Route::post('/select-service', 'CheckUpController@getService');
     Route::post('/tambah/medical-record', 'CheckUpController@postAjax');
+    Route::get('/print-letter', 'CheckUpController@printLetter');
 
     Route::get('/kunjungan', 'ReferenceController@index');
     Route::post('/kunjungan-list', 'ReferenceController@getList');

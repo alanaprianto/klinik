@@ -30,14 +30,14 @@ class StaffsTableSeeder extends Seeder
         $user_5 = \App\User::where('name', 'Kasir')->first();
 
         $job_dokter = \App\StaffJob::where('name', 'Dokter')->first();
-        $hospital  =  \App\Hospital::where('name', 'Rumah Sakit A')->first();
 
 
-        $alan = ['nik' => '11111', 'full_name' => 'Alan', 'gender' => 'male', 'staff_job_id' => $job_dokter->id, 'hospital_id' => $hospital->id, 'user_id' => $user_1->id, 'staff_position_id' => $direktur->id];
-        $syahril = ['nik' => '22222', 'full_name' => 'Syahril', 'gender' => 'male', 'staff_job_id' => $job_dokter->id, 'hospital_id' => $hospital->id, 'user_id' => $user_2->id, 'staff_position_id' => $wakil->id];
-        $lucky = ['nik' => '33333', 'full_name' => 'Lucky', 'gender' => 'male' , 'staff_job_id' => $job_dokter->id, 'hospital_id' => $hospital->id, 'user_id' => $user_3->id, 'staff_position_id' => $ketua_dokter_bedah->id];
-        $user_4 = ['nik' => '4444', 'full_name' => 'Empat', 'gender' => 'male' , 'staff_job_id' => $job_dokter->id, 'hospital_id' => $hospital->id, 'user_id' => $user_4->id, 'staff_position_id' => $ketua_UGD->id];
-        $user_5 = ['nik' => '5555', 'full_name' => 'Lima', 'gender' => 'male' , 'staff_job_id' => $job_dokter->id, 'hospital_id' => $hospital->id, 'user_id' => $user_5->id, 'staff_position_id' => $ketua_umum->id];
+
+        $alan = ['nik' => '11111', 'full_name' => 'Alan', 'gender' => 'male', 'staff_job_id' => $job_dokter->id, 'hospital_id' => 1, 'user_id' => $user_1->id, 'staff_position_id' => $direktur->id];
+        $syahril = ['nik' => '22222', 'full_name' => 'Syahril', 'gender' => 'male', 'staff_job_id' => $job_dokter->id, 'hospital_id' => 1, 'user_id' => $user_2->id, 'staff_position_id' => $wakil->id];
+        $lucky = ['nik' => '33333', 'full_name' => 'Lucky', 'gender' => 'male' , 'staff_job_id' => $job_dokter->id, 'hospital_id' => 1, 'user_id' => $user_3->id, 'staff_position_id' => $ketua_dokter_bedah->id];
+        $user_4 = ['nik' => '4444', 'full_name' => 'Empat', 'gender' => 'male' , 'staff_job_id' => $job_dokter->id, 'hospital_id' => 1, 'user_id' => $user_4->id, 'staff_position_id' => $ketua_UGD->id];
+        $user_5 = ['nik' => '5555', 'full_name' => 'Lima', 'gender' => 'male' , 'staff_job_id' => $job_dokter->id, 'hospital_id' => 1, 'user_id' => $user_5->id, 'staff_position_id' => $ketua_umum->id];
 
         \Illuminate\Support\Facades\DB::table('staff')->insert([$alan, $syahril, $lucky, $user_4, $user_5]);
     }

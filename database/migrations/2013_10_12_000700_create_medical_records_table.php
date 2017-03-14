@@ -26,6 +26,7 @@ class CreateMedicalRecordsTable extends Migration
             $table->text('diagnosis')->nullable();
             $table->text('explain')->nullable();
             $table->text('therapy')->nullable();
+            $table->longText('icd10')->nullable();
             $table->integer('reference_id')->unsigned()->nullable();
             $table->foreign('reference_id')->references('id')->on('references')->onDelete('cascade');
             $table->integer('patient_id')->unsigned()->nullable();

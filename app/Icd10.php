@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Idc10 extends Model
+class Icd10 extends Model
 {
     protected $fillable = [
-        'name',
+        'code',
         'desc'
     ];
 }

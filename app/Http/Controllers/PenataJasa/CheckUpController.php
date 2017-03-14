@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\PenataJasa;
 
 use App\Http\Controllers\GeneralController;
+use App\Icd10;
 use App\Idc10;
 use App\Kiosk;
 use App\MedicalRecord;
+use App\Patient;
 use App\Payment;
 use App\Poly;
 use App\Reference;
 use App\Service;
 use App\Staff;
+use Carbon\Carbon;
 use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,12 +50,12 @@ class CheckUpController extends GeneralController
         $reference = Reference::with(['register', 'register.patient', 'poly', 'poly.doctors', 'doctor', 'medicalRecords'])->find($id);
         $services = Service::get();
         $polies = Poly::get();
-        $idc10s = Idc10::get();
+        $icd10s = Icd10::get();
         $total_payment = 0;
         foreach ($reference->medicalRecords->where('type', Auth::user()->roles()->first()->name) as $medicalRecord) {
             $total_payment += $medicalRecord->quantity * $medicalRecord->cost;
         }
-        return view('checkUp.create', compact(['reference', 'services', 'total_payment', 'polies', 'id', 'idc10s']));
+        return view('checkUp.create', compact(['reference', 'services', 'total_payment', 'polies', 'id', 'icd10s']));
     }
 
     public function getService(Request $request)
@@ -219,6 +222,7 @@ class CheckUpController extends GeneralController
         try{
             $input = $request->except('_token');
             $input['type'] = 'medical_record';
+            $input['icd10'] = json_encode($input['icd10'], true);
             $reference = Reference::find($input['reference_id']);
             $reference->medicalRecords()->create($input);
             $message = ['isSuccess' => true, 'message' => 'Berhasil Menambah medical record'];
@@ -227,5 +231,14 @@ class CheckUpController extends GeneralController
         }
 
         return $message;
+    }
+
+    public function printLetter(Request $request){
+        $query = $request->query();
+        $sum_day = (strtotime($query['until']) - strtotime($query['from'])) / (60 * 60 * 24);
+        $patient = Patient::with('hospital')->find($query['patient_id']);
+        $now = Carbon::now()->format('d/m/Y');
+        $doctor = Staff::where('user_id', Auth::user()->id)->first();
+        return view('checkUp.print', compact('query', 'patient', 'now', 'sum_day', 'doctor'));
     }
 }

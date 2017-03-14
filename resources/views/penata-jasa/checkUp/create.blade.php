@@ -11,7 +11,33 @@
         }
 
         span.select2-container {
-            z-index:10050;
+            z-index: 10050;
+        }
+
+        .icd10 {
+            width: 400% !important;
+        }
+
+        .datepicker {
+            z-index: 10050 !important;
+        }
+
+        table.table-no-border {
+            table-layout: fixed;
+        }
+
+        table.table-no-border tbody tr td, table.table-no-border tbody tr th {
+            border: none;
+        }
+
+        .rs-border {
+            position: absolute;
+            border-style: solid;
+            border-width: 1px;
+            text-align: center;
+            font-family: arial;
+            font-size: 11px;
+            display: none;
         }
     </style>
 @endsection
@@ -23,6 +49,9 @@
                 <div class="ibox-title">
                     <h5>Form Pemeriksaan</h5>
                     <div class="text-right">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                data-target="#printModal"><i class="fa fa-print"></i> Surat Izin
+                        </button>
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
                             Medical Record Pasien
                         </button>
@@ -187,7 +216,7 @@
     </div>
 
 
-    {{--modal--}}
+    <!-- myModal -->
     <div class="modal fade" tabindex="-1" role="dialog" id="myModal" style="overflow:hidden;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -227,9 +256,9 @@
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">ICD10</label>
                             <div class="col-sm-10">
-                                <select class=" idc10" name="idc10">
-                                    @foreach($idc10s as $idc10)
-                                        <option value="{{$idc10->id}}">{{$idc10->name}} - {{$idc10->desc}}</option>
+                                <select class="icd10 form-control" name="icd10[]" multiple>
+                                    @foreach($icd10s as $icd10)
+                                        <option value="{{$icd10->code}}">{{$icd10->code}} - {{$icd10->desc}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -242,7 +271,72 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
+    <!-- printModal -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="printModal" style="overflow:hidden;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel">Print Surat Izin Sakit Pasien</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input type="hidden" name="patient_id" value="{{$reference->register->patient->id}}">
+                        <table class="table table-no-border">
+                            <tbody>
+                            <tr>
+                                <th width="30%">Nama</th>
+                                <td width="5%">:</td>
+                                <td>{{$reference->register->patient->full_name}}</td>
+                            </tr>
+                            <tr>
+                                <th>Umur</th>
+                                <td>:</td>
+                                <td>{{$reference->register->patient->age}}
+                                    <Tahun></Tahun>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Pekerjaan</th>
+                                <td>:</td>
+                                <td>{{$reference->register->patient->job}}
+                                    <Tahun></Tahun>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Alamat</th>
+                                <td>:</td>
+                                <td>{{$reference->register->patient->address}}
+                                    <Tahun></Tahun>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Dari / Sampai</th>
+                                <td>:</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input class="form-control datepicker datepicker-link-start" name="from">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control datepicker datepicker-link-end" name="until">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="btn-print">Print Surat</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
 @endsection
 
 @section('scripts')
@@ -263,9 +357,16 @@
             $('.sub-total').html(sum_amount);
         }
 
-
         $(document).ready(function () {
-            $('.idc10').select2({
+            $('.datepicker').datepicker({
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+
+            $('.icd10').select2({
                 dropdownParent: $("#myModal")
             });
             $(document).on('click', '.btn-plus', function () {
@@ -358,6 +459,7 @@
                     data: $this.parent().prev().find('form').serialize(),
                     type: 'POST',
                     success: function (data) {
+                        console.log(data);
                         if (data.isSuccess) {
 
                         } else {
@@ -368,6 +470,16 @@
                     }
                 })
             });
+
+            $(document).on('click', '#btn-print', function (e) {
+                e.preventDefault();
+                $this = $(this);
+                var form = $this.parent().prev().find('form').serialize();
+                var url = '/penata-jasa/print-letter?' + form
+                window.open(url);
+                $('#printModal').modal('hide')
+            });
+
         });
     </script>
 @endsection
