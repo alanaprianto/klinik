@@ -1,6 +1,12 @@
 @extends('layouts.app')
+
 @section('css')
 
+@endsection
+@section('breadcrumb')
+    <li class="active">
+        <strong>Antrian</strong>
+    </li>
 @endsection
 @section('content')
     {{--BPJS--}}
@@ -124,10 +130,24 @@
         }
 
         $(document).ready(function () {
-            $(document).on('click', '.btn-play', function () {
+            $(document).on('click', '.btn-play', function (e) {
+                e.preventDefault();
                 $this = $(this);
+                /*play sound*/
                 var sound = $this.data('sound');
-                fileAndPlay(sound)
+                var csrf = $('meta[name="csrf-token"]').attr('content');
+                var id = $this.data('id');
+                fileAndPlay(sound);
+
+                /*ajax update status*/
+                $.ajax({
+                    url:'/loket/antrian/update-status',
+                    data:{_token: csrf, id : id},
+                    type: 'POST',
+                    success: function (data) {
+                        console.log(data);
+                    }
+                })
             });
         })
     </script>

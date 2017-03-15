@@ -20,7 +20,7 @@ class PoliesTableSeeder extends Seeder
         $poli_tht = ['name' => 'Poli THT', 'desc' => 'Poli THT'];
         $poli_bedah = ['name' => 'Poli Bedah', 'desc' => 'Poli Bedah'];*/
 
-        \Illuminate\Support\Facades\DB::table('polies')->insert([$poli_umum, $poli_kebidanan, $poli_anak, $poli_gigi, $poli_penyakit_dalam, $poli_mata, $poli_tht, $poli_bedah]);
+        \Illuminate\Support\Facades\DB::table('polies')->insert([$poli_umum, $poli_anak]);
 
     }
 }

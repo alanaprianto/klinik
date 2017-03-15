@@ -46,10 +46,7 @@
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="{{url('/loket/profil') }}">Profile</a></li>
-                            <li><a href="{{url('') }}">Contacts</a></li>
                             <li><a href="{{url('') }}">Mailbox</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{{url('login') }}">Logout</a></li>
                         </ul>
                     </div>
                     <div class="logo-element">
@@ -79,13 +76,6 @@
                 <div class="navbar-header">
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
                     </a>
-                    <form role="search" class="navbar-form-custom"
-                          action="http://webapplayers.com/inspinia_admin-v2.1/search_results.html">
-                        <div class="form-group">
-                            <input type="text" placeholder="Search for something..." class="form-control"
-                                   name="top-search" id="top-search">
-                        </div>
-                    </form>
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
@@ -202,17 +192,12 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>Data Tables</h2>
+                <h2>Sim Klinik</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="index-2.html">Home</a>
+                        <a href="{{url('/loket')}}">Loket</a>
                     </li>
-                    <li>
-                        <a>Tables</a>
-                    </li>
-                    <li class="active">
-                        <strong>Data Tables</strong>
-                    </li>
+                    @yield('breadcrumb')
                 </ol>
             </div>
             <div class="col-lg-2">

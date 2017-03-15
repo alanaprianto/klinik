@@ -91,18 +91,13 @@
                                 <div class="form-group">
                                     <label for="role" class="col-md-4 control-label">Role</label>
                                     <div class="col-md-6">
-                                        <select id="role" name="role">
-
+                                        <select id="role" name="role" class="form-control">
                                             @foreach($roles as $role)
                                                 <option value="{{$role->id}}" {{$user && ($user->roles[0]->id == $role->id) ? 'selected' : ''}}>{{$role->display_name}}</option>
-                                                {{--<option value="{{$role->id}}">{{$role->display_name}}</option>--}}
                                             @endforeach
                                                 @if ($errors->has('role'))
-
-                                        <strong>{{ $errors->first('role') }}</strong>
-
+                                                    <strong>{{ $errors->first('role') }}</strong>
                                                 @endif
-
                                         </select>
                                     </div>
                                 </div>

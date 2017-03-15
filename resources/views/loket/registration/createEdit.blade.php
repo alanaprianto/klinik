@@ -17,6 +17,15 @@
     </style>
 @endsection
 
+@section('breadcrumb')
+    <li>
+        <a href="{{url('/loket/pendaftaran')}}">Pendaftaran</a>
+    </li>
+    <li class="active">
+        <strong>Tambah</strong>
+    </li>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-lg-12">

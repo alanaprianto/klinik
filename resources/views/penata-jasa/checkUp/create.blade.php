@@ -30,6 +30,10 @@
             border: none;
         }
 
+        table.table-info tbody tr td{
+            border: none;
+        }
+
         .rs-border {
             position: absolute;
             border-style: solid;
@@ -40,6 +44,12 @@
             display: none;
         }
     </style>
+@endsection
+
+@section('breadcrumb')
+    <li class="active">
+        <strong>Periksa</strong>
+    </li>
 @endsection
 
 @section('content')
@@ -63,7 +73,7 @@
                         <input type="hidden" name="reference_id" value="{{$reference->id}}">
                         <input type="hidden" name="remove_ids" id="remove-ids">
                         <input type="hidden" name="kiosk_id" value="{{$id}}">
-                        <table class="table">
+                        <table class="table table-info">
                             <tbody>
                             <tr>
                                 <td>No. Rm</td>

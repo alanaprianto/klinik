@@ -42,7 +42,7 @@ class RegistrationController extends GeneralController
         if ($kiosk_id) {
             $kiosk = Kiosk::find($kiosk_id);
             $kiosk->update([
-                'status' => 2,
+                'status' => 3,
                 'staff_id' => Auth::user()->id
             ]);
 

@@ -15,9 +15,10 @@ class GeneralController extends Controller
         $this_day = Carbon::now()->format('Y-m-d');
         $now = Carbon::now();
         $kiosk = Kiosk::where('type', $type)->whereDate('date', $this_day)->get()->last();
-        $queue = 1;
+        $queue = sprintf('%03d', 1);
         if($kiosk){
             $queue = $kiosk->queue_number + 1;
+            $queue = sprintf('%03d', $queue);
         }
         $input = [
             'queue_number' => $queue,

@@ -10,10 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'FrontController@welcome');
+Route::get('/display', 'FrontController@getDisplay');
 
 
 Auth::routes();
@@ -33,6 +31,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/user/modify', 'UserController@postUser');
     Route::post('/user/delete', 'UserController@deleteUser');
     Route::post('/user-list', 'UserController@getList');
+
+    Route::get('/roles', 'RoleController@index');
+    Route::get('/role/{param}', 'RoleController@getRole');
+    Route::post('/role/modify', 'RoleController@postRole');
+    Route::post('/role/delete', 'RoleController@deleteRole');
+    Route::post('/role-list', 'RoleController@getList');
 
 
     Route::get('/poli', 'poliController@Index');
@@ -76,6 +80,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('/jasa-dokter/edit/{id}', 'DoctorServiceController@getEdit');
     Route::post('/jasa-dokter/post', 'DoctorServiceController@postEdit');
 
+    Route::get('/rumah-sakit/profile', 'AdminController@getProfile');
+
     /*common used*/
     Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
     Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
@@ -86,6 +92,7 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
     Route::get('/', 'LoketController@index');
     Route::get('/antrian', 'QueueController@index');
     Route::post('/antrian-list', 'QueueController@getList');
+    Route::post('/antrian/update-status', 'QueueController@updateStatus');
 
     Route::get('/pendaftaran', 'RegistrationController@index');
     Route::get('/pendaftaran/tambah', 'RegistrationController@getCreateEdit');

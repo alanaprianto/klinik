@@ -65,6 +65,7 @@
                     <a href="{{url('/penata-jasa/kunjungan')}}"><i class="fa fa-th-large"></i> <span
                                 class="nav-label"> Kunjungan Pasien</span></a>
                 </li>
+
                 <li>
                     <a href="{{url('/penata-jasa/pengunjung')}}"><i class="fa fa-th-large"></i> <span
                                 class="nav-label"> Pengunjung</span></a>
@@ -203,17 +204,12 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>Data Tables</h2>
+                <h2>Sim Klinik</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="index-2.html">Home</a>
+                        <a href="{{url('/penata-jasa')}}">Penata Jasa</a>
                     </li>
-                    <li>
-                        <a>Tables</a>
-                    </li>
-                    <li class="active">
-                        <strong>Data Tables</strong>
-                    </li>
+                    @yield('breadcrumb')
                 </ol>
             </div>
             <div class="col-lg-2">

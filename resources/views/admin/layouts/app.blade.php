@@ -93,6 +93,14 @@
                                 class="nav-label"> User</span></a>
                 </li>
                 <li>
+                    <a href="{{url('/admin/roles')}}"><i class="fa fa-user"></i> <span
+                                class="nav-label"> Role</span></a>
+                </li>
+                <li>
+                    <a href="{{url('/admin/rumah-sakit/profile')}}"><i class="fa fa-user"></i> <span
+                                class="nav-label"> Profil Rumah Sakit</span></a>
+                </li>
+                <li>
                     <a href="{{url('/admin/pengunjung')}}"><i class="fa fa-user"></i> <span
                                 class="nav-label"> Pengunjung</span></a>
                 </li>

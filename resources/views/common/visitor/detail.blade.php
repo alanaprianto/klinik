@@ -7,6 +7,14 @@
         }
     </style>
 @endsection
+@section('breadcrumb')
+    <li>
+        <a href="{{url('/loket/pengunjung')}}">Pengunjung</a>
+    </li>
+    <li class="active">
+        <strong>Tambah</strong>
+    </li>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12">
@@ -76,13 +84,13 @@
                                 </thead>
                                 <tbody>
                                 @forelse($patient->registers as $index => $register)
-                                    <tr data-toggle="collapse" data-target=".demo{{$index}}" class="accordion-toggle">
+                                    <tr>
                                         <td>{{$index + 1}}</td>
                                         <td>{{$register->register_number}}</td>
                                         <td>{{$register->created_at}}</td>
                                         <td>{{$register->service_type}}</td>
                                         <td>
-                                            <button class="accordion-toggle"><i class="fa fa-eye"></i></button>
+                                            <button  data-toggle="collapse" data-target=".demo{{$index}}" class="accordion-toggle"><i class="fa fa-eye"></i></button>
                                         </td>
                                     </tr>
                                     <tr>
