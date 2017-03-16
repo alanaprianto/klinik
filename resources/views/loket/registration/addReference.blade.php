@@ -8,7 +8,19 @@
         .col-md-6 dl dt {
             text-align: left;
         }
+
+        table.table-info tbody tr td, table.table-info tbody tr th {
+            border: none;
+        }
     </style>
+@endsection
+@section('breadcrumb')
+    <li>
+        <a href="{{url('/loket/pendaftaran')}}">Pendaftaran</a>
+    </li>
+    <li class="active">
+        <strong>Tambah Rujukan</strong>
+    </li>
 @endsection
 @section('content')
     <div class="row">
@@ -27,6 +39,7 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
+<<<<<<< HEAD
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
@@ -72,15 +85,99 @@
                                     </dl>
                                 </div>
                             </div>
+=======
+                        <div class="col-md-6">
+                            <h3>Biodata Pasien</h3>
+                            <table class="table table-info">
+                                <tbody>
+                                <tr>
+                                    <th>No RM</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->number_medical_record}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nama Lengkap</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->full_name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>TTL</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->place}}, {{$register->patient->birth}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Umur</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->age}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Jenis Kelamin</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->gender == 'male' ? 'Laki-laki' : 'Perempuam'}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Alamat</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->address}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Agama</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->religion}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Provinsi / Kota</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->province}} / {{$register->patient->city}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Kecamatan</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->district}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Kelurahan</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->sub_district}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nama Dusun /RT/RW</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->rt_rw}}</td>
+                                </tr>
+                                <tr>
+                                    <th>No Telp</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->phone_number}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Pendidikan</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->last_education}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Pekerjaan</th>
+                                    <td>:</td>
+                                    <td>{{$register->patient->job}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nama Penanggung Jawab</th>
+                                    <td>:</td>
+                                    <td>{{$register->responsible_person}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status Penanggung Jawab</th>
+                                    <td>:</td>
+                                    <td>{{$register->responsible_person_state}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+>>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
                         </div>
-                    </div>
-                    <hr/>
-                    <div class="row">
                         <div class="col-md-6">
                             @foreach($register->references as $index => $reference)
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <hr/>
                                         <h3>Rujukan {{$index+1}}</h3>
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">Klinik</label>
@@ -117,8 +214,8 @@
                                     </div>
                                 </div>
                             @endforeach
-                        </div>
-                        <div class="col-md-6">
+
+                            <hr>
                             <h3>Tambah Rujukan </h3>
                             <form method="post" class="form-horizontal" action="/loket/pendaftaran/tambah-rujukan">
                                 {{csrf_field()}}
@@ -129,7 +226,7 @@
                                         <select class="form-control m-b" name="poly" id="clinic">
                                             <option>-</option>
 
-                                        @foreach($polies as $poly)
+                                            @foreach($polies as $poly)
                                                 <option value="{{$poly->id}}">{{$poly->name}}</option>
                                             @endforeach
                                         </select>
@@ -163,7 +260,7 @@
                 $.ajax({
                     url: '/loket/pendaftaran/pilih-poli',
                     type: 'POST',
-                    data: {_token: $('meta[name="csrf-token"]').attr('content'), id : $this.val()},
+                    data: {_token: $('meta[name="csrf-token"]').attr('content'), id: $this.val()},
                     success: function (data) {
                         var respone = JSON.parse(data.data);
                         $('#doctors').html('');

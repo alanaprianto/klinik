@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('css')
 @endsection
+@section('breadcrumb')
+    <li class="active">
+        <strong>Pendaftaran</strong>
+    </li>
+@endsection
 
 @section('content')
     <div class="row">

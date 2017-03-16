@@ -44,7 +44,7 @@
             $(document).on('click', '.btn-remove', function () {
                 $this = $(this);
                 var $id = $this.data('id');
-                if (confirm('Apakah anda yakin akan menghapus postingan ini?')) {
+                if (confirm('Apakah anda yakin akan menghapus settingan ini?')) {
                     var $form = $('<form />');
                     $form.attr('action', '/admin/setting/delete');
                     $form.attr('method', 'post');

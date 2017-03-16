@@ -34,7 +34,7 @@
             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                 <input id="username" type="text" class="form-control" name="username" value="{{ old('email') }}" required autofocus placeholder="username">
                 @if ($errors->has('username'))
-                    <span class="help-block">
+                            <span class="help-block">
                                         <strong>{{ $errors->first('username') }}</strong>
                                     </span>
                 @endif

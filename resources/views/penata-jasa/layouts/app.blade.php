@@ -27,6 +27,7 @@
     <link href="{{asset('css/buttons.dataTables.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/jquery.timepicker.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/select2.min.css')}}" rel="stylesheet">
     @yield('css')
 </head>
 
@@ -59,6 +60,15 @@
                 <li>
                     <a href="{{url('/penata-jasa/antrian')}}"><i class="fa fa-th-large"></i> <span
                                 class="nav-label"> Antrian</span></a>
+                </li>
+                <li>
+                    <a href="{{url('/penata-jasa/kunjungan')}}"><i class="fa fa-th-large"></i> <span
+                                class="nav-label"> Kunjungan Pasien</span></a>
+                </li>
+
+                <li>
+                    <a href="{{url('/penata-jasa/pengunjung')}}"><i class="fa fa-th-large"></i> <span
+                                class="nav-label"> Pengunjung</span></a>
                 </li>
             </ul>
 
@@ -194,17 +204,12 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>Data Tables</h2>
+                <h2>Sim Klinik</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="index-2.html">Home</a>
+                        <a href="{{url('/penata-jasa')}}">Penata Jasa</a>
                     </li>
-                    <li>
-                        <a>Tables</a>
-                    </li>
-                    <li class="active">
-                        <strong>Data Tables</strong>
-                    </li>
+                    @yield('breadcrumb')
                 </ol>
             </div>
             <div class="col-lg-2">
@@ -367,6 +372,7 @@
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="{{asset('js/socket.io.js')}}"></script>
 <script type="text/javascript" src="{{'/js/table.js'}}"></script>
+<script type="text/javascript" src="{{'/js/select2.full.min.js'}}"></script>
 @yield('scripts')
 </body>
 </html>

@@ -43,7 +43,8 @@
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong
                                             class="font-bold">{{ Auth::user()->name }}</strong>
-                             </span> <span class="text-muted text-xs block">{{ Auth::user()->name }} <b class="caret"></b></span> </span>
+                             </span> <span class="text-muted text-xs block">{{ Auth::user()->name }} <b
+                                            class="caret"></b></span> </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="{{url('') }}">Profile</a></li>
@@ -82,11 +83,27 @@
                             <a href="{{url('/admin/staffposition')}}"><i class="fa fa-user-md"></i> <span
                                         class="nav-label"> Staff Position </span></a>
                         </li>
+                        <li>
+                            <a href="{{url('/admin/jasa-dokter')}}"><i class="fa fa-user-md"></i> <span
+                                        class="nav-label"> Jasa Dokter </span></a>
+                        </li>
                     </ul>
                 </li>
                 <li>
                     <a href="{{url('/admin/user')}}"><i class="fa fa-user"></i> <span
                                 class="nav-label"> User</span></a>
+                </li>
+                <li>
+                    <a href="{{url('/admin/roles')}}"><i class="fa fa-user"></i> <span
+                                class="nav-label"> Role</span></a>
+                </li>
+                <li>
+                    <a href="{{url('/admin/rumah-sakit/profile')}}"><i class="fa fa-user"></i> <span
+                                class="nav-label"> Profil Rumah Sakit</span></a>
+                </li>
+                <li>
+                    <a href="{{url('/admin/pengunjung')}}"><i class="fa fa-user"></i> <span
+                                class="nav-label"> Pengunjung</span></a>
                 </li>
             </ul>
 
@@ -254,7 +271,6 @@
 </div>
 
 
-
 <!-- Mainly scripts -->
 <script src="{{asset('js/jquery-2.2.4.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
@@ -292,6 +308,7 @@
     });
 </script>
 
+<<<<<<< HEAD
 {{--<script>--}}
     {{--$(document).ready(function () {--}}
         {{--/*        setTimeout(function () {--}}
@@ -384,6 +401,8 @@
     {{--};--}}
 
 {{--</script>--}}
+=======
+>>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
 <script type="text/javascript" src="{{'/js/datatables.min.js'}}"></script>
 <script type="text/javascript" src="{{'/js/jquery.dataTables.js'}}"></script>
 <script type="text/javascript" src="{{'/js/dataTables.buttons.min.js'}}"></script>

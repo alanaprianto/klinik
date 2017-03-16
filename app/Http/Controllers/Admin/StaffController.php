@@ -22,10 +22,16 @@ class StaffController extends Controller
         $staff = '';
         $query = $request->query();
         $staffjobs = StaffJob::get();
-        $staffpositions = StaffPosition::get();
+        $staffpositions = StaffPosition::has('staff', '<', 1)->get();
 
         if (($param == 'edit') && $query['id']) {
+<<<<<<< HEAD
             $staff =Staff::with(['staffJob','staffPosition'])->find($query['id']);
+=======
+
+            $staff = Staff::with(['staffJob','staffposition'])->find($query['id']);
+
+>>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
         }
         return view('staff.createEdit', compact(['staff','staffjobs','staffpositions']));
     }
@@ -33,6 +39,7 @@ class StaffController extends Controller
     public function postStaff(Request $request)
     {
         $input = $request->except(['_token']);
+<<<<<<< HEAD
         $hospital=  DB::table('hospitals')->Where('name','Rumah Sakit A')->first();
         $staffjob = StaffJob::find($input['staffjob']);
         $staffposition = StaffPosition::find($input['staffposition']);
@@ -41,20 +48,28 @@ class StaffController extends Controller
 
         if (isset($input['staff_id'])) {
 
+=======
+        if($input['staff_id']){
+>>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
             $staff = Staff::find($input['staff_id']);
 
             $staff->update($input);
+<<<<<<< HEAD
 
         } else {
+=======
+        }else{
+>>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
             $staff = Staff::create($input);
             $staff->attachStaffjob($staffjob);
             $staff->attachStaffposition($staffposition);
         }
+
         return redirect('admin/staff')->with('status', 'Success / Berhasil');
     }
 
     public function getList(){
-        $staff = Staff::get();
+        $staff = Staff::with(['staffJob', 'staffPosition'])->get();
         $datatable = Datatables::of($staff);
         return $datatable->make(true);
     }

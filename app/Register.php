@@ -34,6 +34,10 @@ class Register extends Model
         return $this->hasMany('App\Reference');
     }
 
+    public function payments(){
+        return $this->hasMany('App\Payment');
+    }
+
     public function setTimeAttendAttribute($value)
     {
         if ($value) {

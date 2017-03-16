@@ -17,8 +17,6 @@ class CreateStaffPositionsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('desc');
-            $table->integer('staff_id')->unsigned()->nullable();
-            $table->foreign('staff_id')->references('id')->on('staff')->onDelete('cascade');
             $table->timestamps();
         });
     }

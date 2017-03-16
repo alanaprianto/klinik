@@ -52,5 +52,7 @@ wajib install node js di lokal untuk install dan jalankan socket.ionya
 jalankan file di public/js/server.js
 # node server.js
 
-jalankan redis portable ada di folder public. extract dulu
+jalankan redis portable ada di folder public/requipment extract dulu
 jalankan yang redis-server.exe
+
+semua kebutuhan ada di public/requipment

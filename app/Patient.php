@@ -32,7 +32,7 @@ class Patient extends Model
         return $this->belongsTo('App\Hospital', 'hospital_id', 'id');
     }
 
-    public function register(){
+    public function registers(){
         return $this->hasMany('App\Register');
     }
 

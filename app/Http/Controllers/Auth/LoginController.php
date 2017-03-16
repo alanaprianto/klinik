@@ -46,14 +46,14 @@ class LoginController extends Controller
     public function redirectPath()
     {
         $user = Auth::user();
-        if($user->hasRole('admin')){
+        if ($user->hasRole('admin')) {
             return 'admin';
-        } elseif ($user->hasRole('loket')){
+        } elseif ($user->hasRole('loket')) {
             return 'loket';
-        } elseif ($user->hasRole('penata-jasa')){
-            return 'penata-jasa';
-        } elseif ($user->hasRole('kasir')){
+        } elseif ($user->hasRole('kasir')) {
             return 'kasir';
+        } else {
+            return 'penata-jasa';
         }
 
     }

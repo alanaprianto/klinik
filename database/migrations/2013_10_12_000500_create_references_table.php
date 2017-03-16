@@ -17,6 +17,8 @@ class CreateReferencesTable extends Migration
             $table->increments('id');
             $table->integer('status')->nullable();
             $table->text('notes')->nullable();
+            $table->boolean('is_checked')->default(0);
+            $table->string('final_result')->nullable();
             $table->integer('register_id')->unsigned()->nullable();
             $table->foreign('register_id')->references('id')->on('registers')->onDelete('cascade');
             $table->integer('poly_id')->unsigned()->nullable();

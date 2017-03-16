@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLocketsTable extends Migration
+class CreateIcd10sTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateLocketsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lockets', function (Blueprint $table) {
+        Schema::create('icd10s', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code')->unique()->nullable();
+            $table->text('desc')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateLocketsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lockets');
+        Schema::dropIfExists('icd10s');
     }
 }

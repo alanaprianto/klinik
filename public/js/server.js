@@ -12,10 +12,13 @@ io.on('connection', function (socket) {
     console.log("new client connected");
     var redisClient = redis.createClient();
     redisClient.subscribe('message');
+    redisClient.subscribe('update-front');
 
     redisClient.on("message", function(channel, message) {
-        console.log("mew message in queue "+ message + "channel");
         socket.emit(channel, message);
+    });
+    redisClient.on("update-front", function(channel, update) {
+        socket.emit(channel, update);
     });
 
     socket.on('disconnect', function() {

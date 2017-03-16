@@ -1,11 +1,10 @@
 @extends('layouts.app')
 @section('content')
-    {{--BPJS--}}
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Antrian BPJS</h5>
+                    <h5>Antrian Poli</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -46,6 +45,7 @@
         var baseUrl = getUrl.protocol + "//" + getUrl.host + "/sounds/temp/";
         function fileAndPlay(sound) {
             var antrian = new Audio(baseUrl + sound);
+            antrian.playbackRate = 1.2;
             antrian.play();
         }
 

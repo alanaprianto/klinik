@@ -1,11 +1,15 @@
 @extends('layouts.app')
+@section('breadcrumb')
+    <li class="active">
+        <strong>Pengunjung</strong>
+    </li>
+@endsection
 @section('content')
-    {{--BPJS--}}
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Antrian BPJS</h5>
+                    <h5>Pengunjung</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -25,12 +29,13 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <table class="table" id="table-polies" data-user="{{Auth::user()->id}}" data-poly="poly-umum">
+                    <table class="table" id="table-visitor" data-role="{{$role}}">
                         <thead>
                         <tr>
-                            <td style="width: 50px">Antrian</td>
-                            <td>Status</td>
-                            <td>Action</td>
+                            <th>No</th>
+                            <th>No Medical Record</th>
+                            <th>Nama Pasien</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                     </table>
@@ -41,20 +46,4 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript">
-        var getUrl = window.location;
-        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/sounds/temp/";
-        function fileAndPlay(sound) {
-            var antrian = new Audio(baseUrl + sound);
-            antrian.play();
-        }
-
-        $(document).ready(function () {
-            $(document).on('click', '.btn-play', function () {
-                $this = $(this);
-                var sound = $this.data('sound');
-                fileAndPlay(sound)
-            });
-        })
-    </script>
 @endsection

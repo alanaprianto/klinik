@@ -10,10 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'FrontController@welcome');
+Route::get('/display', 'FrontController@getDisplay');
 
 
 Auth::routes();
@@ -22,6 +20,10 @@ Route::get('/home', 'HomeController@index');
 Route::get('/kiosk', 'FrontController@getKiosk');
 Route::post('/kiosk/add', 'FrontController@postKiosk');
 
+Route::get('/print', function (){
+   return view('penata-jasa.checkUp.print');
+});
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'view.finder.admin', 'role:admin']], function (){
     Route::get('/', 'AdminController@index');
     Route::get('/user', 'UserController@Index');
@@ -29,6 +31,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/user/modify', 'UserController@postUser');
     Route::post('/user/delete', 'UserController@deleteUser');
     Route::post('/user-list', 'UserController@getList');
+
+    Route::get('/roles', 'RoleController@index');
+    Route::get('/role/{param}', 'RoleController@getRole');
+    Route::post('/role/modify', 'RoleController@postRole');
+    Route::post('/role/delete', 'RoleController@deleteRole');
+    Route::post('/role-list', 'RoleController@getList');
 
 
     Route::get('/poli', 'poliController@Index');
@@ -67,13 +75,24 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/setting/delete', 'SettingController@deleteSetting');
     Route::post('/setting-list', 'SettingController@getList');
 
+    Route::get('/jasa-dokter', 'DoctorServiceController@index');
+    Route::post('/jasa-dokter-list', 'DoctorServiceController@getList');
+    Route::get('/jasa-dokter/edit/{id}', 'DoctorServiceController@getEdit');
+    Route::post('/jasa-dokter/post', 'DoctorServiceController@postEdit');
 
+    Route::get('/rumah-sakit/profile', 'AdminController@getProfile');
+
+    /*common used*/
+    Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
+    Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
+    Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
 });
 
 Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['auth', 'view.finder.loket', 'role:loket']], function (){
     Route::get('/', 'LoketController@index');
     Route::get('/antrian', 'QueueController@index');
     Route::post('/antrian-list', 'QueueController@getList');
+    Route::post('/antrian/update-status', 'QueueController@updateStatus');
 
     Route::get('/pendaftaran', 'RegistrationController@index');
     Route::get('/pendaftaran/tambah', 'RegistrationController@getCreateEdit');
@@ -85,9 +104,16 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
     Route::post('/check-medical-report', 'RegistrationController@getInfoMedicalReport');
     Route::post('/pendaftaran/pilih-poli','RegistrationController@selectPoly');
 
+    /*common used*/
+    Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
+    Route::post('/profil', '\App\Http\Controllers\ProfileController@postUpdate');
+    Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
+    Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
+    Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
+
 });
 
-Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:penata-jasa']], function (){
+Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:poli_umum|poli_anak']], function (){
     Route::get('/', 'PenataJasaController@index');
     Route::get('/antrian', 'QueueController@index');
     Route::post('/antrian-list', 'QueueController@getList');
@@ -95,8 +121,22 @@ Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middlewar
     Route::get('/periksa/{id}', 'CheckUpController@getCreate');
     Route::post('/periksa', 'CheckUpController@postCreate');
     Route::post('/select-service', 'CheckUpController@getService');
+    Route::post('/tambah/medical-record', 'CheckUpController@postAjax');
+    Route::get('/print-letter', 'CheckUpController@printLetter');
+
+    Route::get('/kunjungan', 'ReferenceController@index');
+    Route::post('/kunjungan-list', 'ReferenceController@getList');
+    Route::get('/kunjungan/detail/{id}', 'ReferenceController@getDetail');
+
+    Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
+    Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
+    Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
 });
 
 Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['auth', 'view.finder.kasir', 'role:kasir']], function (){
     Route::get('/', 'KasirController@index');
+    Route::get('/pembayaran', 'PaymentController@index');
+    Route::post('/pembayaran-list', 'PaymentController@getList');
+    Route::get('/pembayaran/detail/{id}', 'PaymentController@getPayment');
+    Route::post('/pembayaran', 'PaymentController@postPayment');
 });

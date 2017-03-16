@@ -42,7 +42,6 @@ class UserController extends Controller
         $role = Role::find($input['role']);
 
         if (isset($input['user_id'])) {
-            ;
             $user = User::find($input['user_id']);
             $user->update($input);
         } else {
