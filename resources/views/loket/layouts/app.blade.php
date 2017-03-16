@@ -65,6 +65,10 @@
                     <a href="{{url('/loket/pengunjung')}}"><i class="fa fa-th-large"></i> <span
                                 class="nav-label"> Pengunjung</span></a>
                 </li>
+                <li>
+                    <a href="{{url('/loket/profil')}}"><i class="fa fa-th-large"></i> <span
+                                class="nav-label"> Profil</span></a>
+                </li>
             </ul>
 
         </div>

@@ -81,6 +81,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/jasa-dokter/post', 'DoctorServiceController@postEdit');
 
     Route::get('/rumah-sakit/profile', 'AdminController@getProfile');
+    Route::post('/rumah-sakit/profil', 'AdminController@postProfile');
 
     /*common used*/
     Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
