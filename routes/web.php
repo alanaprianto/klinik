@@ -83,6 +83,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('/rumah-sakit/profile', 'AdminController@getProfile');
 
     /*common used*/
+    Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
+    Route::post('/profil', '\App\Http\Controllers\ProfileController@postUpdate');
     Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
     Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
     Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
@@ -128,6 +130,9 @@ Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middlewar
     Route::post('/kunjungan-list', 'ReferenceController@getList');
     Route::get('/kunjungan/detail/{id}', 'ReferenceController@getDetail');
 
+    /*common used*/
+    Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
+    Route::post('/profil', '\App\Http\Controllers\ProfileController@postUpdate');
     Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
     Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
     Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
@@ -139,4 +144,11 @@ Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['aut
     Route::post('/pembayaran-list', 'PaymentController@getList');
     Route::get('/pembayaran/detail/{id}', 'PaymentController@getPayment');
     Route::post('/pembayaran', 'PaymentController@postPayment');
+
+    /*common used*/
+    Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
+    Route::post('/profil', '\App\Http\Controllers\ProfileController@postUpdate');
+    Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
+    Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
+    Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
 });

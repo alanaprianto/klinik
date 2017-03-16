@@ -163,9 +163,7 @@
                     "orderable": false,
                     "searchable": false
                 },
-                {data: 'name', name: 'name'},
                 {data: 'email', name: 'email'},
-                // {data: 'display_name', name: 'display_name'},
                 {
                     data: 'roles[0].display_name', name: 'roles[0].display_name'
                 },

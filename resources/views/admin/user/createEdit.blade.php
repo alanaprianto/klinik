@@ -26,20 +26,6 @@
                                 @if($user)
                                     <input type="hidden" name="user_id" value="{{$user->id}}">
                                 @endif
-
-                                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                    <label for="user" class="col-md-4 control-label">User</label>
-                                    <div class="col-md-6">
-                                        <input id="name" type="text" class="form-control" name="name"
-                                               value="{{ $user ? $user->name :''}}" placeholder="Name" required autofocus>
-
-                                        @if ($errors->has('name'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>
                                 <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                                     <label for="user" class="col-md-4 control-label">User Name </label>
                                     <div class="col-md-6">

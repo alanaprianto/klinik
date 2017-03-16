@@ -32,13 +32,13 @@ class UserController extends Controller
 
     public function postUser(Request $request)
     {
-
         $this->validate($request, [
-            'name' => 'required|max:255',
+            'username' => 'required|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
         $input = $request->except(['_token']);
+        $input['password'] = bcrypt($input['password']);
         $role = Role::find($input['role']);
 
         if (isset($input['user_id'])) {

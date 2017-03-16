@@ -24,7 +24,9 @@ class Staff extends Model
         'phone_number',
         'last_education',
         'staff_job_id',
-        'staff_position_id'
+        'staff_position_id',
+        'image_profile',
+        'user_id'
     ];
 
     public function user(){
