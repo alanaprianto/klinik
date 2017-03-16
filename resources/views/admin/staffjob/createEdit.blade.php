@@ -16,9 +16,9 @@
                     <div class="ibox-content">
                         <div class="panel-body">
                             <form class="form-horizontal" role="form" method="POST"
-                                  action="{{url('/admin/staffjob/modify')}}"
-                                  enctype="multipart/form-data">
-                                {{ csrf_field() }}
+                                                        action="{{url('/admin/staffjob/modify')}}"
+                                                        enctype="multipart/form-data">
+                                    {{ csrf_field() }}
                                 @if($staffjob)
                                     <input type="hidden" name="staffjob_id" value="{{$staffjob->id}}">
                                 @endif

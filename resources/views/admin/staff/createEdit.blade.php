@@ -15,6 +15,7 @@
             float: right;
         }
     </style>
+
 @endsection
 
 @section('content')
@@ -32,30 +33,46 @@
                         </a>
                     </div>
                     <div class="ibox-content">
+                        <div class="panel-body">
+                            <form class="form-horizontal" role="form" method="POST"
+                                  action="{{url('/admin/staff/modify')}}"
+                                  enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                @if($staff)
+                                    <input type="hidden" name="staff" value="{{$staff->id}}">
+                                @endif
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">NIK</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="nik" value="{{ $staff ? $staff->nik :''}}">
+
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Nama Lengkap</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="full_name">
+                                        <input type="text" class="form-control" name="full_name" value="{{ $staff ? $staff->full_name :''}}">
+
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">TTL</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" placeholder="Tempat" name="place"></div>
+                                        <input type="text" class="form-control" placeholder="Tempat" name="place"  value="{{ $staff ? $staff->place :''}}"></div>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control date-1" name="birth">
+                                        <input type="text" class="form-control date-1" name="birth"  value="{{ $staff ? $staff->birth :''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Umur</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="age">
+                                        <input type="text" class="form-control" name="age" value="{{ $staff ? $staff->age :''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Jenis Kelamin</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control m-b" name="gender">
+                                        <select class="form-control m-b" name="gender" value="{{ $staff ? $staff->gender :''}}">
                                             @foreach(getGenders() as $gender)
                                                 <option value="{{$gender}}">{{$gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</option>
                                             @endforeach
@@ -65,13 +82,13 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Alamat</label>
                                     <div class="col-sm-8">
-                                        <textarea class="form-control" name="address"></textarea>
+                                        <textarea class="form-control" name="address" value="{{ $staff ? $staff->address :''}}"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Agama</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control m-b" name="religion">
+                                        <select class="form-control m-b" name="religion" value="{{ $staff ? $staff->religion :''}}">
                                             @foreach(getReligions() as $religion)
                                                 <option value="{{$religion}}">{{$religion}}</option>
                                             @endforeach
@@ -81,14 +98,14 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Provinsi / Kota</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control m-b" name="province" id="province">
+                                        <select class="form-control m-b" name="province" id="province" value="{{ $staff ? $staff->province :''}}">
                                             @foreach(getProvinceCities() as $province => $arrayCities)
                                                 <option value="{{$province}}">{{$province}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        <select class="form-control m-b" name="city" id="city">
+                                        <select class="form-control m-b" name="city" id="city" value="{{ $staff ? $staff->city :''}}">
                                             <option>-</option>
                                         </select>
                                     </div>
@@ -96,30 +113,30 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Kecamatan</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="district">
+                                        <input type="text" class="form-control" name="district" value="{{ $staff ? $staff->district :''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Kelurahan</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="sub_district">
+                                        <input type="text" class="form-control" name="sub_district" value="{{ $staff ? $staff->sub_district :''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Nama Dusun /RT/RW</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="rt_rw">
+                                        <input type="text" class="form-control" name="rt_rw" value="{{ $staff ? $staff->rt_rw :''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">No Telp</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="phone_number">
+                                        <input type="text" class="form-control" name="phone_number" value="{{ $staff ? $staff->phone_number :''}}">
                                     </div>
                                 </div>
                                 <div class="form-group"><label class="col-sm-4 control-label">Pendidikan</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control m-b" name="last_education">
+                                        <select class="form-control m-b" name="last_education"  value="{{ $staff ? $staff->last_education :''}}">
                                             @foreach(getEducations() as $education)
                                                 <option value="{{$education}}">{{$education}}</option>
                                             @endforeach
@@ -127,12 +144,12 @@
                                     </div>
                                 </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Staff Jobs </label>
+                                <label class="col-md-4 control-label">Staff Jobs & Staff position </label>
+
                                 <div class="col-md-4">
-                                    <select id="staffjob" name="staffjob">
+                                    <select  class="js-example-basic-multiple js-states form-control"  multiple="multiple" id="staffjob" name="staffjob">
                                         @foreach($staffjobs as $staffjob)
-                                            <option value="{{$staffjob->id}}" {{$staff && ($staff->staffjob[0]->id == $staffjob->id) ? 'selected' : ''}}>{{$staffjob->name}}</option>
-                                            {{--<option value="{{$role->id}}">{{$role->display_name}}</option>--}}
+                                            <option value="{{$staffjob->id}}" {{$staff && ($staff->staffjob->id == $staffjob->id) ? 'selected' : ''}}>{{$staffjob->name}}</option>
                                         @endforeach
                                         @if ($errors->has('staffjob'))
 
@@ -140,26 +157,26 @@
                                         @endif
                                     </select>
                                 </div>
-                                <hiden><div class="col-md-4"><label> Staff Position</label>
-                                        <select id="staffposition" name="staffposition">
+                            </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Staff position </label>
+                                    <div class="col-md-4">
+                                        <select  class="js-example-basic-multiple js-states form-control"  multiple="multiple" id="staffposition" name="staffposition">
                                             @foreach($staffpositions as $staffposition)
-                                                <option value="{{$staffposition->id}}" {{$staff && ($staff->staffposition[0]->id == $staffposition->id) ? 'selected' : ''}}>{{$staffposition->name}}</option>
-                                                {{--<option value="{{$role->id}}">{{$role->display_name}}</option>--}}
+                                                <option value="{{$staffposition->id}}" >{{$staffposition->name}}</option>
                                             @endforeach
                                             @if ($errors->has('staffposition'))
+
                                                 <strong>{{ $errors->first('staffposition') }}</strong>
                                             @endif
-
                                         </select>
                                     </div>
-                                </hiden>
-                            </div>
-
+                                </div>
                         <div class="row">
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-5">
                                     <button class="btn btn-primary" type="submit">Daftar</button>
-                                    <a href="/loket/pendaftaran" class="btn btn-white" type="button">Cancel</a>
+                                    <a href="/admin/staff" class="btn btn-white" type="button">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -216,23 +233,7 @@
                     }
                 })
             });
-
-            $(document).on('change', '#clinic', function () {
-                $this = $(this);
-                $.ajax({
-                    url: '/loket/pendaftaran/pilih-poli',
-                    type: 'POST',
-                    data: {_token: $('meta[name="csrf-token"]').attr('content'), id : $this.val()},
-                    success: function (data) {
-                        var respone = JSON.parse(data.data);
-                        $('#doctors').html('');
-                        $.each(respone.doctors, function (key, value) {
-                            var option = '<option value="' + value.id + '">' + value.full_name + '</option>';
-                            $('#doctors').append(option);
-                        });
-                    }
-                })
-            });
         });
     </script>
+
 @endsection

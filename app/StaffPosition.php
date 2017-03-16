@@ -11,6 +11,6 @@ class StaffPosition extends Model
         'desc'
     ];
     public function staff(){
-        return $this->belongsTo('App\Staff', 'staff_id', 'id');
+        return $this->hasMany('App\Staff');
     }
 }

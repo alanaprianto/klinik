@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Hospital;
 use App\Staff;
 use App\StaffJob;
 use App\StaffPosition;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Facades\Datatables;
 
 class StaffController extends Controller
@@ -19,14 +21,11 @@ class StaffController extends Controller
     {
         $staff = '';
         $query = $request->query();
-
         $staffjobs = StaffJob::get();
         $staffpositions = StaffPosition::get();
 
         if (($param == 'edit') && $query['id']) {
-
-            $staff =Staff::with(['staffjobs','staffposition'])->find($query['id']);
-
+            $staff =Staff::with(['staffJob','staffPosition'])->find($query['id']);
         }
         return view('staff.createEdit', compact(['staff','staffjobs','staffpositions']));
     }
@@ -34,16 +33,22 @@ class StaffController extends Controller
     public function postStaff(Request $request)
     {
         $input = $request->except(['_token']);
-
+        $hospital=  DB::table('hospitals')->Where('name','Rumah Sakit A')->first();
         $staffjob = StaffJob::find($input['staffjob']);
         $staffposition = StaffPosition::find($input['staffposition']);
+        $input['hospital_id'] = $hospital->id;
+        $input['staff_job_id']=$staffjob->id;
 
         if (isset($input['staff_id'])) {
-            ;
+
             $staff = Staff::find($input['staff_id']);
+
             $staff->update($input);
+
         } else {
             $staff = Staff::create($input);
+            $staff->attachStaffjob($staffjob);
+            $staff->attachStaffposition($staffposition);
         }
         return redirect('admin/staff')->with('status', 'Success / Berhasil');
     }
