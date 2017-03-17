@@ -20,11 +20,11 @@ Route::get('/home', 'HomeController@index');
 Route::get('/kiosk', 'FrontController@getKiosk');
 Route::post('/kiosk/add', 'FrontController@postKiosk');
 
-Route::get('/print', function (){
-   return view('penata-jasa.checkUp.print');
+Route::get('/print', function () {
+    return view('penata-jasa.checkUp.print');
 });
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'view.finder.admin', 'role:admin']], function (){
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'view.finder.admin', 'role:admin']], function () {
     Route::get('/', 'AdminController@index');
     Route::get('/user', 'UserController@Index');
     Route::get('/user/{param}', 'UserController@getUser');
@@ -83,6 +83,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('/rumah-sakit/profile', 'AdminController@getProfile');
     Route::post('/rumah-sakit/profil', 'AdminController@postProfile');
 
+    Route::get('/inventory', 'InventoryController@index');
+    Route::post('/inventory-list', 'InventoryController@getList');
+    Route::get('/inventory/{param}', 'InventoryController@getCreateEdit');
+    Route::post('/inventory/post', 'InventoryController@store');
+    Route::post('/inventory/delete', 'InventoryController@delete');
+
     /*common used*/
     Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
     Route::post('/profil', '\App\Http\Controllers\ProfileController@postUpdate');
@@ -91,7 +97,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
 });
 
-Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['auth', 'view.finder.loket', 'role:loket']], function (){
+Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['auth', 'view.finder.loket', 'role:loket']], function () {
     Route::get('/', 'LoketController@index');
     Route::get('/antrian', 'QueueController@index');
     Route::post('/antrian-list', 'QueueController@getList');
@@ -105,7 +111,7 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
     Route::post('/pendaftaran/tambah-rujukan', 'RegistrationController@postReference');
 
     Route::post('/check-medical-report', 'RegistrationController@getInfoMedicalReport');
-    Route::post('/pendaftaran/pilih-poli','RegistrationController@selectPoly');
+    Route::post('/pendaftaran/pilih-poli', 'RegistrationController@selectPoly');
 
     /*common used*/
     Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
@@ -116,7 +122,7 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
 
 });
 
-Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:poli_umum|poli_anak']], function (){
+Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:poli_umum|poli_anak']], function () {
     Route::get('/', 'PenataJasaController@index');
     Route::get('/antrian', 'QueueController@index');
     Route::post('/antrian-list', 'QueueController@getList');
@@ -139,12 +145,26 @@ Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middlewar
     Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
 });
 
-Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['auth', 'view.finder.kasir', 'role:kasir']], function (){
+Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['auth', 'view.finder.kasir', 'role:kasir']], function () {
     Route::get('/', 'KasirController@index');
     Route::get('/pembayaran', 'PaymentController@index');
     Route::post('/pembayaran-list', 'PaymentController@getList');
     Route::get('/pembayaran/detail/{id}', 'PaymentController@getPayment');
     Route::post('/pembayaran', 'PaymentController@postPayment');
+
+    /*common used*/
+    Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
+    Route::post('/profil', '\App\Http\Controllers\ProfileController@postUpdate');
+    Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
+    Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
+    Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
+});
+
+
+Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['auth', 'view.finder.apotek', 'role:apotek']], function () {
+    Route::get('/', 'ApotekController@index');
+    Route::get('/pengeluaran', 'ExpenditureController@index');
+    Route::get('/pengeluaran/{param}', 'ExpenditureController@getCreateEdit');
 
     /*common used*/
     Route::get('/profil', '\App\Http\Controllers\ProfileController@index');

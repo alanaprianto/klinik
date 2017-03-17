@@ -16,7 +16,8 @@ class UsersTableSeeder extends Seeder
         $poli_umum = ['email' => 'poli_umum@klinik.com', 'password' => bcrypt('qwe123@@'), 'username' => 'poli_umum'];
         $poli_anak = [ 'email' => 'poli_anak@klinik.com', 'password' => bcrypt('qwe123@@'), 'username' => 'poli_anak'];
         $kasir = ['email' => 'kasir@klinik.com', 'password' => bcrypt('qwe123@@'), 'username' => 'kasir'];
+        $apotek = ['email' => 'apotek@klinik.com', 'password' => bcrypt('qwe123@@'), 'username' => 'apotek'];
 
-        \Illuminate\Support\Facades\DB::table('users')->insert([$admin, $loket, $poli_umum, $poli_anak ,$kasir]);
+        \Illuminate\Support\Facades\DB::table('users')->insert([$admin, $loket, $poli_umum, $poli_anak ,$kasir, $apotek]);
     }
 }

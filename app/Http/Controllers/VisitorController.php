@@ -19,6 +19,8 @@ class VisitorController extends Controller
             $role = 'loket';
         } elseif ($user->hasRole('kasir')){
             $role = 'kasir';
+        } elseif ($user->hasRole('apotek')){
+            $role = 'apotek';
         } else{
             $role = 'penata-jasa';
         }

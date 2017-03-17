@@ -759,6 +759,56 @@
         });
     };
 
+    rs.InventoryTable = function ($element, listUrl, csrf) {
+        if (!$element.length) return null;
+        return $element.DataTable({
+            processing: true,
+            serverSide: true,
+            "deferRender": true,
+            ajax: {
+                'url': listUrl,
+                'type': 'POST',
+                'headers': {
+                    'X-CSRF-TOKEN': csrf
+                }
+            },
+            dom: 'lBfrtip',
+            "order": [[1, 'asc']],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    title: $('.print-datatable').attr('title')
+                }
+            ],
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'code', name: 'code'},
+                {data: 'name', name: 'name'},
+                {data: 'category', name: 'category'},
+                {data: 'type', name: 'type'},
+                {data: 'total', name: 'total'},
+                {data: 'stock_minimal', name: 'stock_minimal'},
+                {data: 'stock_maximal', name: 'stock_maximal'},
+                {data: 'sediaan', name: 'sediaan'},
+                {
+                    "data": '',
+                    "defaultContent": '',
+                    "orderable": false,
+                    "searchable": false,
+                    "mRender": function (data, type, row) {
+                        var edit = '<a href="/admin/inventory/edit?id='+row.id+'"><i class="fa fa-edit"></i></a>';
+                        var remove = '<a href="javascript:;" data-id="'+row.id+'" class="btn-remove"><i class="fa fa-remove"></i></a>';
+                        return edit + ' | ' + remove ;
+                    }
+                }
+            ]
+        });
+    };
+
 
     function orderNumber($datatable) {
         $datatable.on('order.dt search.dt draw.dt', function () {
@@ -847,6 +897,11 @@
         var doctorService = rs.DoctorServiceTable($('#table-doctor-service'), '/admin/jasa-dokter-list', $('meta[name="csrf-token"]').attr('content'));
         if (doctorService) {
             orderNumber(doctorService);
+        }
+
+        var inventory = rs.InventoryTable($('#table-inventory'), '/admin/inventory-list', $('meta[name="csrf-token"]').attr('content'));
+        if (inventory) {
+            orderNumber(inventory);
         }
 
 

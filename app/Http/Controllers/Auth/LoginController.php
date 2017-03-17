@@ -52,6 +52,8 @@ class LoginController extends Controller
             return 'loket';
         } elseif ($user->hasRole('kasir')) {
             return 'kasir';
+        } elseif ($user->hasRole('apotek')) {
+            return 'apotek';
         } else {
             return 'penata-jasa';
         }
