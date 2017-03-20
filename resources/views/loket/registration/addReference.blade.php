@@ -39,7 +39,6 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
-<<<<<<< HEAD
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
@@ -85,7 +84,6 @@
                                     </dl>
                                 </div>
                             </div>
-=======
                         <div class="col-md-6">
                             <h3>Biodata Pasien</h3>
                             <table class="table table-info">
@@ -172,7 +170,6 @@
                                 </tr>
                                 </tbody>
                             </table>
->>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
                         </div>
                         <div class="col-md-6">
                             @foreach($register->references as $index => $reference)

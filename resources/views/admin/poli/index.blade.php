@@ -1,4 +1,9 @@
 @extends('layouts.app')
+@section('breadcrumb')
+    <li class="active">
+        <strong>Poli</strong>
+    </li>
+@endsection
 
 @section('content')
     {{--<script type="text/javascript" href="{{asset('/js/table.js')}}"></script>--}}

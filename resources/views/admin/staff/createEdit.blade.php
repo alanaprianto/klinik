@@ -1,5 +1,4 @@
 @extends('layouts.app')
-<<<<<<< HEAD
 @section('css')
     <style type="text/css">
         .form-group > label.control-label {
@@ -19,8 +18,6 @@
 
 @endsection
 
-=======
->>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
 @section('content')
     <div class="row">
         <div class="col-lg-12">
@@ -37,7 +34,6 @@
                         </a>
                     </div>
                     <div class="ibox-content">
-<<<<<<< HEAD
                         <div class="panel-body">
                             <form class="form-horizontal" role="form" method="POST"
                                   action="{{url('/admin/staff/modify')}}"
@@ -144,7 +140,6 @@
                                         <select class="form-control m-b" name="last_education"  value="{{ $staff ? $staff->last_education :''}}">
                                             @foreach(getEducations() as $education)
                                                 <option value="{{$education}}">{{$education}}</option>
-=======
                         <form class="form-horizontal" role="form" method="POST"
                               action="{{url('/admin/staff/modify')}}"
                               enctype="multipart/form-data">
@@ -225,25 +220,25 @@
                                         @if($staff)
                                             @foreach(getProvinceCities()[$staff->province] as $city)
                                                 <option value="{{$city}}" {{$city == $staff->city    ? 'selected' : ''}}>{{$city}}</option>
->>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
                                             @endforeach
                                         @endif
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-<<<<<<< HEAD
+
                                 <label class="col-md-4 control-label">Staff Jobs & Staff position </label>
 
                                 <div class="col-md-4">
                                     <select  class="js-example-basic-multiple js-states form-control"  multiple="multiple" id="staffjob" name="staffjob">
                                         @foreach($staffjobs as $staffjob)
                                             <option value="{{$staffjob->id}}" {{$staff && ($staff->staffjob->id == $staffjob->id) ? 'selected' : ''}}>{{$staffjob->name}}</option>
-=======
                                 <label class="col-sm-4 control-label">Kecamatan</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" name="district"
                                            value="{{$staff ? $staff->district : ''}}">
+                                </div>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -272,7 +267,6 @@
                                     <select class="form-control m-b" name="last_education">
                                         @foreach(getEducations() as $education)
                                             <option value="{{$education}}" {{$staff && ($staff->last_education == $education) ? 'selected' : ''}}>{{$education}}</option>
->>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
                                         @endforeach
                                     </select>
                                 </div>
@@ -300,7 +294,6 @@
                                     </select>
                                 </div>
                             </div>
-<<<<<<< HEAD
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Staff position </label>
                                     <div class="col-md-4">
@@ -320,17 +313,22 @@
                                 <div class="col-sm-10 col-sm-offset-5">
                                     <button class="btn btn-primary" type="submit">Daftar</button>
                                     <a href="/admin/staff" class="btn btn-white" type="button">Cancel</a>
-=======
-
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         Submit
                                     </button>
->>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
                                 </div>
                             </div>
+                </div>
+    </div>
+                        </div>
                         </form>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -338,7 +336,6 @@
     </div>
 @endsection
 @section('scripts')
-
     <script type="text/javascript" src="{{asset('js/province.js')}}"></script>
     <script type="text/javascript">
         $('.date-1').datepicker({
@@ -383,8 +380,7 @@
                     }
                 })
             });
-<<<<<<< HEAD
-=======
+
 
             $(document).on('change', '#clinic', function () {
                 $this = $(this);
@@ -402,8 +398,6 @@
                     }
                 })
             });
->>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
         });
     </script>
-
 @endsection

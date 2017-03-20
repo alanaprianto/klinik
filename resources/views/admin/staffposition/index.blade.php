@@ -1,5 +1,9 @@
 @extends('layouts.app')
-
+@section('breadcrumb')
+    <li class="active">
+        <strong>Staff Position</strong>
+    </li>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12">

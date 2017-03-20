@@ -239,17 +239,12 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>Data Tables</h2>
+                <h2>Sim Klinik</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="index-2.html">Home</a>
+                        <a href="{{url('/Admin')}}">admin</a>
                     </li>
-                    <li>
-                        <a>Tables</a>
-                    </li>
-                    <li class="active">
-                        <strong>Data Tables</strong>
-                    </li>
+                    @yield('breadcrumb')
                 </ol>
             </div>
             <div class="col-lg-2">
@@ -308,7 +303,6 @@
     });
 </script>
 
-<<<<<<< HEAD
 {{--<script>--}}
     {{--$(document).ready(function () {--}}
         {{--/*        setTimeout(function () {--}}
@@ -401,8 +395,8 @@
     {{--};--}}
 
 {{--</script>--}}
-=======
->>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
+
+
 <script type="text/javascript" src="{{'/js/datatables.min.js'}}"></script>
 <script type="text/javascript" src="{{'/js/jquery.dataTables.js'}}"></script>
 <script type="text/javascript" src="{{'/js/dataTables.buttons.min.js'}}"></script>

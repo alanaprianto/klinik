@@ -24,11 +24,8 @@ class Staff extends Model
         'phone_number',
         'last_education',
         'staff_job_id',
-<<<<<<< HEAD
-        'hospital_id'
-=======
+        'hospital_id',
         'staff_position_id'
->>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
     ];
 
     public function user(){
@@ -63,14 +60,6 @@ class Staff extends Model
     {
         return $this->belongsToMany('App\MedicalRecord', 'staff_medical_records', 'medical_records_id', 'staff_id');
     }
-<<<<<<< HEAD
-    public function setBirthAttribute($value)
-    {
-        if ($value) {
-            $this->attributes['birth'] = Carbon::createFromFormat('d/m/Y', $value);
-        }
-    }
-=======
 
     public function doctorService(){
         return $this->hasOne('App\DoctorService');
@@ -89,5 +78,4 @@ class Staff extends Model
         $birth = Carbon::parse($value)->format('m/d/Y');
         return $birth;
     }
->>>>>>> 1927ec38e0b1e3067ed432439ce1a3e9a6a38afa
 }
