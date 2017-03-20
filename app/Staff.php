@@ -66,6 +66,11 @@ class Staff extends Model
         return $this->hasOne('App\DoctorService');
     }
 
+    /*receipes khusus buat staff type role = apoteker*/
+    public function recipes(){
+        return $this->hasMany('App\Recipe');
+    }
+
     /*mutator*/
     public function setBirthAttribute($value)
     {

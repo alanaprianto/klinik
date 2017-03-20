@@ -63,7 +63,7 @@ class RegistrationController extends GeneralController
             $kiosk->update(['status' => 3]);
         }
 
-        $hospital = Hospital::where('name', 'Rumah Sakit A')->first();
+        $hospital = Hospital::first();
         $input['hospital_id'] = $hospital->id;
         if ($input['patient_number_id']) {
             $patient = Patient::find($input['patient_number_id']);

@@ -25,6 +25,7 @@ class CreateInventoriesTable extends Migration
             $table->text('explain')->nullable();
             $table->string('unit')->nullable();
             $table->string('sediaan')->nullable();
+            $table->double('price')->nullable();
             $table->timestamps();
         });
     }

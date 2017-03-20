@@ -165,6 +165,9 @@ Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['a
     Route::get('/', 'ApotekController@index');
     Route::get('/pengeluaran', 'ExpenditureController@index');
     Route::get('/pengeluaran/{param}', 'ExpenditureController@getCreateEdit');
+    Route::post('/pengeluaran/post', 'ExpenditureController@postCreate');
+    Route::post('/get-inventory', 'ExpenditureController@getInventory');
+    Route::post('/search-reference', 'ExpenditureController@postAjaxReference');
 
     /*common used*/
     Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
