@@ -38,12 +38,12 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="{{asset('img/profile_small.jpg')}}"/>
+                            <img alt="image" class="img-circle" style="width: 44px; height: 44px"  src="{{\Illuminate\Support\Facades\Auth::user()->staff && \Illuminate\Support\Facades\Auth::user()->staff->image_profile ? asset(\Illuminate\Support\Facades\Auth::user()->staff->image_profile) : asset('img/profile_small.jpg') }}"/>
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong
                                             class="font-bold">{{ Auth::user()->name }}</strong>
-                             </span> <span class="text-muted text-xs block">Loket <b class="caret"></b></span> </span>
+                             </span> <span class="text-muted text-xs block">Penata Jasa <b class="caret"></b></span> </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="{{url('') }}">Profile</a></li>
@@ -69,6 +69,10 @@
                 <li>
                     <a href="{{url('/penata-jasa/pengunjung')}}"><i class="fa fa-th-large"></i> <span
                                 class="nav-label"> Pengunjung</span></a>
+                </li>
+                <li>
+                    <a href="{{url('/penata-jasa/profil')}}"><i class="fa fa-th-large"></i> <span
+                                class="nav-label"> Profil</span></a>
                 </li>
             </ul>
 

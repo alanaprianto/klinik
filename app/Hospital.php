@@ -11,10 +11,12 @@ class Hospital extends Model
         'address',
         'phone',
         'website',
+        'footer_kwitansi',
         'unit_state',
         'unit_number',
         'province_code',
         'province_name',
+        'signature_sign',
         'image_header'
     ];
 

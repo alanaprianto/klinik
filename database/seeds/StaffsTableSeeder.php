@@ -23,11 +23,11 @@ class StaffsTableSeeder extends Seeder
         $ketua_UGD = \App\StaffPosition::where('name', 'Ketua UGD')->first();
         $ketua_umum = \App\StaffPosition::where('name', 'Ketua Umum')->first();
 
-        $user_1 = \App\User::where('name', 'Admin')->first();
-        $user_2 = \App\User::where('name', 'Loket')->first();
-        $user_3 = \App\User::where('name', 'poli_umum')->first();
-        $user_4 = \App\User::where('name', 'poli_anak')->first();
-        $user_5 = \App\User::where('name', 'Kasir')->first();
+        $user_1 = \App\User::where('username', 'admin')->first();
+        $user_2 = \App\User::where('username', 'loket')->first();
+        $user_3 = \App\User::where('username', 'poli_umum')->first();
+        $user_4 = \App\User::where('username', 'poli_anak')->first();
+        $user_5 = \App\User::where('username', 'kasir')->first();
 
         $job_dokter = \App\StaffJob::where('name', 'Dokter')->first();
 

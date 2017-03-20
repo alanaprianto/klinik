@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'view.finder.loket' => \App\Http\Middleware\LoketViewFinder::class,
         'view.finder.penata-jasa' => \App\Http\Middleware\PenataJasaViewFinder::class,
         'view.finder.kasir' => \App\Http\Middleware\KasirViewFinder::class,
+        'view.finder.apotek' => \App\Http\Middleware\ApotekViewFinder::class,
 
     ];
 }

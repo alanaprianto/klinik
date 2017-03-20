@@ -1,16 +1,11 @@
 @extends('layouts.app')
-@section('breadcrumb')
-    <li class="active">
-        <strong>User</strong>
-    </li>
-@endsection
+
 @section('content')
-    <script type="text/javascript" href="{{asset('/js/table.js')}}"></script>
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5> <i class="fa fa-angle-right"></i> User</h5>
+                    <h5> <i class="fa fa-angle-right"></i> Inventory</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -26,15 +21,21 @@
                 <div class="ibox-content">
                     <div class="form-panel">
                         <div class="action" style="margin-bottom: 10px">
-                            <a href="{{url('/admin/user/create')}}" type="button"  class="btn btn-primary">Tambah User </a>
+                            <a href="{{url('/admin/inventory/create')}}" type="button"  class="btn btn-primary">Tambah Barang</a>
                         </div>
 
-                        <table class="table table-stripped" id="table-user" data-token="{{csrf_token()}}">
+                        <table class="table table-stripped" id="table-inventory">
                             <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Email</th>
-                                <th>Role</th>
+                                <th>Kode</th>
+                                <th>Nama</th>
+                                <th>Kategori</th>
+                                <th>Tipe</th>
+                                <th>Total</th>
+                                <th>Stock Minimal</th>
+                                <th>Stock Maximal</th>
+                                <th>sediaan</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -53,7 +54,7 @@
                 var $id = $this.data('id');
                 if (confirm('Apakah anda yakin akan menghapus postingan ini?')) {
                     var $form = $('<form />');
-                    $form.attr('action', '/admin/user/delete');
+                    $form.attr('action', '/admin/inventory/delete');
                     $form.attr('method', 'post');
                     $form.css({
                         'display': 'none'

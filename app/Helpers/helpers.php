@@ -106,3 +106,28 @@ function getConditions(){
         'Selesai Diperiksa'
     ];
 }
+
+function getCategories(){
+    return [
+        'Alkes',
+        'Non Alkes'
+    ];
+}
+
+function getUnits(){
+    return [
+        'kg',
+        'pcs',
+        'gram',
+        'liter',
+        'ton',
+    ];
+}
+
+function getSediaans(){
+    return [
+        'tablet',
+        'syrup',
+        'pil',
+    ];
+}

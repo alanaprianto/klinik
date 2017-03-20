@@ -42,7 +42,7 @@
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong
                                             class="font-bold">{{ Auth::user()->name }}</strong>
-                             </span> <span class="text-muted text-xs block">Kasir <b class="caret"></b></span> </span>
+                             </span> <span class="text-muted text-xs block">Apotek <b class="caret"></b></span> </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="{{url('') }}">Profile</a></li>
@@ -57,16 +57,16 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{url('/kasir/pembayaran')}}"><i class="fa fa-th-large"></i> <span
-                                class="nav-label"> Pembayaran</span></a>
+                    <a href="{{url('/apotek/pengeluaran')}}"><i class="fa fa-th-large"></i> <span
+                                class="nav-label"> Pengeluaran</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/kasir/pengunjung')}}"><i class="fa fa-th-large"></i> <span
-                                class="nav-label"> Pengunjung</span></a>
-                </li>
-                <li>
-                    <a href="{{url('/kasir/profil')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/apotek/profil')}}"><i class="fa fa-th-large"></i> <span
                                 class="nav-label"> Profil</span></a>
+                </li>
+                <li>
+                    <a href="{{url('/apotek/pengunjung')}}"><i class="fa fa-th-large"></i> <span
+                                class="nav-label"> Pengunjung</span></a>
                 </li>
             </ul>
 

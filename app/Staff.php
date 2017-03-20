@@ -25,7 +25,10 @@ class Staff extends Model
         'last_education',
         'staff_job_id',
         'hospital_id',
-        'staff_position_id'
+        'staff_position_id',
+        'image_profile',
+        'user_id'
+>>>>>>> 56bd06d7cc2c0e94b3c9d8786d62f916ce725ff7
     ];
 
     public function user(){
