@@ -77,10 +77,9 @@ class ExpenditureController extends Controller
             $recipe = Recipe::create([
                 'reference_id' => $input['reference_id'],
                 'number_recipe' => Carbon::now()->format('YmdHis'),
-                'staff_id' => Auth::user()->id
+                'staff_id' => Auth::user()->staff->id
             ]);
 
-            dd($recipe);
 
 
             foreach ($input['inventory'] as $index => $item) {
@@ -90,7 +89,7 @@ class ExpenditureController extends Controller
                     'inventory_id' => $inventory->id,
                     'amount' => $input['amount'][$index],
                     'total_payment' => $total,
-                    'staff_id' => Auth::user()->id,
+                    'staff_id' => Auth::user()->staff->id,
                     'status' => 1
                 ]);
             }
