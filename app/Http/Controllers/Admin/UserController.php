@@ -32,11 +32,20 @@ class UserController extends Controller
 
     public function postUser(Request $request)
     {
+
+
+//        $this->validate($request, [
+//            'name' => 'required|max:255',
+//            'email' => 'required|email|max:255|unique:users',
+//            'password' => 'required|min:6|confirmed',
+//        ]);
+
         $this->validate($request, [
             'username' => 'required|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
+
         $input = $request->except(['_token']);
         $input['password'] = bcrypt($input['password']);
         $role = Role::find($input['role']);
@@ -62,8 +71,6 @@ class UserController extends Controller
     {
         $user = User::find($request['id']);
         $user->delete();
-        $role = Role::find($request['role']);
-        $user->attachRole($role);
         return redirect()->back()->with('status', 'Berhasil menghapus service');
     }
 }

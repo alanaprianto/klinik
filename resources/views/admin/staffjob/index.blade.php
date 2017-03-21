@@ -1,5 +1,9 @@
 @extends('layouts.app')
-
+@section('breadcrumb')
+    <li class="active">
+        <strong>Staff Jobs</strong>
+    </li>
+@endsection
 @section('content')
     {{--<script type="text/javascript" href="{{asset('/js/table.js')}}"></script>--}}
     <div class="row">

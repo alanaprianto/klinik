@@ -1,4 +1,12 @@
 @extends('layouts.app')
+@section('breadcrumb')
+    <li>
+        <a href="{{url('/admin/staffjob')}}">Staff Job</a>
+    </li>
+    <li class="active">
+        <strong>Tambah</strong>
+    </li>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12">
@@ -16,9 +24,9 @@
                     <div class="ibox-content">
                         <div class="panel-body">
                             <form class="form-horizontal" role="form" method="POST"
-                                  action="{{url('/admin/staffjob/modify')}}"
-                                  enctype="multipart/form-data">
-                                {{ csrf_field() }}
+                                                        action="{{url('/admin/staffjob/modify')}}"
+                                                        enctype="multipart/form-data">
+                                    {{ csrf_field() }}
                                 @if($staffjob)
                                     <input type="hidden" name="staffjob_id" value="{{$staffjob->id}}">
                                 @endif
