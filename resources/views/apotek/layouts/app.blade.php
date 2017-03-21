@@ -57,8 +57,8 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{url('/apotek/pengeluaran')}}"><i class="fa fa-th-large"></i> <span
-                                class="nav-label"> Pengeluaran</span></a>
+                    <a href="{{url('/apotek/resep')}}"><i class="fa fa-th-large"></i> <span
+                                class="nav-label"> Resep</span></a>
                 </li>
                 <li>
                     <a href="{{url('/apotek/profil')}}"><i class="fa fa-th-large"></i> <span

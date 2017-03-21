@@ -13,7 +13,7 @@ class Recipe extends Model
     ];
 
     public function reference(){
-        return $this->belongsTo('App\Recipe', 'reference_id', 'id');
+        return $this->belongsTo('App\Reference', 'reference_id', 'id');
     }
 
     public function pharmacySellers(){

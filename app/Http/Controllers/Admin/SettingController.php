@@ -13,46 +13,30 @@ class SettingController extends Controller
     {
         return view('setting.index');
     }
-    public function getSetting(Request $request, $param)
+    public function getSetting(Request $request)
     {
-        $setting = '';
-        $query = $request->query();
-
-        if (($param == 'edit') && $query['id']) {
-
-            $setting = Setting::find($query['id']);
-
-        }
-        return view('setting.createEdit', compact(['setting']));
+        $settings = Setting::get();
+        return view('setting.createEdit', compact(['settings']));
     }
     public function postSetting(Request $request)
     {
+        $inputs = $request->except('_token');
+        $total_setting = count($inputs) / 2;
+        Setting::truncate();
 
+        $array = [11 => 11, 12 => 12];
 
-        $input = $request->except(['_token']);
-
-        if (isset($input['setting_id'])) {
-            ;
-            $setting = Setting::find($input['setting_id']);
-            $setting->update($input);
-        } else {
-            $setting = Setting::create($input);
-
+        for($i=1; $i<=$total_setting; $i++){
+            $array_setting = [];
+            foreach ($inputs['setting_'.$i.'_name'] as $index => $name){
+                $array = [$name => $inputs['setting_'.$i.'_value'][$index]];
+                array_push($array_setting, $array);
+            }
+            Setting::create([
+                'name_value' => json_encode($array_setting, true)
+            ]);
 
         }
         return redirect('admin/setting')->with('status', 'Success / Berhasil');
-    }
-
-    public function getList(){
-        $setting = Setting::get();
-        $datatable = Datatables::of($setting);
-        return $datatable->make(true);
-    }
-
-    public function deleteSetting(Request $request)
-    {
-        $setting = Setting::find($request['id']);
-        $setting->delete();
-        return redirect()->back()->with('status', 'Berhasil menghapus setting');
     }
 }

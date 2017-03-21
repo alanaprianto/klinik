@@ -10,7 +10,8 @@
         "laravel/tinker": "~1.0",
         "zizaco/entrust": "5.2.x-dev",
         "yajra/laravel-datatables-oracle": "7.*",
-        "predis/predis": "*"
+        "predis/predis": "*",
+        "sineld/bladeset": "^5.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

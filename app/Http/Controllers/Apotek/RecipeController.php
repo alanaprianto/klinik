@@ -3,20 +3,17 @@
 namespace App\Http\Controllers\Apotek;
 
 use App\Inventory;
-use App\Patient;
-use App\Pharmacy;
 use App\Recipe;
 use App\Reference;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Facades\Datatables;
 
-class ExpenditureController extends Controller
+class RecipeController extends Controller
 {
     public function index()
     {
-        return view('expenditure.index');
+        return view('recipe.index');
     }
 
     public function getCreateEdit(Request $request, $param)
@@ -31,7 +28,13 @@ class ExpenditureController extends Controller
         }
 
         $inventories = Inventory::get();
-        return view('expenditure.createEdit', compact(['record_apotek', 'inventories']));
+        return view('recipe.createEdit', compact(['record_apotek', 'inventories']));
+    }
+
+    public function getList(){
+        $recipes = Recipe::with(['reference', 'reference.poly', 'reference.register', 'reference.register.patient' ,'pharmacySellers', 'staff'])->get();
+        $datatable = Datatables::of($recipes);
+        return $datatable->make(true);
     }
 
     public function getInventory(Request $request)
@@ -98,5 +101,14 @@ class ExpenditureController extends Controller
         }
 
         return redirect('/apotek/pengeluaran')->with('status', 'Berhasil / Success');
+    }
+
+    public function getDetail($id){
+        $recipe = Recipe::with(['reference', 'reference.register', 'reference.register.patient', 'staff', 'pharmacySellers', 'pharmacySellers.inventory'])->find($id);
+        $total_payment = 0;
+        foreach ($recipe->pharmacySellers as $pharmacySeller){
+            $total_payment += $pharmacySeller->total_payment;
+        }
+        return view('recipe.detail', compact(['recipe', 'total_payment']));
     }
 }
