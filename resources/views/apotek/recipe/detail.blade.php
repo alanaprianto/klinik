@@ -40,9 +40,39 @@
                         <tr>
                             <th>Jumlah Pembayaran</th>
                             <td>:</td>
-                            <td>Rp. {{$total_payment}}</td>
+                            <td>Rp. {{$total_payment}} + Rp. {{$total_tuslah}} (biaya tuslah)</td>
                         </tr>
                         </tbody>
+                    </table>
+                    <hr/>
+                    <h4>Biaya Tuslah</h4>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Tuslah</th>
+                            <th>Jumlah</th>
+                            <th>Harga Satuan</th>
+                            <th>Total Harga</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($recipe->tuslahs as $index => $tuslah)
+                            <tr>
+                                <td>{{$index + 1}}</td>
+                                <td>{{$tuslah->name}}</td>
+                                <td>{{$tuslah->amount}}</td>
+                                <td>{{$tuslah->price}}</td>
+                                <td>Rp. {{$tuslah->amount * $tuslah->price}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th colspan="4">Total</th>
+                            <th>Rp. {{$total_tuslah}}</th>
+                        </tr>
+                        </tfoot>
                     </table>
                     <hr/>
                     <h4>Detail Pembelian transaksi</h4>
@@ -53,24 +83,28 @@
                             <th>Nama Obat</th>
                             <th>Jumlah</th>
                             <th>Harga Satuan</th>
-                            <th>Jumlah Pembelian</th>
+                            <th>Total Harga</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            @foreach($recipe->pharmacySellers as $index => $pharmacySeller)
+                        @foreach($recipe->pharmacySellers as $index => $pharmacySeller)
+                            <tr>
                                 <td>{{$index + 1}}</td>
                                 <td>{{$pharmacySeller->inventory->name}}</td>
                                 <td>{{$pharmacySeller->amount}}</td>
                                 <td>{{$pharmacySeller->inventory->price}}</td>
                                 <td>Rp. {{$pharmacySeller->total_payment}}</td>
-                            @endforeach
-                        </tr>
+                            </tr>
+                        @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
                             <th colspan="4">Total</th>
                             <th>Rp. {{$total_payment}}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4">Grand Total</th>
+                            <th>Rp. {{$total_payment + $total_tuslah}}</th>
                         </tr>
                         </tfoot>
                     </table>

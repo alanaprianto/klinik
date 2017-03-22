@@ -21,21 +21,18 @@ class SettingController extends Controller
     public function postSetting(Request $request)
     {
         $inputs = $request->except('_token');
-        $total_setting = count($inputs) / 2;
+        $total_setting = count($inputs) / 3;
         Setting::truncate();
 
-        $array = [11 => 11, 12 => 12];
-
         for($i=1; $i<=$total_setting; $i++){
-            $array_setting = [];
-            foreach ($inputs['setting_'.$i.'_name'] as $index => $name){
-                $array = [$name => $inputs['setting_'.$i.'_value'][$index]];
-                array_push($array_setting, $array);
+            $array = [];
+            foreach ($inputs['name_'.$i] as $index => $name){
+                $array[$name] = $inputs['value_'.$i][$index];
             }
             Setting::create([
-                'name_value' => json_encode($array_setting, true)
+                'name' => $inputs['setting_name_'.$i],
+                'name_value' => json_encode($array, true)
             ]);
-
         }
         return redirect('admin/setting')->with('status', 'Success / Berhasil');
     }

@@ -169,6 +169,7 @@ Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['a
     Route::get('/resep/detail/{id}', 'RecipeController@getDetail');
     Route::post('/get-inventory', 'RecipeController@getInventory');
     Route::post('/search-reference', 'RecipeController@postAjaxReference');
+    Route::get('/biaya-racik','RecipeController@getPrice');
 
 
     /*common used*/

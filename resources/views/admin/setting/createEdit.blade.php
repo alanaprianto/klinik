@@ -1,16 +1,14 @@
 @extends('layouts.app')
 @section('css')
     <style type="text/css">
-        table.table-border tbody tr td {
-            border-bottom: 1px solid #e7eaec;
+        table.borderless tbody tr td {
+            border: none;
         }
 
-        table.table-border tbody tr td:first-child {
-            border-left: 1px solid #e7eaec;
-        }
-
-        table.table-border tbody tr td:last-child {
-            border-right: 1px solid #e7eaec;
+        .padding-all {
+            margin: 1px;
+            border: 1px solid #e7eaec;
+            border-radius: 5px;
         }
 
     </style>
@@ -51,93 +49,142 @@
                                 <button class="btn btn-primary btn-add-setting" type="button"><i class="fa fa-plus"></i>
                                     Setting
                                 </button>
-                                <div style="display: none" class="col-md-4 for-clone">
-                                    <h4><span class="span-setting">Setting 1</span> <a type="button" href="javascript:;"
-                                                                                       class="btn btn-remove-setting"><i
-                                                    class="fa fa-minus"></i></a></h4>
-                                    <table class="table table-border">
-                                        <tbody>
-                                        <tr>
-                                            <td><input type="text" class="form-control setting-name" placeholder="name">
-                                            </td>
-                                            <td>:</td>
-                                            <td><input type="text" class="form-control setting-value"
-                                                       placeholder="value"></td>
-                                            <td>
-                                                <button class="btn btn-primary btn-add-field" type="button"><i
-                                                            class="fa fa-plus"></i></button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            @forelse($settings as $index => $setting)
-                                <div class="col-md-4">
-                                    <h4>Setting {{$index + 1}} <a type="button" href="javascript:;"
-                                                                  class="btn btn-remove-setting"><i
-                                                    class="fa fa-minus"></i></a></h4>
-                                    <table class="table table-border">
-                                        <tbody>
-                                        @forelse($setting->name_value as $index_name_value =>  $item)
-                                            @foreach($item as $name => $value)
-                                                <tr>
-                                                    <td><input type="text" class="form-control setting-name"
-                                                               placeholder="name"
-                                                               name="setting_{{$index + 1}}_name[]" value="{{$name}}">
-                                                    </td>
-                                                    <td>:</td>
-                                                    <td><input type="text" class="form-control setting-value"
-                                                               placeholder="value"
-                                                               name="setting_{{$index + 1}}_value[]" value="{{$value}}">
-                                                    </td>
-                                                    <td>
-                                                        @if($index_name_value == 0)
-                                                            <button class="btn btn-primary btn-add-field" type="button">
-                                                                <i class="fa fa-plus"></i></button>
-                                                        @else
-                                                            <button class="btn btn-primary btn-remove-field" type="button">
-                                                                <i class="fa fa-minus"></i></button>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @empty
+                                <div class="col-md-4 border for-clone" hidden>
+                                    <div class="padding-all">
+                                        <table class="table borderless">
+                                            <tbody>
                                             <tr>
-                                                <td><input type="text" class="form-control setting-name"
-                                                           placeholder="name"
-                                                           name="setting_1_name[]"></td>
+                                            <tr>
+                                                <td>
+                                                    <input class="form-control setting-name" type="text"
+                                                           placeholder="Nama Setting">
+                                                </td>
+                                                <td>
+                                                    <a type="button" href="javascript:;"
+                                                       class="btn btn-primary btn-remove-setting"><i
+                                                                class="fa fa-minus"></i></a>
+                                                </td>
+                                            </tr>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-border">
+                                            <tbody>
+                                            <tr>
+                                                <td><input type="text" class="form-control name" placeholder="name">
+                                                </td>
                                                 <td>:</td>
-                                                <td><input type="text" class="form-control setting-value"
-                                                           placeholder="value" name="setting_1_value[]"></td>
+                                                <td><input type="text" class="form-control value"
+                                                           placeholder="value"></td>
                                                 <td>
                                                     <button class="btn btn-primary btn-add-field" type="button"><i
                                                                 class="fa fa-plus"></i></button>
                                                 </td>
                                             </tr>
-                                        @endforelse
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @forelse($settings as $index => $setting)
+                                <div class="col-md-4 border">
+                                    <div class="padding-all">
+                                        <table class="table borderless">
+                                            <tbody>
+                                            <tr>
+                                            <tr>
+                                                <td>
+                                                    <input class="form-control setting-name" type="text"
+                                                           placeholder="Nama Setting" name="setting_name_{{$index}}"
+                                                           value="{{$setting->name}}">
+                                                </td>
+                                                <td>
+                                                    <a type="button" href="javascript:;"
+                                                       class="btn btn-primary btn-remove-setting"><i
+                                                                class="fa fa-minus"></i></a>
+                                                </td>
+                                            </tr>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-border">
+                                            <tbody>
+                                            @forelse($setting->name_value as $name => $value)
+                                                <tr>
+                                                    <td><input type="text" class="form-control setting-name"
+                                                               placeholder="name" name="name_{{$index}}[]"
+                                                               value="{{$name}}">
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td><input type="text" class="form-control setting-value"
+                                                               placeholder="value" name="value_{{$index}}[]"
+                                                               value="{{$value}}"></td>
+                                                    <td>
+                                                        @if($loop->index == 0)
+                                                            <button class="btn btn-primary btn-add-field" type="button">
+                                                                <i class="fa fa-plus"></i></button>
+                                                        @else
+                                                            <button class="btn btn-primary btn-remopve-field" type="button">
+                                                                <i class="fa fa-plus"></i></button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td><input type="text" class="form-control setting-name"
+                                                               placeholder="name" name="name_1[]">
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td><input type="text" class="form-control setting-value"
+                                                               placeholder="value" name="value_1[]"></td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-add-field" type="button"><i
+                                                                    class="fa fa-plus"></i></button>
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             @empty
-                                <div class="col-md-4">
-                                    <h4>Setting 1 <a type="button" href="javascript:;" class="btn btn-remove-setting"><i
-                                                    class="fa fa-minus"></i></a></h4>
-                                    <table class="table table-border">
-                                        <tbody>
-                                        <tr>
-                                            <td><input type="text" class="form-control setting-name" placeholder="name"
-                                                       name="setting_1_name[]"></td>
-                                            <td>:</td>
-                                            <td><input type="text" class="form-control setting-value"
-                                                       placeholder="value" name="setting_1_value[]"></td>
-                                            <td>
-                                                <button class="btn btn-primary btn-add-field" type="button"><i
-                                                            class="fa fa-plus"></i></button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col-md-4 border">
+                                    <div class="padding-all">
+                                        <table class="table borderless">
+                                            <tbody>
+                                            <tr>
+                                            <tr>
+                                                <td>
+                                                    <input class="form-control setting-name" type="text"
+                                                           placeholder="Nama Setting" name="setting_name_1">
+                                                </td>
+                                                <td>
+                                                    <a type="button" href="javascript:;"
+                                                       class="btn btn-primary btn-remove-setting"><i
+                                                                class="fa fa-minus"></i></a>
+                                                </td>
+                                            </tr>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-border">
+                                            <tbody>
+                                            <tr>
+                                                <td><input type="text" class="form-control setting-name"
+                                                           placeholder="name" name="name_1[]">
+                                                </td>
+                                                <td>:</td>
+                                                <td><input type="text" class="form-control setting-value"
+                                                           placeholder="value" name="value_1[]"></td>
+                                                <td>
+                                                    <button class="btn btn-primary btn-add-field" type="button"><i
+                                                                class="fa fa-plus"></i></button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             @endforelse
                         </div>
@@ -180,10 +227,10 @@
                 var total_md4 = $this.parent().parent().find('.col-md-4').length;
                 var cloned = $('.for-clone').clone();
                 cloned.removeClass('for-clone');
-                cloned.css('display', 'block');
-                cloned.find('.span-setting').html('Setting ' + total_md4);
-                cloned.find('.setting-name').attr('name', 'setting_' + total_md4 + '_name[]');
-                cloned.find('.setting-value').attr('name', 'setting_' + total_md4 + '_value[]');
+                cloned.prop('hidden', false);
+                cloned.find('.setting-name').attr('name', 'setting_name_' + total_md4);
+                cloned.find('.name').attr('name', 'name_' + total_md4 + '[]');
+                cloned.find('.value').attr('name', 'value_' + total_md4 + '[]');
                 $this.parent().parent().append(cloned);
             });
 

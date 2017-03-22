@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Apotek;
 use App\Inventory;
 use App\Recipe;
 use App\Reference;
+use App\Setting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Facades\Datatables;
 
 class RecipeController extends Controller
@@ -84,6 +87,14 @@ class RecipeController extends Controller
             ]);
 
 
+            foreach ($input['name_tuslah'] as $index => $name){
+                $recipe->tuslahs()->create([
+                    'name' => $name,
+                    'amount' => $input['tuslah'][$index],
+                    'price' => $input['price'][$index]
+                ]);
+            }
+
 
             foreach ($input['inventory'] as $index => $item) {
                 $inventory = Inventory::find($item);
@@ -95,20 +106,32 @@ class RecipeController extends Controller
                     'staff_id' => Auth::user()->staff->id,
                     'status' => 1
                 ]);
+                $inventory->total = $inventory->total - $input['amount'][$index];
+                $inventory->save();
             }
         } else {
 
         }
 
-        return redirect('/apotek/pengeluaran')->with('status', 'Berhasil / Success');
+        return redirect('/apotek/resep')->with('status', 'Berhasil / Success');
     }
 
     public function getDetail($id){
-        $recipe = Recipe::with(['reference', 'reference.register', 'reference.register.patient', 'staff', 'pharmacySellers', 'pharmacySellers.inventory'])->find($id);
+        $recipe = Recipe::with(['reference', 'reference.register', 'reference.register.patient', 'staff', 'pharmacySellers', 'pharmacySellers.inventory', 'tuslahs'])->find($id);
         $total_payment = 0;
+        $total_tuslah = 0;
         foreach ($recipe->pharmacySellers as $pharmacySeller){
             $total_payment += $pharmacySeller->total_payment;
         }
-        return view('recipe.detail', compact(['recipe', 'total_payment']));
+
+        foreach ($recipe->tuslahs as $tuslah){
+            $total_tuslah += ($tuslah->amount * $tuslah->price);
+        }
+        return view('recipe.detail', compact(['recipe', 'total_payment', 'total_tuslah']));
+    }
+
+    public function getPrice(){
+        $setting = Setting::where('name','racik')->orWhere('id', 1)->first();
+        return $setting->name_value['price'];
     }
 }

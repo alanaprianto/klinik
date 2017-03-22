@@ -23,4 +23,8 @@ class Recipe extends Model
     public function staff(){
         return $this->belongsTo('App\Staff', 'staff_id', 'id');
     }
+
+    public function tuslahs(){
+        return $this->hasMany('App\Tuslah');
+    }
 }

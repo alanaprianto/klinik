@@ -27,6 +27,7 @@
     <link href="{{asset('css/buttons.dataTables.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/jquery.timepicker.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/select2.min.css')}}" rel="stylesheet">
     @yield('css')
 </head>
 
@@ -375,6 +376,7 @@
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="{{asset('js/socket.io.js')}}"></script>
 <script type="text/javascript" src="{{'/js/table.js'}}"></script>
+<script type="text/javascript" src="{{'/js/select2.min.js'}}"></script>
 @yield('scripts')
 </body>
 </html>

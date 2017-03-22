@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSettingsTable extends Migration
+class CreateTuslahsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('tuslahs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->longText('name_value')->nullable();
+            $table->double('amount')->nullable();
+            $table->double('price')->nullable();
+            $table->integer('recipe_id')->unsigned()->nullable();
+            $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('tuslahs');
     }
 }
