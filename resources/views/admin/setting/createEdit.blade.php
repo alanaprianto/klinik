@@ -96,7 +96,7 @@
                                             <tr>
                                                 <td>
                                                     <input class="form-control setting-name" type="text"
-                                                           placeholder="Nama Setting" name="setting_name_{{$index}}"
+                                                           placeholder="Nama Setting" name="setting_name_{{$index + 1}}"
                                                            value="{{$setting->name}}">
                                                 </td>
                                                 <td>
@@ -113,19 +113,20 @@
                                             @forelse($setting->name_value as $name => $value)
                                                 <tr>
                                                     <td><input type="text" class="form-control setting-name"
-                                                               placeholder="name" name="name_{{$index}}[]"
+                                                               placeholder="name" name="name_{{$index + 1}}[]"
                                                                value="{{$name}}">
                                                     </td>
                                                     <td>:</td>
                                                     <td><input type="text" class="form-control setting-value"
-                                                               placeholder="value" name="value_{{$index}}[]"
+                                                               placeholder="value" name="value_{{$index + 1}}[]"
                                                                value="{{$value}}"></td>
                                                     <td>
                                                         @if($loop->index == 0)
                                                             <button class="btn btn-primary btn-add-field" type="button">
                                                                 <i class="fa fa-plus"></i></button>
                                                         @else
-                                                            <button class="btn btn-primary btn-remopve-field" type="button">
+                                                            <button class="btn btn-primary btn-remopve-field"
+                                                                    type="button">
                                                                 <i class="fa fa-plus"></i></button>
                                                         @endif
                                                     </td>

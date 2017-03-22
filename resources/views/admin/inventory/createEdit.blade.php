@@ -28,19 +28,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Kode Produk</label>
+                                    <label class="col-sm-4 control-label">Kode Produk <span class="error">*</span> </label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" name="code" value="{{$inventory ? $inventory->code : ''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Nama</label>
+                                    <label class="col-sm-4 control-label">Nama <span class="error">*</span> </label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" name="name" value="{{$inventory ? $inventory->name : ''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Kategori</label>
+                                    <label class="col-sm-4 control-label">Kategori <span class="error">*</span> </label>
                                     <div class="col-sm-8">
                                         <select class="form-control" name="category">
                                             @foreach(getCategories() as $category)
@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Stok Minimal</label>
+                                    <label class="col-sm-4 control-label">Stok Minimal<span class="error">*</span> </label>
                                     <div class="col-sm-8">
                                         <input type="number" class="form-control" name="stock_minimal" value="{{$inventory ? $inventory->stock_minimal : ''}}">
                                     </div>
@@ -70,7 +70,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Stok Maksimal</label>
+                                    <label class="col-sm-4 control-label">Stok Maksimal<span class="error">*</span> </label>
                                     <div class="col-sm-8">
                                         <input type="number" class="form-control" name="stock_maximal" value="{{$inventory ? $inventory->stock_maximal : ''}}">
                                     </div>

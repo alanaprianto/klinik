@@ -44,17 +44,10 @@ class StaffController extends Controller
         $input['staff_job_id'] = $staffjob->id;
 
         if (isset($input['staff_id'])) {
-
-
             if ($input['staff_id']) {
-
                 $staff = Staff::find($input['staff_id']);
-
                 $staff->update($input);
-
             } else {
-
-
                 $staff = Staff::create($input);
                 $staff->attachStaffjob($staffjob);
                 $staff->attachStaffposition($staffposition);

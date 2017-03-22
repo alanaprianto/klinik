@@ -58,20 +58,20 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{url('/penata-jasa/antrian')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/penata-jasa/antrian')}}"><i class="fa  fa-users"></i> <span
                                 class="nav-label"> Antrian</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/penata-jasa/kunjungan')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/penata-jasa/kunjungan')}}"><i class="fa fa-random"></i> <span
                                 class="nav-label"> Kunjungan Pasien</span></a>
                 </li>
 
                 <li>
-                    <a href="{{url('/penata-jasa/pengunjung')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/penata-jasa/pengunjung')}}"><i class="fa fa-male"></i> <span
                                 class="nav-label"> Pengunjung</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/penata-jasa/profil')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/penata-jasa/profil')}}"><i class="fa fa-picture-o"></i> <span
                                 class="nav-label"> Profil</span></a>
                 </li>
             </ul>

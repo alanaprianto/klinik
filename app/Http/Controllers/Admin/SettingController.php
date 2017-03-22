@@ -13,11 +13,13 @@ class SettingController extends Controller
     {
         return view('setting.index');
     }
+
     public function getSetting(Request $request)
     {
         $settings = Setting::get();
         return view('setting.createEdit', compact(['settings']));
     }
+
     public function postSetting(Request $request)
     {
         $inputs = $request->except('_token');
@@ -34,6 +36,7 @@ class SettingController extends Controller
                 'name_value' => json_encode($array, true)
             ]);
         }
-        return redirect('admin/setting')->with('status', 'Success / Berhasil');
+
+        return redirect('/admin/setting')->with('status', 'Berhasil / Success');
     }
 }

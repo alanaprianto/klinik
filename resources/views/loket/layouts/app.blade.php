@@ -54,19 +54,19 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{url('/loket/antrian')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/loket/antrian')}}"><i class="fa fa-users"></i> <span
                                 class="nav-label"> Antrian</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/loket/pendaftaran')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/loket/pendaftaran')}}"><i class="fa fa-pencil-square-o"></i> <span
                                 class="nav-label"> Pendaftaran</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/loket/pengunjung')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/loket/pengunjung')}}"><i class="fa fa-male"></i> <span
                                 class="nav-label"> Pengunjung</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/loket/profil')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/loket/profil')}}"><i class="fa  fa-picture-o"></i> <span
                                 class="nav-label"> Profil</span></a>
                 </li>
             </ul>

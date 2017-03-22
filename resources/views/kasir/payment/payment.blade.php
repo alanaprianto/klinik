@@ -23,15 +23,6 @@
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#">Config option 1</a>
-                            </li>
-                            <li><a href="#">Config option 2</a>
-                            </li>
-                        </ul>
                         <a class="close-link">
                             <i class="fa fa-times"></i>
                         </a>
@@ -41,19 +32,25 @@
                     <div class="row">
                         <div class="col-md-6">
                             <dl class="dl-horizontal">
-                                <dt>No RM</dt>
+                                <dt>No RM : </dt>
                                 <dd>{{$patient->number_medical_record}}</dd>
-                                <dt>Nama Pasien</dt>
+                                <dt>Nama Pasien : </dt>
                                 <dd>{{$patient->full_name}}</dd>
-                                <dt>TTL</dt>
-                                <dd>{{$patient->place}} / {{$patient->birth}}</dd>
-                                <dt>Umur</dt>
+                                {{--<dt>TTL : </dt>--}}
+                                {{--<dd>{{$patient->place}} / {{$patient->birth}}</dd>--}}
+                                <dt>Umur : </dt>
                                 <dd>{{$patient->age}}</dd>
-                                <dt>Jenis Kelamin</dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="dl-horizontal">
+                                <dt>No Askes / Jamkesmas : </dt>
+                                <dd>{{$patient->askes_number}}</dd>
+                                <dt>Jenis Kelamin : </dt>
                                 <dd>{{$patient->gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</dd>
-                                <dt>No Telp</dt>
+                                <dt>No Telp : </dt>
                                 <dd>{{$patient->phone_number}}</dd>
-                                <dt>No Askes / Jamkesmas</dt>
+                                <dt>No Askes / Jamkesmas : </dt>
                                 <dd>{{$patient->askes_number}}</dd>
                             </dl>
                         </div>
