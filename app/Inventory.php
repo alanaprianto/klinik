@@ -16,11 +16,16 @@ class Inventory extends Model
         'stock_maximal',
         'explain',
         'unit',
-        'sediaan'
+        'sediaan',
+        'price'
     ];
 
     public function batches(){
         return $this->hasMany('App\Batch');
+    }
+
+    public function pharmacySellers(){
+        return $this->hasMany('App\PharmacySeller');
     }
 
 }

@@ -61,14 +61,14 @@
                                         <input type="number" class="form-control" name="total" value="{{$inventory ? $inventory->total : ''}}">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Stok Minimal<span class="error">*</span> </label>
                                     <div class="col-sm-8">
                                         <input type="number" class="form-control" name="stock_minimal" value="{{$inventory ? $inventory->stock_minimal : ''}}">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Stok Maksimal<span class="error">*</span> </label>
                                     <div class="col-sm-8">
@@ -93,6 +93,12 @@
                                                 <option value="{{$sediaan}}" {{$inventory && ($inventory->sediaan == $sediaan) ? 'selected' : ''}}>{{$sediaan}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Harga Satuan</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="price" value="{{$inventory ? $inventory->price : ''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">

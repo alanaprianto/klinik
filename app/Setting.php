@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Model
 {
     protected $fillable = [
-        'name',
-        'desc'
+        'name_value',
     ];
+
+    public function getNameValueAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 }

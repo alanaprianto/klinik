@@ -69,11 +69,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/tindakan/delete', 'ServiceController@deleteService');
     Route::post('/tindakan-list', 'ServiceController@getList');
 
-    Route::get('/setting', 'SettingController@Index');
-    Route::get('/setting/{param}', 'SettingController@getSetting');
+    Route::get('/setting', 'SettingController@getSetting');
     Route::post('/setting/modify', 'SettingController@postSetting');
-    Route::post('/setting/delete', 'SettingController@deleteSetting');
-    Route::post('/setting-list', 'SettingController@getList');
+
 
     Route::get('/jasa-dokter', 'DoctorServiceController@index');
     Route::post('/jasa-dokter-list', 'DoctorServiceController@getList');
@@ -163,8 +161,15 @@ Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['aut
 
 Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['auth', 'view.finder.apotek', 'role:apotek']], function () {
     Route::get('/', 'ApotekController@index');
-    Route::get('/pengeluaran', 'ExpenditureController@index');
-    Route::get('/pengeluaran/{param}', 'ExpenditureController@getCreateEdit');
+
+    Route::get('/resep', 'RecipeController@index');
+    Route::get('/resep/{param}', 'RecipeController@getCreateEdit');
+    Route::post('/resep/post', 'RecipeController@postCreate');
+    Route::post('/recipe-list', 'RecipeController@getList');
+    Route::get('/resep/detail/{id}', 'RecipeController@getDetail');
+    Route::post('/get-inventory', 'RecipeController@getInventory');
+    Route::post('/search-reference', 'RecipeController@postAjaxReference');
+
 
     /*common used*/
     Route::get('/profil', '\App\Http\Controllers\ProfileController@index');

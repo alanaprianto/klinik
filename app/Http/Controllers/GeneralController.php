@@ -38,6 +38,7 @@ class GeneralController extends Controller
             $register_id = $input['register_id'];
         }
         $reference = Reference::create([
+            'number_reference' => Carbon::now()->format('Ymdhis'),
             'register_id' => $register_id,
             'poly_id' => $input['poly'],
             'staff_id' => $input['doctor'],

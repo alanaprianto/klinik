@@ -28,7 +28,8 @@ class Staff extends Model
         'staff_position_id',
         'image_profile',
         'user_id'
-];
+    ];
+
 
     public function user(){
         return $this->belongsTo('App\User', 'user_id', 'id');
@@ -65,6 +66,11 @@ class Staff extends Model
 
     public function doctorService(){
         return $this->hasOne('App\DoctorService');
+    }
+
+    /*receipes khusus buat staff type role = apoteker*/
+    public function recipes(){
+        return $this->hasMany('App\Recipe');
     }
 
     /*mutator*/

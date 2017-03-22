@@ -7,7 +7,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Data Pendaftar</h5>
+                    <h5>Resep</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -27,14 +27,14 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <table class="table" id="table-expenditure">
+                    <table class="table" id="table-recipe">
                         <thead>
                         <tr>
                             <td>No</td>
-                            <td>No Register</td>
-                            <td>Nama Pasien</td>
-                            <td>Tanggal Pendaftaran</td>
-                            <td>Status</td>
+                            <td>Nama Pembeli</td>
+                            <td>Nomor Resep</td>
+                            <td>Dirujuk Poli</td>
+                            <td>Tanggal Transaksi</td>
                             <td>Action</td>
                         </tr>
                         </thead>

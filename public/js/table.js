@@ -809,6 +809,51 @@
         });
     };
 
+    rs.ApotekRecipeTable = function ($element, listUrl, csrf) {
+        if (!$element.length) return null;
+        return $element.DataTable({
+            processing: true,
+            serverSide: true,
+            "deferRender": true,
+            ajax: {
+                'url': listUrl,
+                'type': 'POST',
+                'headers': {
+                    'X-CSRF-TOKEN': csrf
+                }
+            },
+            dom: 'lBfrtip',
+            "order": [[1, 'asc']],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    title: $('.print-datatable').attr('title')
+                }
+            ],
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'reference.register.patient.full_name', name: 'reference.register.patient.full_name'},
+                {data: 'number_recipe', name: 'number_recipe'},
+                {data: 'reference.poly.name', name: 'reference.poly.name'},
+                {data: 'created_at', name: 'created_at'},
+                {
+                    "data": '',
+                    "defaultContent": '',
+                    "orderable": false,
+                    "searchable": false,
+                    "mRender": function (data, type, row) {
+                        var detail = '<a href="/apotek/resep/detail/'+row.id+'"><i class="fa fa-info"></i></a>';
+                        return detail;
+                    }
+                }
+            ]
+        });
+    };
+
 
     function orderNumber($datatable) {
         $datatable.on('order.dt search.dt draw.dt', function () {
@@ -902,6 +947,11 @@
         var inventory = rs.InventoryTable($('#table-inventory'), '/admin/inventory-list', $('meta[name="csrf-token"]').attr('content'));
         if (inventory) {
             orderNumber(inventory);
+        }
+
+        var apotek_recipe = rs.ApotekRecipeTable($('#table-recipe'), '/apotek/recipe-list', $('meta[name="csrf-token"]').attr('content'));
+        if (apotek_recipe) {
+            orderNumber(apotek_recipe);
         }
 
 
