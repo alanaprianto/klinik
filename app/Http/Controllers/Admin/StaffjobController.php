@@ -29,8 +29,9 @@ class StaffjobController extends Controller
     public function postStaffjob(Request $request)
     {
         $input = $request->except(['_token']);
-
-
+        $this->validate($request, [
+            'name' => 'required|max:255|unique:staff_jobs',
+        ]);
         if (isset($input['staffjob_id'])) {
             ;
             $staffjob = StaffJob::find($input['staffjob_id']);

@@ -9,15 +9,6 @@
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#">Config option 1</a>
-                            </li>
-                            <li><a href="#">Config option 2</a>
-                            </li>
-                        </ul>
                         <a class="close-link">
                             <i class="fa fa-times"></i>
                         </a>
@@ -27,15 +18,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <dl class="dl-horizontal">
-                                <dt>No RM</dt>
+                                <dt>No RM :</dt>
                                 <dd>{{$reference->register->patient->number_medical_record}}</dd>
-                                <dt>Nama Pasien</dt>
+                                <dt>Nama Pasien : </dt>
                                 <dd>{{$reference->register->patient->full_name}}</dd>
-                            </dl>
-                        </div>
-                        <div class="col-md-6">
-                            <dl class="dl-horizontal">
-                                <dt>Status Kunjungan</dt>
+                                <dt>Status Kunjungan : </dt>
                                 <dd>
                                     @if($reference->status == 1)
                                         <span class="alert-danger">Belum Diperiksa</span>
@@ -47,11 +34,16 @@
                                         <span class="alert-success">Selesai Pemeriksaan</span>
                                     @endif
                                 </dd>
-                                <dt>Catatan</dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="dl-horizontal">
+
+                                <dt>Catatan : </dt>
                                 <dd>{{$reference->notes}}</dd>
-                                <dt>Dokter Pemeriksa</dt>
+                                <dt>Dokter Pemeriksa : </dt>
                                 <dd>{{$reference->doctor->full_name}}</dd>
-                                <dt>Poli Tujuan</dt>
+                                <dt>Poli Tujuan : </dt>
                                 <dd>{{$reference->poly->name}}</dd>
                             </dl>
                         </div>

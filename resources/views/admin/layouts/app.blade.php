@@ -27,7 +27,11 @@
     <link href="{{asset('css/buttons.dataTables.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/jquery.timepicker.min.css')}}" rel="stylesheet">
-
+    <style>
+        .error {
+            color: #FF0000;
+        }
+    </style>
     @yield('css')
 </head>
 
@@ -94,23 +98,23 @@
                                 class="nav-label"> User</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/admin/roles')}}"><i class="fa fa-user"></i> <span
+                    <a href="{{url('/admin/roles')}}"><i class="fa  fa-exchange"></i> <span
                                 class="nav-label"> Role</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/admin/rumah-sakit/profile')}}"><i class="fa fa-user"></i> <span
+                    <a href="{{url('/admin/rumah-sakit/profile')}}"><i class="fa fa-hospital-o"></i> <span
                                 class="nav-label"> Profil Rumah Sakit</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/admin/pengunjung')}}"><i class="fa fa-user"></i> <span
+                    <a href="{{url('/admin/pengunjung')}}"><i class="fa fa-wheelchair"></i> <span
                                 class="nav-label"> Pengunjung</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/admin/profil')}}"><i class="fa fa-user"></i> <span
+                    <a href="{{url('/admin/profil')}}"><i class="fa fa-file-image-o"></i> <span
                                 class="nav-label"> Profil</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/admin/inventory')}}"><i class="fa fa-user"></i> <span
+                    <a href="{{url('/admin/inventory')}}"><i class="fa  fa-cart-plus"></i> <span
                                 class="nav-label"> Inventory</span></a>
                 </li>
             </ul>

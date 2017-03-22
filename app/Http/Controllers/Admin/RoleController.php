@@ -30,6 +30,10 @@ class RoleController extends Controller
 
     public function postRole(Request $request){
         $input = $request->except('_toke');
+        $this->validate($request, [
+            'name' => 'required|max:255|unique:roles',
+            'display_name' => 'required|max:255|unique:roles',
+        ]);
         if(isset($input['role_id'])){
             $role = Role::find($input['role_id']);
             $role->update($input);

@@ -30,7 +30,10 @@ class poliController extends Controller
     public function postPoli(Request $request)
     {
         $input = $request->except(['_token']);
+        $this->validate($request, [
+            'name' => 'required|max:255|unique:polies',
 
+        ]);
 
         if (isset($input['poli_id'])) {
             ;

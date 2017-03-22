@@ -57,15 +57,15 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{url('/kasir/pembayaran')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/kasir/pembayaran')}}"><i class="fa fa-credit-card"></i> <span
                                 class="nav-label"> Pembayaran</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/kasir/pengunjung')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/kasir/pengunjung')}}"><i class="fa fa-male"></i> <span
                                 class="nav-label"> Pengunjung</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/kasir/profil')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/kasir/profil')}}"><i class="fa  fa-file-image-o"></i> <span
                                 class="nav-label"> Profil</span></a>
                 </li>
             </ul>

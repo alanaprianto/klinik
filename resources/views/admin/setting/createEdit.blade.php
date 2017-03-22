@@ -34,7 +34,7 @@
                                 @endif
 
                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                    <label for="tindakan" class="col-md-4 control-label">Setting</label>
+                                    <label for="tindakan" class="col-md-4 control-label">Name <span class="error">*</span></label>
                                     <div class="col-md-6">
                                         <input id="name" type="text" class="form-control" name="name"
                                                value="{{ $setting ? $setting->name :''}}" placeholder="Name" required autofocus>
@@ -67,6 +67,7 @@
                                         </button>
                                     </div>
                                 </div>
+                                <p class="error"> (*) mohon untuk di isi  </p>
                             </form>
                         </div>
                     </div>

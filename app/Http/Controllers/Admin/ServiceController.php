@@ -31,7 +31,10 @@ class ServiceController extends Controller
 
 
         $input = $request->except(['_token']);
-
+        $this->validate($request, [
+            'name' => 'required|max:255|unique:services',
+            'cost' => 'required|max:255|unique:services',
+        ]);
         if (isset($input['service_id'])) {
             ;
             $service = Service::find($input['service_id']);

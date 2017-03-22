@@ -25,15 +25,6 @@
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#">Config option 1</a>
-                            </li>
-                            <li><a href="#">Config option 2</a>
-                            </li>
-                        </ul>
                         <a class="close-link">
                             <i class="fa fa-times"></i>
                         </a>
@@ -41,32 +32,80 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-md-6">
-                            <dl class="dl-horizontal">
-                                <dt>No RM</dt>
-                                <dd>{{$patient->number_medical_record}}</dd>
-                                <dt>Nama Pasien</dt>
-                                <dd>{{$patient->full_name}}</dd>
-                                <dt>TTL</dt>
-                                <dd>{{$patient->place}} / {{$patient->birth}}</dd>
-                                <dt>Umur</dt>
-                                <dd>{{$patient->age}}</dd>
-                                <dt>Jenis Kelamin</dt>
-                                <dd>{{$patient->gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</dd>
-                                <dt>No Telp</dt>
-                                <dd>{{$patient->phone_number}}</dd>
-                                <dt>No Askes / Jamkesmas</dt>
-                                <dd>{{$patient->askes_number}}</dd>
-                            </dl>
+                        <div class="col-md-12">
+                            <table class="table table-info">
+                                <tbody>
+                                <tr>
+                                    <th>No RM</th>
+                                    <td>:</td>
+                                    <td class="text-navy">{{$patient->number_medical_record}}</td>
+                                    <th>No Askes / Jamkesmas</th>
+                                    <td>:</td>
+                                    <td >{{$patient->askes_number}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nama Pasien</th>
+                                    <td>:</td>
+                                    <td >{{$patient->full_name}}</td>
+                                    <th>Umur</th>
+                                    <td>:</td>
+                                    <td >{{$patient->age}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Jenis Kelamin</th>
+                                    <td>:</td>
+                                    <td >{{$patient->gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</td>
+                                    <th>Agama</th>
+                                    <td>:</td>
+                                    <td>{{$patient->religion}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Alamat</th>
+                                    <td>:</td>
+                                    <td>{{$patient->address}}</td>
+                                    <th>Nama Dusun /RT/RW</th>
+                                    <td>:</td>
+                                    <td>{{$patient->rt_rw}}</td>
+
+                                </tr>
+                                <tr>
+                                    <th>Kelurahan</th>
+                                    <td>:</td>
+                                    <td>{{$patient->sub_district}}</td>
+                                    <th>Kecamatan</th>
+                                    <td>:</td>
+                                    <td>{{$patient->district}}</td>
+
+                                </tr>
+                                <tr>
+                                    <th>Provinsi / Kota</th>
+                                    <td>:</td>
+                                    <td>{{$patient->province}} / {{$patient->city}}</td>
+                                    <th>No Telepon</th>
+                                    <td>:</td>
+                                    <td >{{$patient->phone_number}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Pendidikan</th>
+                                    <td>:</td>
+                                    <td>{{$patient->last_education}}</td>
+                                    <th>Pekerjaan</th>
+                                    <td>:</td>
+                                    <td>{{$patient->job}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Jumlah Pendaftaran</th>
+                                    <td>:</td>
+                                    <td>{{count($patient->registers)}} Kali Mendaftar</td>
+                                    <th>Jumlah Kunjungan</th>
+                                    <td>:</td>
+                                    <td>{{$counts}} Kunjungan</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col-md-6">
-                            <dl class="dl-horizontal">
-                                <dt>Jumlah Pendaftaran Pasien</dt>
-                                <dd>{{count($patient->registers)}} Kali Mendaftar</dd>
-                                <dt>Jumlah Kunjungan Pasien</dt>
-                                <dd>{{$counts}} Kunjungan</dd>
-                            </dl>
-                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -95,7 +134,7 @@
                                     </tr>
                                     <tr>
                                         <th class="hiddenRow">
-                                            <div class="accordian-body collapse demo{{$index}}"> Poly Tujuan</div>
+                                            <div class="accordian-body collapse demo{{$index}}"> Poli Tujuan</div>
                                         </th>
                                         <th class="hiddenRow">
                                             <div class="accordian-body collapse demo{{$index}}"> Diperiksa Oleh</div>

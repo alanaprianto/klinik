@@ -35,7 +35,7 @@
                                     <input type="hidden" name="user_id" value="{{$user->id}}">
                                 @endif
                                 <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                                    <label for="user" class="col-md-4 control-label">User Name </label>
+                                    <label for="user" class="col-md-4 control-label">User Name <span class="error">*</span> </label>
                                     <div class="col-md-6">
                                         <input id="username" type="text" class="form-control" name="username"
                                                value="{{ $user ? $user->username :'' }}" placeholder="User Name" required autofocus>
@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                    <label for="stock" class="col-md-4 control-label">email</label>
+                                    <label for="stock" class="col-md-4 control-label">email <span class="error">*</span>  </label>
                                     <div class="col-md-6">
                                         <input id="email" type="email" class="form-control" placeholder="Email"
                                                name="email" value="{{ $user ? $user->email :'' }}" required>
@@ -62,7 +62,7 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                    <label for="password" class="col-md-4 control-label">password</label>
+                                    <label for="password" class="col-md-4 control-label">password <span class="error">*</span> </label>
                                     <div class="col-md-6">
                                         <input id="password" type="password" class="form-control" placeholder="Password"
                                                name="password" value="{{ $user ? $user->password :'' }}" required>
@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="col-md-4 control-label">password</label>
+                                    <label for="password" class="col-md-4 control-label">password <span class="error">*</span> </label>
                                     <div class="col-md-6">
                                         <input id="password-confirm" type="password" class="form-control"
                                                name="password_confirmation" placeholder="Confirm Password" value="{{ $user ? $user->password :'' }}"

@@ -37,7 +37,7 @@
                         @endif
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Nama</label>
+                            <label for="name" class="col-md-4 control-label">Nama<span class="error">*</span></label>
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control" name="name"
                                        value="{{ $role ? $role->name :''}}" placeholder="Name" required>
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('display_name') ? ' has-error' : '' }}">
-                            <label for="user" class="col-md-4 control-label">Nama Tampilan</label>
+                            <label for="user" class="col-md-4 control-label">Nama Tampilan <span class="error">*</span></label>
                             <div class="col-md-6">
                                 <input id="display_name" type="text" class="form-control" name="display_name"
                                        value="{{ $role ? $role->display_name :'' }}" placeholder="Display Name" required>
@@ -81,6 +81,7 @@
                                 </button>
                             </div>
                         </div>
+                        <p class="error"> (*) mohon untuk di isi  </p>
                     </form>
                 </div>
             </div>

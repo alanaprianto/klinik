@@ -28,8 +28,7 @@ class Staff extends Model
         'staff_position_id',
         'image_profile',
         'user_id'
->>>>>>> 56bd06d7cc2c0e94b3c9d8786d62f916ce725ff7
-    ];
+];
 
     public function user(){
         return $this->belongsTo('App\User', 'user_id', 'id');

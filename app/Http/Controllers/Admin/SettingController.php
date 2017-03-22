@@ -28,7 +28,9 @@ class SettingController extends Controller
     public function postSetting(Request $request)
     {
 
-
+        $this->validate($request, [
+            'name' => 'required|max:255|settings',
+        ]);
         $input = $request->except(['_token']);
 
         if (isset($input['setting_id'])) {
