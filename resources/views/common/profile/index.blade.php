@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('css')
     <link href="{{asset('css/croppie.css')}}" rel="stylesheet">
+    <style>
+        .error {
+            color: #FF0000;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="row">
@@ -34,7 +39,7 @@
 
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Foto Profil</label>
+                            <label class="col-sm-2 control-label">Foto Profil <span class="error">*</span></label>
                             <div class="col-md-10">
                                 <input type="file" name="file" class="form-control" id="upload"
                                        value="Choose a file"
@@ -43,14 +48,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">NIK</label>
+                            <label class="col-sm-2 control-label">NIK <span class="error">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="nik"
                                        value="{{$user->staff ? $user->staff->nik : ''}}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Nama Lengkap</label>
+                            <label class="col-sm-2 control-label">Nama Lengkap <span class="error">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="full_name"
                                        value="{{$user->staff ? $user->staff->full_name : ''}}">
@@ -67,9 +72,20 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Alamat</label>
+                            <label class="col-sm-2 control-label">Nomor Telepon <span class="error">*</span></label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" name="address">{{$user->staff ? $user->staff->address : ''}}</textarea>
+                                <input type="text" class="form-control" name="phone_number"
+                                       value="{{$user->staff ? $user->staff->phone_number : ''}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Jenis Kelamin <span class="error">*</span></label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="gender">
+                                    @foreach(getGenders() as $gender)
+                                        <option value="{{$gender}}" {{ $user->staff && ($gender == $user->staff->gender) ? 'selected' : ''}}>{{$gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -83,15 +99,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Jenis Kelamin</label>
+                            <label class="col-sm-2 control-label">Alamat <span class="error">*</span></label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="gender">
-                                    @foreach(getGenders() as $gender)
-                                        <option value="{{$gender}}" {{ $user->staff && ($gender == $user->staff->gender) ? 'selected' : ''}}>{{$gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</option>
-                                    @endforeach
-                                </select>
+                                <textarea class="form-control" name="address">{{$user->staff ? $user->staff->address : ''}}</textarea>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Provinsi / Kota</label>
                             <div class="col-sm-5">
@@ -129,13 +142,7 @@
                                 <input type="text" class="form-control" name="rt_rw" value="{{$user->staff ? $user->staff->rt_rw : ''}}">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Nomor Telepon</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="phone_number"
-                                       value="{{$user->staff ? $user->staff->phone_number : ''}}">
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Pendidikan</label>
                             <div class="col-sm-10">

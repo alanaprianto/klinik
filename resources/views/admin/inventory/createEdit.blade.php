@@ -108,6 +108,76 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                            <div class="row">
+                                {{--<div class="col-md-6">--}}
+
+                                    {{--<div class="row">--}}
+                                            {{--<div class="col-md-12">   <hr>--}}
+                                                {{--<h3>Batches</h3>--}}
+                                                {{--<div class="form-group">--}}
+                                                    {{--<label class="col-sm-4 control-label">Code</label>--}}
+                                                    {{--<div class="col-sm-8">--}}
+                                                        {{--<input type="text" class="form-control" name="code" value=""  disabled>--}}
+                                                    {{--</div>--}}
+                                                {{--</div>--}}
+                                                {{--<div class="form-group">--}}
+                                                    {{--<label class="col-sm-4 control-label">Nama Batches</label>--}}
+                                                    {{--<div class="col-sm-8">--}}
+                                                        {{--<input type="text" class="form-control" name="name" value=""  disabled>--}}
+                                                    {{--</div>--}}
+                                                {{--</div>--}}
+                                                {{--<div class="form-group">--}}
+                                                    {{--<label class="col-sm-4 control-label">Expired Date</label>--}}
+                                                    {{--<div class="col-sm-8">--}}
+                                                        {{--<input type="text" class="form-control" name="expired_date" value=""  disabled>--}}
+                                                    {{--</div>--}}
+                                                {{--</div>--}}
+                                                {{--<div class="form-group">--}}
+                                                    {{--<label class="col-sm-4 control-label">stock</label>--}}
+                                                    {{--<div class="col-sm-8">--}}
+                                                        {{--<input type="text" class="form-control" name="stock" value=""  disabled>--}}
+                                                    {{--</div>--}}
+                                                {{--</div>--}}
+
+                                            {{--</div>--}}
+
+                                        {{--</div>--}}
+                                </div>
+                                <hr>
+                                <div class="col-md-6">
+
+                                    <h3>Tambah Batches </h3>
+                                    <form method="post" class="form-horizontal" action="{{url('/admin/inventory/post')}}">
+                                        {{csrf_field()}}
+                                        <input type="hidden" name="register_id" value="">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Code</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="code" value=""  >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Nama Batches</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="name" value=""  >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">Expired Date</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="expired_date" value="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">stock</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="stock" value="" >
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-12 text-center">

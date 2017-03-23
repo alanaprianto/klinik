@@ -140,7 +140,7 @@
                                 <div class="col-md-6">
                                     @foreach($register->references as $index => $reference)
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-12">   <hr>
                                                 <h3>Rujukan {{$index+1}}</h3>
                                                 <div class="form-group">
                                                     <label class="col-sm-4 control-label">Klinik</label>

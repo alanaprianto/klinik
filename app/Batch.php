@@ -11,6 +11,8 @@ class Batch extends Model
         'name',
         'expired_date',
         'inventory_id',
+        'sum',
+        'stock'
     ];
 
     public function inventory(){

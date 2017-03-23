@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Batch;
 use App\Inventory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,11 +23,12 @@ class InventoryController extends Controller
     public function getCreateEdit(Request $request, $param){
         $id = $request->query('id');
         $inventory = '';
+        $batches = Batch::get();
         if(($param == 'edit') && $id){
             $inventory = Inventory::find($id);
         }
 
-        return view('inventory.createEdit', compact('inventory'));
+        return view('inventory.createEdit', compact('inventory','batches'));
     }
 
     public function store(Request $request){

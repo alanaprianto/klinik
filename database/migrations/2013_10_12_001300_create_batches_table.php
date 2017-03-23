@@ -17,6 +17,7 @@ class CreateBatchesTable extends Migration
             $table->increments('id');
             $table->string('code')->nullable();
             $table->string('name')->nullable();
+            $table->double('stock')->nullable();
             $table->date('expired_date')->nullable();
             $table->integer('inventory_id')->nullable()->unsigned();
             $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
