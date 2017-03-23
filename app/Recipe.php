@@ -27,4 +27,8 @@ class Recipe extends Model
     public function tuslahs(){
         return $this->hasMany('App\Tuslah');
     }
+
+    public function buyer(){
+        return $this->hasOne('App\Buyer');
+    }
 }

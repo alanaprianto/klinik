@@ -27,13 +27,16 @@
                     </div>
                 </div>
                 <div class="ibox-content">
+                    <div class="action">
+                        <a href="/apotek/resep/tambah" class="btn btn-primary"><i class="fa fa-plus"></i> Resep</a>
+                    </div>
                     <table class="table" id="table-recipe">
                         <thead>
                         <tr>
                             <td>No</td>
                             <td>Nama Pembeli</td>
                             <td>Nomor Resep</td>
-                            <td>Dirujuk Poli</td>
+                            <td>Poli / Pembelian Luar</td>
                             <td>Tanggal Transaksi</td>
                             <td>Action</td>
                         </tr>

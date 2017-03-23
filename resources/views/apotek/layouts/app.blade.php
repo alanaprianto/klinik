@@ -69,6 +69,16 @@
                     <a href="{{url('/apotek/pengunjung')}}"><i class="fa fa-th-large"></i> <span
                                 class="nav-label"> Pengunjung</span></a>
                 </li>
+                <li>
+                    <a href="{{url('/apotek/inventory')}}"><i class="fa fa-cart-plus"></i> <span
+                                class="nav-label"> Inventory</span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{url('/apotek/obat')}}"><i class="fa fa-user-md"></i> <span
+                                        class="nav-label"> Obat</span></a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
 
         </div>

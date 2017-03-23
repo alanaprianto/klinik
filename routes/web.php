@@ -81,18 +81,25 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('/rumah-sakit/profile', 'AdminController@getProfile');
     Route::post('/rumah-sakit/profil', 'AdminController@postProfile');
 
-    Route::get('/inventory', 'InventoryController@index');
-    Route::post('/inventory-list', 'InventoryController@getList');
-    Route::get('/inventory/{param}', 'InventoryController@getCreateEdit');
-    Route::post('/inventory/post', 'InventoryController@store');
-    Route::post('/inventory/delete', 'InventoryController@delete');
+
 
     /*common used*/
     Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
     Route::post('/profil', '\App\Http\Controllers\ProfileController@postUpdate');
+
     Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
     Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
     Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
+
+    Route::get('/inventory', '\App\Http\Controllers\InventoryController@index');
+    Route::post('/inventory-list', '\App\Http\Controllers\InventoryController@getList');
+    Route::get('/inventory/{param}', '\App\Http\Controllers\InventoryController@getCreateEdit');
+    Route::post('/inventory/post', '\App\Http\Controllers\InventoryController@store');
+    Route::post('/inventory/delete', '\App\Http\Controllers\InventoryController@delete');
+
+    Route::get('/obat', '\App\Http\Controllers\InventoryController@indexMedicine');
+    Route::get('/obat/{param}', '\App\Http\Controllers\InventoryController@getCreateEditMedicine');
+    /*end common used*/
 });
 
 Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['auth', 'view.finder.loket', 'role:loket']], function () {
@@ -117,6 +124,8 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
     Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
     Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
     Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
+    /*end common used*/
+
 
 });
 
@@ -141,6 +150,8 @@ Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middlewar
     Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
     Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
     Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
+    /*end common used*/
+
 });
 
 Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['auth', 'view.finder.kasir', 'role:kasir']], function () {
@@ -156,6 +167,8 @@ Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['aut
     Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
     Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
     Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
+    /*end common used*/
+
 });
 
 
@@ -165,7 +178,7 @@ Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['a
     Route::get('/resep', 'RecipeController@index');
     Route::get('/resep/{param}', 'RecipeController@getCreateEdit');
     Route::post('/resep/post', 'RecipeController@postCreate');
-    Route::post('/recipe-list', 'RecipeController@getList');
+    Route::post('/resep-list', 'RecipeController@getList');
     Route::get('/resep/detail/{id}', 'RecipeController@getDetail');
     Route::post('/get-inventory', 'RecipeController@getInventory');
     Route::post('/search-reference', 'RecipeController@postAjaxReference');
@@ -178,4 +191,15 @@ Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['a
     Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
     Route::post('/pengunjung-list', '\App\Http\Controllers\VisitorController@getList');
     Route::get('/pengunjung/detail/{id}', '\App\Http\Controllers\VisitorController@getDetail');
+
+    Route::get('/inventory', '\App\Http\Controllers\InventoryController@index');
+    Route::post('/inventory-list', '\App\Http\Controllers\InventoryController@getList');
+    Route::get('/inventory/{param}', '\App\Http\Controllers\InventoryController@getCreateEdit');
+    Route::post('/inventory/post', '\App\Http\Controllers\InventoryController@store');
+    Route::post('/inventory/delete', '\App\Http\Controllers\InventoryController@delete');
+
+    Route::get('/obat', '\App\Http\Controllers\InventoryController@indexMedicine');
+    Route::get('/obat/{param}', '\App\Http\Controllers\InventoryController@getCreateEditMedicine');
+    /*end common used*/
+
 });

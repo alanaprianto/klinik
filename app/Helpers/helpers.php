@@ -109,8 +109,8 @@ function getConditions(){
 
 function getCategories(){
     return [
-        'Alkes',
-        'Non Alkes'
+        'Medis',
+        'Non Medis'
     ];
 }
 

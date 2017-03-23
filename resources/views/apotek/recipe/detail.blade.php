@@ -20,7 +20,7 @@
                         <tr>
                             <th style="width: 20%">Nama Pembeli</th>
                             <td style="width: 5%">:</td>
-                            <td>{{$recipe->reference->register->patient->full_name}}</td>
+                            <td>{{$recipe->reference ? $recipe->reference->register->patient->full_name : $recipe->buyer->full_name}}</td>
                         </tr>
                         <tr>
                             <th>Nomor Resep</th>

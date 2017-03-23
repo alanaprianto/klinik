@@ -114,8 +114,14 @@
                                 class="nav-label"> Profil</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/admin/inventory')}}"><i class="fa  fa-cart-plus"></i> <span
+                    <a href="{{url('/admin/inventory')}}"><i class="fa fa-cart-plus"></i> <span
                                 class="nav-label"> Inventory</span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{url('/admin/obat')}}"><i class="fa fa-user-md"></i> <span
+                                        class="nav-label"> Obat</span></a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
 

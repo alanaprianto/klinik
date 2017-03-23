@@ -759,7 +759,7 @@
         });
     };
 
-    rs.InventoryTable = function ($element, listUrl, csrf) {
+    rs.InventoryTable = function ($element, listUrl, csrf, role) {
         if (!$element.length) return null;
         return $element.DataTable({
             processing: true,
@@ -800,7 +800,7 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        var edit = '<a href="/admin/inventory/edit?id='+row.id+'"><i class="fa fa-edit"></i></a>';
+                        var edit = '<a href="/'+role+'/inventory/edit?id='+row.id+'"><i class="fa fa-edit"></i></a>';
                         var remove = '<a href="javascript:;" data-id="'+row.id+'" class="btn-remove"><i class="fa fa-remove"></i></a>';
                         return edit + ' | ' + remove ;
                     }
@@ -836,15 +836,43 @@
             ],
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'reference.register.patient.full_name', name: 'reference.register.patient.full_name'},
-                {data: 'number_recipe', name: 'number_recipe'},
-                {data: 'reference.poly.name', name: 'reference.poly.name'},
-                {data: 'created_at', name: 'created_at'},
                 {
                     "data": '',
                     "defaultContent": '',
                     "orderable": false,
                     "searchable": false,
+                    "mRender": function (data, type, row) {
+                        var name;
+                        if(row.reference){
+                            name = row.reference.register.patient.full_name
+                        }else{
+                            name = row.buyer.full_name
+                        }
+                        return name;
+                    }
+                },
+                {data: 'number_recipe', name: 'number_recipe'},
+                {
+                    "data": '',
+                    "defaultContent": '',
+                    "orderable": true,
+                    "searchable": true,
+                    "mRender": function (data, type, row) {
+                        var poly;
+                        if(row.reference){
+                            poly = row.reference.poly.name
+                        }else{
+                            poly = 'Pembeli Luar'
+                        }
+                        return poly;
+                    }
+                },
+                {data: 'created_at', name: 'created_at'},
+                {
+                    "data": '',
+                    "defaultContent": '',
+                    "orderable": true,
+                    "searchable": true,
                     "mRender": function (data, type, row) {
                         var detail = '<a href="/apotek/resep/detail/'+row.id+'"><i class="fa fa-info"></i></a>';
                         return detail;
@@ -944,12 +972,20 @@
             orderNumber(doctorService);
         }
 
-        var inventory = rs.InventoryTable($('#table-inventory'), '/admin/inventory-list', $('meta[name="csrf-token"]').attr('content'));
+        var inventory = rs.InventoryTable($('#table-inventory'), '/'+$('#table-inventory').data('role')+'/inventory-list?type=non_medis', $('meta[name="csrf-token"]').attr('content'), $('#table-inventory').data('role'));
         if (inventory) {
+            inventory.column(-2).visible(false);
+            inventory.column(-3).visible(false);
+            inventory.column(-4).visible(false);
             orderNumber(inventory);
         }
 
-        var apotek_recipe = rs.ApotekRecipeTable($('#table-recipe'), '/apotek/recipe-list', $('meta[name="csrf-token"]').attr('content'));
+        var medicine = rs.InventoryTable($('#table-medicine'), '/'+$('#table-medicine').data('role')+'/inventory-list?type=medis', $('meta[name="csrf-token"]').attr('content'), $('#table-medicine').data('role'));
+        if (medicine) {
+            orderNumber(medicine);
+        }
+
+        var apotek_recipe = rs.ApotekRecipeTable($('#table-recipe'), '/apotek/resep-list', $('meta[name="csrf-token"]').attr('content'));
         if (apotek_recipe) {
             orderNumber(apotek_recipe);
         }
