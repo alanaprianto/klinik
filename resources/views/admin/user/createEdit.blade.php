@@ -37,7 +37,7 @@
                                 <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                                     <label for="user" class="col-md-4 control-label">User Name <span class="error">*</span> </label>
                                     <div class="col-md-6">
-                                        <input id="username" type="text" class="form-control" name="username"
+                                        <input id="username" type="text" class="form-control" name="username" required
                                                value="{{ $user ? $user->username :'' }}" placeholder="User Name" required autofocus>
 
                                         @if ($errors->has('name'))
@@ -50,7 +50,7 @@
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <label for="stock" class="col-md-4 control-label">email <span class="error">*</span>  </label>
                                     <div class="col-md-6">
-                                        <input id="email" type="email" class="form-control" placeholder="Email"
+                                        <input id="email" type="email" class="form-control" placeholder="Email" required
                                                name="email" value="{{ $user ? $user->email :'' }}" required>
 
                                         @if ($errors->has('email'))
@@ -64,7 +64,7 @@
                                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                     <label for="password" class="col-md-4 control-label">password <span class="error">*</span> </label>
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control" placeholder="Password"
+                                        <input id="password" type="password" class="form-control" placeholder="Password" required
                                                name="password" value="{{ $user ? $user->password :'' }}" required>
 
                                         @if ($errors->has('password'))
@@ -77,7 +77,7 @@
                                 <div class="form-group">
                                     <label for="password" class="col-md-4 control-label">password <span class="error">*</span> </label>
                                     <div class="col-md-6">
-                                        <input id="password-confirm" type="password" class="form-control"
+                                        <input id="password-confirm" type="password" class="form-control" required
                                                name="password_confirmation" placeholder="Confirm Password" value="{{ $user ? $user->password :'' }}"
                                                required>
                                     </div>
@@ -85,7 +85,7 @@
                                 <div class="form-group">
                                     <label for="role" class="col-md-4 control-label">Role</label>
                                     <div class="col-md-6">
-                                        <select id="role" name="role" class="form-control">
+                                        <select id="role" name="role" class="form-control" required>
                                             @foreach($roles as $role)
                                                 <option value="{{$role->id}}" {{$user && ($user->roles[0]->id == $role->id) ? 'selected' : ''}}>{{$role->display_name}}</option>
                                             @endforeach

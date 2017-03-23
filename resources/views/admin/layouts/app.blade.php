@@ -116,6 +116,12 @@
                 <li>
                     <a href="{{url('/admin/inventory')}}"><i class="fa  fa-cart-plus"></i> <span
                                 class="nav-label"> Inventory</span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{url('/obat')}}"><i class="fa fa-user-md"></i> <span
+                                        class="nav-label"> obat </span></a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
 
