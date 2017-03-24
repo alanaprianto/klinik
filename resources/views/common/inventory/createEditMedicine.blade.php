@@ -120,8 +120,8 @@
                         </div>
                         <div class="row">
                             <hr>
-                            <h3>Batch</h3>
                             <div class="col-md-6">
+                                <h3>Tambah Batch</h3>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Kode Batch <span class="error">*</span>
                                     </label>
@@ -129,6 +129,16 @@
                                         <input type="text" class="form-control" name="batch_code" required>
                                     </div>
                                 </div>
+                                @if($inventory)
+                                    <div class="form-group" {{$inventory ? '' : 'hidden'}}>
+                                        <label class="col-sm-4 control-label">Stock <span class="error">*</span>
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control datepicker" name="stock"
+                                                   required {{$inventory ? '' : 'disabled'}}>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Expired Date <span class="error">*</span>
                                     </label>
@@ -136,16 +146,39 @@
                                         <input type="text" class="form-control datepicker" name="expired_date" required>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group text-center">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <h3>History Batch</h3>
+                                <table id="table-history-batch">
+                                    <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Kode</th>
+                                        <th>Stok</th>
+                                        <th>Expired Date</th>
+                                        <th>Tanggal Penambahan</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if($inventory)
+                                        @forelse($inventory->batches as $index => $batch)
+                                            <tr>
+                                                <td>{{$index + 1}}</td>
+                                                <td>{{$batch->code}}</td>
+                                                <td>{{$batch->stock}}</td>
+                                                <td>{{$batch->expired_date}}</td>
+                                                <td>{{$batch->created_at}}</td>
+                                            </tr>
+                                        @empty
+                                        @endforelse
+                                    @endif
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -155,6 +188,8 @@
 
 @section('scripts')
     <script type="text/javascript">
+        $('#table-history-batch').dataTable();
+
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
             autoclose: true

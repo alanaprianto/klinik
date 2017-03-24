@@ -759,7 +759,7 @@
         });
     };
 
-    rs.InventoryTable = function ($element, listUrl, csrf, role) {
+    rs.InventoryTable = function ($element, listUrl, csrf, role, category) {
         if (!$element.length) return null;
         return $element.DataTable({
             processing: true,
@@ -800,9 +800,23 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        var edit = '<a href="/'+role+'/inventory/edit?id='+row.id+'"><i class="fa fa-edit"></i></a>';
+                        var result;
+                        var category_type;
+                        if(category == 'medicine'){
+                            category_type = 'obat';
+                        } else{
+                            category_type = 'inventory';
+                        }
+                        var maximal_add = row.stock_maximal - row.total;
+                        var edit = '<a href="/'+role+'/'+category_type+'/edit?id='+row.id+'"><i class="fa fa-edit"></i></a>';
                         var remove = '<a href="javascript:;" data-id="'+row.id+'" class="btn-remove"><i class="fa fa-remove"></i></a>';
-                        return edit + ' | ' + remove ;
+                        var batch = '<a class="btn-modal" data-id="'+row.id+'" data-max="'+maximal_add+'"><i class="fa fa-plus"></i> Batch</a>';
+                        if(category == 'medicine'){
+                            result = edit + ' | ' + remove + ' | ' + batch;
+                        } else{
+                            result =  edit + ' | ' + remove ;
+                        }
+                        return result;
                     }
                 }
             ]
@@ -887,7 +901,7 @@
         $datatable.on('order.dt search.dt draw.dt', function () {
             var page = $datatable.page.info().page;
             $datatable.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
-                cell.innerHTML = i + 1 + (page * 10);
+                cell.innerHTML = i + 1 + (page * 10);''
             });
         }).draw();
     }
@@ -972,7 +986,7 @@
             orderNumber(doctorService);
         }
 
-        var inventory = rs.InventoryTable($('#table-inventory'), '/'+$('#table-inventory').data('role')+'/inventory-list?type=non_medis', $('meta[name="csrf-token"]').attr('content'), $('#table-inventory').data('role'));
+        var inventory = rs.InventoryTable($('#table-inventory'), '/'+$('#table-inventory').data('role')+'/inventory-list?type=non_medis', $('meta[name="csrf-token"]').attr('content'), $('#table-inventory').data('role'), 'inventory');
         if (inventory) {
             inventory.column(-2).visible(false);
             inventory.column(-3).visible(false);
@@ -980,7 +994,7 @@
             orderNumber(inventory);
         }
 
-        var medicine = rs.InventoryTable($('#table-medicine'), '/'+$('#table-medicine').data('role')+'/inventory-list?type=medis', $('meta[name="csrf-token"]').attr('content'), $('#table-medicine').data('role'));
+        var medicine = rs.InventoryTable($('#table-medicine'), '/'+$('#table-medicine').data('role')+'/inventory-list?type=medis', $('meta[name="csrf-token"]').attr('content'), $('#table-medicine').data('role'), 'medicine');
         if (medicine) {
             orderNumber(medicine);
         }
@@ -1011,6 +1025,9 @@
                     break;
                 case 'Poli Anak':
                     polies.ajax.reload();
+                    break;
+                case 'medicine':
+                    medicine.ajax.reload();
                     break;
                 default:
                     polies.ajax.reload();

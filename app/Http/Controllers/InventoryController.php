@@ -7,9 +7,16 @@ use App\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Facades\Datatables;
+use LRedis;
 
 class InventoryController extends Controller
 {
+    protected $LRedis;
+    public function __construct(LRedis $lredis)
+    {
+        $this->LRedis = $lredis::connection();
+    }
+
     public function index(Request $request){
         $user = Auth::user();
         $role = 'admin';
@@ -59,7 +66,7 @@ class InventoryController extends Controller
         $id = $request->query('id');
         $inventory = '';
         if(($param == 'edit') && $id){
-            $inventory = Inventory::find($id);
+            $inventory = Inventory::with(['batches'])->find($id);
         }
         $user = Auth::user();
         $role = 'admin';
@@ -74,6 +81,13 @@ class InventoryController extends Controller
         if($input['inventory_id']){
             $inventory = Inventory::find($input['inventory_id']);
             $inventory->update($input);
+            if($input['category'] == 'Medis'){
+                $inventory->batches()->create([
+                    'code' => $input['batch_code'],
+                    'expired_date' => $input['expired_date'],
+                    'stock' => $input['stock']
+                ]);
+            }
         }else{
             $inventory = Inventory::create($input);
             if($input['category'] == 'Medis'){
@@ -109,5 +123,28 @@ class InventoryController extends Controller
             $role = 'apotek';
         }
         return redirect('/'.$role.'/inventory')->with('status', 'Behasil / Success');
+    }
+
+    public function postBatch(Request $request){
+        $input = $request->except('_token');
+        $respone = [];
+        try{
+            $inventory = Inventory::find($input['id']);
+            if ($inventory){
+                $inventory->update([
+                    'total' => $inventory->total + $input['stock']
+                ]);
+                $inventory->batches()->create($input);
+                $respone = ['isSuccess' => true, 'message' => 'Berhasil / Success', 'data' => $inventory];
+            } else{
+                $respone = ['isSuccess' => true, 'message' => 'Berhasil / Success', 'data' => null];
+            }
+        } catch (\Exception $e){
+            $respone = ['isSuccess' => false, 'message' => $e->getMessage(), 'data' => null];
+        }
+
+        $redis = $this->LRedis;
+        $redis->publish('message', 'medicine');
+        return collect($respone);
     }
 }

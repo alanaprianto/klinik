@@ -99,6 +99,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
 
     Route::get('/obat', '\App\Http\Controllers\InventoryController@indexMedicine');
     Route::get('/obat/{param}', '\App\Http\Controllers\InventoryController@getCreateEditMedicine');
+    Route::post('/post-batch', '\App\Http\Controllers\InventoryController@postBatch');
     /*end common used*/
 });
 
