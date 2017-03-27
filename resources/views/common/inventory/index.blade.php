@@ -21,10 +21,10 @@
                 <div class="ibox-content">
                     <div class="form-panel">
                         <div class="action" style="margin-bottom: 10px">
-                            <a href="{{url('/admin/inventory/create')}}" type="button"  class="btn btn-primary">Tambah Barang</a>
+                            <a href="{{url('/'.$role.'/inventory/create')}}" type="button"  class="btn btn-primary">Tambah Barang</a>
                         </div>
 
-                        <table class="table table-stripped" id="table-inventory">
+                        <table class="table table-stripped" id="table-inventory" data-role="{{$role}}">
                             <thead>
                             <tr>
                                 <th>No</th>
@@ -54,7 +54,7 @@
                 var $id = $this.data('id');
                 if (confirm('Apakah anda yakin akan menghapus postingan ini?')) {
                     var $form = $('<form />');
-                    $form.attr('action', '/admin/inventory/delete');
+                    $form.attr('action', '/{{$role}}/inventory/delete');
                     $form.attr('method', 'post');
                     $form.css({
                         'display': 'none'

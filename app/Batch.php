@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Batch extends Model
@@ -17,5 +18,11 @@ class Batch extends Model
 
     public function inventory(){
         return $this->belongsTo('App\Inventory', 'inventory_id', 'id');
+    }
+
+    public function setExpiredDateAttribute($value){
+        if ($value) {
+            $this->attributes['expired_date'] = Carbon::createFromFormat('d/m/Y', $value);
+        }
     }
 }

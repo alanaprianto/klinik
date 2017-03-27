@@ -42,7 +42,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" style="width: 44px; height: 44px"  src="{{\Illuminate\Support\Facades\Auth::user()->staff && \Illuminate\Support\Facades\Auth::user()->staff->image_profile ? asset(\Illuminate\Support\Facades\Auth::user()->staff->image_profile) : asset('img/profile_small.jpg') }}"/>
+                            <img alt="image" class="img-circle" style="width: 44px; height: 44px"  src="{{\Illuminate\Support\Facades\Auth::user()->staff && \Illuminate\Support\Facades\Auth::user()->staff->image_profile ? asset(\Illuminate\Support\Facades\Auth::user()->staff->image_profile) : asset('img/profile.jpg') }}"/>
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong
@@ -114,12 +114,12 @@
                                 class="nav-label"> Profil</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/admin/inventory')}}"><i class="fa  fa-cart-plus"></i> <span
+                    <a href="{{url('/admin/inventory')}}"><i class="fa fa-cart-plus"></i> <span
                                 class="nav-label"> Inventory</span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{url('/obat')}}"><i class="fa fa-user-md"></i> <span
-                                        class="nav-label"> obat </span></a>
+                            <a href="{{url('/admin/obat')}}"><i class="fa fa-plus-circle"></i> <span
+                                        class="nav-label"> Obat</span></a>
                         </li>
                     </ul>
                 </li>

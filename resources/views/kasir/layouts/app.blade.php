@@ -202,16 +202,10 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>Data Tables</h2>
+                <h2>SIM Klinik</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="index-2.html">Home</a>
-                    </li>
-                    <li>
-                        <a>Tables</a>
-                    </li>
-                    <li class="active">
-                        <strong>Data Tables</strong>
+                        <a href="{{url('/kasir')}}">Kasir</a>
                     </li>
                 </ol>
             </div>

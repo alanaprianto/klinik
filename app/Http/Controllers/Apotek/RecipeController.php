@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Apotek;
 
+use App\Buyer;
 use App\Inventory;
+use App\Patient;
+use App\PharmacySeller;
 use App\Recipe;
 use App\Reference;
 use App\Setting;
@@ -26,16 +29,16 @@ class RecipeController extends Controller
 
         $record_apotek = '';
         if ($id && ($param == 'edit')) {
-            $record_apotek = Pharmacy::find($id);
+            $record_apotek = PharmacySeller::find($id);
             $record_apotek->update($input);
         }
 
-        $inventories = Inventory::get();
+        $inventories = Inventory::where('category', 'Medis')->get();
         return view('recipe.createEdit', compact(['record_apotek', 'inventories']));
     }
 
     public function getList(){
-        $recipes = Recipe::with(['reference', 'reference.poly', 'reference.register', 'reference.register.patient' ,'pharmacySellers', 'staff'])->get();
+        $recipes = Recipe::with(['reference', 'reference.poly', 'reference.register', 'reference.register.patient' ,'pharmacySellers', 'staff', 'buyer'])->get();
         $datatable = Datatables::of($recipes);
         return $datatable->make(true);
     }
@@ -86,7 +89,6 @@ class RecipeController extends Controller
                 'staff_id' => Auth::user()->staff->id
             ]);
 
-
             foreach ($input['name_tuslah'] as $index => $name){
                 $recipe->tuslahs()->create([
                     'name' => $name,
@@ -95,22 +97,26 @@ class RecipeController extends Controller
                 ]);
             }
 
-
-            foreach ($input['inventory'] as $index => $item) {
-                $inventory = Inventory::find($item);
-                $total = $inventory->price * $input['amount'][$index];
-                $recipe->pharmacySellers()->create([
-                    'inventory_id' => $inventory->id,
-                    'amount' => $input['amount'][$index],
-                    'total_payment' => $total,
-                    'staff_id' => Auth::user()->staff->id,
-                    'status' => 1
-                ]);
-                $inventory->total = $inventory->total - $input['amount'][$index];
-                $inventory->save();
-            }
         } else {
+            $recipe = Recipe::create([
+                'number_recipe' => Carbon::now()->format('YmdHis'),
+                'staff_id' => Auth::user()->staff->id
+            ]);
+            $recipe->buyer()->create($input);
+        }
 
+        foreach ($input['inventory'] as $index => $item) {
+            $inventory = Inventory::find($item);
+            $total = $inventory->price * $input['amount'][$index];
+            $recipe->pharmacySellers()->create([
+                'inventory_id' => $inventory->id,
+                'amount' => $input['amount'][$index],
+                'total_payment' => $total,
+                'staff_id' => Auth::user()->staff->id,
+                'status' => 1
+            ]);
+            $inventory->total = $inventory->total - $input['amount'][$index];
+            $inventory->save();
         }
 
         return redirect('/apotek/resep')->with('status', 'Berhasil / Success');
