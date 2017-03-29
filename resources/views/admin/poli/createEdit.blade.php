@@ -35,7 +35,7 @@
                                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                         <label for="poli" class="col-md-4 control-label">Name <span class="error">*</span></label>
                                         <div class="col-md-6">
-                                            <input id="name" type="text" class="form-control" name="name"
+                                            <input id="name" type="text" class="form-control" name="name" required
                                                    value="{{ $poli ? $poli->name :''}}" placeholder="Name" required autofocus>
 
                                             @if ($errors->has('name'))
@@ -48,7 +48,7 @@
                                     <div class="form-group{{ $errors->has('desc') ? ' has-error' : '' }}">
                                         <label for="desc" class="col-md-4 control-label">Description </label>
                                         <div class="col-md-6">
-                                            <textarea class="form-control" rows="5" name="desc">{{$poli ?  $poli->desc : ''}}</textarea>
+                                            <textarea class="form-control" rows="5" name="desc" required>{{$poli ?  $poli->desc : ''}}</textarea>
 
                                             @if ($errors->has('desc'))
                                                 <span class="help-block">

@@ -32,7 +32,7 @@
                                 <div id="upload-demo">
                                     {!! $user->staff && $user->staff->image_profile ? '<img src="'.asset($user->staff->image_profile ).'">' : ''!!}
                                 </div>
-                                <input type="hidden" name="picture" class="picture">
+                                <input type="hidden" name="picture" class="picture" required>
                                 <button type="button" class="result" style="display: none">Crop</button>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Foto Profil <span class="error">*</span></label>
                             <div class="col-md-10">
-                                <input type="file" name="file" class="form-control" id="upload"
+                                <input type="file" name="file" class="form-control" id="upload" required
                                        value="Choose a file"
                                        accept="image/*">
                             </div>
@@ -50,14 +50,14 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">NIK <span class="error">*</span></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="nik"
+                                <input type="text" class="form-control" name="nik" required
                                        value="{{$user->staff ? $user->staff->nik : ''}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nama Lengkap <span class="error">*</span></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="full_name"
+                                <input type="text" class="form-control" name="full_name"required
                                        value="{{$user->staff ? $user->staff->full_name : ''}}">
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nomor Telepon <span class="error">*</span></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="phone_number"
+                                <input type="text" class="form-control" name="phone_number" required
                                        value="{{$user->staff ? $user->staff->phone_number : ''}}">
                             </div>
                         </div>
@@ -83,17 +83,17 @@
                             <div class="col-sm-10">
                                 <select class="form-control" name="gender">
                                     @foreach(getGenders() as $gender)
-                                        <option value="{{$gender}}" {{ $user->staff && ($gender == $user->staff->gender) ? 'selected' : ''}}>{{$gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</option>
+                                        <option value="{{$gender}}" required {{ $user->staff && ($gender == $user->staff->gender) ? 'selected' : ''}}>{{$gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Agama</label>
+                            <label class="col-sm-2 control-label">Agama<span class="error">*</span></label>
                             <div class="col-sm-10">
                                 <select class="form-control" name="religion">
                                     @foreach(getReligions() as $religion)
-                                        <option value="{{$religion}}" {{$user->staff && ($religion == $user->staff->religion) ? 'selected' : ''}}>{{$religion}}</option>
+                                        <option value="{{$religion}}" required {{$user->staff && ($religion == $user->staff->religion) ? 'selected' : ''}}>{{$religion}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -101,16 +101,16 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Alamat <span class="error">*</span></label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" name="address">{{$user->staff ? $user->staff->address : ''}}</textarea>
+                                <textarea class="form-control" name="address" required>{{$user->staff ? $user->staff->address : ''}}</textarea>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Provinsi / Kota</label>
+                            <label class="col-sm-2 control-label">Provinsi / Kota<span class="error">*</span></label>
                             <div class="col-sm-5">
                                 <select class="form-control" name="province" id="province">
                                     @foreach(getProvinceCities() as $province => $arrayCities)
-                                        <option value="{{$province}}" {{$user->staff && ($province == $user->staff->province) ? 'selected' : ''}}>{{$province}}</option>
+                                        <option value="{{$province}}" required {{$user->staff && ($province == $user->staff->province) ? 'selected' : ''}}>{{$province}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -119,7 +119,7 @@
                                     <option>-</option>
                                     @if($user->staff && $user->staff->city)
                                         @foreach(getProvinceCities()[$user->staff->province] as $city)
-                                            <option value="{{$city}}" {{$user->staff && ($city == $user->staff->city) ? 'selected' : ''}}>{{$city}}</option>
+                                            <option value="{{$city}}" required {{$user->staff && ($city == $user->staff->city) ? 'selected' : ''}}>{{$city}}</option>
                                         @endforeach
                                     @endif
                                 </select>

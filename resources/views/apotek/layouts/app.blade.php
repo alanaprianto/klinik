@@ -58,15 +58,15 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{url('/apotek/resep')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/apotek/resep')}}"><i class="fa fa-pencil-square-o"></i> <span
                                 class="nav-label"> Resep</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/apotek/profil')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/apotek/profil')}}"><i class="fa fa-file-image-o"></i> <span
                                 class="nav-label"> Profil</span></a>
                 </li>
                 <li>
-                    <a href="{{url('/apotek/pengunjung')}}"><i class="fa fa-th-large"></i> <span
+                    <a href="{{url('/apotek/pengunjung')}}"><i class="fa fa-wheelchair"></i> <span
                                 class="nav-label"> Pengunjung</span></a>
                 </li>
                 <li>
@@ -74,7 +74,7 @@
                                 class="nav-label"> Inventory</span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{url('/apotek/obat')}}"><i class="fa fa-user-md"></i> <span
+                            <a href="{{url('/apotek/obat')}}"><i class="fa fa-plus-circle"></i> <span
                                         class="nav-label"> Obat</span></a>
                         </li>
                     </ul>
@@ -213,18 +213,15 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>Data Tables</h2>
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="index-2.html">Home</a>
-                    </li>
-                    <li>
-                        <a>Tables</a>
-                    </li>
-                    <li class="active">
-                        <strong>Data Tables</strong>
-                    </li>
-                </ol>
+                <div class="col-lg-10">
+                    <h2>Sim Klinik</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="{{url('/apotek')}}">Apotek</a>
+                        </li>
+                        @yield('breadcrumb')
+                    </ol>
+                </div>
             </div>
             <div class="col-lg-2">
 

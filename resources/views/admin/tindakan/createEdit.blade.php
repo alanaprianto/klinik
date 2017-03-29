@@ -34,9 +34,9 @@
                                 @endif
 
                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                    <label for="tindakan" class="col-md-4 control-label">Nama *</label>
+                                    <label for="tindakan" class="col-md-4 control-label">Nama <span class="error">*</span></label>
                                     <div class="col-md-6">
-                                        <input id="name" type="text" class="form-control" name="name"
+                                        <input id="name" type="text" class="form-control" name="name" required
                                                value="{{ $service ? $service->name :''}}" placeholder="Name" required autofocus>
 
                                         @if ($errors->has('name'))
@@ -48,9 +48,9 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                    <label for="tindakan" class="col-md-4 control-label">Harga *</label>
+                                    <label for="tindakan" class="col-md-4 control-label">Harga <span class="error">*</span></label>
                                     <div class="col-md-6">
-                                        <input id="name" type="text" class="form-control" name="cost"
+                                        <input id="name" type="text" class="form-control" name="cost" required
                                                value="{{ $service ? $service->cost :''}}" placeholder="Harga" required autofocus>
 
                                         @if ($errors->has('cost'))

@@ -12,7 +12,11 @@
         }
     </style>
 @endsection
-
+@section('breadcrumb')
+    <li class="active">
+        <strong>Kasir</strong>
+    </li>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12">

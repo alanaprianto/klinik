@@ -34,7 +34,7 @@
                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                     <label for="staffjob" class="col-md-4 control-label">Name <span class="error">*</span> </label>
                                     <div class="col-md-6">
-                                        <input id="name" type="text" class="form-control" name="name"
+                                        <input id="name" type="text" class="form-control" name="name" required
                                                value="{{ $staffposition ? $staffposition->name :''}}" placeholder="Name" required autofocus>
 
                                         @if ($errors->has('name'))

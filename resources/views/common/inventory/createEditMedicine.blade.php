@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('css')
+    <style>
+        .error {
+            color: #FF0000;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -7,7 +12,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5><i class="fa fa-angle-right"></i> Inventory </h5>
+                    <h5><i class="fa fa-angle-right"></i> Inventory Obat</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>

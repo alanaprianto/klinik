@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('css')
+    <style>
+        .error {
+            color: #FF0000;
+        }
+    </style>
 @endsection
 
 @section('content')

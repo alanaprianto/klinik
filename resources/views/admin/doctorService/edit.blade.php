@@ -37,7 +37,7 @@
                         <div class="form-group{{ $errors->has('cost') ? ' has-error' : '' }}">
                             <label for="cost" class="col-md-4 control-label">Tarif Jasa Dokter</label>
                             <div class="col-md-6">
-                                <input id="cost" type="text" class="form-control" name="cost"
+                                <input id="cost" type="text" class="form-control" name="cost" required
                                        value="{{$doctor->doctorService ? $doctor->doctorService->allowance : ''}}" placeholder="Tarif Dokter" required autofocus>
 
                                 @if ($errors->has('cost'))
@@ -50,7 +50,7 @@
                         <div class="form-group{{ $errors->has('allowance') ? ' has-error' : '' }}">
                             <label for="allowance" class="col-md-4 control-label">Tunjangan Dokter</label>
                             <div class="col-md-6">
-                                <input id="allowance" type="text" class="form-control" name="allowance"
+                                <input id="allowance" type="text" class="form-control" name="allowance" required
                                        value="{{$doctor->doctorService ? $doctor->doctorService->allowance : ''}}" placeholder="Tunjangan Dokter" required>
 
                                 @if ($errors->has('allowance'))

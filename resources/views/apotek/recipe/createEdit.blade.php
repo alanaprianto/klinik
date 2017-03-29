@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('css')
     <style type="text/css">
         .table-apotek {
@@ -6,7 +7,11 @@
         }
     </style>
 @endsection
-
+@section('breadcrumb')
+    <li class="active">
+        <strong>Resep</strong>
+    </li>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12">

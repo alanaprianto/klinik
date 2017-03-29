@@ -45,14 +45,14 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">NIK</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="nik" value="{{ $staff ? $staff->nik :''}}">
+                                        <input type="text" class="form-control" name="nik" required value="{{ $staff ? $staff->nik :''}}">
 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Nama Lengkap</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="full_name" value="{{ $staff ? $staff->full_name :''}}">
+                                        <input type="text" class="form-control" name="full_name"  required value="{{ $staff ? $staff->full_name :''}}">
 
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Jenis Kelamin</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control m-b" name="gender" value="{{ $staff ? $staff->gender :''}}">
+                                        <select class="form-control m-b" name="gender"  required value="{{ $staff ? $staff->gender :''}}">
                                             @foreach(getGenders() as $gender)
                                                 <option value="{{$gender}}">{{$gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</option>
                                             @endforeach
@@ -83,13 +83,13 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Alamat</label>
                                     <div class="col-sm-8">
-                                        <textarea class="form-control" name="address" value="{{ $staff ? $staff->address :''}}"></textarea>
+                                        <textarea class="form-control" name="address" required value="{{ $staff ? $staff->address :''}}"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Agama</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control m-b" name="religion" value="{{ $staff ? $staff->religion :''}}">
+                                        <select class="form-control m-b" name="religion" required value="{{ $staff ? $staff->religion :''}}">
                                             @foreach(getReligions() as $religion)
                                                 <option value="{{$religion}}">{{$religion}}</option>
                                             @endforeach
@@ -99,7 +99,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Provinsi / Kota</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control m-b" name="province" id="province" value="{{ $staff ? $staff->province :''}}">
+                                        <select class="form-control m-b"  required name="province" id="province" value="{{ $staff ? $staff->province :''}}">
                                             @foreach(getProvinceCities() as $province => $arrayCities)
                                                 <option value="{{$province}}">{{$province}}</option>
                                             @endforeach
@@ -132,7 +132,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">No Telp</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="phone_number" value="{{ $staff ? $staff->phone_number :''}}">
+                                        <input type="text" class="form-control" required name="phone_number" value="{{ $staff ? $staff->phone_number :''}}">
                                     </div>
                                 </div>
                                 <div class="form-group"><label class="col-sm-4 control-label">Pendidikan</label>
@@ -153,7 +153,7 @@
                                 <div class="form-group">
                                 <label class="col-sm-4 control-label">Staff Job</label>
                                 <div class="col-sm-3">
-                                    <select class="form-control m-b" name="staff_job_id">
+                                    <select class="form-control m-b" required  name="staff_job_id">
                                         @foreach($staffjobs as $staffjob)
                                             <option value="{{$staffjob->id}}" {{$staff && ($staff->staff_job_id == $staff->id) ? 'selected' : ''}}>{{$staffjob->name}}</option>
                                         @endforeach
@@ -161,7 +161,7 @@
                                 </div>
                                 <label class="col-sm-2 control-label">Staff Posisi</label>
                                 <div class="col-sm-3">
-                                    <select class="form-control m-b" name="staff_position">
+                                    <select class="form-control m-b" required name="staff_position">
                                         @if($staff && $staff->staff_position_id)
                                             <option value="{{$staff->staffposition->id}}"
                                                     selected>{{$staff->staffposition->name}}</option>
