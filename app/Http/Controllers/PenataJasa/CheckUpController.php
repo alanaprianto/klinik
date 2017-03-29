@@ -39,8 +39,8 @@ class CheckUpController extends GeneralController
                 'staff_id' => Auth::user()->id
             ]);
 
-            $redis = $this->LRedis;
-            $redis->publish('message', $kiosk->type);
+/*            $redis = $this->LRedis;
+            $redis->publish('message', $kiosk->type);*/
             $filename = 'sounds/temp/' . $kiosk->queue_number . '_' . $kiosk->type . '.mp3';
             if (file_exists($filename)) {
                 File::delete($filename);
@@ -103,8 +103,8 @@ class CheckUpController extends GeneralController
                 'staff_id' => Auth::user()->id
             ]);
 
-            $redis = $this->LRedis;
-            $redis->publish('message', $kiosk->type);
+/*            $redis = $this->LRedis;
+            $redis->publish('message', $kiosk->type);*/
             $filename = 'sounds/temp/' . $kiosk->queue_number . '_' . $kiosk->type . '.mp3';
             if (file_exists($filename)) {
                 File::delete($filename);

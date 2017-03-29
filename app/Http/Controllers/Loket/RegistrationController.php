@@ -46,8 +46,8 @@ class RegistrationController extends GeneralController
                 'staff_id' => Auth::user()->id
             ]);
 
-            $redis = $this->LRedis;
-            $redis->publish('message', $kiosk->type);
+/*            $redis = $this->LRedis;
+            $redis->publish('message', $kiosk->type);*/
             $filename = 'sounds/temp/' . $kiosk->queue_number . '_' . $kiosk->type . '.mp3';
             File::delete($filename);
         }
@@ -93,11 +93,11 @@ class RegistrationController extends GeneralController
         $poly = Poly::find($request['poly']);
         $this->getKioskQueue($poly->name, $reference->id);
 
-        $redis = $this->LRedis;
+/*        $redis = $this->LRedis;
         $redis->publish('message', 'registration');
 
         $redis = $this->LRedis;
-        $redis->publish('message', 'polies');
+        $redis->publish('message', 'polies');*/
 
         return redirect('/loket/pendaftaran')->with('status', 'Berhasil menambkan / mengubah data pasien');
     }

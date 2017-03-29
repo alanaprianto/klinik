@@ -913,7 +913,9 @@
     }
 
     $(document).ready(function () {
+/*
         var socket = io.connect('http://localhost:8890');
+*/
 
         var $QueueTable = rs.QueueTable($('#table-queue'), '/loket/antrian-list', $('meta[name="csrf-token"]').attr('content'));
 
@@ -1012,7 +1014,7 @@
 
 
         //socket message
-        socket.on('message', function (data) {
+/*        socket.on('message', function (data) {
             switch (data) {
                 case 'bpjs':
                     bpjs.ajax.reload();
@@ -1038,7 +1040,7 @@
                 default:
                     polies.ajax.reload();
             }
-        });
+        });*/
     });
 
 })(jQuery, window);

@@ -59,10 +59,9 @@ class QueueController extends GeneralController
                     'status' => 2
                 ]);
 
-                $redis = $this->LRedis;
+/*                $redis = $this->LRedis;
                 $redis->publish('message', $kiosk->type);
-                /*update front*/
-                $redis->publish('update-front', json_encode([sprintf('%03d', $kiosk->queue_number), $kiosk->type, 'calling'], true));
+                $redis->publish('update-front', json_encode([sprintf('%03d', $kiosk->queue_number), $kiosk->type, 'calling'], true));*/
             }
 
         } catch (\Exception $e){
