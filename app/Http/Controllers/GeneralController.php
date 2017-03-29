@@ -138,8 +138,8 @@ class GeneralController extends Controller
             File::makeDirectory($path, $mode = 0777, true, true);
         }
         foreach ($kiosks as $index => $kiosk) {
+            $name = $kiosk->queue_number . '_' . $kiosk->type . '.mp3';
             if ($kiosk->status == 1) {
-                $name = $kiosk->queue_number . '_' . $kiosk->type . '.mp3';
                 if (!File::exists($path.$name)) {
                     $numbers = $this->getNumber($kiosk->queue_number);
                     if($type_record == 'register'){
@@ -165,6 +165,8 @@ class GeneralController extends Controller
                         file_put_contents($path . $name, $nomor_antrian . $first . $second . $third . $type);
                     }
                 }
+            }
+            if($kiosk->status == 1 || $kiosk->status == 2){
                 $kiosks[$index]->location = $name;
             }
         }

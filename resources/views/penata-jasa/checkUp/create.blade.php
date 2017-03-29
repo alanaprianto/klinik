@@ -368,12 +368,21 @@
         }
 
         $(document).ready(function () {
+            var d = new Date();
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+            var now_time = d.getFullYear() + '-' +
+                ((''+month).length<2 ? '0' : '') + month + '-' +
+                ((''+day).length<2 ? '0' : '') + day;
+
+
             $('.datepicker').datepicker({
                 keyboardNavigation: false,
                 forceParse: false,
                 calendarWeeks: true,
                 autoclose: true,
-                format: 'yyyy-mm-dd'
+                format: 'yyyy-mm-dd',
+                startDate: now_time
             });
 
             $('.icd10').select2({
@@ -475,7 +484,6 @@
                         } else {
                             alert(data.message);
                         }
-
                         $('#myModal').modal('hide')
                     }
                 })
@@ -485,9 +493,10 @@
                 e.preventDefault();
                 $this = $(this);
                 var form = $this.parent().prev().find('form').serialize();
-                var url = '/penata-jasa/print-letter?' + form
+                var url = '/penata-jasa/print-letter?' + form;
                 window.open(url);
-                $('#printModal').modal('hide')
+                $('#printModal').find('form').trigger('reset');
+                $('#printModal').modal('hide');
             });
 
         });

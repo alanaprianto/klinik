@@ -84,6 +84,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
 
 
     /*common used*/
+    Route::get('/chat', '\App\Http\Controllers\ChatController@getChat');
+
+
     Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
     Route::post('/profil', '\App\Http\Controllers\ProfileController@postUpdate');
 
@@ -120,6 +123,8 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
     Route::post('/pendaftaran/pilih-poli', 'RegistrationController@selectPoly');
 
     /*common used*/
+    Route::get('/chat', '\App\Http\Controllers\ChatController@getChat');
+
     Route::get('/profil', '\App\Http\Controllers\ProfileController@index');
     Route::post('/profil', '\App\Http\Controllers\ProfileController@postUpdate');
     Route::get('/pengunjung', '\App\Http\Controllers\VisitorController@index');
@@ -134,6 +139,8 @@ Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middlewar
     Route::get('/', 'PenataJasaController@index');
     Route::get('/antrian', 'QueueController@index');
     Route::post('/antrian-list', 'QueueController@getList');
+    Route::post('/antrian/update-status', 'QueueController@updateStatus');
+
 
     Route::get('/periksa/{id}', 'CheckUpController@getCreate');
     Route::post('/periksa', 'CheckUpController@postCreate');

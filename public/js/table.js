@@ -12,7 +12,6 @@
             bInfo: false,
             "ordering": false,
             "lengthChange": false,
-            bPaginate: false,
             ajax: {
                 'url': listUrl,
                 'type': 'POST',
@@ -111,6 +110,8 @@
                         var status = '';
                         if (data == 1 || data == "1") {
                             status = '<span class="alert-success">Open</span>'
+                        } else{
+                            status = '<span class="alert-warning">Closed</span>'
                         }
 
                         return status;
@@ -123,7 +124,12 @@
                     "searchable": false,
                     "mRender": function (data, type, row) {
                         var reference = '<a href="/loket/pendaftaran/' + row.id + '/tambah-rujukan"><i class="fa fa-plus"></i> Rujukan</a>';
-                        return reference;
+                        if(row.status == 1 || row.status == "1"){
+                            return reference;
+                        } else{
+                            return '-';
+                        }
+
                     }
                 }
             ]
@@ -901,7 +907,7 @@
         $datatable.on('order.dt search.dt draw.dt', function () {
             var page = $datatable.page.info().page;
             $datatable.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
-                cell.innerHTML = i + 1 + (page * 10);''
+                cell.innerHTML = i + 1 + (page * 10);
             });
         }).draw();
     }

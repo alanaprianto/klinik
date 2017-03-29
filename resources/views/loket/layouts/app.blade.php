@@ -37,7 +37,8 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" style="width: 44px; height: 44px"  src="{{\Illuminate\Support\Facades\Auth::user()->staff && \Illuminate\Support\Facades\Auth::user()->staff->image_profile ? asset(\Illuminate\Support\Facades\Auth::user()->staff->image_profile) : asset('img/profile_small.jpg') }}"/>
+                            <img alt="image" class="img-circle" style="width: 44px; height: 44px"
+                                 src="{{\Illuminate\Support\Facades\Auth::user()->staff && \Illuminate\Support\Facades\Auth::user()->staff->image_profile ? asset(\Illuminate\Support\Facades\Auth::user()->staff->image_profile) : asset('img/profile_small.jpg') }}"/>
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong
@@ -264,17 +265,17 @@
 
 <script>
     $(document).ready(function () {
-/*        setTimeout(function () {
-            toastr.options = {
-                closeButton: true,
-                progressBar: true,
-                showMethod: 'slideDown',
-                timeOut: 4000
-            };
-            toastr.success('SIM Klinik, Pekerjaan Jadi mudah ');
+        /*        setTimeout(function () {
+         toastr.options = {
+         closeButton: true,
+         progressBar: true,
+         showMethod: 'slideDown',
+         timeOut: 4000
+         };
+         toastr.success('SIM Klinik, Pekerjaan Jadi mudah ');
 
 
-        }, 1300);*/
+         }, 1300);*/
 
 
         var data1 = [

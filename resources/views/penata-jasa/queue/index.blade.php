@@ -53,7 +53,17 @@
             $(document).on('click', '.btn-play', function () {
                 $this = $(this);
                 var sound = $this.data('sound');
+                var csrf = $('meta[name="csrf-token"]').attr('content');
+                var id = $this.data('id');
                 fileAndPlay(sound)
+
+                $.ajax({
+                    url:'/penata-jasa/antrian/update-status',
+                    data:{_token: csrf, id : id},
+                    type: 'POST',
+                    success: function (data) {
+                    }
+                })
             });
         })
     </script>

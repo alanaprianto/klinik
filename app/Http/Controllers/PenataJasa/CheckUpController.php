@@ -35,7 +35,7 @@ class CheckUpController extends GeneralController
         $kiosk = Kiosk::where('reference_id', $id)->first();
         if ($kiosk) {
             $kiosk->update([
-                'status' => 2,
+                'status' => 3,
                 'staff_id' => Auth::user()->id
             ]);
 

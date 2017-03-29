@@ -56,8 +56,12 @@
                                             <tr>
                                             <tr>
                                                 <td>
-                                                    <input class="form-control setting-name" type="text"
-                                                           placeholder="Nama Setting">
+                                                    <select class="form-control setting-name">
+                                                        <option value="racik">Biaya Racik</option>
+                                                        <option value="lainnya">Lainnya</option>
+                                                    </select>
+                                                    {{--                                                    <input class="form-control setting-name" type="text"
+                                                                                                               placeholder="Nama Setting">--}}
                                                 </td>
                                                 <td>
                                                     <a type="button" href="javascript:;"
@@ -95,9 +99,17 @@
                                             <tr>
                                             <tr>
                                                 <td>
-                                                    <input class="form-control setting-name" type="text"
-                                                           placeholder="Nama Setting" name="setting_name_{{$index + 1}}"
-                                                           value="{{$setting->name}}">
+                                                    @if($setting->name == 'racik')
+                                                        <select class="form-control setting-name" name="setting_name_{{$index + 1}}">
+                                                            <option value="racik" selected >Biaya Racik</option>
+                                                            <option value="lainnya">Lainnya</option>
+                                                        </select>
+                                                    @else
+                                                        <input class="form-control setting-name" type="text"
+                                                               placeholder="Nama Setting"
+                                                               name="setting_name_{{$index + 1}}"
+                                                               value="{{$setting->name}}">
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <a type="button" href="javascript:;"
@@ -239,6 +251,17 @@
             $(document).on('click', '.btn-remove-setting', function () {
                 $this = $(this);
                 $this.closest('.col-md-4').remove();
+            });
+
+            $(document).on('change', '.setting-name', function () {
+                $this = $(this);
+                var td = $this.parent();
+                var name = $this.attr('name');
+                if ($this.val() == 'lainnya') {
+                    $this.remove();
+                    var input = '<input class="form-control" type="text" name="' + name + '" autofocus>';
+                    td.append(input);
+                }
             });
         });
     </script>

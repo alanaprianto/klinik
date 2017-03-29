@@ -136,7 +136,7 @@
                 </tr>
                 <tr>
                     <td colspan="4">
-                        selama <b>{{$sum_day}}</b> hari terhitung mulai tanggal <b>{{$query['from']}}</b> s.d <b>{{$query['until']}}</b>
+                        selama <b>{{$sum_day != 0 ? $sum_day : 1}}</b> hari terhitung mulai tanggal <b>{{$query['from']}}</b> s.d <b>{{$query['until']}}</b>
                     </td>
                 </tr>
                 <tr>

@@ -118,7 +118,6 @@
                     data:{_token: csrf, id : id},
                     type: 'POST',
                     success: function (data) {
-                        console.log(data);
                     }
                 })
             });
