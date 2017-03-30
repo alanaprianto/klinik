@@ -60,7 +60,7 @@ class RegistrationController extends GeneralController
         $input = $request->except('_token');
         if ($input['kiosk_id']) {
             $kiosk = Kiosk::find($input['kiosk_id']);
-            $kiosk->update(['status' => 3]);
+            $kiosk->update(['status' => 4]);
         }
 
         $hospital = Hospital::first();

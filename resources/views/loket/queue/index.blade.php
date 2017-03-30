@@ -12,11 +12,9 @@
     {{--BPJS--}}
     <div class="container" style="text-align: justify">
         <div class="ui breadcrumb">
-            <div class="section">Admin</div>
+            <div class="section">Loket</div>
             <div class="divider"> / </div>
-            <div class="active section">Staff</div>
-            <div class="divider"> / </div>
-            <div class="active section">Staff Position</div>
+            <div class="active section">Antrian</div>
         </div><br/>
 
         <div class="row">
