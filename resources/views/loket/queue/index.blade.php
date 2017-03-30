@@ -10,7 +10,56 @@
 @endsection
 @section('content')
     {{--BPJS--}}
-    <div class="row">
+    <div class="container" style="text-align: justify">
+        <div class="ui breadcrumb">
+            <div class="section">Admin</div>
+            <div class="divider"> / </div>
+            <div class="active section">Staff</div>
+            <div class="divider"> / </div>
+            <div class="active section">Staff Position</div>
+        </div><br/>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Antrian BPJS</h5>
+                <table class="ui celled table dataTable responsive" id="table-queue-bpjs" data-user="{{Auth::user()->id}}">
+                    <thead>
+                    <tr>
+                        <th>Antrian</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h5>Antrian Umum</h5>
+                <table class="ui celled table dataTable responsive" id="table-queue-umum" data-user="{{Auth::user()->id}}">
+                    <thead>
+                    <tr>
+                        <th>Antrian</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h5>Antrian Kontraktor</h5>
+                <table class="ui celled table dataTable responsive" id="table-queue-contractor" data-user="{{Auth::user()->id}}">
+                    <thead>
+                    <tr>
+                        <th>Antrian</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{{--    <div class="row">
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -89,7 +138,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 @endsection
 
 @section('scripts')

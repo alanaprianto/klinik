@@ -3,6 +3,27 @@
 @endsection
 
 @section('content')
+    <div class="container" style="text-align: justify">
+        <div class="ui breadcrumb">
+            <div class="section">Apotek</div>
+            <div class="divider"> / </div>
+            <div class="active section">Resep</div>
+        </div><br/>
+
+        <table id="table-recipe" class="ui celled table dataTable responsive" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <td>No</td>
+                <td>Nama Pembeli</td>
+                <td>Nomor Resep</td>
+                <td>Poli / Pembelian Luar</td>
+                <td>Tanggal Transaksi</td>
+                <td>Action</td>
+            </tr>
+            </thead>
+        </table>
+    </div>
+{{--
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
@@ -46,6 +67,7 @@
             </div>
         </div>
     </div>
+--}}
 @endsection
 
 @section('scripts')

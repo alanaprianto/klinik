@@ -7,6 +7,34 @@
     </style>
 @endsection
 @section('content')
+    <div class="container" style="text-align: justify">
+        <div class="ui breadcrumb">
+            <div class="section">{{ucfirst($role)}}</div>
+            <div class="divider"> / </div>
+            <div class="active section">Inventory</div>
+            <div class="divider"> / </div>
+            <div class="active section">Obat</div>
+        </div><br/>
+
+        <table id="table-medicine" class="ui celled table dataTable responsive" cellspacing="0" width="100%" data-role="{{$role}}">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Kode</th>
+                <th>Nama</th>
+                <th>Kategori</th>
+                <th>Tipe</th>
+                <th>Total</th>
+                <th>Stock Minimal</th>
+                <th>Stock Maximal</th>
+                <th>Sediaan</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+{{--
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
@@ -90,9 +118,12 @@
             </div>
         </div>
     </div>
+--}}
 @endsection
 @section('scripts')
     <script type="text/javascript">
+
+/*
         $(document).on('click', '.btn-modal', function () {
             var id = $(this).data('id');
             var max = $(this).data('max');
@@ -107,7 +138,9 @@
             format: 'dd/mm/yyyy',
             autoclose: true
         });
+*/
 
+/*
         $(document).on('click', '.btn-submit', function (e) {
             e.preventDefault();
             $this = $(this);
@@ -124,9 +157,13 @@
                 }
             })
         });
+*/
 
         $(document).ready(function () {
-            $(document).on('click', '.btn-remove', function () {
+            $('.test')
+                .modal()
+            ;
+         /*   $(document).on('click', '.btn-remove', function () {
                 $this = $(this);
                 var $id = $this.data('id');
                 if (confirm('Apakah anda yakin akan menghapus postingan ini?')) {
@@ -151,7 +188,7 @@
                     $('body').append($form);
                     $form.submit();
                 }
-            });
+            });*/
         });
     </script>
 @endsection

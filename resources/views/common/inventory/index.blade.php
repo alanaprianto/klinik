@@ -1,6 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="container" style="text-align: justify">
+        <div class="ui breadcrumb">
+            <div class="section">{{ucfirst($role)}}</div>
+            <div class="divider"> / </div>
+            <div class="active section">Inventory</div>
+            <div class="divider"> / </div>
+            <div class="active section">Non Alkes</div>
+        </div><br/>
+
+        <table id="table-medicine" class="ui celled table dataTable responsive" cellspacing="0" width="100%" data-role="{{$role}}">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Kode</th>
+                <th>Nama</th>
+                <th>Kategori</th>
+                <th>Tipe</th>
+                <th>Total</th>
+                <th>Stock Minimal</th>
+                <th>Stock Maximal</th>
+                <th>Sediaan</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+{{--
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
@@ -45,9 +72,10 @@
             </div>
         </div>
     </div>
+--}}
 @endsection
 @section('scripts')
-    <script type="text/javascript">
+{{--    <script type="text/javascript">
         $(document).ready(function () {
             $(document).on('click', '.btn-remove', function () {
                 $this = $(this);
@@ -76,5 +104,5 @@
                 }
             });
         });
-    </script>
+    </script>--}}
 @endsection

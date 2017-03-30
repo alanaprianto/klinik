@@ -1,10 +1,25 @@
 @extends('layouts.app')
-@section('breadcrumb')
-    <li class="active">
-        <strong>Tindakan</strong>
-    </li>
-@endsection
 @section('content')
+    <div class="container" style="text-align: justify">
+        <div class="ui breadcrumb">
+            <div class="section">Admin</div>
+            <div class="divider"> / </div>
+            <div class="active section">Tindakan</div>
+        </div><br/>
+
+        <table id="table-service" class="ui celled table dataTable responsive" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Tindakan</th>
+                <th>Harga</th>
+                <th>Deskripsion</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+{{--
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
@@ -44,10 +59,10 @@
             </div>
         </div>
     </div>
-    {{--<script type="text/javascript" href="{{asset('/js/table.js')}}"></script>--}}
+--}}
 @endsection
 @section('scripts')
-    <script type="text/javascript">
+{{--    <script type="text/javascript">
         $(document).ready(function () {
             $(document).on('click', '.btn-remove', function () {
                 $this = $(this);
@@ -76,5 +91,5 @@
                 }
             });
         });
-    </script>
+    </script>--}}
 @endsection

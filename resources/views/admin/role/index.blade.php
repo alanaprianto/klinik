@@ -1,10 +1,27 @@
 @extends('layouts.app')
-@section('breadcrumb')
-    <li class="active">
-        <strong>Role</strong>
-    </li>
-@endsection
 @section('content')
+    <div class="container" style="text-align: justify">
+        <div class="ui breadcrumb">
+            <div class="section">Admin</div>
+            <div class="divider"> / </div>
+            <div class="active section">Roles</div>
+        </div><br/>
+
+        <table id="table-roles" class="ui celled table dataTable responsive" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Display Name</th>
+                <th>Desc</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+
+{{--
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
@@ -44,6 +61,7 @@
             </div>
         </div>
     </div>
+--}}
 @endsection
 @section('scripts')
     <script type="text/javascript">

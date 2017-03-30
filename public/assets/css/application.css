@@ -1,0 +1,242 @@
+/* MAIN */
+@import url("../plugins/metismenu/metisMenu.min.css");
+@import url("../plugins/bootstrap/css/bootstrap.min.css");
+@import url("../plugins/semantic/semantic.min.css");
+
+/* FONT */
+@import url("../plugins/fontawesome/css/font-awesome.min.css");
+@import url("../plugins/themify/themify-icons.css");
+@import url("../plugins/ionicons/css/ionicons.min.css");
+
+/* TABLE */
+/*@import url("../plugins/datatables/css/jquery.dataTables.min.css");*/
+@import url("../plugins/datatables/css/dataTables.semanticui.min.css");
+@import url("../plugins/datatables/css/responsive.semanticui.min.css");
+
+/* CSS MODULE */
+a:focus, a:active{
+    text-decoration: none;
+}
+.loader-done{
+	display: none;
+}
+.loader{
+	position: fixed;
+    z-index: 1080;
+    width: 100%;
+    height: 100%;
+    border: none;
+	background: #000000;
+}
+.module-left-aside{
+    float: left;
+    width: 250px;
+}
+.module-left-container{
+    display: block;
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    background-color: #4D545E;
+
+    padding-top: 50px;
+}
+.module-left-title{
+    background-color: #529695;
+    height: 50px;
+    width: 250px;
+    position: fixed;
+    z-index: 999;
+}
+.module-left-title img{
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin: 10px 10px;
+}
+.module-left-title span{
+    font-size: 20px;
+    color: #ffffff;
+    display: block;
+    padding: 15px 10px;
+}
+.module-left-nav ul{
+    list-style: none;
+    padding: 0;
+}
+.module-left-nav li > a{
+    display: block;
+    color: #E6E6E6;
+    width: 250px;
+    padding: 10px 10px;
+}
+.module-left-nav li > a:hover{
+    background-color: rgba(136, 149, 163, 0.5);
+    text-decoration: none;
+}
+.module-left-nav li > a > i{
+    margin-right: 10px;
+}
+.module-left-container .active{
+    background-color: rgba(136, 149, 163, 0.5);
+}
+.module-left-dropdown{
+    background-color: #3A4047;
+}
+.module-left-dropdown li > a{
+    padding-left: 55px;
+}
+.module-left-dropdown li > a:hover{
+    background-color: #333333;
+    text-decoration: none;
+}
+.module-left-bars{
+    color: #ffffff;
+    float: left;
+    margin: 15px 10px;
+    cursor: pointer;
+    display: none;
+    font-size: 20px;
+}
+
+.module-content-container{
+    margin-left: 250px;
+    display: block;
+}
+
+/** customize metismenu **/
+.sidebar-nav-item{
+    margin-left: 15px;
+}
+.sidebar-nav-heading{
+    color: #72CCCA;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 0;
+    margin-top: 10px;
+    overflow: hidden;
+    padding: 10px 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.metismenu .has-arrow:after{
+    width: .4em;
+    height: .45em;
+}
+
+/** customize bootstrap **/
+.breadcrumb{
+    background-color: transparent;
+    padding: 15px 0px;
+}
+@media (min-width: 1224px){
+    .container {
+        width: 1100px;
+    }
+}
+
+/** customize datatable.semanticui **/
+div.dataTables_wrapper div.dataTables_filter input{
+    margin-left: 0px;
+}
+.dataTables_paginate{
+    margin-top: 0.5em;
+    float: right;
+}
+.dataTables_filter label{
+    display: block;
+}
+.bottom > .col-md-6{
+    padding: 0px;
+}
+
+/** customize semantic **/
+.ui.pagination.menu .item{
+    min-width: 2em;
+    text-align: center;
+    padding: .9em;
+}
+
+
+@media only screen and (min-width : 320px) and (max-width : 480px){
+    .module-left-title{
+        width: 100%;
+    }
+    .module-left-bars{
+        display: block;
+    }
+    .module-left-container{
+        z-index: 99;
+        display: none;
+    }
+    .module-content-container{
+        margin-left: 0px;
+        padding-top: 50px;
+    }
+
+    /** customize datatable.semanticui **/
+    .dataTables_paginate{
+        float: none;
+        text-align: center;
+    }
+    .dataTables_info{
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width : 480px) and (max-width : 768px){
+    /** customize datatable.semanticui **/
+    .dataTables_paginate{
+        float: none;
+        text-align: center;
+    }
+    .dataTables_info{
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : landscape){
+    .module-left-title{
+        width: 100%;
+    }
+    .module-left-bars{
+        display: block;
+    }
+    .module-left-container{
+        z-index: 99;
+        display: none;
+    }
+    .module-content-container{
+        margin-left: 0px;
+        padding-top: 50px;
+    }
+}
+
+/* tabs (portrait) ----------- */
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : portrait) {
+    .module-left-title{
+        width: 100%;
+    }
+    .module-left-bars{
+        display: block;
+    }
+    .module-left-container{
+        z-index: 99;
+        display: none;
+    }
+    .module-content-container{
+        margin-left: 0px;
+        padding-top: 50px;
+    }
+
+    /** customize datatable.semanticui **/
+    .dataTables_paginate{
+        float: none;
+        text-align: center;
+    }
+    .dataTables_info{
+        text-align: center;
+    }
+}
+/* END OF MODULE */

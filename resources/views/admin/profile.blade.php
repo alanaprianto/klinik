@@ -3,7 +3,130 @@
     <link href="{{asset('css/croppie.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-    <div class="row">
+    <div class="container" style="text-align: justify">
+        <div class="ui breadcrumb">
+            <div class="section">Admin</div>
+            <div class="divider"> / </div>
+            <div class="active section">Profil Rumah Sakit</div>
+        </div><br/>
+
+        <form method="post" class="form-horizontal" action="{{url('/admin/rumah-sakit/profil')}}"
+              enctype="multipart/form-data">
+            {{csrf_field()}}
+            <input type="hidden" name="hospital_id" value="{{$hospital ? $hospital->id : ''}}">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nama</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="name"
+                                   value="{{$hospital->name}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Alamat</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="address">{{$hospital->address}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Telp</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="phone"
+                                   value="{{$hospital->phone}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Website</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="website"
+                                   value="{{$hospital->website}}" placeholder="contoh: www.google.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Footer Kwitansi</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="footer_kwitansi"
+                                   value="{{$hospital->footer_kwitansi}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Status Unit</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="unit_state">
+                                <option value="Pusat" {{$hospital->unit_state == 'Pusat' ? 'selected' : ''}}>Pusat</option>
+                                <option value="Cabang" {{$hospital->unit_state == 'Cabang' ? 'selected' : ''}}>Cabang</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nomor Unit</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="unit_number"
+                                   value="{{$hospital->unit_number}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Kode Provinsi</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="province_code"
+                                   value="{{$hospital->province_code}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nama Provinsi</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="province_name">
+                                <option>-</option>
+                                @foreach(getProvinceCities() as $province => $cities)
+                                    <option value="{{$province}}" {{$hospital->province_name && ($hospital->province_name == $province) ? 'selected' : '' }}>{{$province}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Pjb. Penandatanganan Kwitansi</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="signature_sign"
+                                   value="{{$hospital->signature_sign}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Picture</label>
+                        <div class="col-md-10">
+                            <input type="file" name="file" class="form-control" id="upload"
+                                   value="Choose a file"
+                                   accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div id="upload-demo">
+                                {!!$hospital && $hospital->image_header ? ' <img src="'.asset($hospital->image_header).'">' : ''!!}
+                                <img src="">
+                            </div>
+                            <input type="hidden" name="picture" class="picture">
+                            <button type="button" class="result" style="display: none">Crop</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{{--    <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -145,7 +268,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 @endsection
 
 @section('scripts')

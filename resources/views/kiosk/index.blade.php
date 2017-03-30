@@ -45,7 +45,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{{asset('/js/jquery-2.2.4.js')}}"></script>
+<script type="text/javascript" src="{{asset('/assets/plugins/jquery/jquery.min.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('.btn-print').on('click', function () {
