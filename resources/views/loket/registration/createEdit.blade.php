@@ -333,7 +333,7 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript" src="{{asset('js/province.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/province.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/typeahead.bundle.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/bloodhound.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/handlebars-v4.0.5.js')}}"></script>
