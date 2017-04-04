@@ -20,9 +20,12 @@
         <div class="ui breadcrumb">
             <div class="section">Loket</div>
             <div class="divider"> /</div>
+            <div class="active section">Pendaftaran</div>
+            <div class="divider"> /</div>
             <div class="active section">Tambah Rujukan</div>
         </div>
         <br/>
+        <hr/>
         <div class="row">
             <div class="col-md-6">
                 <h3>Biodata Pasien</h3>

@@ -52,9 +52,12 @@ class CheckUpController extends GeneralController
         $polies = Poly::get();
         $icd10s = Icd10::get();
         $total_payment = 0;
-        foreach ($reference->medicalRecords->where('type', Auth::user()->roles()->first()->name) as $medicalRecord) {
-            $total_payment += $medicalRecord->quantity * $medicalRecord->cost;
+        if($reference){
+            foreach ($reference->medicalRecords->where('type', Auth::user()->roles()->first()->name) as $medicalRecord) {
+                $total_payment += $medicalRecord->quantity * $medicalRecord->cost;
+            }
         }
+
         return view('checkUp.create', compact(['reference', 'services', 'total_payment', 'polies', 'id', 'icd10s']));
     }
 

@@ -4,12 +4,11 @@
 @section('content')
     <div class="container" style="text-align: justify">
         <div class="ui breadcrumb">
-            <div class="section">Admin</div>
+            <div class="section">Loket</div>
             <div class="divider"> / </div>
-            <div class="active section">Staff</div>
-            <div class="divider"> / </div>
-            <div class="active section">Staff Position</div>
+            <div class="active section">Pendaftaran</div>
         </div><br/>
+        <hr />
         <div class="action" style="margin-bottom: 10px">
             <a href="{{url('/loket/pendaftaran/tambah')}}" class="btn btn-primary">Tambah</a>
         </div>

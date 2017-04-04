@@ -11,10 +11,11 @@
     <div class="container" style="text-align: justify">
         <div class="ui breadcrumb">
             <div class="section">{{ucfirst($role)}}</div>
-            <div class="divider"> / </div>
+            <div class="divider"> /</div>
             <div class="active section">Profil</div>
-        </div><br/>
-
+        </div>
+        <br/>
+        <hr/>
         <form method="post" class="form-horizontal" action="{{url('/'.$role.'/profil')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <input type="hidden" name="user_id" value="{{$user->id}}">
@@ -49,14 +50,15 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Nama Lengkap <span class="error">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="full_name"required
+                    <input type="text" class="form-control" name="full_name" required
                            value="{{$user->staff ? $user->staff->full_name : ''}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Tempat / Tanggal Lahir</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" name="place" value="{{$user->staff ? $user->staff->place : ''}}">
+                    <input type="text" class="form-control" name="place"
+                           value="{{$user->staff ? $user->staff->place : ''}}">
                 </div>
                 <div class="col-sm-5">
                     <input type="text" class="form-control datetime" name="birth"
@@ -75,7 +77,8 @@
                 <div class="col-sm-10">
                     <select class="form-control" name="gender">
                         @foreach(getGenders() as $gender)
-                            <option value="{{$gender}}" required {{ $user->staff && ($gender == $user->staff->gender) ? 'selected' : ''}}>{{$gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</option>
+                            <option value="{{$gender}}"
+                                    required {{ $user->staff && ($gender == $user->staff->gender) ? 'selected' : ''}}>{{$gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -85,7 +88,8 @@
                 <div class="col-sm-10">
                     <select class="form-control" name="religion">
                         @foreach(getReligions() as $religion)
-                            <option value="{{$religion}}" required {{$user->staff && ($religion == $user->staff->religion) ? 'selected' : ''}}>{{$religion}}</option>
+                            <option value="{{$religion}}"
+                                    required {{$user->staff && ($religion == $user->staff->religion) ? 'selected' : ''}}>{{$religion}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -93,7 +97,8 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Alamat <span class="error">*</span></label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" name="address" required>{{$user->staff ? $user->staff->address : ''}}</textarea>
+                    <textarea class="form-control" name="address"
+                              required>{{$user->staff ? $user->staff->address : ''}}</textarea>
                 </div>
             </div>
 
@@ -102,7 +107,8 @@
                 <div class="col-sm-5">
                     <select class="form-control" name="province" id="province">
                         @foreach(getProvinceCities() as $province => $arrayCities)
-                            <option value="{{$province}}" required {{$user->staff && ($province == $user->staff->province) ? 'selected' : ''}}>{{$province}}</option>
+                            <option value="{{$province}}"
+                                    required {{$user->staff && ($province == $user->staff->province) ? 'selected' : ''}}>{{$province}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -111,7 +117,8 @@
                         <option>-</option>
                         @if($user->staff && $user->staff->city)
                             @foreach(getProvinceCities()[$user->staff->province] as $city)
-                                <option value="{{$city}}" required {{$user->staff && ($city == $user->staff->city) ? 'selected' : ''}}>{{$city}}</option>
+                                <option value="{{$city}}"
+                                        required {{$user->staff && ($city == $user->staff->city) ? 'selected' : ''}}>{{$city}}</option>
                             @endforeach
                         @endif
                     </select>
@@ -131,7 +138,8 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Nama Dusun /RT/RW</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="rt_rw" value="{{$user->staff ? $user->staff->rt_rw : ''}}">
+                    <input type="text" class="form-control" name="rt_rw"
+                           value="{{$user->staff ? $user->staff->rt_rw : ''}}">
                 </div>
             </div>
 

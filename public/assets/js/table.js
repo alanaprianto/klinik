@@ -55,6 +55,7 @@
                         var process = '<a href="/loket/pendaftaran/tambah?id=' + row.id + '" class="btn btn-primary btn-process"><i class="fa fa-sign-in"></i></a>';
 
                         if (role == 'penata-jasa') {
+                            console.log(row)
                             process = '<a href="/penata-jasa/periksa/' + row.reference_id + '" class="btn btn-primary btn-process"><i class="fa fa-check-square"></i></a>';
                         }
 
