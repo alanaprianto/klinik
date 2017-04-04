@@ -24,13 +24,13 @@
     @yield('css')
 </head>
 <body>
-<div class="loader" id="loader">
+<div class="loader no-print" id="loader">
     <div class="ui active dimmer">
         <div class="ui loader"></div>
     </div>
 </div>
 
-<div class="module-left-aside">
+<div class="module-left-aside no-print">
     <div class="module-left-title">
         <div class="module-left-bars"><i class="ti-menu"></i></div>
         <img src="{{asset('/assets/images/logo/farmasi-101.png')}}">

@@ -14,11 +14,26 @@
         .coloum-clinic button, .coloum-clinic-next button {
             float: right;
         }
+
+        @media print
+        {
+            body *, .no-print, .no-print * {
+                visibility:hidden;
+            }
+            #print-area * {
+                visibility:visible;
+            }
+            #print-area {
+                position:absolute;
+                left:0;
+                top:0;
+            }
+        }
     </style>
 @endsection
 
 @section('content')
-    <div class="container" style="text-align: justify">
+    <div class="container no-print" style="text-align: justify">
         <div class="ui breadcrumb">
             <div class="section">Loket</div>
             <div class="divider"> /</div>
@@ -30,36 +45,36 @@
             <div class="col-md-12 text-center">
                 <form class="form-inline form-rm">
                     {{csrf_field()}}
-                    <div class="form-group">
-                        <label>Cari Nomor RM</label>
-                        <input type="text" class="form-control" name="number_mr"
-                               placeholder="0123456789">
+                    <div class="form-group field">
+                        <label>Cari Pasien</label>
+                        <input type="text" class="form-control typeahead" name="number_mr"
+                               placeholder="name, No Rm">
+                        <button type="submit" class="btn btn-primary">Cek</button>
                     </div>
-                    <button type="submit" class="btn btn-default">Cari</button>
                 </form>
             </div>
         </div>
         <hr/>
-        <form method="post" class="form-horizontal" action="/loket/pendaftaran/store">
+        <form method="post" class="form-horizontal ui form" id="form_register">
             {{csrf_field()}}
             <input type="hidden" name="kiosk_id" value="{{$kiosk_id ? $kiosk_id : ''}}">
             <input type="hidden" name="patient_number_id">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">No RM</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="number_medical_record"
                                    id="number_medical_record">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Nama Lengkap</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="full_name">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">TTL</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" placeholder="Tempat" name="place"></div>
@@ -67,13 +82,13 @@
                             <input type="text" class="form-control date-1" name="birth">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Umur</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="age">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Jenis Kelamin</label>
                         <div class="col-sm-8">
                             <select class="form-control m-b" name="gender">
@@ -83,13 +98,13 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Alamat</label>
                         <div class="col-sm-8">
                             <textarea class="form-control" name="address"></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Agama</label>
                         <div class="col-sm-8">
                             <select class="form-control m-b" name="religion">
@@ -99,7 +114,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Provinsi / Kota</label>
                         <div class="col-sm-4">
                             <select class="form-control m-b" name="province" id="province">
@@ -114,31 +129,31 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Kecamatan</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="district">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Kelurahan</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="sub_district">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Nama Dusun /RT/RW</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="rt_rw">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">No Telp</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="phone_number">
                         </div>
                     </div>
-                    <div class="form-group"><label class="col-sm-4 control-label">Pendidikan</label>
+                    <div class="form-group field"><label class="col-sm-4 control-label">Pendidikan</label>
                         <div class="col-sm-8">
                             <select class="form-control m-b" name="last_education">
                                 @foreach(getEducations() as $education)
@@ -147,7 +162,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group"><label class="col-sm-4 control-label">Pekerjaan</label>
+                    <div class="form-group field"><label class="col-sm-4 control-label">Pekerjaan</label>
                         <div class="col-sm-8">
                             <select class="form-control m-b" name="job">
                                 @foreach(getJobs() as $job)
@@ -156,7 +171,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">No Jamkesmas / Jamkesda / ASKES
                         </label>
                         <div class="col-sm-8">
@@ -165,25 +180,25 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Nama Penanggung Jawab</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="responsible_person">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Status Penanggung Jawab</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="responsible_person_state">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Sebab Sakit</label>
                         <div class="col-sm-8">
                             <textarea class="form-control" name="cause_pain"></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Cara Kunjungan</label>
                         <div class="col-sm-8">
                             <select class="form-control m-b" name="how_visit">
@@ -193,13 +208,13 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Jam Kedatangan</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control time-1" name="time_attend">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Tipe Layanan</label>
                         <div class="col-sm-8">
                             <select class="form-control m-b" name="service_type">
@@ -209,7 +224,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Klinik</label>
                         <div class="col-sm-8">
                             <select class="form-control m-b" name="poly" id="clinic">
@@ -220,7 +235,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group field">
                         <label class="col-sm-4 control-label">Nama Dokter</label>
                         <div class="col-sm-8">
                             <select class="form-control m-b" name="doctor" id="doctors">
@@ -231,21 +246,100 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group">
+                <div class="form-group field">
                     <div class="col-sm-10 col-sm-offset-5">
                         <button class="btn btn-primary" type="submit">Daftar</button>
-                        <a href="/loket/pendaftaran" class="btn btn-white" type="button">Cancel</a>
+                        <button class="btn btn-primary" type="button" onclick="printModal()">Print</button>
+                        <a href="{{url('/loket/pendaftaran')}}" class="btn btn-secondary" type="button">Cancel</a>
                     </div>
                 </div>
             </div>
         </form>
-
     </div>
+    <div class="ui modal" id="print-area">
+        <table style="width: 100%">
+            <tbody>
+            <tr>
+                <td rowspan="3" class="text-center"><img src="{{asset($hospital->image_header)}}"
+                                                         style="width:40px; height: 60px"></td>
+                <td class="text-center"><span style="font-size: 16px;"><b>{{$hospital->name}}</b></span>
+                </td>
+                <td rowspan="3" ><span style="font-size: 24px"><b>1</b></span></td>
+            </tr>
+            <tr>
+                <td class="text-center" colspan="3"><span
+                            style="font-size: 14px;"><b>{{$hospital->address}}</b></span></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-center"><span style="font-size: 12px;"><b>Telp.{{$hospital->phone}}</b></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table style="width:100%">
+            <tbody>
+            <tr>
+                <td style="width: 50%">
+                    <table style="width: 100%">
+                        <tr>
+                            <th style="width: 40%">No Pendaftaran</th>
+                            <td style="width: 5%">:</td>
+                            <td style="width: 55%">11111111</td>
+                        </tr>
+                        <tr>
+                            <th>No Rekam Medik</th>
+                            <td>:</td>
+                            <td>0123456789</td>
+                        </tr>
+                        <tr>
+                            <th>Nama</th>
+                            <td>:</td>
+                            <td>Alan Aprianto</td>
+                        </tr>
+                        <tr>
+                            <th>Umur</th>
+                            <td>:</td>
+                            <td>22 Tahun</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 50%">
+                    <table style="width: 100%">
+                        <tr>
+                            <th style="width: 40%">Poli Rujukan</th>
+                            <td style="width: 5%">:</td>
+                            <td style="width: 55%">Poli Umum</td>
+                        </tr>
+                        <tr>
+                            <th>Dokter</th>
+                            <td>:</td>
+                            <td>Dokter Alan</td>
+                        </tr>
+                        <tr>
+                            <th>Tanggal Rujukan</th>
+                            <td>:</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 @endsection
 
 @section('scripts')
     <script type="text/javascript" src="{{asset('js/province.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/typeahead.bundle.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/bloodhound.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/handlebars-v4.0.5.js')}}"></script>
+
     <script type="text/javascript">
+        function printModal() {
+            $('.ui.modal').modal('show');
+        }
+
         $('.date-1').datepicker({
             keyboardNavigation: false,
             forceParse: false,
@@ -260,6 +354,17 @@
             scrollbar: true
         });
         $(document).ready(function () {
+
+
+            $('input.typeahead').typeahead({
+                source: function (query, process) {
+                    return $.get('/loket/get_patient', {query: query}, function (data) {
+                        return process(data);
+                    });
+                }
+            });
+
+
             $('.form-rm').on('submit', function (e) {
                 e.preventDefault();
                 $this = $(this);
@@ -302,6 +407,23 @@
                             var option = '<option value="' + value.id + '">' + value.full_name + '</option>';
                             $('#doctors').append(option);
                         });
+                    }
+                })
+            });
+
+            $('#form_register').on('submit', function (e) {
+                e.preventDefault();
+                $this = $(this);
+                var data_info = $this.serialize();
+                $.post('/loket/pendaftaran/store', data_info).done(function (data) {
+                    if (data.isSuccess) {
+                        console.log(data);
+                        $('.ui.modal').modal('show');
+                        $('.ui.modal').on('shown.bs.modal', function () {
+                            window.print();
+                        });
+                    } else {
+                        alert(data.message)
                     }
                 })
             });

@@ -112,12 +112,15 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
     Route::post('/antrian-list', 'QueueController@getList');
     Route::post('/antrian/update-status', 'QueueController@updateStatus');
 
+
+    Route::get('/get_patient', 'RegistrationController@getPatient');
     Route::get('/pendaftaran', 'RegistrationController@index');
     Route::get('/pendaftaran/tambah', 'RegistrationController@getCreateEdit');
     Route::post('/pendaftaran/store', 'RegistrationController@store');
     Route::post('/pendaftaran-list', 'RegistrationController@getList');
     Route::get('/pendaftaran/{id}/tambah-rujukan', 'RegistrationController@getReference');
     Route::post('/pendaftaran/tambah-rujukan', 'RegistrationController@postReference');
+    Route::get('/pendaftaran/print/{id}', 'RegistrationController@printReport');
 
     Route::post('/check-medical-report', 'RegistrationController@getInfoMedicalReport');
     Route::post('/pendaftaran/pilih-poli', 'RegistrationController@selectPoly');

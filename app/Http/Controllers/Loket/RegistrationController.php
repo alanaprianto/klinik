@@ -7,6 +7,7 @@ use App\Http\Controllers\GeneralController;
 use App\Kiosk;
 use App\Patient;
 use App\Poly;
+use App\Reference;
 use App\Register;
 use App\Staff;
 use Carbon\Carbon;
@@ -38,6 +39,7 @@ class RegistrationController extends GeneralController
         $doctors = Staff::whereHas('staffJob', function ($q) {
             $q->where('name', 'Dokter');
         })->get();
+        $hospital = Hospital::first();
 
         if ($kiosk_id) {
             $kiosk = Kiosk::find($kiosk_id);
@@ -51,55 +53,65 @@ class RegistrationController extends GeneralController
             $filename = 'sounds/temp/' . $kiosk->queue_number . '_' . $kiosk->type . '.mp3';
             File::delete($filename);
         }
-        return view('registration.createEdit', compact(['polies', 'doctors', 'kiosk_id']));
+        return view('registration.createEdit', compact(['polies', 'doctors', 'kiosk_id', 'hospital']));
     }
 
     public function store(Request $request)
     {
-        /*create new patient*/
-        $input = $request->except('_token');
-        if ($input['kiosk_id']) {
-            $kiosk = Kiosk::find($input['kiosk_id']);
-            $kiosk->update(['status' => 4]);
+        $respone = [];
+        try{
+            /*create new patient*/
+            $input = $request->except('_token');
+            if ($input['kiosk_id']) {
+                $kiosk = Kiosk::find($input['kiosk_id']);
+                $kiosk->update(['status' => 4]);
+            }
+
+            $hospital = Hospital::first();
+            $input['hospital_id'] = $hospital->id;
+            if ($input['patient_number_id']) {
+                $patient = Patient::find($input['patient_number_id']);
+            } else {
+                $patient = Patient::create($input);
+            }
+
+            $input['register_number'] = Carbon::now()->format('Ymdhis');
+            $input['staff_id'] = Auth::user()->id;
+            $input['patient_id'] = $patient->id;
+            $input['status'] = 1;
+
+            /*create type registration*/
+            $register = Register::create($input);
+
+
+            /*add reference /  tambah rujukan*/
+            $reference = $this->addReference($input, $register, 'create');
+            $doctor = Staff::with('doctorService')->find($input['doctor']);
+            $register->payments()->create([
+                'status' => 1,
+                'total' => $doctor->doctorService->cost,
+                'type' => 'doctor_service',
+            ]);
+
+            /*add kiosk queue*/
+            $poly = Poly::find($request['poly']);
+            $kiosk = $this->getKioskQueue($poly->name, $reference->id);
+
+            /*        $redis = $this->LRedis;
+                    $redis->publish('message', 'registration');
+
+                    $redis = $this->LRedis;
+                    $redis->publish('message', 'polies');*/
+
+
+            $respone = ['isSuccess' => true, 'message' => 'success', 'data' => ['patient' => $patient, 'reference' => $reference, 'poly' => $poly, 'kiosk' => $kiosk]];
+        } catch (\Exception $e){
+            $respone = ['isSuccess' => false, 'message' => $e->getMessage(), 'data' => null];
         }
 
-        $hospital = Hospital::first();
-        $input['hospital_id'] = $hospital->id;
-        if ($input['patient_number_id']) {
-            $patient = Patient::find($input['patient_number_id']);
-        } else {
-            $patient = Patient::create($input);
-        }
+        return $respone;
 
-        $input['register_number'] = Carbon::now()->format('Ymdhis');
-        $input['staff_id'] = Auth::user()->id;
-        $input['patient_id'] = $patient->id;
-        $input['status'] = 1;
-
-        /*create type registration*/
-        $register = Register::create($input);
-
-
-        /*add reference /  tambah rujukan*/
-        $reference = $this->addReference($input, $register, 'create');
-        $doctor = Staff::with('doctorService')->find($input['doctor']);
-        $register->payments()->create([
-            'status' => 1,
-            'total' => $doctor->doctorService->cost,
-            'type' => 'doctor_service',
-        ]);
-
-        /*add kiosk queue*/
-        $poly = Poly::find($request['poly']);
-        $this->getKioskQueue($poly->name, $reference->id);
-
-/*        $redis = $this->LRedis;
-        $redis->publish('message', 'registration');
-
-        $redis = $this->LRedis;
-        $redis->publish('message', 'polies');*/
-
-        return redirect('/loket/pendaftaran')->with('status', 'Berhasil menambkan / mengubah data pasien');
+/*        return redirect('/loket/pendaftaran/print/'.$reference->id.'?kiosk='.$kiosk->queue_number)->with('status', 'Berhasil menambkan / mengubah data pasien');*/
     }
 
     public function getList()
@@ -134,7 +146,8 @@ class RegistrationController extends GeneralController
     {
         $respone = array();
         try {
-            $patient = Patient::where('number_medical_record', $request['number_mr'])->first();
+            $value = explode('-', $request['number_mr']);
+            $patient = Patient::where('number_medical_record', trim($value[0]))->where('full_name', trim($value[1]))->first();
             $message = 'Pasien Tidak ada';
             if ($patient) {
                 $message = 'Pasien ada';
@@ -156,5 +169,17 @@ class RegistrationController extends GeneralController
             $respone = ['is_success' => false, 'message' => $e->getMessage(), 'data' => null];
         }
         return collect($respone);
+    }
+
+    public function getPatient(Request $request){
+        $data = Patient::where('full_name', 'LIKE', '%'.$request->query('query').'%')
+            ->orWhere('number_medical_record', 'LIKE', '%'.$request->query('query').'%')->get();
+        return $data->pluck('result');
+    }
+
+    public function printReport(Request $request, $id){
+        $queue = $request->query('kiosk');
+        $reference = Reference::with(['register', 'register.patient', 'poly'])->find($id);
+        return view('registration.print', compact(['reference', 'queue']));
     }
 }

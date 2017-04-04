@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model
 {
+    protected $appends = ['result'];
+
     protected $fillable = [
         'number_medical_record',
         'full_name',
@@ -26,6 +28,7 @@ class Patient extends Model
         'job',
         'askes_number',
     ];
+
 
     /*belong*/
     public function hospital(){
@@ -47,6 +50,11 @@ class Patient extends Model
     public function getBirthAttribute($value)
     {
         return Carbon::parse($value)->format('m/d/Y');
+    }
+
+    public function getResultAttribute()
+    {
+        return $this->attributes['number_medical_record']. ' - '. $this->attributes['full_name'];
     }
 
 }
