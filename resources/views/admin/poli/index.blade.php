@@ -7,6 +7,11 @@
             <div class="active section">Poli</div>
         </div><br/>
 
+        <hr/>
+        <div class="action" style="margin-bottom: 10px">
+            <a href="{{url('/admin/poli/create')}}" type="button"  class="btn btn-primary">Tambah Poli </a>
+        </div>
+
         <table id="table-poli" class="ui celled table dataTable responsive" cellspacing="0" width="100%">
             <thead>
             <tr>

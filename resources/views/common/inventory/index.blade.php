@@ -6,10 +6,11 @@
             <div class="section">{{ucfirst($role)}}</div>
             <div class="divider"> / </div>
             <div class="active section">Inventory</div>
-            <div class="divider"> / </div>
-            <div class="active section">Non Alkes</div>
         </div><br/>
-
+        <hr/>
+        <div class="action" style="margin-bottom: 10px">
+            <a href="{{url('/'.$role.'/inventory/create')}}" type="button"  class="btn btn-primary">Tambah Barang</a>
+        </div>
         <table id="table-medicine" class="ui celled table dataTable responsive" cellspacing="0" width="100%" data-role="{{$role}}">
             <thead>
             <tr>
@@ -27,55 +28,9 @@
             </thead>
         </table>
     </div>
-{{--
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5> <i class="fa fa-angle-right"></i> Inventory</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content">
-                    <div class="form-panel">
-                        <div class="action" style="margin-bottom: 10px">
-                            <a href="{{url('/'.$role.'/inventory/create')}}" type="button"  class="btn btn-primary">Tambah Barang</a>
-                        </div>
-
-                        <table class="table table-stripped" id="table-inventory" data-role="{{$role}}">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Kode</th>
-                                <th>Nama</th>
-                                <th>Kategori</th>
-                                <th>Tipe</th>
-                                <th>Total</th>
-                                <th>Stock Minimal</th>
-                                <th>Stock Maximal</th>
-                                <th>sediaan</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
---}}
 @endsection
 @section('scripts')
-{{--    <script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             $(document).on('click', '.btn-remove', function () {
                 $this = $(this);
@@ -104,5 +59,5 @@
                 }
             });
         });
-    </script>--}}
+    </script>
 @endsection

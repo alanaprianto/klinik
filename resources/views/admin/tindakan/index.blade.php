@@ -6,63 +6,25 @@
             <div class="divider"> / </div>
             <div class="active section">Tindakan</div>
         </div><br/>
-
+        <hr/>
+        <div class="action" style="margin-bottom: 10px">
+            <a href="{{url('/admin/tindakan/create')}}" type="button"  class="btn btn-primary">Tambah Tindakan</a>
+        </div>
         <table id="table-service" class="ui celled table dataTable responsive" cellspacing="0" width="100%">
             <thead>
             <tr>
                 <th>No</th>
                 <th>Tindakan</th>
                 <th>Harga</th>
-                <th>Deskripsion</th>
+                <th>Deskripsi</th>
                 <th>Action</th>
             </tr>
             </thead>
         </table>
     </div>
-{{--
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5> <i class="fa fa-angle-right"></i> Tindakan</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content">
-                    <div class="form-panel">
-                        <div class="action" style="margin-bottom: 10px">
-                            <a href="{{url('/admin/tindakan/create')}}" type="button"  class="btn btn-primary">Tambah Tindakan</a>
-                        </div>
-
-                        <table class="table table-stripped" id="table-service" data-token="{{csrf_token()}}">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Tindakan</th>
-                                <th>Harga</th>
-                                <th>Deskripsion</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
---}}
 @endsection
 @section('scripts')
-{{--    <script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             $(document).on('click', '.btn-remove', function () {
                 $this = $(this);
@@ -91,5 +53,5 @@
                 }
             });
         });
-    </script>--}}
+    </script>
 @endsection

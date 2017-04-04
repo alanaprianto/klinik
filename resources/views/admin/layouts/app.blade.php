@@ -67,6 +67,7 @@
                                 <li><a href="{{url('/admin/staff')}}">Database Staff</a></li>
                                 <li><a href="{{url('/admin/staffjob')}}">Database Staff Job</a></li>
                                 <li><a href="{{url('/admin/staffposition')}}">Database Staff Position</a></li>
+                                <li><a href="{{url('/admin/jasa-dokter')}}">Database Jasa Dokter</a></li>
                             </ul>
                         </li>
                         <li>
