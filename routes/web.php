@@ -38,6 +38,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::post('/role/delete', 'RoleController@deleteRole');
     Route::post('/role-list', 'RoleController@getList');
 
+    Route::get('/permissions', 'PermissionController@index');
+    Route::post('/permission-list', 'PermissionController@getList');
+    Route::get('/permission/{param}', 'PermissionController@getCreateEdit');
+    Route::post('/permission/modify', 'PermissionController@postModify');
+
 
     Route::get('/poli', 'poliController@Index');
     Route::get('/poli/{param}', 'poliController@getPoli');
@@ -106,7 +111,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     /*end common used*/
 });
 
-Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['auth', 'view.finder.loket', 'role:loket']], function () {
+Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['auth', 'view.finder.loket', 'role:loket|admin_loket']], function () {
     Route::get('/', 'LoketController@index');
     Route::get('/antrian', 'QueueController@index');
     Route::post('/antrian-list', 'QueueController@getList');
@@ -138,7 +143,7 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['aut
 
 });
 
-Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:poli_umum|poli_anak']], function () {
+Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['auth', 'view.finder.penata-jasa', 'role:poli_umum|poli_anak|admin_poli_umum|admin_poli_anak']], function () {
     Route::get('/', 'PenataJasaController@index');
     Route::get('/antrian', 'QueueController@index');
     Route::post('/antrian-list', 'QueueController@getList');

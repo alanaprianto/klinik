@@ -2,6 +2,11 @@
     var rs = {};
     moment.locale('id');
 
+    function pad(str, max) {
+        str = str.toString();
+        return str.length < max ? pad("0" + str, max) : str;
+    }
+
     rs.QueueTable = function ($element, listUrl, csrf, userId, role) {
         if (!$element.length) return null;
         return $element.DataTable({
@@ -28,7 +33,10 @@
                 {
                     data: 'queue_number',
                     name: 'queue_number',
-                    "width": "5%"
+                    "width": "5%",
+                    "mRender": function (data) {
+                        return pad(data, 3);
+                    }
                 },
                 {
                     data: 'status',
@@ -38,9 +46,9 @@
                         var status;
                         if (data == 1) {
                             status = '<span class="alert-success">Open</span>';
-                        } else if (data == 2){
+                        } else if (data == 2) {
                             status = '<span class="alert-warning">Calling</span>';
-                        } else if (data == 3){
+                        } else if (data == 3) {
                             status = '<span class="alert-warning">On Process</span>';
                         }
 
@@ -51,11 +59,10 @@
                     "data": '',
                     "defaultContent": '',
                     "mRender": function (data, type, row) {
-                        var btn = '<a class="btn btn-primary btn-play" data-sound="' + row.location + '" data-id="'+row.id+'"><i class="fa fa-play"></i></a>';
+                        var btn = '<a class="btn btn-primary btn-play" data-sound="' + row.location + '" data-id="' + row.id + '"><i class="fa fa-play"></i></a>';
                         var process = '<a href="/loket/pendaftaran/tambah?id=' + row.id + '" class="btn btn-primary btn-process"><i class="fa fa-sign-in"></i></a>';
 
                         if (role == 'penata-jasa') {
-                            console.log(row)
                             process = '<a href="/penata-jasa/periksa/' + row.reference_id + '" class="btn btn-primary btn-process"><i class="fa fa-check-square"></i></a>';
                         }
 
@@ -109,7 +116,7 @@
                         var status = '';
                         if (data == 1 || data == "1") {
                             status = '<span class="alert-success">Open</span>'
-                        } else{
+                        } else {
                             status = '<span class="alert-warning">Closed</span>'
                         }
 
@@ -123,9 +130,9 @@
                     "searchable": false,
                     "mRender": function (data, type, row) {
                         var reference = '<a href="/loket/pendaftaran/' + row.id + '/tambah-rujukan"><i class="fa fa-plus"></i> Rujukan</a>';
-                        if(row.status == 1 || row.status == "1"){
+                        if (row.status == 1 || row.status == "1") {
                             return reference;
-                        } else{
+                        } else {
                             return '-';
                         }
 
@@ -170,7 +177,7 @@
                 {data: 'email', name: 'email'},
                 {data: 'username', name: 'username'},
                 {
-                    data: 'roles[0].display_name', name: 'roles[0].display_name'
+                    data: 'roles[, ].display_name', name: 'roles[, ].display_name'
                 },
                 {
                     "data": '',
@@ -187,7 +194,7 @@
         });
     };
 
-    rs.RoleTable = function ($element, listUrl, csrf) {
+    rs.RolePermissionTable = function ($element, listUrl, csrf, selector) {
         if (!$element.length) return null;
         return $element.DataTable({
             processing: true,
@@ -228,7 +235,7 @@
                     "orderable": false,
                     "searchable": false,
                     "mRender": function (data, type, row) {
-                        var edit = '<a href="/admin/role/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
+                        var edit = '<a href="/admin/' + selector + '/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
                         return edit;
                     }
                 }
@@ -518,13 +525,18 @@
                 {data: 'nik', name: 'nik'},
                 {data: 'full_name', name: 'full_name'},
                 {data: 'gender', name: 'gender'},
-                {data: 'staff_job.name', name: 'staff_job.name'},
+                {data: 'staff_job.name', name: 'staff_job.name', 'mRender' : function (data) {
+                    if (!data) {
+                        return '-';
+                    }
+                    return data;
+                }},
                 {
                     data: 'staff_position.name', name: 'staff_position.name', 'mRender': function (data) {
-                        if(!data){
-                            return '-';
-                        }
-                        return data;
+                    if (!data) {
+                        return '-';
+                    }
+                    return data;
                 }
                 },
 
@@ -609,7 +621,7 @@
         });
     };
 
-        rs.VisitorTable = function ($element, listUrl, csrf, role) {
+    rs.VisitorTable = function ($element, listUrl, csrf, role) {
         if (!$element.length) return null;
         return $element.DataTable({
             processing: true,
@@ -795,19 +807,19 @@
                     "mRender": function (data, type, row) {
                         var result;
                         var category_type;
-                        if(category == 'medicine'){
+                        if (category == 'medicine') {
                             category_type = 'obat';
-                        } else{
+                        } else {
                             category_type = 'inventory';
                         }
                         var maximal_add = row.stock_maximal - row.total;
-                        var edit = '<a href="/'+role+'/'+category_type+'/edit?id='+row.id+'"><i class="fa fa-edit"></i></a>';
-                        var remove = '<a href="javascript:;" data-id="'+row.id+'" class="btn-remove"><i class="fa fa-remove"></i></a>';
-                        var batch = '<a class="btn-modal" data-id="'+row.id+'" data-max="'+maximal_add+'"><i class="fa fa-plus"></i> Batch</a>';
-                        if(category == 'medicine'){
+                        var edit = '<a href="/' + role + '/' + category_type + '/edit?id=' + row.id + '"><i class="fa fa-edit"></i></a>';
+                        var remove = '<a href="javascript:;" data-id="' + row.id + '" class="btn-remove"><i class="fa fa-remove"></i></a>';
+                        var batch = '<a class="btn-modal" data-id="' + row.id + '" data-max="' + maximal_add + '"><i class="fa fa-plus"></i> Batch</a>';
+                        if (category == 'medicine') {
                             result = edit + ' | ' + remove + ' | ' + batch;
-                        } else{
-                            result =  edit + ' | ' + remove ;
+                        } else {
+                            result = edit + ' | ' + remove;
                         }
                         return result;
                     }
@@ -849,9 +861,9 @@
                     "searchable": false,
                     "mRender": function (data, type, row) {
                         var name;
-                        if(row.reference){
+                        if (row.reference) {
                             name = row.reference.register.patient.full_name
-                        }else{
+                        } else {
                             name = row.buyer.full_name
                         }
                         return name;
@@ -865,9 +877,9 @@
                     "searchable": true,
                     "mRender": function (data, type, row) {
                         var poly;
-                        if(row.reference){
+                        if (row.reference) {
                             poly = row.reference.poly.name
-                        }else{
+                        } else {
                             poly = 'Pembeli Luar'
                         }
                         return poly;
@@ -880,7 +892,7 @@
                     "orderable": true,
                     "searchable": true,
                     "mRender": function (data, type, row) {
-                        var detail = '<a href="/apotek/resep/detail/'+row.id+'"><i class="fa fa-info"></i></a>';
+                        var detail = '<a href="/apotek/resep/detail/' + row.id + '"><i class="fa fa-info"></i></a>';
                         return detail;
                     }
                 }
@@ -899,9 +911,9 @@
     }
 
     $(document).ready(function () {
-/*
-        var socket = io.connect('http://localhost:8890');
-*/
+        /*
+         var socket = io.connect('http://localhost:8890');
+         */
 
         var $QueueTable = rs.QueueTable($('#table-queue'), '/loket/antrian-list', $('meta[name="csrf-token"]').attr('content'));
 
@@ -911,9 +923,13 @@
             orderNumber($UserTable);
         }
 
-        var $roleTable = rs.RoleTable($('#table-roles'), '/admin/role-list', $('meta[name="csrf-token"]').attr('content'));
+        var $roleTable = rs.RolePermissionTable($('#table-roles'), '/admin/role-list', $('meta[name="csrf-token"]').attr('content'), 'role');
         if ($roleTable) {
             orderNumber($roleTable);
+        }
+        var $permissionTable = rs.RolePermissionTable($('#table-permissions'), '/admin/permission-list', $('meta[name="csrf-token"]').attr('content'), 'permission');
+        if ($permissionTable) {
+            orderNumber($permissionTable);
         }
 
         var $ServiceTable = rs.ServiceTable($('#table-service'), '/admin/tindakan-list', $('meta[name="csrf-token"]').attr('content'));
@@ -980,7 +996,7 @@
             orderNumber(doctorService);
         }
 
-        var inventory = rs.InventoryTable($('#table-inventory'), '/'+$('#table-inventory').data('role')+'/inventory-list?type=non_medis', $('meta[name="csrf-token"]').attr('content'), $('#table-inventory').data('role'), 'inventory');
+        var inventory = rs.InventoryTable($('#table-inventory'), '/' + $('#table-inventory').data('role') + '/inventory-list?type=non_medis', $('meta[name="csrf-token"]').attr('content'), $('#table-inventory').data('role'), 'inventory');
         if (inventory) {
             inventory.column(-2).visible(false);
             inventory.column(-3).visible(false);
@@ -988,7 +1004,7 @@
             orderNumber(inventory);
         }
 
-        var medicine = rs.InventoryTable($('#table-medicine'), '/'+$('#table-medicine').data('role')+'/inventory-list?type=medis', $('meta[name="csrf-token"]').attr('content'), $('#table-medicine').data('role'), 'medicine');
+        var medicine = rs.InventoryTable($('#table-medicine'), '/' + $('#table-medicine').data('role') + '/inventory-list?type=medis', $('meta[name="csrf-token"]').attr('content'), $('#table-medicine').data('role'), 'medicine');
         if (medicine) {
             orderNumber(medicine);
         }
@@ -1000,33 +1016,33 @@
 
 
         //socket message
-/*        socket.on('message', function (data) {
-            switch (data) {
-                case 'bpjs':
-                    bpjs.ajax.reload();
-                    break;
-                case 'umum':
-                    umum.ajax.reload();
-                    break;
-                case 'contractor':
-                    contractor.ajax.reload();
-                    break;
-                case 'registration':
-                    registration.ajax.reload();
-                    break;
-                case 'Poli Umum':
-                    polies.ajax.reload();
-                    break;
-                case 'Poli Anak':
-                    polies.ajax.reload();
-                    break;
-                case 'medicine':
-                    medicine.ajax.reload();
-                    break;
-                default:
-                    polies.ajax.reload();
-            }
-        });*/
+        /*        socket.on('message', function (data) {
+         switch (data) {
+         case 'bpjs':
+         bpjs.ajax.reload();
+         break;
+         case 'umum':
+         umum.ajax.reload();
+         break;
+         case 'contractor':
+         contractor.ajax.reload();
+         break;
+         case 'registration':
+         registration.ajax.reload();
+         break;
+         case 'Poli Umum':
+         polies.ajax.reload();
+         break;
+         case 'Poli Anak':
+         polies.ajax.reload();
+         break;
+         case 'medicine':
+         medicine.ajax.reload();
+         break;
+         default:
+         polies.ajax.reload();
+         }
+         });*/
     });
 
 })(jQuery, window);

@@ -57,6 +57,7 @@
                 type: 'POST',
                 data: {type: type, _token: CSRF_TOKEN},
                 success: function (data) {
+                    console.log(data);
                     $('.modal-content').html();
                     var h3 = '<h3> Nomor Antrian Anda Adalah ' + data.message.queue_number + '</h3>';
                     $('.modal-content').html(h3);
