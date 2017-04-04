@@ -38,8 +38,11 @@
             <div class="section">Loket</div>
             <div class="divider"> /</div>
             <div class="active section">Pendaftaran</div>
+            <div class="divider"> /</div>
+            <div class="active section">Tambah</div>
         </div>
         <br/>
+        <hr/>
 
         <div class="row">
             <div class="col-md-12 text-center">
@@ -54,7 +57,7 @@
                 </form>
             </div>
         </div>
-        <hr/>
+        <br/>
         <form method="post" class="form-horizontal ui form" id="form_register">
             {{csrf_field()}}
             <input type="hidden" name="kiosk_id" value="{{$kiosk_id ? $kiosk_id : ''}}">

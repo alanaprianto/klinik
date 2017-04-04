@@ -43,6 +43,20 @@ class VisitorController extends Controller
         foreach ($patient->registers as $register) {
             $counts += count($register->references);
         }
-        return view('Common::visitor.detail', compact('patient', 'counts'));
+
+        $user = Auth::user();
+        $role = 'admin';
+        if ($user->hasRole('admin')) {
+            $role = 'admin';
+        } elseif ($user->hasRole('loket')) {
+            $role = 'loket';
+        } elseif ($user->hasRole('kasir')){
+            $role = 'kasir';
+        } elseif ($user->hasRole('apotek')){
+            $role = 'apotek';
+        } else{
+            $role = 'penata-jasa';
+        }
+        return view('Common::visitor.detail', compact('patient', 'counts', 'role'));
     }
 }

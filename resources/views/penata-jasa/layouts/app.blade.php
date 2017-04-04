@@ -57,7 +57,7 @@
                         <li>
                             <a href="{{url('/penata-jasa/kunjungan')}}">
                                 <span class="sidebar-nav-item-icon fa fa-random fa-fw"></span>
-                                <span class="sidebar-nav-item">Pendaftaran</span>
+                                <span class="sidebar-nav-item">Kunjungan</span>
                             </a>
                         </li>
                         <li>

@@ -11,7 +11,7 @@
 
     <div class="container" style="text-align: justify">
         <div class="ui breadcrumb">
-            <div class="section"></div>
+            <div class="section">{{ucfirst($role)}}</div>
             <div class="divider"> / </div>
             <div class="active section">Pengunjung</div>
         </div><br/>

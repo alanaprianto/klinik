@@ -46,13 +46,170 @@
     </style>
 @endsection
 
-@section('breadcrumb')
-    <li class="active">
-        <strong>Periksa</strong>
-    </li>
-@endsection
-
 @section('content')
+    <div class="container" style="text-align: justify">
+        <div class="ui breadcrumb">
+            <div class="section">Penata Jasa</div>
+            <div class="divider"> / </div>
+            <div class="active section">Periksa</div>
+        </div><br/>
+        <hr/>
+
+        <form method="post" action="{{url('/penata-jasa/periksa')}}">
+            {{csrf_field()}}
+            <input type="hidden" name="reference_id" value="{{$reference->id}}">
+            <input type="hidden" name="remove_ids" id="remove-ids">
+            <input type="hidden" name="kiosk_id" value="{{$id}}">
+            <table class="table table-info">
+                <tbody>
+                <tr>
+                    <td>No. Rm</td>
+                    <td style="width: 10px">:</td>
+                    <td>{{$reference->register->patient->number_medical_record}}</td>
+                </tr>
+                <tr>
+                    <td>Nama Lengkap</td>
+                    <td>:</td>
+                    <td>{{$reference->register->patient->full_name}}</td>
+                </tr>
+                <tr>
+                    <td>TTL / Umur</td>
+                    <td>:</td>
+                    <td>{{$reference->register->patient->place}}, {{$reference->register->patient->birth}}
+                        / {{$reference->register->patient->age}} Tahun
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jenis Kelamin</td>
+                    <td>:</td>
+                    <td>{{$reference->register->patient->gender == 'male' ? 'Laki-laki' : 'Perempuan'}}</td>
+                </tr>
+                <tr>
+                    <td>Alamat</td>
+                    <td>:</td>
+                    <td>{{$reference->register->patient->address}}</td>
+                </tr>
+                <tr>
+                    <td>No Hp</td>
+                    <td>:</td>
+                    <td>{{$reference->register->patient->phone_number}}</td>
+                </tr>
+                <tr>
+                    <td>Dokter</td>
+                    <td>:</td>
+                    <td>
+                        <select name="doctor" class="form-control">
+                            @foreach($reference->poly->doctors as $doctor)
+                                <option value="{{$doctor->id}}" {{$doctor->id == $reference->staff_id ? 'selected' : ''}}>{{$doctor->full_name}}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Tambah Tindakan</h3>
+            <button class="btn btn-primary btn-plus" type="button"><i class="fa fa-plus"></i></button>
+            <table class="table service-table" id="service-table">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Layanan</th>
+                    <th>Biaya Layanan</th>
+                    <th>Jumlah</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                @forelse($reference->medicalRecords->where('type', \Illuminate\Support\Facades\Auth::user()->roles()->first()->name) as $index => $medicalRecord)
+                    <tr class="{{$index == 0 ? 'clone' : ''}}">
+                        <input type="hidden" name="mr_id[]" value="{{$medicalRecord->id}}">
+                        <td>{{$index + 1}} @if($index != 0) <a href="javascript:;" type="button"
+                                                               class="btn-minus"
+                                                               data-id="{{$medicalRecord->id}}"><i
+                                        class="fa fa-minus"></i></a> @endif </td>
+                        <td>
+                            <select name="service[]" class="select-service form-control">
+                                <option></option>
+                                @foreach($services as $service)
+                                    <option value="{{$service->id}}" {{$medicalRecord->service_id == $service->id ? 'selected' : ''}}>{{$service->name}}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td class="cost">{{$medicalRecord->cost}}</td>
+                        <td><input type="number" placeholder="jumlah" name="quantity[]"
+                                   class="amount form-control"
+                                   value="{{$medicalRecord->quantity}}">
+                        </td>
+                        <td class="total-amount">{{$medicalRecord->cost * $medicalRecord->quantity}}</td>
+                    </tr>
+                @empty
+                    <tr class="clone">
+                        <input type="hidden" name="mr_id[]" value="">
+                        <td>1</td>
+                        <td>
+                            <select name="service[]" class="select-service form-control">
+                                <option></option>
+                                @foreach($services as $service)
+                                    <option value="{{$service->id}}">{{$service->name}}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td class="cost"></td>
+                        <td><input type="number" min="0" placeholder="jumlah" name="quantity[]"
+                                   class="amount form-control">
+                        </td>
+                        <td class="total-amount"></td>
+                    </tr>
+                @endforelse
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="4">Total Pembayaran</th>
+                    <th class="sub-total">{{$total_payment}}</th>
+                </tr>
+                </tfoot>
+            </table>
+
+
+            <h3>Kondisi Akhir</h3>
+            <table class="table table-condition">
+                <tbody>
+                <tr>
+                    <td>
+                        <select name="final_result" class="form-control condition" required>
+                            <option>-</option>
+                            @foreach(getConditions() as $condition)
+                                <option value="{{$condition}}">{{$condition}}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select name="poly" class="form-control poly" style="display: none" required
+                                disabled>
+                            <option></option>
+                            @foreach($polies as $poly)
+                                <option value="{{$poly->id}}">{{$poly->name}}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Catatan :
+                        <textarea name="notes" class="form-control"></textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+{{--
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
@@ -224,6 +381,7 @@
             </div>
         </div>
     </div>
+--}}
 
 
     <!-- myModal -->
@@ -385,9 +543,9 @@
                 startDate: now_time
             });
 
-            $('.icd10').select2({
+/*            $('.icd10').select2({
                 dropdownParent: $("#myModal")
-            });
+            });*/
             $(document).on('click', '.btn-plus', function () {
                 var count_row = $('.service-table tbody').find('tr').length + 1;
                 var tr = $('.clone').clone(true);
