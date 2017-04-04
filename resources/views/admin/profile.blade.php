@@ -9,6 +9,7 @@
             <div class="divider"> / </div>
             <div class="active section">Profil Rumah Sakit</div>
         </div><br/>
+        <hr/>
 
         <form method="post" class="form-horizontal" action="{{url('/admin/rumah-sakit/profil')}}"
               enctype="multipart/form-data">

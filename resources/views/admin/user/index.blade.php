@@ -6,7 +6,10 @@
             <div class="divider"> / </div>
             <div class="active section">User</div>
         </div><br/>
-
+        <hr/>
+        <div class="action" style="margin-bottom: 10px">
+            <a href="{{url('/admin/user/create')}}" type="button"  class="btn btn-primary">Tambah User </a>
+        </div>
         <table id="table-user" class="ui celled table dataTable responsive" cellspacing="0" width="100%">
             <thead>
             <tr>
@@ -19,47 +22,8 @@
             </thead>
         </table>
     </div>
-{{--    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5> <i class="fa fa-angle-right"></i> User</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content">
-                    <div class="form-panel">
-                        <div class="action" style="margin-bottom: 10px">
-                            <a href="{{url('/admin/user/create')}}" type="button"  class="btn btn-primary">Tambah User </a>
-                        </div>
-
-                        <table class="table table-stripped" id="table-user" data-token="{{csrf_token()}}">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>--}}
 @endsection
 @section('scripts')
-{{--
     <script type="text/javascript">
         $(document).ready(function () {
             $(document).on('click', '.btn-remove', function () {
@@ -90,5 +54,4 @@
             });
         });
     </script>
---}}
 @endsection
