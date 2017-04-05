@@ -3,20 +3,14 @@
 @section('css')
 
 @endsection
-@section('breadcrumb')
-    <li class="active">
-        <strong>Antrian</strong>
-    </li>
-@endsection
 @section('content')
-    {{--BPJS--}}
     <div class="container" style="text-align: justify">
         <div class="ui breadcrumb">
             <div class="section">Loket</div>
             <div class="divider"> / </div>
             <div class="active section">Antrian</div>
         </div><br/>
-
+        <hr/>
         <div class="row">
             <div class="col-md-4">
                 <h5>Antrian BPJS</h5>

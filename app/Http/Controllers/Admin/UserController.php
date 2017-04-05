@@ -19,8 +19,6 @@ class UserController extends Controller
     {
         $user = '';
         $query = $request->query();
-
-
         $roles = Role::get();
         if (($param == 'edit') && $query['id']) {
 
@@ -32,30 +30,37 @@ class UserController extends Controller
 
     public function postUser(Request $request)
     {
-
-
-        $this->validate($request, [
-            'username' => 'required|max:255|unique:users',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-
         $input = $request->except(['_token']);
-        $input['password'] = bcrypt($input['password']);
-        $role = Role::find($input['role']);
+        if (isset($input['user_id'])) {
+            $this->validate($request, [
+                'username' => 'required|max:255|',
+                'email' => 'required|email|max:255',
+            ]);
+        } else {
+            $this->validate($request, [
+                'username' => 'required|max:255|unique:users',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|min:6|confirmed',
+            ]);
+            $input['password'] = bcrypt($input['password']);
+
+        }
 
         if (isset($input['user_id'])) {
             $user = User::find($input['user_id']);
             $user->update($input);
+            $user->attachRoles($input['roles']);
+            $user->roles()->sync($input['roles']);
         } else {
             $user = user::create($input);
-            $user->attachRole($role);
-
+            $user->staff()->create([]);
+            $user->attachRoles($input['roles']);
         }
         return redirect('admin/user')->with('status', 'Success / Berhasil');
     }
 
-    public function getList(){
+    public function getList()
+    {
         $user = User::with('roles')->get();
         $datatable = Datatables::of($user);
         return $datatable->make(true);

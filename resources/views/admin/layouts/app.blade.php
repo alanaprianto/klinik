@@ -67,6 +67,7 @@
                                 <li><a href="{{url('/admin/staff')}}">Database Staff</a></li>
                                 <li><a href="{{url('/admin/staffjob')}}">Database Staff Job</a></li>
                                 <li><a href="{{url('/admin/staffposition')}}">Database Staff Position</a></li>
+                                <li><a href="{{url('/admin/jasa-dokter')}}">Database Jasa Dokter</a></li>
                             </ul>
                         </li>
                         <li>
@@ -94,10 +95,14 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{url('/admin/roles')}}">
+                            <a class="has-arrow" href="#" aria-expanded="false">
                                 <span class="sidebar-nav-item-icon fa fa-exchange fa-fw"></span>
-                                <span class="sidebar-nav-item">Roles</span>
+                                <span class="sidebar-nav-item">Role & Permission</span>
                             </a>
+                            <ul class="module-left-dropdown" aria-expanded="false">
+                                <li><a href="{{url('/admin/roles')}}">Roles User</a></li>
+                                <li><a href="{{url('/admin/permissions')}}">Permissions</a></li>
+                            </ul>
                         </li>
                         <li>
                             <a href="{{url('/admin/rumah-sakit/profile')}}">

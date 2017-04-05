@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Permission;
 use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,28 +24,37 @@ class RoleController extends Controller
         $role = '';
         $query = $request->query();
         if (($param == 'edit') && $query['id']) {
-            $role = Role::find($query['id']);
+            $role = Role::with(['perms'])->find($query['id']);
         }
-        return view('role.createEdit', compact(['role']));
+        $permissions = Permission::get();
+        return view('role.createEdit', compact(['role', 'permissions']));
     }
 
     public function postRole(Request $request){
-        $input = $request->except('_toke');
-        $this->validate($request, [
-            'name' => 'required|max:255|unique:roles',
-            'display_name' => 'required|max:255|unique:roles',
-        ]);
+        $input = $request->except('_token');
+        if(isset($input['role_id'])){
+            $this->validate($request, [
+                'name' => 'required|max:255',
+                'display_name' => 'required|max:255',
+            ]);
+        } else{
+            $this->validate($request, [
+                'name' => 'required|max:255|unique:roles',
+                'display_name' => 'required|max:255|unique:roles',
+            ]);
+        }
+
         if(isset($input['role_id'])){
             $role = Role::find($input['role_id']);
             $role->update($input);
+            $role->attachPermissions($input['permissions']);
         }else{
-            Role::create($input);
+            $role = Role::create($input);
+            $role->attachPermissions($input['permissions']);
         }
 
         return redirect('/admin/roles')->with('status', 'Berhasil / Sukses');
     }
 
-
-    public function deleteRole(){}
 
 }

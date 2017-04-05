@@ -6,6 +6,7 @@
             <div class="divider"> / </div>
             <div class="active section">Antrian</div>
         </div><br/>
+        <hr/>
 
         <table id="table-queue-polies" data-user="{{Auth::user()->id}}" class="ui celled table dataTable responsive" cellspacing="0" width="100%">
             <thead>
@@ -17,45 +18,7 @@
             </thead>
         </table>
     </div>
-    {{--
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Antrian Poli</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#">Config option 1</a>
-                                </li>
-                                <li><a href="#">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <table class="table" id="table-queue-polies" data-user="{{Auth::user()->id}}">
-                            <thead>
-                            <tr>
-                                <td style="width: 50px">Antrian</td>
-                                <td>Status</td>
-                                <td>Action</td>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    --}}
+
 @endsection
 
 @section('scripts')

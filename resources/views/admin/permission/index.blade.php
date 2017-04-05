@@ -4,26 +4,25 @@
         <div class="ui breadcrumb">
             <div class="section">Admin</div>
             <div class="divider"> / </div>
-            <div class="active section">Staff</div>
+            <div class="active section">Roles</div>
         </div><br/>
         <hr/>
         <div class="action" style="margin-bottom: 10px">
-            <a href="{{url('/admin/staff/create')}}" type="button"  class="btn btn-primary">Tambah Staff </a>
+            <a href="{{url('/admin/permission/create')}}" type="button"  class="btn btn-primary">Tambah Permission </a>
         </div>
-        <table id="table-staff" class="ui celled table dataTable responsive" cellspacing="0" width="100%">
+        <table id="table-permissions" class="ui celled table dataTable responsive" cellspacing="0" width="100%">
             <thead>
             <tr>
                 <th>No</th>
-                <th>NIK</th>
                 <th>Nama</th>
-                <th>Jenis Kelamin</th>
-                <th>Staff Position</th>
-                <th>Staff Job</th>
+                <th>Display Name</th>
+                <th>Desc</th>
                 <th>Action</th>
             </tr>
             </thead>
         </table>
     </div>
+
 @endsection
 @section('scripts')
     <script type="text/javascript">
@@ -33,7 +32,7 @@
                 var $id = $this.data('id');
                 if (confirm('Apakah anda yakin akan menghapus postingan ini?')) {
                     var $form = $('<form />');
-                    $form.attr('action', '/admin/poli/delete');
+                    $form.attr('action', '/admin/user/delete');
                     $form.attr('method', 'post');
                     $form.css({
                         'display': 'none'

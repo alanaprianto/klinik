@@ -21,6 +21,7 @@
             <div class="divider"> / </div>
             <div class="active section">Setting</div>
         </div><br/>
+        <hr/>
         <form class="form-horizontal" role="form" method="POST"
               action="{{url('/admin/setting/modify')}}"
               enctype="multipart/form-data">
@@ -42,8 +43,6 @@
                                             <option value="racik">Biaya Racik</option>
                                             <option value="lainnya">Lainnya</option>
                                         </select>
-                                        {{--                                                    <input class="form-control setting-name" type="text"
-                                                                                                   placeholder="Nama Setting">--}}
                                     </td>
                                     <td>
                                         <a type="button" href="javascript:;"

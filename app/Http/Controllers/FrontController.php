@@ -39,11 +39,11 @@ class FrontController extends GeneralController
             $respone = array('is_success' => true, 'message'  => $addKiosk);
             $redis = $this->LRedis;
             /*push to loket table*/
-            $redis->publish('message', $request->type);
+/*            $redis->publish('message', $request->type);*/
 
             /*push to front*/
-            $count = count(Kiosk::where('type', $request->type)->get());
-            $redis->publish('update-front', json_encode([$count, $request->type, 'total'], true));
+/*            $count = count(Kiosk::where('type', $request->type)->get());
+            $redis->publish('update-front', json_encode([$count, $request->type, 'total'], true));*/
         }catch (\Exception $e){
             $respone = array('is_success' => false, 'message' => $e->getMessage());
         }
