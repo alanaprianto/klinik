@@ -15,19 +15,28 @@
             float: right;
         }
 
-        @media print
-        {
+        @media print {
             body *, .no-print, .no-print * {
-                visibility:hidden;
+                visibility: hidden;
             }
+
             #print-area * {
-                visibility:visible;
+                visibility: visible;
             }
+
+            #inside-no-print *{
+                visibility: hidden;
+            }
+
             #print-area {
-                position:absolute;
-                left:0;
-                top:0;
+                position: absolute;
+                left: 0;
+                top: 0;
             }
+        }
+
+        table.table-patient-info tbody tr th {
+            padding-left: 20px;
         }
     </style>
 @endsection
@@ -252,95 +261,116 @@
                 <div class="form-group field">
                     <div class="col-sm-10 col-sm-offset-5">
                         <button class="btn btn-primary" type="submit">Daftar</button>
-                        <button class="btn btn-primary" type="button" onclick="printModal()">Print</button>
                         <a href="{{url('/loket/pendaftaran')}}" class="btn btn-secondary" type="button">Cancel</a>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+
     <div class="ui modal" id="print-area">
-        <table style="width: 100%">
+        <table style="width: 100%; table-layout: fixed">
             <tbody>
             <tr>
-                <td rowspan="3" class="text-center"><img src="{{asset($hospital->image_header)}}"
-                                                         style="width:40px; height: 60px"></td>
-                <td class="text-center"><span style="font-size: 16px;"><b>{{$hospital->name}}</b></span>
+                <td rowspan="3" class="text-right" style="width: 20%"><img src="{{asset($hospital->image_header)}}"
+                                                                           style="width:40px; height: 60px"></td>
+                <td class="text-center" style="width:60%;"><span
+                            style="font-size: 16px;"><b>{{$hospital->name}}</b></span>
                 </td>
-                <td rowspan="3" ><span style="font-size: 24px"><b>1</b></span></td>
+                <td rowspan="3" style="width:20%;" class="text-center"><span style="font-size: 24px"><b><span
+                                    class="queue_number"></span></b></span></td>
             </tr>
             <tr>
-                <td class="text-center" colspan="3"><span
+                <td class="text-center"><span
                             style="font-size: 14px;"><b>{{$hospital->address}}</b></span></td>
             </tr>
             <tr>
-                <td colspan="3" class="text-center"><span style="font-size: 12px;"><b>Telp.{{$hospital->phone}}</b></span>
+                <td class="text-center"><span style="font-size: 12px;"><b>Telp.{{$hospital->phone}}</b></span>
                 </td>
             </tr>
             </tbody>
         </table>
+        <hr/>
         <table style="width:100%">
             <tbody>
             <tr>
                 <td style="width: 50%">
-                    <table style="width: 100%">
+                    <table style="width: 100%" class="table-patient-info">
                         <tr>
                             <th style="width: 40%">No Pendaftaran</th>
                             <td style="width: 5%">:</td>
-                            <td style="width: 55%">11111111</td>
+                            <td style="width: 55%"><span class="register_number"></span></td>
                         </tr>
                         <tr>
                             <th>No Rekam Medik</th>
                             <td>:</td>
-                            <td>0123456789</td>
+                            <td><span class="number_medical_record"></span></td>
                         </tr>
                         <tr>
                             <th>Nama</th>
                             <td>:</td>
-                            <td>Alan Aprianto</td>
+                            <td><span class="full_name"></span></td>
                         </tr>
                         <tr>
                             <th>Umur</th>
                             <td>:</td>
-                            <td>22 Tahun</td>
+                            <td><span class="age"></span> Tahun</td>
                         </tr>
                     </table>
                 </td>
                 <td style="width: 50%">
-                    <table style="width: 100%">
+                    <table style="width: 100%" table-patient-info>
                         <tr>
                             <th style="width: 40%">Poli Rujukan</th>
                             <td style="width: 5%">:</td>
-                            <td style="width: 55%">Poli Umum</td>
+                            <td style="width: 55%"><span class="poly"></span></td>
                         </tr>
                         <tr>
                             <th>Dokter</th>
                             <td>:</td>
-                            <td>Dokter Alan</td>
+                            <td><span class="doctor"></span></td>
                         </tr>
                         <tr>
                             <th>Tanggal Rujukan</th>
                             <td>:</td>
-                            <td></td>
+                            <td><span class="date"></span></td>
                         </tr>
                     </table>
                 </td>
             </tr>
             </tbody>
         </table>
+        <hr/>
+        <div class="text-center" id="inside-no-print">
+            <a href="{{url('/loket/pendaftaran')}}" class="btn btn-primary no-print">Kembali</a>
+        </div>
     </div>
 
 @endsection
 
 @section('scripts')
+
     <script type="text/javascript" src="{{asset('assets/js/province.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/typeahead.bundle.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/bloodhound.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/handlebars-v4.0.5.js')}}"></script>
 
     <script type="text/javascript">
-        function printModal() {
-            $('.ui.modal').modal('show');
+        function printModal(data) {
+            var modal = $('.ui.modal');
+            modal.find('.queue_number').html(data.data.kiosk.queue_number);
+            modal.find('.register_number').html(data.data.register.register_number);
+            modal.find('.number_medical_record').html(data.data.patient.number_medical_record);
+            modal.find('.full_name').html(data.data.patient.full_name);
+            modal.find('.age').html(data.data.patient.age);
+            modal.find('.poly').html(data.data.poly.name);
+            modal.find('.doctor').html(data.data.doctor.full_name);
+            modal.find('.date').html(data.data.register.created_at);
+            modal.modal({
+                onVisible: function () {
+                    window.print();
+                }
+            }).modal('show');
         }
 
         $('.date-1').datepicker({
@@ -357,8 +387,6 @@
             scrollbar: true
         });
         $(document).ready(function () {
-
-
             $('input.typeahead').typeahead({
                 source: function (query, process) {
                     return $.get('/loket/get_patient', {query: query}, function (data) {
@@ -420,11 +448,7 @@
                 var data_info = $this.serialize();
                 $.post('/loket/pendaftaran/store', data_info).done(function (data) {
                     if (data.isSuccess) {
-                        console.log(data);
-                        $('.ui.modal').modal('show');
-                        $('.ui.modal').on('shown.bs.modal', function () {
-                            window.print();
-                        });
+                        printModal(data)
                     } else {
                         alert(data.message)
                     }
