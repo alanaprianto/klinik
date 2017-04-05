@@ -104,7 +104,7 @@ class RegistrationController extends GeneralController
                     $redis->publish('message', 'polies');*/
 
 
-            $respone = ['isSuccess' => true, 'message' => 'success', 'data' => ['patient' => $patient, 'reference' => $reference, 'poly' => $poly, 'kiosk' => $kiosk]];
+            $respone = ['isSuccess' => true, 'message' => 'success', 'data' => ['patient' => $patient, 'reference' => $reference, 'poly' => $poly, 'kiosk' => $kiosk, 'register' => $register, 'doctor' => $doctor]];
         } catch (\Exception $e){
             $respone = ['isSuccess' => false, 'message' => $e->getMessage(), 'data' => null];
         }
