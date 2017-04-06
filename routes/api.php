@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+
+
 });
 
 Route::get('/test-api', function (){
@@ -22,7 +24,7 @@ Route::get('/test-api', function (){
 });
 
 
-Route::group(['prefix' => 'loket', 'namespace' => 'Loket'], function () {
+Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => 'auth:api'], function () {
     Route::get('/antrian-list', 'ApiQueueController@getList');
     Route::post('/antrian/update-status', 'ApiQueueController@updateStatus');
 
@@ -30,6 +32,6 @@ Route::group(['prefix' => 'loket', 'namespace' => 'Loket'], function () {
     Route::get('/pendaftaran/tambah', 'ApiRegistrationController@CreateEdit');
     Route::post('/pendaftaran/store', 'ApiRegistrationController@store');
 
-    Route::post('/test', 'ApiRegistrationController@test');
+    Route::get('/test', 'ApiRegistrationController@test');
 
 });

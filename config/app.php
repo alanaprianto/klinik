@@ -180,7 +180,7 @@ return [
         Yajra\Datatables\DatatablesServiceProvider::class,
         Sineld\BladeSet\BladeSetServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-
+        Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*

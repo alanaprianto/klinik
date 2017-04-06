@@ -106,6 +106,6 @@ class ApiRegistrationController extends GeneralController
     }
 
     public function test(Request $request){
-        return response()->json($request->all());
+        return User::all();
     }
 }
