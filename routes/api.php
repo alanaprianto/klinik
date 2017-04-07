@@ -15,23 +15,32 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-
-
 });
 
-Route::get('/test-api', function (){
-   return json_encode(['name' => 'Alan'], true);
-});
+Route::group(['middleware' => ['auth:api']], function () {
+
+    Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['role:loket|admin_loket']], function () {
+        Route::group(['prefix' => 'antrian'], function (){
+            Route::get('/', 'ApiQueueController@index');
+            Route::get('/list', 'ApiQueueController@getList');
+            Route::post('/update-status', 'ApiQueueController@updateStatus');
+        });
+        Route::group(['prefix' => 'pendaftaran'], function (){
+            Route::get('/', 'ApiRegistrationController@index');
+            Route::get('/list', 'ApiRegistrationController@getList');
+            Route::get('/tambah', 'ApiRegistrationController@CreateEdit');
+            Route::get('/pilih-poli', 'ApiRegistrationController@selectPoly');
+            Route::get('/get_patient', 'ApiRegistrationController@getPatient');
+            Route::post('/store', 'ApiRegistrationController@store');
+            Route::get('/tambah-rujukan', 'ApiRegistrationController@getReference');
+            Route::post('/tambah-rujukan', 'RegistrationController@postReference');
+
+        });
 
 
-Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => 'auth:api'], function () {
-    Route::get('/antrian-list', 'ApiQueueController@getList');
-    Route::post('/antrian/update-status', 'ApiQueueController@updateStatus');
 
-    Route::get('/pendaftaran', 'ApiRegistrationController@index');
-    Route::get('/pendaftaran/tambah', 'ApiRegistrationController@CreateEdit');
-    Route::post('/pendaftaran/store', 'ApiRegistrationController@store');
 
-    Route::get('/test', 'ApiRegistrationController@test');
+
+    });
 
 });

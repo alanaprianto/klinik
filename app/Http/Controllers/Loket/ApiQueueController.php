@@ -4,12 +4,24 @@ namespace App\Http\Controllers\Loket;
 
 use App\Http\Controllers\GeneralController;
 use App\Kiosk;
-use Illuminate\Database\QueryException;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Facades\Datatables;
 
 class ApiQueueController extends GeneralController
 {
+    public function index(){
+        $response = [];
+        try{
+            $user = User::find(Auth::user()->id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
+        } catch (\Exception $e){
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+    }
+
     public function getList(Request $request)
     {
         $response = [];
