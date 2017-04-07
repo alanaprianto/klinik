@@ -25,7 +25,7 @@ class ProfileController extends Controller
             $role = 'penata-jasa';
         }
 
-        return view('Common::profile.index', compact(['user', 'role']));
+        return view('Common::.iprofilendex', compact(['user', 'role']));
     }
 
     public function postUpdate(Request $request)

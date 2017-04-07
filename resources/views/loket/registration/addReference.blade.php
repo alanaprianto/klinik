@@ -12,6 +12,30 @@
         table.table-info tbody tr td, table.table-info tbody tr th {
             border: none;
         }
+
+        @media print {
+            body *, .no-print, .no-print * {
+                visibility: hidden;
+            }
+
+            #print-area * {
+                visibility: visible;
+            }
+
+            #inside-no-print *{
+                visibility: hidden;
+            }
+
+            #print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+
+        table.table-patient-info tbody tr th {
+            padding-left: 20px;
+        }
     </style>
 @endsection
 
@@ -156,7 +180,7 @@
                     <div class="col-md-6">
                         <hr>
                         <h3>Tambah Rujukan </h3>
-                        <form method="post" class="form-horizontal" action="/loket/pendaftaran/tambah-rujukan">
+                        <form method="post" class="form-horizontal" id="form-reference">
                             {{csrf_field()}}
                             <input type="hidden" name="register_id" value="{{$register->id}}">
                             <div class="form-group">
@@ -192,9 +216,104 @@
         </div>
     </div>
 
+    <div class="ui modal" id="print-area">
+        <table style="width: 100%; table-layout: fixed">
+            <tbody>
+            <tr>
+                <td rowspan="3" class="text-right" style="width: 20%"><img src="{{asset($hospital->image_header)}}"
+                                                                           style="width:40px; height: 60px"></td>
+                <td class="text-center" style="width:60%;"><span
+                            style="font-size: 16px;"><b>{{$hospital->name}}</b></span>
+                </td>
+                <td rowspan="3" style="width:20%;" class="text-center"><span style="font-size: 24px"><b><span
+                                    class="queue_number"></span></b></span></td>
+            </tr>
+            <tr>
+                <td class="text-center"><span
+                            style="font-size: 14px;"><b>{{$hospital->address}}</b></span></td>
+            </tr>
+            <tr>
+                <td class="text-center"><span style="font-size: 12px;"><b>Telp.{{$hospital->phone}}</b></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <hr/>
+        <table style="width:100%">
+            <tbody>
+            <tr>
+                <td style="width: 50%">
+                    <table style="width: 100%" class="table-patient-info">
+                        <tr>
+                            <th style="width: 40%">No Pendaftaran</th>
+                            <td style="width: 5%">:</td>
+                            <td style="width: 55%"><span class="register_number"></span></td>
+                        </tr>
+                        <tr>
+                            <th>No Rekam Medik</th>
+                            <td>:</td>
+                            <td><span class="number_medical_record"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Nama</th>
+                            <td>:</td>
+                            <td><span class="full_name"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Umur</th>
+                            <td>:</td>
+                            <td><span class="age"></span> Tahun</td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 50%">
+                    <table style="width: 100%" table-patient-info>
+                        <tr>
+                            <th style="width: 40%">Poli Rujukan</th>
+                            <td style="width: 5%">:</td>
+                            <td style="width: 55%"><span class="poly"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Dokter</th>
+                            <td>:</td>
+                            <td><span class="doctor"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Tanggal Rujukan</th>
+                            <td>:</td>
+                            <td><span class="date"></span></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <hr/>
+        <div class="text-center" id="inside-no-print">
+            <a href="{{url('/loket/pendaftaran')}}" class="btn btn-primary no-print">Kembali</a>
+        </div>
+    </div>
+
 @endsection
 @section('scripts')
     <script type="text/javascript">
+        function printModal(datas) {
+            var modal = $('.ui.modal');
+            modal.find('.queue_number').html(datas.data.kiosk.queue_number);
+            modal.find('.register_number').html(datas.data.register.register_number);
+            modal.find('.number_medical_record').html(datas.data.patient.number_medical_record);
+            modal.find('.full_name').html(datas.data.patient.full_name);
+            modal.find('.age').html(datas.data.patient.age);
+            modal.find('.poly').html(datas.data.poly.name);
+            modal.find('.doctor').html(datas.data.doctor.full_name);
+            modal.find('.date').html(datas.data.register.created_at);
+            modal.modal({
+                onVisible: function () {
+                    window.print();
+                }
+            }).modal('show');
+        }
+
         $(document).ready(function () {
             $(document).on('change', '#clinic', function () {
                 $this = $(this);
@@ -210,7 +329,16 @@
                             $('#doctors').append(option);
                         });
                     }
-                })
+                });
+
+                $('#form-reference').on('submit', function (e) {
+                    e.preventDefault();
+                    $this = $(this);
+                    var datas = $this.serialize();
+                    $.post('/loket/pendaftaran/tambah-rujukan', datas).done(function (data) {
+                        printModal(data.datas);
+                    });
+                });
             });
         });
     </script>

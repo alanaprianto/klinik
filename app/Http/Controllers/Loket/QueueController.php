@@ -69,4 +69,5 @@ class QueueController extends GeneralController
         }
         return $message;
     }
+
 }
