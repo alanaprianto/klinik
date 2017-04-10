@@ -34,4 +34,8 @@ class User extends Authenticatable
     public function staff(){
         return $this->hasOne('App\Staff');
     }
+
+    public function findForPassport($username){
+        return User::where('username', $username)->first();
+    }
 }

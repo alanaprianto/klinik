@@ -64,13 +64,13 @@ class ApiRegistrationController extends GeneralController
 
             /*get polies*/
             $polies = Poly::get();
-            $polies['totalRecord'] = count($polies);
+            $polies['recordsTotal'] = count($polies);
 
             /*get staff where staffjob doctor*/
             $doctors = Staff::whereHas('staffJob', function ($q) {
                 $q->where('name', 'Dokter');
             })->get();
-            $doctors['totalRecord'] = count($doctors);
+            $doctors['recordsTotal'] = count($doctors);
 
             /*get hospital*/
             $hospital = Hospital::first();
@@ -179,13 +179,13 @@ class ApiRegistrationController extends GeneralController
         try{
             /*get polies*/
             $polies = Poly::get();
-            $polies['totalRecord'] = count($polies);
+            $polies['recordsTotal'] = count($polies);
 
             /*get doctors*/
             $doctors = Staff::whereHas('staffJob', function ($q) {
                 $q->where('name', 'Dokter');
             })->get();
-            $doctors['totalRecord'] = count($doctors);
+            $doctors['recordsTotal'] = count($doctors);
 
             $hospital = Hospital::first();
             $register = Register::with(['patient', 'references', 'references.poly', 'references.doctor'])->find($request['id']);

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Icd10;
 use App\Kiosk;
+use App\MedicalRecord;
+use App\Poly;
 use App\Reference;
+use App\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use File;
@@ -172,5 +176,29 @@ class GeneralController extends Controller
         }
 
         return $kiosks;
+    }
+
+    protected function getServices(){
+        $services = Service::get();
+        $services['recordsTotal'] = count($services);
+        return $services;
+    }
+
+    protected function getPolies(){
+        $polies = Poly::get();
+        $polies['recordsTotal'] = count($polies);
+        return $polies;
+    }
+
+    protected function getIcd10s(){
+        $icd10s = Icd10::get();
+        $icd10s['recordsTotal'] = count($icd10s);
+        return $icd10s;
+    }
+
+    protected function getMedicalRecords(){
+        $medicalRecords = MedicalRecord::get();
+        $medicalRecords['recordsTotal'] = count($medicalRecords);
+        return $medicalRecords;
     }
 }
