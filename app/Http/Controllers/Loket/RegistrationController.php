@@ -48,8 +48,8 @@ class RegistrationController extends GeneralController
                 'staff_id' => Auth::user()->id
             ]);
 
-/*            $redis = $this->LRedis;
-            $redis->publish('message', $kiosk->type);*/
+            /*            $redis = $this->LRedis;
+                        $redis->publish('message', $kiosk->type);*/
             $filename = 'sounds/temp/' . $kiosk->queue_number . '_' . $kiosk->type . '.mp3';
             File::delete($filename);
         }
@@ -59,7 +59,7 @@ class RegistrationController extends GeneralController
     public function store(Request $request)
     {
         $respone = [];
-        try{
+        try {
             /*create new patient*/
             $input = $request->except('_token');
             if ($input['kiosk_id']) {
@@ -105,13 +105,11 @@ class RegistrationController extends GeneralController
 
 
             $respone = ['isSuccess' => true, 'message' => 'success', 'data' => ['patient' => $patient, 'reference' => $reference, 'poly' => $poly, 'kiosk' => $kiosk, 'register' => $register, 'doctor' => $doctor]];
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $respone = ['isSuccess' => false, 'message' => $e->getMessage(), 'data' => null];
         }
 
         return $respone;
-
-/*        return redirect('/loket/pendaftaran/print/'.$reference->id.'?kiosk='.$kiosk->queue_number)->with('status', 'Berhasil menambkan / mengubah data pasien');*/
     }
 
     public function getList()
@@ -129,17 +127,24 @@ class RegistrationController extends GeneralController
         $doctors = Staff::whereHas('staffJob', function ($q) {
             $q->where('name', 'Dokter');
         })->get();
+        $hospital = Hospital::first();
         $register = Register::with(['patient', 'references', 'references.poly', 'references.doctor'])->find($id);
-        return view('registration.addReference', compact(['register', 'polies', 'doctors']));
+        return view('registration.addReference', compact(['register', 'polies', 'doctors', 'hospital']));
     }
 
     public function postReference(Request $request)
     {
-        $input = $request->except('_token');
-        $reference = $this->addReference($input, '', 'add');
-        $poly = Poly::find($input['poly']);
-        $this->getKioskQueue($poly->name, $reference->id);
-        return redirect('/loket/pendaftaran')->with('status', 'berhasil menambahkan rujukan');
+        $respone = [];
+        try {
+            $input = $request->except('_token');
+            $reference = $this->addReference($input, '', 'add');
+            $poly = Poly::find($input['poly']);
+            $kiosk = $this->getKioskQueue($poly->name, $reference->id);
+            $respone = ['isSuccess' => true, 'message' => 'Success', 'datas' => ['kiosk' => $kiosk, 'register' => $reference, 'poly' => $poly]];
+        } catch (\Exception $e) {
+            $respone = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null];
+        }
+        return $respone;
     }
 
     public function getInfoMedicalReport(Request $request)
@@ -171,15 +176,25 @@ class RegistrationController extends GeneralController
         return collect($respone);
     }
 
-    public function getPatient(Request $request){
-        $data = Patient::where('full_name', 'LIKE', '%'.$request->query('query').'%')
-            ->orWhere('number_medical_record', 'LIKE', '%'.$request->query('query').'%')->get();
+    public function getPatient(Request $request)
+    {
+        $data = Patient::where('full_name', 'LIKE', '%' . $request->query('query') . '%')
+            ->orWhere('number_medical_record', 'LIKE', '%' . $request->query('query') . '%')->get();
         return $data->pluck('result');
     }
 
-    public function printReport(Request $request, $id){
+    public function printReport(Request $request, $id)
+    {
         $queue = $request->query('kiosk');
         $reference = Reference::with(['register', 'register.patient', 'poly'])->find($id);
         return view('registration.print', compact(['reference', 'queue']));
+    }
+
+    /*API Here*/
+
+    public function test(Request $request)
+    {
+        $test = $request->except('_token');
+        return response()->json($test);
     }
 }

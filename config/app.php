@@ -179,7 +179,8 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Sineld\BladeSet\BladeSetServiceProvider::class,
-
+        Laravel\Passport\PassportServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*
