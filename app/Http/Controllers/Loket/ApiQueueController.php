@@ -4,25 +4,17 @@ namespace App\Http\Controllers\Loket;
 
 use App\Http\Controllers\GeneralController;
 use App\Kiosk;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Yajra\Datatables\Facades\Datatables;
+use App\Http\Controllers\Controller;
 
 class ApiQueueController extends GeneralController
 {
-    public function index(){
-        $response = [];
-        try{
-            $user = User::find(Auth::user()->id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
-        } catch (\Exception $e){
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
-    }
-
-    public function getList(Request $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
     {
         $response = [];
         try {
@@ -31,7 +23,7 @@ class ApiQueueController extends GeneralController
              * 2 = calling
              * 3 = on process
              * 4 = finish*/
-            switch ($request->query('type')) {
+            switch ($request['type']) {
                 case 'bpjs':
                     $kiosks = Kiosk::where('type', 'bpjs')->whereIn('status', [1, 2, 3])->get();
                     break;
@@ -46,29 +38,32 @@ class ApiQueueController extends GeneralController
                     break;
             }
 
-            $kiosk_final = $this->eachKiosK($kiosks, 'register');
-            $datatable = Datatables::of($kiosk_final);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => $datatable->make(true)];
-
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['kiosks' => $kiosks, 'recordsTotal' => count($kiosks)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
-
         return response()->json($response);
     }
 
-    public function updateStatus(Request $request)
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
         $response = [];
         try {
-            $kiosk = Kiosk::find($request['id']);
+            $kiosk = Kiosk::find($id);
             if ($kiosk->status != 2) {
                 $kiosk->update([
                     'status' => 2
                 ]);
             }
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => $kiosk];
-
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['kiosk' => $kiosk]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }

@@ -44,8 +44,8 @@ class GeneralController extends Controller
         $reference = Reference::create([
             'number_reference' => Carbon::now()->format('Ymdhis'),
             'register_id' => $register_id,
-            'poly_id' => $input['poly'],
-            'staff_id' => $input['doctor'],
+            'poly_id' => $input['poly_id'],
+            'staff_id' => $input['doctor_id'],
             'status' => 1
         ]);
         return $reference;
