@@ -13,44 +13,39 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use File;
 use Illuminate\Support\Facades\Auth;
-use Yajra\Datatables\Facades\Datatables;
+use File;
 
 class ApiRegistrationController extends GeneralController
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $response = [];
         try {
-            $user = User::find(Auth::user()->id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
-    }
-
-    public function getList(Request $request)
-    {
-        $response = [];
-        try {
             $registers = Register::with(['patient', 'staff'])->get();
-            $datatable = Datatables::of($registers);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => $datatable->make(true)];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['registers' => $registers, 'recordsTotal' => count($registers)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
-
         return response()->json($response);
     }
 
-    public function CreateEdit(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
     {
         $response = [];
         try {
             /*update kiosk to status on process*/
-            $kiosk_id = $request->query('kiosk_id');
+            $kiosk_id = $request['kiosk_id'];
             $kiosk = null;
             if ($kiosk_id) {
                 $kiosk = Kiosk::find($kiosk_id);
@@ -63,8 +58,7 @@ class ApiRegistrationController extends GeneralController
             }
 
             /*get polies*/
-            $polies = Poly::get();
-            $polies['recordsTotal'] = count($polies);
+            $polies = $this->getPolies();
 
             /*get staff where staffjob doctor*/
             $doctors = Staff::whereHas('staffJob', function ($q) {
@@ -85,33 +79,12 @@ class ApiRegistrationController extends GeneralController
         return response()->json($response);
     }
 
-    public function selectPoly(Request $request)
-    {
-        $response = [];
-        try {
-            $poly = Poly::with(['doctors'])->find($request['id']);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-
-        return response()->json($response);
-    }
-
-    public function getPatient(Request $request)
-    {
-        $response = [];
-        try {
-            $patient = Patient::where('full_name', 'LIKE', '%' . $request->query('query') . '%')
-                ->orWhere('number_medical_record', 'LIKE', '%' . $request->query('query') . '%')->get();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['patient', $patient]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-
-        return response()->json($response);
-    }
-
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $response = [];
@@ -132,8 +105,8 @@ class ApiRegistrationController extends GeneralController
             $input['hospital_id'] = $hospital->id;
 
             /*select patient from database or create new*/
-            if ($input['patient_number_id']) {
-                $patient = Patient::find($input['patient_number_id']);
+            if ($input['patient_id']) {
+                $patient = Patient::find($input['patient_id']);
             } else {
                 $patient = Patient::create($input);
             }
@@ -150,21 +123,19 @@ class ApiRegistrationController extends GeneralController
             /*create type registration*/
             $register = Register::create($input);
 
-
             /*add reference to poly*/
             $reference = $this->addReference($input, $register, 'create');
 
             /*assign payment for doctor / create payment for doctor*/
-            $doctor = Staff::with('doctorService')->find($input['doctor']);
+            $doctor = Staff::with('doctorService')->find($input['doctor_id']);
             $register->payments()->create([
                 'status' => 1,
                 'total' => $doctor->doctorService->cost,
                 'type' => 'doctor_service',
             ]);
 
-
             /*add kiosk queue in poly*/
-            $poly = Poly::find($request['poly']);
+            $poly = Poly::find($request['poly_id']);
             $kiosk = $this->getKioskQueue($poly->name, $reference->id);
 
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['patient' => $patient, 'reference' => $reference, 'poly' => $poly, 'kiosk' => $kiosk, 'register' => $register, 'doctor' => $doctor]];
@@ -174,12 +145,39 @@ class ApiRegistrationController extends GeneralController
         return response()->json($response);
     }
 
+
+    public function getPatient(Request $request){
+        $response = [];
+        try {
+            $patient = Patient::where('full_name', 'LIKE', '%' . $request['name']. '%')
+                ->orWhere('number_medical_record', 'LIKE', '%' . $request['name'] . '%')->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['patient', $patient]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+
+        return response()->json($response);
+    }
+
+    public function selectPoly(Request $request)
+    {
+        $response = [];
+        try {
+            $poly = Poly::with(['doctors'])->find($request['poly_id']);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+
+        return response()->json($response);
+    }
+
+
     public function getReference(Request $request){
         $response = [];
         try{
             /*get polies*/
-            $polies = Poly::get();
-            $polies['recordsTotal'] = count($polies);
+            $polies = $this->getPolies();
 
             /*get doctors*/
             $doctors = Staff::whereHas('staffJob', function ($q) {
@@ -188,7 +186,7 @@ class ApiRegistrationController extends GeneralController
             $doctors['recordsTotal'] = count($doctors);
 
             $hospital = Hospital::first();
-            $register = Register::with(['patient', 'references', 'references.poly', 'references.doctor'])->find($request['id']);
+            $register = Register::with(['patient', 'references', 'references.poly', 'references.doctor'])->find($request['register_id']);
 
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['polies' => $polies, 'doctors' => $doctors, 'hospital' => $hospital, 'register' => $register]];
         } catch (\Exception $e){
@@ -203,16 +201,14 @@ class ApiRegistrationController extends GeneralController
         try{
             $input = $request->all();
             $reference = $this->addReference($input, '', 'add');
-            $poly = Poly::find($input['poly']);
+            $poly = Poly::find($input['poly_id']);
             $kiosk = $this->getKioskQueue($poly->name, $reference->id);
 
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly, 'kiosk' => $kiosk, 'reference' => $reference]];
         } catch (\Exception $e){
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
 
         return response()->json($response);
     }
-
-
 }

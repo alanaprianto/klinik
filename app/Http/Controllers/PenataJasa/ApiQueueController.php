@@ -7,23 +7,15 @@ use App\Kiosk;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Yajra\Datatables\Facades\Datatables;
 
 class ApiQueueController extends GeneralController
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
-    {
-        $response = [];
-        try {
-            $user = Auth::user();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
-    }
-
-    public function getList()
     {
         $response = [];
         try {
@@ -34,16 +26,22 @@ class ApiQueueController extends GeneralController
                 $kiosks = Kiosk::where('type', 'Poli Anak')->whereNotNull('reference_id')->whereIn('status', [1, 2, 3])->get();
             }
             $kiosk_final = $this->eachKiosK($kiosks, 'checkup');
-            $datatable = Datatables::of($kiosk_final);
 
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => $datatable->make(true)];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['kiosks' => $kiosk_final, 'recordsTotal' => count($kiosk_final)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
         return response()->json($response);
     }
 
-    public function updateStatus(Request $request)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
         $response = [];
         try {
