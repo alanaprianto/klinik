@@ -25,7 +25,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['role:loket|admin_loket']], function () {
         Route::resource('queues', 'ApiQueueController');
 
-        Route::group(['prefix' => 'registers'], function (){
+        Route::group(['prefix' => 'registers'], function () {
             Route::put('/select-poly', 'ApiRegistrationController@selectPoly');
             Route::get('/get-patient', 'ApiRegistrationController@getPatient');
             Route::get('/get-reference', 'ApiRegistrationController@getReference');
@@ -44,19 +44,10 @@ Route::group(['middleware' => ['auth:api']], function () {
             Route::get('/print-letter', 'ApiCheckUpController@printLetter');
         });
         Route::resource('check-up', 'ApiCheckUpController');
-/*        Route::group(['prefix' => 'antrian'], function () {
-            Route::get('/', 'ApiQueueController@index');
-            Route::get('/list', 'ApiQueueController@getList');
-            Route::post('/update-status', 'ApiQueueController@updateStatus');
-        });
+    });
 
-
-        Route::group(['prefix' => 'periksa'], function () {
-            Route::get('/tambah', 'ApiCheckUpController@getCreate');
-            Route::post('/tambah', 'ApiCheckUpController@postCreate');
-            Route::get('/select-service', 'ApiCheckUpController@selectService');
-            Route::get('/medical-record/tambah', 'ApiCheckUpController@addMedicalRecord');
-        });*/
+    Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['role:kasir|admin_kasir']], function () {
+        Route::resource('payments', 'ApiPaymentController');
     });
 
 });

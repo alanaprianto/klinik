@@ -2,12 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Batch;
+use App\Buyer;
+use App\DoctorService;
+use App\Hospital;
 use App\Icd10;
+use App\Inventory;
 use App\Kiosk;
 use App\MedicalRecord;
+use App\Patient;
+use App\Payment;
+use App\Permission;
+use App\PharmacySeller;
 use App\Poly;
+use App\Recipe;
 use App\Reference;
+use App\Register;
+use App\Role;
 use App\Service;
+use App\Setting;
+use App\Staff;
+use App\StaffJob;
+use App\StaffPosition;
+use App\Tuslah;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use File;
@@ -178,16 +196,28 @@ class GeneralController extends Controller
         return $kiosks;
     }
 
-    protected function getServices(){
-        $services = Service::get();
-        $services['recordsTotal'] = count($services);
-        return $services;
+    /*get all Model*/
+    protected function getBatches(){
+        $batches = Batch::with(['inventory'])->get();
+        $batches['recordsTotal'] = count($batches);
+        return $batches;
     }
 
-    protected function getPolies(){
-        $polies = Poly::get();
-        $polies['recordsTotal'] = count($polies);
-        return $polies;
+    protected function getBuyers(){
+        $buyers = Buyer::with(['recipe'])->get();
+        $buyers['recordsTotal'] = count($buyers);
+        return $buyers;
+    }
+
+    protected function getDoctorServices(){
+        $doctorServices = DoctorService::with(['doctor'])->get();
+        $doctorServices['recordsTotal'] = count($doctorServices);
+        return $doctorServices;
+    }
+
+    protected function getHospital(){
+        $hospital = Hospital::with(['staffs', 'patients'])->first();
+        return $hospital;
     }
 
     protected function getIcd10s(){
@@ -196,9 +226,118 @@ class GeneralController extends Controller
         return $icd10s;
     }
 
+    protected function getInventories(){
+        $inventories = Inventory::with(['batches', 'pharmacySellers'])->get();
+        $inventories['recordsTotal'] = count($inventories);
+        return $inventories;
+    }
+
+    protected function getKiosks(){
+        $kiosks = Kiosk::get();
+        $kiosks['recordsTotal'] = count($kiosks);
+        return $kiosks;
+    }
+
     protected function getMedicalRecords(){
-        $medicalRecords = MedicalRecord::get();
+        $medicalRecords = MedicalRecord::with(['reference', 'patient', 'staff', 'service'])->get();
         $medicalRecords['recordsTotal'] = count($medicalRecords);
         return $medicalRecords;
     }
+
+    protected function getPatients(){
+        $patient = Patient::with(['hospital', 'registers'])->get();
+        $patient['recordsTotal'] = count($patient);
+        return $patient;
+    }
+
+    protected function getPayments(){
+        $payment = Payment::with(['reference', 'register'])->get();
+        $payment['recordsTotal'] = count($payment);
+        return $payment;
+    }
+
+    protected function getPermissions(){
+        $permissions = Permission::with(['roles'])->get();
+        $permissions['recordsTotal'] = count($permissions);
+        return $permissions;
+    }
+
+    protected function getPharmacySeller(){
+        $pharmacySeller = PharmacySeller::with(['inventory', 'recipe'])->get();
+        $pharmacySeller['recordsTotal'] = count($pharmacySeller);
+        return $pharmacySeller;
+    }
+
+    protected function getPolies(){
+        $polies = Poly::with(['references', 'doctors'])->get();
+        $polies['recordsTotal'] = count($polies);
+        return $polies;
+    }
+
+    protected function getRecipes(){
+        $recipes = Recipe::with(['reference', 'pharmacySellers', 'staff', 'tuslahs', 'buyer'])->get();
+        $recipes['recordsTotal'] = count($recipes);
+        return $recipes;
+    }
+
+    protected function getReferences(){
+        $references = Reference::with(['register', 'poly', 'doctor', 'medicalRecords', 'payments', 'recipe'])->get();
+        $references['recordsTotal'] = count($references);
+        return $references;
+    }
+
+    protected function getRegisters(){
+        $registers = Register::with(['patient', 'staff', 'references', 'payments'])->get();
+        $registers['recordsTotal'] = count($registers);
+        return $registers;
+    }
+
+    protected function getRoles(){
+        $roles = Role::with(['perms', 'users'])->get();
+        $roles['recordsTotal'] = count($roles);
+        return $roles;
+    }
+
+    protected function getServices(){
+        $services = Service::with(['medicalRecords'])->get();
+        $services['recordsTotal'] = count($services);
+        return $services;
+    }
+
+    protected function getSettings(){
+        $settings = Setting::get();
+        $settings['recordsTotal'] = count($settings);
+        return $settings;
+    }
+
+    protected function getStaff(){
+        $staff = Staff::with(['user', 'hospital', 'staffJob', 'staffPosition' , 'register', 'references', 'polies', 'medicalRecords', 'doctorService', 'recipes'])->get();
+        $staff['recordsTotal'] = count($staff);
+        return $staff;
+    }
+
+    protected function getStaffJobs(){
+        $staffJobs = StaffJob::with(['staffs'])->get();
+        $staffJobs['recordsTotal'] = count($staffJobs);
+        return $staffJobs;
+    }
+
+    protected function getStaffPositions(){
+        $staffPositions = StaffPosition::with(['staff'])->get();
+        $staffPositions['recordsTotal'] = count($staffPositions);
+        return $staffPositions;
+    }
+
+    protected function getTuslahs(){
+        $tuslahs = Tuslah::with(['recipe'])->get();
+        $tuslahs['recordsTotal'] = count($tuslahs);
+        return $tuslahs;
+    }
+
+    protected function getUsers(){
+        $user = User::with(['roles', 'staff'])->get();
+        $user['recordsTotal'] = count($user);
+        return $user;
+    }
+
 }
