@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/staff-positions', 'GeneralController@getStaffPositions');
         Route::get('/tuslahs', 'GeneralController@getTuslahs');
         Route::get('/users', 'GeneralController@getUsers');
+        Route::get('/user-info', 'CommonController@info');
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['role:admin']], function () {
