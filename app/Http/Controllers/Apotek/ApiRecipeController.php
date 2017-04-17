@@ -110,7 +110,24 @@ class ApiRecipeController extends GeneralController
      */
     public function show($id)
     {
-        //
+        $response = [];
+        try {
+
+            $recipe = Recipe::with(['reference', 'reference.register', 'reference.register.patient', 'staff', 'pharmacySellers', 'pharmacySellers.inventory', 'tuslahs'])->find($id);
+            $total_payment = 0;
+            $total_tuslah = 0;
+            foreach ($recipe->pharmacySellers as $pharmacySeller) {
+                $total_payment += $pharmacySeller->total_payment;
+            }
+            foreach ($recipe->tuslahs as $tuslah) {
+                $total_tuslah += ($tuslah->amount * $tuslah->price);
+            }
+
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['recipe' => $recipe, 'total_payment' => $total_payment, 'total_tuslah' => $total_tuslah]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     /**
@@ -147,25 +164,4 @@ class ApiRecipeController extends GeneralController
         //
     }
 
-    public function detail(Request $request)
-    {
-        $response = [];
-        try {
-
-            $recipe = Recipe::with(['reference', 'reference.register', 'reference.register.patient', 'staff', 'pharmacySellers', 'pharmacySellers.inventory', 'tuslahs'])->find($request['id']);
-            $total_payment = 0;
-            $total_tuslah = 0;
-            foreach ($recipe->pharmacySellers as $pharmacySeller) {
-                $total_payment += $pharmacySeller->total_payment;
-            }
-            foreach ($recipe->tuslahs as $tuslah) {
-                $total_tuslah += ($tuslah->amount * $tuslah->price);
-            }
-
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['recipe' => $recipe, 'total_payment' => $total_payment, 'total_tuslah' => $total_tuslah]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
-    }
 }

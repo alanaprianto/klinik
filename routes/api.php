@@ -42,6 +42,12 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/users', 'GeneralController@getUsers');
     });
 
+    Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['role:admin']], function () {
+        Route::resource('doctor-services', 'ApiDoctorServiceController');
+        Route::resource('permissions', 'ApiPermissionController');
+        Route::resource('polies', 'ApiPolyController');
+        Route::resource('roles', 'ApiRoleController');
+    });
 
     Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['role:loket|admin_loket']], function () {
         Route::resource('queues', 'ApiQueueController');
@@ -54,7 +60,6 @@ Route::group(['middleware' => ['auth:api']], function () {
         });
         Route::resource('registers', 'ApiRegistrationController');
     });
-
 
     Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['role:poli_umum|poli_anak|admin_poli_umum|admin_poli_anak']], function () {
         Route::resource('queues', 'ApiQueueController');
@@ -72,9 +77,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     });
 
     Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['role:apotek|admin_apotek']], function () {
-        Route::group(['prefix' => 'recipes'], function () {
-            Route::get('/detail', 'ApiRecipeController@detail');
-        });
         Route::resource('recipes', 'ApiRecipeController');
     });
 
