@@ -9,26 +9,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>SIM Klinik | Login </title>
-
-    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('css/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
-
-    <link href="{{asset('css/animate.css')}}" rel="stylesheet">
-    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <title>Login .: Teknohealth :. </title>
+    <link rel="icon" href="/assets/images/logo/logo-sm.png">
+    <link href="assets/plugins/semantic/semantic.min.css" rel="stylesheet">
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/plugins/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+      body {
+      background-color: #4D545E;
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+    .column {
+      max-width: 450px;
+    }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
-<body class="gray-bg">
-
-<div class="middle-box text-center loginscreen animated fadeInDown">
-    <div>
+<body>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+        <div class="ui stacked segment">
+            <img src="assets/images/logo/logo.png" style="margin-top: 0.4px" class="image">
+        <h2 class="ui teal header">
+          <div class="content">
+            LOGIN
+          </div>
+        </h2>
         <div>
-
-            <h1 class="logo-name"><img src="img/logo.png"></h1>
-
-        </div>
-        <h3>Sistem Informasi Manajemen Klinik</h3>
-        <p>Silahkan Untuk Login terlebih dahulu </p>
         <form class="m-t" role="form" method="POST" action="{{ route('login') }}">
             {{ csrf_field() }}
             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
@@ -47,11 +61,12 @@
                                     </span>
                 @endif
             </div>
-            <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
-            <a class="btn btn-link" href="{{ route('password.request') }}"><small>Forgot password?</small></a>
-            <p class="text-muted text-center"><small>Do not have an account?</small></p>
-            <a class="btn btn-sm btn-white btn-block" href="{{ route('register') }}">Create an account</a>
+            <button type="submit" class="ui fluid large teal submit button" >Login</button>
+            <div class="field">
+            <hr>
+            <p>Tidak memiliki akun? <p>Klik tombol berikut untuk mengajukan pendaftaran.</p>
+            </div>
+            <a  class="ui fluid large teal button" style="background-color: #FE6860" href="{{ route('register') }}">Create an account</a>
         </form>
         <p class="m-t"> <small>Teknoland for medical</small> </p>
     </div>
