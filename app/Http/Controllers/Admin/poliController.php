@@ -36,7 +36,6 @@ class poliController extends Controller
         ]);
 
         if (isset($input['poli_id'])) {
-            ;
             $poli = Poly::find($input['poli_id']);
             $poli->update($input);
         } else {
