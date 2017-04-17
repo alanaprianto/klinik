@@ -47,6 +47,9 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('permissions', 'ApiPermissionController');
         Route::resource('polies', 'ApiPolyController');
         Route::resource('roles', 'ApiRoleController');
+        Route::resource('services', 'ApiServiceController');
+        Route::resource('settings', 'ApiSettingController');
+        Route::resource('staff', 'ApiStaffController');
     });
 
     Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['role:loket|admin_loket']], function () {

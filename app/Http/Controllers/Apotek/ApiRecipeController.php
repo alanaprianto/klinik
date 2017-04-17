@@ -70,7 +70,7 @@ class ApiRecipeController extends GeneralController
                 foreach ($input['name_tuslah'] as $index => $name) {
                     $recipe->tuslahs()->create([
                         'name' => $name,
-                        'amount' => $input['tuslah'][$index],
+                        'amount' => $input['tuslah_amount'][$index],
                         'price' => $input['price'][$index]
                     ]);
                 }
