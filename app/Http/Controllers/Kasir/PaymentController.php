@@ -51,7 +51,6 @@ class PaymentController extends Controller
 
     public function postPayment(Request $request){
         $inputs = $request->except(['_token']);
-        dd($inputs);
         foreach ($inputs as $index => $input){
             $payment = Payment::find($index);
             $payment->update([

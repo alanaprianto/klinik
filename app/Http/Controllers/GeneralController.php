@@ -293,7 +293,7 @@ class GeneralController extends Controller
     }
 
     protected function getRoles(){
-        $roles = Role::with(['perms', 'users'])->get();
+        $roles = Role::with(['perms'])->get();
         $roles['recordsTotal'] = count($roles);
         return $roles;
     }

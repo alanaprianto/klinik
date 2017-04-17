@@ -35,26 +35,26 @@ class StaffController extends Controller
 
     public function postStaff(Request $request)
     {
-        $input = $request->except(['_token']);
+            $input = $request->except(['_token']);
 
-        $hospital = DB::table('hospitals')->Where('name', 'Rumah Sakit A')->first();
-        $staffjob = StaffJob::find($input['staffjob']);
-        $staffposition = StaffPosition::find($input['staffposition']);
-        $input['hospital_id'] = $hospital->id;
-        $input['staff_job_id'] = $staffjob->id;
+            $hospital = DB::table('hospitals')->Where('name', 'Rumah Sakit A')->first();
+            $staffjob = StaffJob::find($input['staffjob']);
+            $staffposition = StaffPosition::find($input['staffposition']);
+            $input['hospital_id'] = $hospital->id;
+            $input['staff_job_id'] = $staffjob->id;
 
-        if (isset($input['staff_id'])) {
-            if ($input['staff_id']) {
-                $staff = Staff::find($input['staff_id']);
-                $staff->update($input);
-            } else {
-                $staff = Staff::create($input);
-                $staff->attachStaffjob($staffjob);
-                $staff->attachStaffposition($staffposition);
+            if (isset($input['staff_id'])) {
+                if ($input['staff_id']) {
+                    $staff = Staff::find($input['staff_id']);
+                    $staff->update($input);
+                } else {
+                    $staff = Staff::create($input);
+                    $staff->attachStaffjob($staffjob);
+                    $staff->attachStaffposition($staffposition);
+                }
+
+                return redirect('admin/staff')->with('status', 'Success / Berhasil');
             }
-
-            return redirect('admin/staff')->with('status', 'Success / Berhasil');
-        }
     }
 
     public
