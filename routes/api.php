@@ -13,14 +13,35 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['prefix' => 'common'], function () {
-    Route::get('/services', 'GeneralController@getServices');
-    Route::get('/polies', 'GeneralController@getPolies');
-    Route::get('/icd10s', 'GeneralController@getIcd10s');
-    Route::get('/medicalRecords', 'GeneralController@getMedicalRecords');
-});
 
 Route::group(['middleware' => ['auth:api']], function () {
+    Route::group(['prefix' => 'common'], function () {
+        Route::get('/batches', 'GeneralController@getBatches');
+        Route::get('/buyers', 'GeneralController@getBuyers');
+        Route::get('/doctor-services', 'GeneralController@getDoctorServices');
+        Route::get('/hospital', 'GeneralController@getHospital');
+        Route::get('/icd10', 'GeneralController@getIcd10s');
+        Route::get('/inventories', 'GeneralController@getInventories');
+        Route::get('/kiosks', 'GeneralController@getKiosks');
+        Route::get('/medical-records', 'GeneralController@getMedicalRecords');
+        Route::get('/patiens', 'GeneralController@getPatients');
+        Route::get('/payments', 'GeneralController@getPayments');
+        Route::get('/permissions', 'GeneralController@getPermissions');
+        Route::get('/pharmacy-seller', 'GeneralController@getPharmacySeller');
+        Route::get('/polies', 'GeneralController@getPolies');
+        Route::get('/recipes', 'GeneralController@getRecipes');
+        Route::get('/references', 'GeneralController@getReferences');
+        Route::get('/registers', 'GeneralController@getRegisters');
+        Route::get('/roles', 'GeneralController@getRoles');
+        Route::get('/services', 'GeneralController@getServices');
+        Route::get('/settings', 'GeneralController@getSettings');
+        Route::get('/staff', 'GeneralController@getStaff');
+        Route::get('/staff-jobs', 'GeneralController@getStaffJobs');
+        Route::get('/staff-positions', 'GeneralController@getStaffPositions');
+        Route::get('/tuslahs', 'GeneralController@getTuslahs');
+        Route::get('/users', 'GeneralController@getUsers');
+    });
+
 
     Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['role:loket|admin_loket']], function () {
         Route::resource('queues', 'ApiQueueController');
@@ -48,6 +69,13 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['role:kasir|admin_kasir']], function () {
         Route::resource('payments', 'ApiPaymentController');
+    });
+
+    Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['role:apotek|admin_apotek']], function () {
+        Route::group(['prefix' => 'recipes'], function () {
+            Route::get('/detail', 'ApiRecipeController@detail');
+        });
+        Route::resource('recipes', 'ApiRecipeController');
     });
 
 });
