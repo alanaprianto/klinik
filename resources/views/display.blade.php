@@ -9,10 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>SIM Klinik </title>
-
+    <title>Display .: Teknohealth :. </title>
+    <link rel="icon" href="{{asset('assets/images/logo/logo-sm.png')}}">
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('css/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/plugins/fontawesome/css/font-awesome.min.css')}}" rel="stylesheet">
 
     <!-- Toastr style -->
     <link href="{{asset('css/toastr.min.css')}}" rel="stylesheet">
@@ -52,7 +52,7 @@
                         <h1 class="no-margins"><span class="count-bpjs">#{{$bpjs ? sprintf('%03d', $bpjs->queue_number) : '000'}}</span></h1>
                         <div class="stat-percent font-bold text-navy"><span
                                     class="total-bpjs">{{count($kiosks->where('type', 'bpjs'))}}</span> <i
-                                    class="fa fa-list"></i></div>
+                                    class="fa fa-male"></i></div>
                         <small>Total Antrian</small>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                         <h1 class="no-margins"><span class="count-umum">#{{$umum ? sprintf('%03d', $umum->queue_number) : '000'}}</span></h1>
                         <div class="stat-percent font-bold text-success"><span
                                     class="total-umum">{{count($kiosks->where('type', 'umum'))}}</span> <i
-                                    class="fa fa-list"></i></div>
+                                    class=" fa fa-male"></i></div>
                         <small>Total Antrian</small>
                     </div>
                 </div>
@@ -82,12 +82,15 @@
                         <h1 class="no-margins"><span class="count-contractor">#{{$contractor ? sprintf('%03d', $contractor->queue_number) : '000'}}</span></h1>
                         <div class="stat-percent font-bold text-danger"><span
                                     class="total-contractor">{{count($kiosks->where('type', 'contractor'))}}</span> <i
-                                    class="fa fa-list"></i></div>
+                                    class="fa fa-male"></i></div>
                         <small>Total Antrian</small>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-lg-6">
+
     </div>
     <div class="footer">
         <div class="pull-right">
