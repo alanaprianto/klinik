@@ -9,25 +9,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>SIM Klinik | Login </title>
+    <title>Register .: Teknohealth :. </title>
+    <link rel="icon" href="/assets/images/logo/logo-sm.png">
+    <link href="assets/plugins/semantic/semantic.min.css" rel="stylesheet">
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/plugins/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+      body {
+      background-color: #4D545E;
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+    .column {
+      max-width: 450px;
+    }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('css/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
-    <link href="{{asset('css/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('css/animate.css')}}" rel="stylesheet">
-    <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
 </head>
-<body class="black-bg">
+<body>
 <div class="middle-box text-center loginscreen   animated fadeInDown">
-    <div>
+   <div class="ui middle aligned center aligned grid">
+        <div class="column">
+        <div class="ui stacked segment">
+            <img src="assets/images/logo/logo.png" style="margin-top: 0.4px" class="image">
+        <h2 class="ui teal header">
+          <div class="content">
+            LOGIN
+          </div>
+        </h2>
         <div>
-
-            <h1 class="logo-name"><img src="img/logo.png"></h1>
-
-        </div>
-        <h3>Sistem Informasi Manajemen Klinik</h3>
-        <p>Silahkan Untuk Login terlebih dahulu </p>
         <form class="m-t" role="form" method="POST" action="{{ route('register') }}">
                 {{ csrf_field() }}
             <div class="form-group">
@@ -63,10 +80,12 @@
             <div class="form-group">
                 <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Agree the terms and policy </label></div>
             </div>
-            <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
-
-            <p class="text-muted text-center"><small>Already have an account?</small></p>
-            <a class="btn btn-sm btn-white btn-block" href="{{route('login')}}">Login</a>
+            <button type="submit"  class="ui fluid large teal button" style="background-color: #FE6860">Register</button>
+            <div class="field">
+                <hr>
+                <p>Login?<p>Klik tombol berikut untuk melakukan login. </p>
+            </div>
+            <a class="ui fluid large teal button" href="{{route('login')}}">Login</a>
         </form>
         <p class="m-t"> <small>Teknoland for medical</small> </p>
     </div>
