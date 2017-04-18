@@ -310,7 +310,7 @@ class GeneralController extends Controller
         return $settings;
     }
 
-    protected function getStaff(){
+    protected function agetStaff(){
         $staff = Staff::with(['user', 'hospital', 'staffJob', 'staffPosition' , 'register', 'references', 'polies', 'medicalRecords', 'doctorService', 'recipes'])->get();
         $staff['recordsTotal'] = count($staff);
         return $staff;
