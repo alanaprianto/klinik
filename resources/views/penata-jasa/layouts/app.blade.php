@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard Inside</title>
+    <title>Penata Jasa .: Teknohealth :.</title>
     <link rel="icon" href="{{asset('assets/images/logo/logo-sm.png')}}">
 
     <!-- CSS -->
@@ -33,7 +33,7 @@
 <div class="module-left-aside">
     <div class="module-left-title">
         <div class="module-left-bars"><i class="ti-menu"></i></div>
-        <img src="{{asset('/assets/images/logo/farmasi-101.png')}}">
+        <img src="{{asset('/assets/images/logo/rawat-inap.png')}}">
         <span>{{Auth::user()->roles()->first()->display_name}}</span>
     </div>
     <div class="module-left-container">
