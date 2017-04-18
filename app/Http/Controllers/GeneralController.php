@@ -227,9 +227,14 @@ class GeneralController extends Controller
     }
 
     protected function getInventories(){
-        $inventories = Inventory::with(['batches', 'pharmacySellers'])->get();
-        $inventories['recordsTotal'] = count($inventories);
-        return $inventories;
+        $response = [];
+        try {
+            $inventories = Inventory::with(['batches', 'pharmacySellers'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventories' => $inventories, 'recordsTotal' => count($inventories)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getKiosks(){
@@ -310,7 +315,7 @@ class GeneralController extends Controller
         return $settings;
     }
 
-    protected function agetStaff(){
+    protected function getStaff(){
         $staff = Staff::with(['user', 'hospital', 'staffJob', 'staffPosition' , 'register', 'references', 'polies', 'medicalRecords', 'doctorService', 'recipes'])->get();
         $staff['recordsTotal'] = count($staff);
         return $staff;
