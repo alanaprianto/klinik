@@ -35,7 +35,6 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/roles', 'GeneralController@getRoles');
         Route::get('/services', 'GeneralController@getServices');
         Route::get('/settings', 'GeneralController@getSettings');
-        Route::get('/staff', 'GeneralController@getStaff');
         Route::get('/staff-jobs', 'GeneralController@getStaffJobs');
         Route::get('/staff-positions', 'GeneralController@getStaffPositions');
         Route::get('/tuslahs', 'GeneralController@getTuslahs');
