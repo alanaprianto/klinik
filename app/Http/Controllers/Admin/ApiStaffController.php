@@ -1,4 +1,4 @@
-<?php
+.<?php
 
 namespace App\Http\Controllers\Admin;
 
@@ -10,7 +10,7 @@ use App\StaffPosition;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ApiStaffController extends GeneralController
+class ApiStaffController extends Controller
 {
     /**
      * Display a listing of the resource.
