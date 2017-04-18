@@ -21,8 +21,8 @@ class ApiStaffController extends GeneralController
     {
         $response = [];
         try {
-            $staff = $this->getStaff();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff]];
+            $staff = Staff::get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff, 'recordsTotal' => count($staff)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
