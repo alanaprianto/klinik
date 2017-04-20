@@ -198,32 +198,58 @@ class GeneralController extends Controller
 
     /*get all Model*/
     protected function getBatches(){
-        $batches = Batch::with(['inventory'])->get();
-        $batches['recordsTotal'] = count($batches);
-        return $batches;
+        $response = [];
+        try {
+            $batches = Batch::with(['inventory'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['batches' => $batches, 'recordsTotal' => count($batches)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getBuyers(){
-        $buyers = Buyer::with(['recipe'])->get();
-        $buyers['recordsTotal'] = count($buyers);
-        return $buyers;
+        $response = [];
+        try {
+            $buyers = Buyer::with(['recipe'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['buyers' => $buyers, 'recordsTotal' => count($buyers)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getDoctorServices(){
-        $doctorServices = DoctorService::with(['doctor'])->get();
-        $doctorServices['recordsTotal'] = count($doctorServices);
-        return $doctorServices;
+        $response = [];
+        try {
+            $doctorServices = DoctorService::with(['doctor'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['doctorServices' => $doctorServices, 'recordsTotal' => count($doctorServices)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getHospital(){
-        $hospital = Hospital::with(['staffs', 'patients'])->first();
-        return $hospital;
+        $response = [];
+        try {
+            $hospital = Hospital::with(['staffs', 'patients'])->first();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['hospital' => $hospital]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getIcd10s(){
-        $icd10s = Icd10::get();
-        $icd10s['recordsTotal'] = count($icd10s);
-        return $icd10s;
+        $response = [];
+        try {
+            $icd10s = Icd10::get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['icd10s' => $icd10s, 'recordsTotal' => count($icd10s)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getInventories(){
@@ -238,111 +264,203 @@ class GeneralController extends Controller
     }
 
     protected function getKiosks(){
-        $kiosks = Kiosk::get();
-        $kiosks['recordsTotal'] = count($kiosks);
-        return $kiosks;
+        $response = [];
+        try {
+            $kiosks = Kiosk::get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['kiosks' => $kiosks, 'recordsTotal' => count($kiosks)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getMedicalRecords(){
-        $medicalRecords = MedicalRecord::with(['reference', 'patient', 'staff', 'service'])->get();
-        $medicalRecords['recordsTotal'] = count($medicalRecords);
-        return $medicalRecords;
+        $response = [];
+        try {
+            $medicalRecords = MedicalRecord::with(['reference', 'patient', 'staff', 'service'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['medicalRecords' => $medicalRecords, 'recordsTotal' => count($medicalRecords)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getPatients(){
-        $patient = Patient::with(['hospital', 'registers'])->get();
-        $patient['recordsTotal'] = count($patient);
-        return $patient;
+        $response = [];
+        try {
+            $patient = Patient::with(['hospital', 'registers'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['patient' => $patient, 'recordsTotal' => count($patient )]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getPayments(){
-        $payment = Payment::with(['reference', 'register'])->get();
-        $payment['recordsTotal'] = count($payment);
-        return $payment;
+        $response = [];
+        try {
+            $payment = Payment::with(['reference', 'register'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['paymen' => $payment, 'recordsTotal' => count($payment)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getPermissions(){
-        $permissions = Permission::with(['roles'])->get();
-        $permissions['recordsTotal'] = count($permissions);
-        return $permissions;
+        $response = [];
+        try {
+            $permissions = Permission::with(['roles'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['permissions' => $permissions, 'recordsTotal' => count($permissions)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getPharmacySeller(){
-        $pharmacySeller = PharmacySeller::with(['inventory', 'recipe'])->get();
-        $pharmacySeller['recordsTotal'] = count($pharmacySeller);
-        return $pharmacySeller;
+        $response = [];
+        try {
+            $pharmacySeller = PharmacySeller::with(['inventory', 'recipe'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['pharmacySeller' => $pharmacySeller, 'recordsTotal' => count($pharmacySeller)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getPolies(){
-        $polies = Poly::with(['references', 'doctors'])->get();
-        $polies['recordsTotal'] = count($polies);
-        return $polies;
+        $response = [];
+        try {
+            $polies = Poly::with(['references', 'doctors'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['polies' => $polies, 'recordsTotal' => count($polies)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getRecipes(){
-        $recipes = Recipe::with(['reference', 'pharmacySellers', 'staff', 'tuslahs', 'buyer'])->get();
-        $recipes['recordsTotal'] = count($recipes);
-        return $recipes;
+        $response = [];
+        try {
+            $recipes = Recipe::with(['reference', 'pharmacySellers', 'staff', 'tuslahs', 'buyer'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['recipes' => $recipes, 'recordsTotal' => count($recipes)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getReferences(){
-        $references = Reference::with(['register', 'poly', 'doctor', 'medicalRecords', 'payments', 'recipe'])->get();
-        $references['recordsTotal'] = count($references);
-        return $references;
+        $response = [];
+        try {
+            $references = Reference::with(['register', 'poly', 'doctor', 'medicalRecords', 'payments', 'recipe'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['references' => $references, 'recordsTotal' => count($references)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getRegisters(){
-        $registers = Register::with(['patient', 'staff', 'references', 'payments'])->get();
-        $registers['recordsTotal'] = count($registers);
-        return $registers;
+        $response = [];
+        try {
+            $registers = Register::with(['patient', 'staff', 'references', 'payments'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['registers' => $registers, 'recordsTotal' => count($registers)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getRoles(){
-        $roles = Role::with(['perms'])->get();
-        $roles['recordsTotal'] = count($roles);
-        return $roles;
+        $response = [];
+        try {
+            $roles = Role::with(['perms'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['roles' => $roles, 'recordsTotal' => count($roles)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getServices(){
-        $services = Service::with(['medicalRecords'])->get();
-        $services['recordsTotal'] = count($services);
-        return $services;
+        $response = [];
+        try {
+            $services = Service::with(['medicalRecords'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['services' => $services, 'recordsTotal' => count($services)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getSettings(){
-        $settings = Setting::get();
-        $settings['recordsTotal'] = count($settings);
-        return $settings;
+        $response = [];
+        try {
+            $settings = Setting::get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['settings' => $settings, 'recordsTotal' => count($settings)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getStaff(){
-        $staff = Staff::with(['user', 'hospital', 'staffJob', 'staffPosition' , 'register', 'references', 'polies', 'medicalRecords', 'doctorService', 'recipes'])->get();
-        $staff['recordsTotal'] = count($staff);
-        return $staff;
+        $response = [];
+        try {
+            $staff = Staff::with(['user', 'hospital', 'staffJob', 'staffPosition' , 'register', 'references', 'polies', 'medicalRecords', 'doctorService', 'recipes'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff, 'recordsTotal' => count($staff)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getStaffJobs(){
-        $staffJobs = StaffJob::with(['staffs'])->get();
-        $staffJobs['recordsTotal'] = count($staffJobs);
-        return $staffJobs;
+        $response = [];
+        try {
+            $staffJobs = StaffJob::with(['staffs'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffJobs' => $staffJobs, 'recordsTotal' => count($staffJobs)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getStaffPositions(){
-        $staffPositions = StaffPosition::with(['staff'])->get();
-        $staffPositions['recordsTotal'] = count($staffPositions);
-        return $staffPositions;
+        $response = [];
+        try {
+            $staffPositions = StaffPosition::with(['staff'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffPositions' => $staffPositions, 'recordsTotal' => count($staffPositions)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getTuslahs(){
-        $tuslahs = Tuslah::with(['recipe'])->get();
-        $tuslahs['recordsTotal'] = count($tuslahs);
-        return $tuslahs;
+        $response = [];
+        try {
+            $tuslahs = Tuslah::with(['recipe'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['tuslahs' => $tuslahs, 'recordsTotal' => count($tuslahs)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
+
+
     protected function getUsers(){
-        $user = User::with(['roles', 'staff'])->get();
-        $user['recordsTotal'] = count($user);
-        return $user;
+        $response = [];
+        try {
+            $users = User::with(['roles', 'staff'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['users' => $users, 'recordsTotal' => count($users)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
 }

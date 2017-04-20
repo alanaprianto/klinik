@@ -13,9 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/', 'ApiFrontController@welcome');
+Route::get('/display', 'ApiFrontController@getDisplay');
+Route::post('/kiosk/add', 'ApiFrontController@postKiosk');
+
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::group(['prefix' => 'common'], function () {
+        /*list all model*/
         Route::get('/batches', 'GeneralController@getBatches');
         Route::get('/buyers', 'GeneralController@getBuyers');
         Route::get('/doctor-services', 'GeneralController@getDoctorServices');
@@ -39,7 +44,9 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/staff-positions', 'GeneralController@getStaffPositions');
         Route::get('/tuslahs', 'GeneralController@getTuslahs');
         Route::get('/users', 'GeneralController@getUsers');
-        Route::get('/user-info', 'CommonController@info');
+
+
+        Route::get('/user-info', 'ApiCommonController@info');
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['role:admin']], function () {
@@ -50,6 +57,14 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('services', 'ApiServiceController');
         Route::resource('settings', 'ApiSettingController');
         Route::resource('staff', 'ApiStaffController');
+        Route::resource('staff-jobs', 'ApiStaffJobController');
+        Route::resource('staff-positions', 'ApiStaffPositionController');
+        Route::resource('users', 'ApiUserController');
+
+        /*common used*/
+        Route::resource('inventories', '\App\Http\Controllers\ApiInventoryController');
+        Route::resource('visitors', '\App\Http\Controllers\ApiVisitorController');
+        Route::post('/profile', '\App\Http\Controllers\ApiProfileController@postProfile');
     });
 
     Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['role:loket|admin_loket']], function () {
@@ -81,6 +96,9 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['role:apotek|admin_apotek']], function () {
         Route::resource('recipes', 'ApiRecipeController');
+
+        /*common used*/
+        Route::resource('inventories', '\App\Http\Controllers\ApiInventoryController');
     });
 
 });
