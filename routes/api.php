@@ -50,6 +50,8 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('services', 'ApiServiceController');
         Route::resource('settings', 'ApiSettingController');
         Route::resource('staff', 'ApiStaffController');
+        Route::resource('staff-jobs', 'ApiStaffJobController');
+        Route::resource('staff-positions', 'ApiStaffPositionController');
     });
 
     Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['role:loket|admin_loket']], function () {

@@ -216,6 +216,7 @@ class GeneralController extends Controller
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
+        return response()->json($response);
     }
 
     protected function getDoctorServices(){
@@ -226,11 +227,18 @@ class GeneralController extends Controller
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
+        return response()->json($response);
     }
 
     protected function getHospital(){
-        $hospital = Hospital::with(['staffs', 'patients'])->first();
-        return $hospital;
+        $response = [];
+        try {
+            $hospital = Hospital::with(['staffs', 'patients'])->first();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['hospital' => $hospital]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     protected function getIcd10s(){
@@ -336,7 +344,7 @@ class GeneralController extends Controller
         $response = [];
         try {
             $recipes = Recipe::with(['reference', 'pharmacySellers', 'staff', 'tuslahs', 'buyer'])->get();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['recipes' => $recipes, 'recordsTotal' => count()]];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['recipes' => $recipes, 'recordsTotal' => count($recipes)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -413,7 +421,7 @@ class GeneralController extends Controller
         $response = [];
         try {
             $staffJobs = StaffJob::with(['staffs'])->get();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffJobs', 'recordsTotal' => count($staffJobs)]];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffJobs' => $staffJobs, 'recordsTotal' => count($staffJobs)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
