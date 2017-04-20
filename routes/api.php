@@ -62,6 +62,27 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('staff-positions', 'ApiStaffPositionController');
         Route::resource('users', 'ApiUserController');
 
+        /*loket*/
+        Route::resource('queues', 'ApiQueueController');
+        Route::resource('registers', 'ApiRegistrationController');
+
+        /*penata jasa*/
+        Route::resource('queues', 'ApiQueueController');
+
+        Route::group(['prefix' => 'check-up'], function () {
+            Route::get('/select-service', 'ApiCheckUpController@selectService');
+            Route::post('/add-medical-record', 'ApiCheckUpController@postMedicalRecord');
+            Route::get('/print-letter', 'ApiCheckUpController@printLetter');
+        });
+        Route::resource('check-up', 'ApiCheckUpController');
+
+        /*kasir*/
+        Route::resource('payments', 'ApiPaymentController');
+
+
+        /*apotek*/
+        Route::resource('recipes', 'ApiRecipeController');
+
         /*common used*/
         Route::resource('inventories', '\App\Http\Controllers\ApiInventoryController');
         Route::resource('visitors', '\App\Http\Controllers\ApiVisitorController');
