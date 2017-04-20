@@ -69,7 +69,14 @@ class ApiPermissionController extends GeneralController
      */
     public function show($id)
     {
-        //
+        $response = [];
+        try {
+            $permission = Permission::find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['permission' => $permission]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     /**
@@ -119,6 +126,13 @@ class ApiPermissionController extends GeneralController
      */
     public function destroy($id)
     {
-        //
+        $response = [];
+        try {
+            $permission = Permission::find($id);
+            $permission->delete();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
     }
 }

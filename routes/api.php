@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/staff-positions', 'GeneralController@getStaffPositions');
         Route::get('/tuslahs', 'GeneralController@getTuslahs');
         Route::get('/users', 'GeneralController@getUsers');
+        Route::get('/doctors', 'GeneralController@getDoctors');
 
 
         Route::get('/user-info', 'ApiCommonController@info');
@@ -73,7 +74,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::group(['prefix' => 'registers'], function () {
             Route::put('/select-poly', 'ApiRegistrationController@selectPoly');
             Route::get('/get-patient', 'ApiRegistrationController@getPatient');
-            Route::get('/get-reference', 'ApiRegistrationController@getReference');
+            Route::get('', 'ApiRegistrationController@getRegister');
             Route::post('/post-reference', 'ApiRegistrationController@postReference');
         });
         Route::resource('registers', 'ApiRegistrationController');
