@@ -7,6 +7,7 @@ use App\Http\Controllers\GeneralController;
 use App\Kiosk;
 use App\Patient;
 use App\Poly;
+use App\Reference;
 use App\Register;
 use App\Staff;
 use App\User;
@@ -80,6 +81,25 @@ class ApiRegistrationController extends GeneralController
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $response = [];
+        try {
+            $register = Register::with(['patient', 'references'])->find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['register' => $register]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -92,7 +112,7 @@ class ApiRegistrationController extends GeneralController
             $input = $request->all();
 
             /*update kiosk status to finished*/
-            if ($input['kiosk_id']) {
+            if (isset($input['kiosk_id'])) {
                 $kiosk = Kiosk::find($input['kiosk_id']);
                 if ($kiosk) {
                     $kiosk->update(['status' => 4]);
@@ -105,7 +125,7 @@ class ApiRegistrationController extends GeneralController
             $input['hospital_id'] = $hospital->id;
 
             /*select patient from database or create new*/
-            if ($input['patient_id']) {
+            if (isset($input['patient_id'])) {
                 $patient = Patient::find($input['patient_id']);
             } else {
                 $patient = Patient::create($input);
@@ -137,8 +157,8 @@ class ApiRegistrationController extends GeneralController
             /*add kiosk queue in poly*/
             $poly = Poly::find($request['poly_id']);
             $kiosk = $this->getKioskQueue($poly->name, $reference->id);
-
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['patient' => $patient, 'reference' => $reference, 'poly' => $poly, 'kiosk' => $kiosk, 'register' => $register, 'doctor' => $doctor]];
+            $full_reference = Reference::with(['register', 'register.patient' ,'poly', 'doctor'])->find($reference->id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $full_reference]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -173,17 +193,14 @@ class ApiRegistrationController extends GeneralController
     }
 
 
-    public function getReference(Request $request){
+    public function getRegister(Request $request){
         $response = [];
         try{
             /*get polies*/
             $polies = $this->getPolies();
 
             /*get doctors*/
-            $doctors = Staff::whereHas('staffJob', function ($q) {
-                $q->where('name', 'Dokter');
-            })->get();
-            $doctors['recordsTotal'] = count($doctors);
+            $doctors = $this->getDoctors();
 
             $hospital = Hospital::first();
             $register = Register::with(['patient', 'references', 'references.poly', 'references.doctor'])->find($request['register_id']);

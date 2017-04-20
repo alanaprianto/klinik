@@ -69,7 +69,14 @@ class ApiPolyController extends GeneralController
      */
     public function show($id)
     {
-        //
+        $response = [];
+        try {
+            $poly = Poly::find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     /**
