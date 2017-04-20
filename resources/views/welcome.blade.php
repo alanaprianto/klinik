@@ -84,7 +84,7 @@
     </style>
 </head>
 <body>
-<img src="img/medical.jpg" alt="gambar" class="bg" />
+<img src="assets/images/background/medical.jpg" alt="gambar" class="bg" />
 <div class="flex-center position-ref full-height">
     {{--@if (Route::has('login'))--}}
         {{--<div class="top-right links">--}}

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
@@ -10,6 +11,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use EntrustUserTrait;
+    use HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -31,5 +33,9 @@ class User extends Authenticatable
 
     public function staff(){
         return $this->hasOne('App\Staff');
+    }
+
+    public function findForPassport($username){
+        return User::where('username', $username)->first();
     }
 }
