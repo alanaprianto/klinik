@@ -96,7 +96,44 @@ class ApiRegistrationController extends GeneralController
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
         return response()->json($response);
+    }
 
+    public function edit($id)
+    {
+        $response = [];
+        try {
+            $register = Register::with(['patient', 'references'])->find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['register' => $register]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $response = [];
+        try{
+            $input = $request->all();
+            $register = Register::with(['references', 'patient', 'staff'])->find($id);
+            $reference = Reference::create([
+                'number_reference' => Carbon::now()->format('Ymdhis'),
+                'register_id' => $register->id,
+                'poly_id' => $input['poly_id'],
+                'staff_id' => $input['doctor_id'],
+                'status' => 1
+            ]);
+
+            $poly = Poly::find($input['poly_id']);
+            $kiosk = $this->getKioskQueue($poly->name, $reference->id);
+
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly, 'kiosk' => $kiosk, 'reference' => $reference]];
+        } catch (\Exception $e){
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+
+        return response()->json($response);
     }
 
     /**
@@ -213,19 +250,4 @@ class ApiRegistrationController extends GeneralController
         return response()->json($response);
     }
 
-    public function postReference(Request $request){
-        $response = [];
-        try{
-            $input = $request->all();
-            $reference = $this->addReference($input, '', 'add');
-            $poly = Poly::find($input['poly_id']);
-            $kiosk = $this->getKioskQueue($poly->name, $reference->id);
-
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly, 'kiosk' => $kiosk, 'reference' => $reference]];
-        } catch (\Exception $e){
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-
-        return response()->json($response);
-    }
 }
