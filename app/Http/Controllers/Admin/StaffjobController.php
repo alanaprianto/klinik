@@ -20,7 +20,7 @@ class StaffjobController extends Controller
 
         if (($param == 'edit') && $query['id']) {
 
-            $staffjob =StaffJob::find($query['id']);
+            $staffjob =  StaffJob::find($query['id']);
 
         }
         return view('staffjob.createEdit', compact(['staffjob']));
