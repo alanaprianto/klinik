@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\GeneralController;
 use App\Kiosk;
+use App\MedicalRecord;
 use App\Patient;
-use App\Poly;
 use App\Reference;
 use App\Service;
 use App\Staff;
@@ -23,7 +23,14 @@ class ApiCheckUpController extends GeneralController
      */
     public function index()
     {
-        //
+        $response = [];
+        try{
+
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
+        } catch (\Exception $e){
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     /**
@@ -35,6 +42,7 @@ class ApiCheckUpController extends GeneralController
     {
         $response = [];
         try {
+            $input = $request->all();
             $kiosk = Kiosk::where('reference_id', $request['reference_id'])->first();
             if ($kiosk) {
                 $kiosk->update([
@@ -48,31 +56,53 @@ class ApiCheckUpController extends GeneralController
                 }
 
             }
-            $reference = Reference::with(['register', 'register.patient', 'poly', 'poly.doctors', 'doctor', 'medicalRecords'])->find($request['reference_id']);
-            $total_payment = 0;
-            if ($reference) {
-                foreach ($reference->medicalRecords->where('type', Auth::user()->roles()->first()->name) as $medicalRecord) {
-                    $total_payment += $medicalRecord->quantity * $medicalRecord->cost;
-                }
-            }
-
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['kiosk' => $kiosk, 'reference' => $reference, 'services' => $this->getServices(), 'polies' => $this->getPolies(), 'icd10s' => $this->getIcd10s()]];
+            $reference = Reference::with(['register', 'register.patient', 'poly', 'poly.doctors', 'doctor', 'medicalRecords'])->find($input['reference_id']);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['kiosk' => $kiosk, 'reference' => $reference]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
         return response()->json($response);
     }
 
-
-    public function selectService(Request $request){
+    public function store(Request $request)
+    {
         $response = [];
         try{
-            $service = Service::find($request['service_id']);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['service' => $service]];
+            $input = $request->all();
+            $reference = Reference::with(['register', 'register.patient', 'register.payments', 'doctor', 'doctor.doctorService', 'medicalRecords'])->find($input['reference_id']);
+
+            /*status
+            1 = belum diperiksa
+            2 = pulang
+            3 = dirujuk
+            4 = dirawat*/
+            /*update payment doctor if doctor change*/
+            $reference->update([
+                'staff_id' => $input['doctor_id'],
+                'status' => $input['status']
+            ]);
+            $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
+            $doctor_service = $reference->register->payments->where('type', 'doctor_service')->first();
+            $doctor_service->update([
+                'cost' => $doctor->doctorService->cost
+            ]);
+
+            /*main logic*/
+            foreach ($input['service_ids'] as $index_service => $service_id){
+                $amount = $input['service_amounts'][$index_service];
+                $reference->medicalRecords()->create([
+                    'type' => 'action',
+                    'service_id' => $service_id,
+                    'quantity' => $amount
+                ]);
+            }
+
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference]];
         } catch (\Exception $e){
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
         return response()->json($response);
+
     }
 
     public function postMedicalRecord(Request $request){
@@ -105,4 +135,5 @@ class ApiCheckUpController extends GeneralController
         }
         return response()->json($response);
     }
+
 }

@@ -16,10 +16,6 @@ class CreateMedicalRecordsTable extends Migration
         Schema::create('medical_records', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('quantity')->nullable();
-            $table->double('cost')->nullable();
-            $table->double('subsidy')->nullable();
-            $table->double('total_sum')->nullable();
-            $table->double('total_payment')->nullable();
             $table->text('notes')->nullable();
             $table->string('type')->nullable();
             $table->text('anamnesa')->nullable();

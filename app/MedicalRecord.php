@@ -11,7 +11,6 @@ class MedicalRecord extends Model
         'patient_id',
         'service_id',
         'quantity',
-        'cost',
         'subsidy',
         'total_sum',
         'total_payment',
