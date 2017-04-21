@@ -20,7 +20,7 @@ class CreatePatientsTable extends Migration
             $table->string('place')->nullable();
             $table->timestamp('birth')->nullable();
             $table->string('age')->nullable();
-            $table->string('gender')->nullable();
+            $table->integer('gender')->nullable();
             $table->text('address')->nullable();
             $table->string('religion')->nullable();
             $table->string('province')->nullable();
