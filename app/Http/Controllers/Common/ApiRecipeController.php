@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Apotek;
+namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\GeneralController;
 use App\Inventory;
@@ -40,7 +40,7 @@ class ApiRecipeController extends GeneralController
     {
         $response = [];
         try {
-            $inventories = $this->getInventories()->where('category', 'Medis');
+            $inventories = $this->getInventories();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventories' => $inventories]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

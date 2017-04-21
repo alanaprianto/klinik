@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Common;
 
 use App\Hospital;
 use App\Http\Controllers\GeneralController;
@@ -88,12 +88,13 @@ class ApiRegistrationController extends GeneralController
     public function show($id)
     {
         $response = [];
-        try {
-            $register = Register::with(['patient', 'references'])->find($id);
+        try{
+            $register = Register::find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['register' => $register]];
-        } catch (\Exception $e) {
+        } catch (\Exception $e){
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
+
         return response()->json($response);
     }
 
@@ -115,19 +116,17 @@ class ApiRegistrationController extends GeneralController
         $response = [];
         try{
             $input = $request->all();
-            $register = Register::with(['references', 'patient', 'staff'])->find($id);
-            $reference = Reference::create([
+            Reference::create([
                 'number_reference' => Carbon::now()->format('Ymdhis'),
-                'register_id' => $register->id,
+                'register_id' => $id,
                 'poly_id' => $input['poly_id'],
                 'staff_id' => $input['doctor_id'],
                 'status' => 1
             ]);
 
-            $poly = Poly::find($input['poly_id']);
-            $kiosk = $this->getKioskQueue($poly->name, $reference->id);
+            $register = Register::with(['references', 'patient', 'staff'])->find($id);
 
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly, 'kiosk' => $kiosk, 'reference' => $reference]];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['register' => $register]];
         } catch (\Exception $e){
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -201,52 +200,5 @@ class ApiRegistrationController extends GeneralController
         return response()->json($response);
     }
 
-
-    public function getPatient(Request $request){
-        $response = [];
-        try {
-            $patient = Patient::where('full_name', 'LIKE', '%' . $request['name']. '%')
-                ->orWhere('number_medical_record', 'LIKE', '%' . $request['name'] . '%')->get();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['patient', $patient]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-
-        return response()->json($response);
-    }
-
-    public function selectPoly(Request $request)
-    {
-        $response = [];
-        try {
-            $poly = Poly::with(['doctors'])->find($request['poly_id']);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-
-        return response()->json($response);
-    }
-
-
-    public function getRegister(Request $request){
-        $response = [];
-        try{
-            /*get polies*/
-            $polies = $this->getPolies();
-
-            /*get doctors*/
-            $doctors = $this->getDoctors();
-
-            $hospital = Hospital::first();
-            $register = Register::with(['patient', 'references', 'references.poly', 'references.doctor'])->find($request['register_id']);
-
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['polies' => $polies, 'doctors' => $doctors, 'hospital' => $hospital, 'register' => $register]];
-        } catch (\Exception $e){
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-
-        return response()->json($response);
-    }
 
 }

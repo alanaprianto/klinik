@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/doctors', 'GeneralController@getDoctors');
 
 
-        Route::get('/user-info', 'ApiCommonController@info');
+        Route::get('/user-info', '\App\Http\Controllers\Common\ApiCommonController@info');
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['role:admin']], function () {
@@ -62,65 +62,37 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('staff-positions', 'ApiStaffPositionController');
         Route::resource('users', 'ApiUserController');
 
-        /*loket*/
-        Route::resource('queues', 'ApiQueueController');
-        Route::resource('registers', 'ApiRegistrationController');
-
-        /*penata jasa*/
-        Route::resource('queues', 'ApiQueueController');
-
-        Route::group(['prefix' => 'check-up'], function () {
-            Route::get('/select-service', 'ApiCheckUpController@selectService');
-            Route::post('/add-medical-record', 'ApiCheckUpController@postMedicalRecord');
-            Route::get('/print-letter', 'ApiCheckUpController@printLetter');
-        });
-        Route::resource('check-up', 'ApiCheckUpController');
-
-        /*kasir*/
-        Route::resource('payments', 'ApiPaymentController');
-
-
-        /*apotek*/
-        Route::resource('recipes', 'ApiRecipeController');
-
         /*common used*/
-        Route::resource('inventories', '\App\Http\Controllers\ApiInventoryController');
-        Route::resource('visitors', '\App\Http\Controllers\ApiVisitorController');
-        Route::post('/profile', '\App\Http\Controllers\ApiProfileController@postProfile');
+        Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
+        Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');
+        Route::resource('check-up', '\App\Http\Controllers\Common\ApiCheckUpController');
+        Route::resource('payments', '\App\Http\Controllers\Common\ApiPaymentController');
+        Route::resource('recipes', '\App\Http\Controllers\Common\ApiRecipeController');
+        Route::resource('inventories', '\App\Http\Controllers\Common\ApiInventoryController');
+        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
+        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
     });
 
     Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['role:loket|admin_loket']], function () {
-        Route::resource('queues', 'ApiQueueController');
-
-        Route::group(['prefix' => 'registers'], function () {
-            Route::put('/select-poly', 'ApiRegistrationController@selectPoly');
-            Route::get('/get-patient', 'ApiRegistrationController@getPatient');
-            Route::get('', 'ApiRegistrationController@getRegister');
-            Route::post('/post-reference', 'ApiRegistrationController@postReference');
-        });
-        Route::resource('registers', 'ApiRegistrationController');
+        /*common used*/
+        Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
+        Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');
     });
 
     Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['role:poli_umum|poli_anak|admin_poli_umum|admin_poli_anak']], function () {
-        Route::resource('queues', 'ApiQueueController');
-
-        Route::group(['prefix' => 'check-up'], function () {
-            Route::get('/select-service', 'ApiCheckUpController@selectService');
-            Route::post('/add-medical-record', 'ApiCheckUpController@postMedicalRecord');
-            Route::get('/print-letter', 'ApiCheckUpController@printLetter');
-        });
-        Route::resource('check-up', 'ApiCheckUpController');
+        /*common used*/
+        Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
+        Route::resource('check-up', '\App\Http\Controllers\Common\ApiCheckUpController');
     });
 
     Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['role:kasir|admin_kasir']], function () {
-        Route::resource('payments', 'ApiPaymentController');
+        Route::resource('payments', '\App\Http\Controllers\Common\ApiPaymentController');
     });
 
     Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['role:apotek|admin_apotek']], function () {
-        Route::resource('recipes', 'ApiRecipeController');
-
         /*common used*/
-        Route::resource('inventories', '\App\Http\Controllers\ApiInventoryController');
+        Route::resource('recipes', '\App\Http\Controllers\Common\ApiRecipeController');
+        Route::resource('inventories', '\App\Http\Controllers\Common\ApiInventoryController');
     });
 
 });
