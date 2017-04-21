@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Common;
 
+use App\Http\Controllers\GeneralController;
 use App\Inventory;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ApiInventoryController extends Controller
+class ApiInventoryController extends GeneralController
 {
     /**
      * Display a listing of the resource.

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Common;
 
+use App\Http\Controllers\GeneralController;
 use App\Patient;
 use Illuminate\Http\Request;
 
-class ApiVisitorController extends Controller
+class ApiVisitorController extends GeneralController
 {
     /**
      * Display a listing of the resource.
