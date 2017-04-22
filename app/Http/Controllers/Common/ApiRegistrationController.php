@@ -27,7 +27,7 @@ class ApiRegistrationController extends GeneralController
     {
         $response = [];
         try {
-            $registers = Register::with(['patient', 'staff', 'references'])->orderBy('created_at', 'desc')->get();
+            $registers = Register::with(['patient', 'staff', 'references', 'references.poly', 'references.doctor'])->orderBy('created_at', 'desc')->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['registers' => $registers, 'recordsTotal' => count($registers)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
