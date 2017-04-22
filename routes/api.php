@@ -62,6 +62,9 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('staff-positions', 'ApiStaffPositionController');
         Route::resource('users', 'ApiUserController');
 
+        /*route before resource*/
+        Route::get('/registers/select-patient', '\App\Http\Controllers\Common\ApiRegistrationController@selectPatient');
+
         /*common used*/
         Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
         Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');

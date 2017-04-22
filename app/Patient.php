@@ -49,7 +49,7 @@ class Patient extends Model
 
     public function getBirthAttribute($value)
     {
-        return Carbon::parse($value)->format('m/d/Y');
+        return Carbon::parse($value)->format('d/m/Y');
     }
 
     public function getResultAttribute()
