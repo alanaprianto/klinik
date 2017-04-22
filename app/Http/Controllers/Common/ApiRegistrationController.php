@@ -200,5 +200,17 @@ class ApiRegistrationController extends GeneralController
         return response()->json($response);
     }
 
+    public function selectPatient(Request $request){
+        $response = [];
+        try{
+            $patient = Patient::where('full_name', 'LIKE', '%' . $request['data'] . '%')
+                ->orWhere('number_medical_record', 'LIKE', '%' . $request['data'] . '%')->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['patient' => $patient]];
+        } catch (\Exception $e){
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+
+        return response()->json($response);
+    }
 
 }
