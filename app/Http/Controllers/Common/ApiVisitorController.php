@@ -17,7 +17,7 @@ class ApiVisitorController extends GeneralController
     {
         $response = [];
         try {
-            $patients = Patient::with(['registers', 'registers.patient', 'registers.staff', 'registers.references'])->get();
+            $patients = Patient::with(['registers', 'registers.patient', 'registers.staff', 'registers.payments' ,'registers.references', 'registers.references.doctor', 'registers.references.poly'])->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['patients' => $patients, 'recordsTotal' => count($patients)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -57,7 +57,7 @@ class ApiVisitorController extends GeneralController
     {
         $response = [];
         try {
-            $patient = Patient::with(['registers', 'registers.patient', 'registers.staff', 'registers.references', 'registers.references.doctor', 'registers.references.poly'])->find($id);
+            $patient = Patient::with(['registers', 'registers.patient', 'registers.staff', 'registers.payments' , 'registers.references', 'registers.references.doctor', 'registers.references.poly'])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['patient' => $patient]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
