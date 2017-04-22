@@ -111,20 +111,20 @@ class ApiRegistrationController extends GeneralController
     }
 
 
-    public function update(Request $request, $id)
+    public function createReference($request)
     {
         $response = [];
         try{
             $input = $request->all();
             Reference::create([
                 'number_reference' => Carbon::now()->format('Ymdhis'),
-                'register_id' => $id,
+                'register_id' => $request['register_id'],
                 'poly_id' => $input['poly_id'],
                 'staff_id' => $input['doctor_id'],
                 'status' => 1
             ]);
 
-            $register = Register::with(['references', 'patient', 'staff'])->find($id);
+            $register = Register::with(['references', 'patient', 'staff'])->find($request['register_id']);
 
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['register' => $register]];
         } catch (\Exception $e){
@@ -145,6 +145,10 @@ class ApiRegistrationController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
+
+            if(isset($input['register_id'])){
+                return $this->createReference($request);
+            }
 
             /*update kiosk status to finished*/
             if (isset($input['kiosk_id'])) {
