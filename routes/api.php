@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::get('/', 'ApiFrontController@welcome');
 Route::get('/display', 'ApiFrontController@getDisplay');
-Route::post('/kiosk/add', 'ApiFrontController@postKiosk');
+Route::post('/kiosk/create', 'ApiFrontController@postKiosk');
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::group(['prefix' => 'common'], function () {
@@ -69,6 +69,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         /*check-up*/
         Route::post('/check-up/change-doctor', '\App\Http\Controllers\Common\ApiCheckUpController@postDoctor');
         Route::post('/check-up/medical-record', '\App\Http\Controllers\Common\ApiCheckUpController@postMedicalRecord');
+        /*queues*/
 
         /*common used*/
         Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');

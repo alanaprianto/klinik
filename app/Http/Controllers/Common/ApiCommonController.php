@@ -20,4 +20,5 @@ class ApiCommonController extends GeneralController
         }
         return response()->json($response);
     }
+
 }
