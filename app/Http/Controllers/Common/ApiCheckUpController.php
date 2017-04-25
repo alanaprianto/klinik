@@ -56,6 +56,8 @@ class ApiCheckUpController extends GeneralController
                 }
 
             }
+
+
             $reference = Reference::with(['register', 'register.patient', 'poly', 'poly.doctors', 'doctor', 'medicalRecords'])->find($input['reference_id']);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['kiosk' => $kiosk, 'reference' => $reference]];
         } catch (\Exception $e) {
@@ -71,30 +73,53 @@ class ApiCheckUpController extends GeneralController
             $input = $request->all();
             $reference = Reference::with(['register', 'register.patient', 'register.payments', 'doctor', 'doctor.doctorService', 'medicalRecords'])->find($input['reference_id']);
 
-            /*status
-            1 = belum diperiksa
-            2 = pulang
-            3 = dirujuk
-            4 = dirawat*/
-            /*update payment doctor if doctor change*/
-            $reference->update([
-                'staff_id' => $input['doctor_id'],
-                'status' => $input['status']
-            ]);
-            $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
-            $doctor_service = $reference->register->payments->where('type', 'doctor_service')->first();
-            $doctor_service->update([
-                'cost' => $doctor->doctorService->cost
-            ]);
+            /*if docter change*/
+            if($input['doctor_id']){
+                $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
+                $doctor_service = $reference->register->payments->where('type', 'doctor_service')->first();
+                $doctor_service->update([
+                    'cost' => $doctor->doctorService->cost
+                ]);
+            }
 
             /*main logic*/
             foreach ($input['service_ids'] as $index_service => $service_id){
                 $amount = $input['service_amounts'][$index_service];
+                $service = Service::find($service_id);
                 $reference->medicalRecords()->create([
                     'type' => 'action',
                     'service_id' => $service_id,
                     'quantity' => $amount
                 ]);
+                $total_payments = $service->cost * $amount;
+                $reference->payments()->create([
+                    'total' => $total_payments,
+                    'type' => 'action',
+                    'status' => 1
+                ]);
+            }
+
+            /*status
+            1 = belum diperiksa
+            2 = pulang
+            3 = dirujuk
+            4 = dirawat*/
+
+            $reference->update([
+                'status' => $input['status'],
+                'notes' => $input['notes']
+            ]);
+
+            switch ($input['status']){
+                case '3':
+                    /*tambah rujukan*/
+                    $this->addReference($input, $reference->register, 'create');
+                    break;
+                case '4':
+                    /*case buat dirawat*/
+                    break;
+                default:
+                    /*default 1*/
             }
 
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference]];
@@ -103,6 +128,19 @@ class ApiCheckUpController extends GeneralController
         }
         return response()->json($response);
 
+    }
+
+    public function postDoctor(Request $request){
+        try{
+            $input = $request->all();
+            $reference = Reference::find($input['reference_id']);
+            $reference->update([
+               'staff_id' => $input['doctor_id']
+            ]);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference]];
+        } catch (\Exception $e){
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
     }
 
     public function postMedicalRecord(Request $request){

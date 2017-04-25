@@ -63,8 +63,12 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('users', 'ApiUserController');
 
         /*route before resource*/
+        /*registers*/
         Route::get('/registers/select-patient', '\App\Http\Controllers\Common\ApiRegistrationController@selectPatient');
         Route::post('/registers/{id}', '\App\Http\Controllers\Common\ApiRegistrationController@update');
+        /*check-up*/
+        Route::post('/check-up/change-doctor', '\App\Http\Controllers\Common\ApiCheckUpController@postDoctor');
+        Route::post('/check-up/medical-record', '\App\Http\Controllers\Common\ApiCheckUpController@postMedicalRecord');
 
         /*common used*/
         Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
