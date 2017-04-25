@@ -197,7 +197,7 @@ class ApiRegistrationController extends GeneralController
             $poly = Poly::find($request['poly_id']);
             $kiosk = $this->getKioskQueue($poly->name, $reference->id);
             $full_reference = Reference::with(['register', 'register.patient' ,'poly', 'doctor'])->find($reference->id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $full_reference]];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $full_reference, 'kiosk' => $kiosk]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }

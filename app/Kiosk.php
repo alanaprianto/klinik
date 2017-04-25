@@ -16,4 +16,7 @@ class Kiosk extends Model
         'reference_id'
     ];
 
+    public function reference(){
+        return $this->belongsTo('App\Reference', 'reference_id', 'id');
+    }
 }

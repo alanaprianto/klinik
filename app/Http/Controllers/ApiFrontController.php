@@ -35,7 +35,8 @@ class ApiFrontController extends GeneralController
     public function postKiosk(Request $request){
         $response = [];
         try {
-            $addKiosk =  $this->getKioskQueue($request->type, null);
+            $input = $request->all();
+            $addKiosk =  $this->getKioskQueue($input['type'], null);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['kiosk' => $addKiosk]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

@@ -22,19 +22,10 @@ class ApiQueueController extends Controller
              * 2 = calling
              * 3 = on process
              * 4 = finish*/
-            switch ($request['type']) {
-                case 'bpjs':
-                    $kiosks = Kiosk::where('type', 'bpjs')->whereIn('status', [1, 2, 3])->get();
-                    break;
-                case 'umum':
-                    $kiosks = Kiosk::where('type', 'umum')->whereIn('status', [1, 2, 3])->get();
-                    break;
-                case 'contractor' :
-                    $kiosks = Kiosk::where('type', 'contractor')->whereIn('status', [1, 2, 3])->get();
-                    break;
-                default:
-                    $kiosks = Kiosk::get();
-                    break;
+            if(isset($request['type'])){
+                $kiosks = Kiosk::with(['reference', 'reference.register', 'reference.register.patient'])->where('type', $request['type'])->whereIn('status', [1, 2, 3])->get();
+            } else{
+                $kiosks = Kiosk::with(['reference', 'reference.register', 'reference.register.patient'])->whereIn('status', [1, 2, 3])->get();
             }
 
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['kiosks' => $kiosks, 'recordsTotal' => count($kiosks)]];
