@@ -17,7 +17,6 @@ Route::get('/', 'ApiFrontController@welcome');
 Route::get('/display', 'ApiFrontController@getDisplay');
 Route::post('/kiosk/add', 'ApiFrontController@postKiosk');
 
-
 Route::group(['middleware' => ['auth:api']], function () {
     Route::group(['prefix' => 'common'], function () {
         /*list all model*/
@@ -45,6 +44,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/tuslahs', 'GeneralController@getTuslahs');
         Route::get('/users', 'GeneralController@getUsers');
         Route::get('/doctors', 'GeneralController@getDoctors');
+        Route::get('/provinces', 'GeneralController@getProvinces');
 
 
         Route::get('/user-info', '\App\Http\Controllers\Common\ApiCommonController@info');
