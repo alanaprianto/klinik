@@ -15,6 +15,7 @@ use App\Payment;
 use App\Permission;
 use App\PharmacySeller;
 use App\Poly;
+use App\Province;
 use App\Recipe;
 use App\Reference;
 use App\Register;
@@ -468,6 +469,17 @@ class GeneralController extends Controller
                 $q->where('name', 'Dokter');
             })->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['doctors' => $doctors, 'recordsTotal' => count($doctors)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+    }
+
+    protected function getProvinces(){
+        $response = [];
+        try {
+            $provinces = Province::with(['cities', 'cities.districts', 'cities.districts.subDistricts'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['provinces' => $provinces, 'recordsTotal' => count($provinces)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
