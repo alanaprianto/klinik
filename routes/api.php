@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::post('/check-up/change-doctor', '\App\Http\Controllers\Common\ApiCheckUpController@postDoctor');
         Route::post('/check-up/medical-record', '\App\Http\Controllers\Common\ApiCheckUpController@postMedicalRecord');
         /*queues*/
+        Route::post('/queues/update', '\App\Http\Controllers\Common\ApiQueueController@updateStatus');
 
         /*common used*/
         Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');

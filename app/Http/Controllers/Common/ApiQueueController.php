@@ -43,11 +43,12 @@ class ApiQueueController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateStatus(Request $request)
     {
         $response = [];
         try {
-            $kiosk = Kiosk::find($id);
+            $input = $request->all();
+            $kiosk = Kiosk::find($input['id']);
             if ($kiosk->status != 2) {
                 $kiosk->update([
                     'status' => 2
