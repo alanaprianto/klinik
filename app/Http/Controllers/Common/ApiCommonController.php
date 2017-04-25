@@ -6,7 +6,6 @@ use App\Http\Controllers\GeneralController;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\GeneralController;
 
 class ApiCommonController extends GeneralController
 {
