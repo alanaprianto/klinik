@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/buyers', 'GeneralController@getBuyers');
         Route::get('/doctor-services', 'GeneralController@getDoctorServices');
         Route::get('/hospital', 'GeneralController@getHospital');
-        Route::get('/icd10', 'GeneralController@getIcd10s');
+        Route::get('/icd10s', 'GeneralController@getIcd10s');
         Route::get('/inventories', 'GeneralController@getInventories');
         Route::get('/kiosks', 'GeneralController@getKiosks');
         Route::get('/medical-records', 'GeneralController@getMedicalRecords');
@@ -48,6 +48,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
 
         Route::get('/user-info', '\App\Http\Controllers\Common\ApiCommonController@info');
+        Route::get('/icd10', '\App\Http\Controllers\Common\ApiCommonController@getIcd10');
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['role:admin']], function () {
@@ -69,6 +70,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         /*check-up*/
         Route::post('/check-up/change-doctor', '\App\Http\Controllers\Common\ApiCheckUpController@postDoctor');
         Route::post('/check-up/medical-record', '\App\Http\Controllers\Common\ApiCheckUpController@postMedicalRecord');
+
         /*queues*/
         Route::post('/queues/update', '\App\Http\Controllers\Common\ApiQueueController@updateStatus');
 
