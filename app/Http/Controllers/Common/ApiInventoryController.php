@@ -20,11 +20,11 @@ class ApiInventoryController extends GeneralController
         $response = [];
         try {
             if ($request['type'] && ($request['type'] == 'medicine')) {
-                $inventories = Inventory::with(['batches'])->where('category', 'medicine')->get();
+                $inventories = Inventory::with(['batches', 'depos'])->where('category', 'medicine')->get();
             } elseif ($request['type'] && ($request['type'] == 'non_medicine')) {
-                $inventories = Inventory::with(['batches'])->where('category', 'non_medicine')->get();
+                $inventories = Inventory::with(['batches', 'depos'])->where('category', 'non_medicine')->get();
             } else {
-                $inventories = Inventory::get();
+                $inventories = Inventory::with(['batches', 'depos'])->get();
             }
 
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventories' => $inventories, 'recordsTotal' => count($inventories)]];
@@ -62,14 +62,16 @@ class ApiInventoryController extends GeneralController
         try {
             $input = $request->all();
             $inventory = Inventory::create($input);
+            $inventory->depos()->create($input);
             if($input['category'] == 'medicine'){
                 $inventory->batches()->create([
                     'code' => $input['batch_code'],
                     'expired_date' => $input['expired_date'],
-                    'stock' => $input['stock']
+                    'amount' => $input['amount']
                 ]);
             }
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventory' => $inventory]];
+            $old_inventory = Inventory::with(['batches', 'depos'])->find($inventory->id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventory' => $old_inventory]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }

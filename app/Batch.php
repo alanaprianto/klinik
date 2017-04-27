@@ -13,7 +13,7 @@ class Batch extends Model
         'expired_date',
         'inventory_id',
         'sum',
-        'stock'
+        'amount'
     ];
 
     public function inventory(){

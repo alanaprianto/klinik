@@ -11,11 +11,7 @@ class Inventory extends Model
         'name',
         'category',
         'type',
-        'total',
-        'stock_minimal',
-        'stock_maximal',
         'explain',
-        'unit',
         'sediaan',
         'price'
     ];
@@ -26,6 +22,10 @@ class Inventory extends Model
 
     public function pharmacySellers(){
         return $this->hasMany('App\PharmacySeller');
+    }
+
+    public function depos(){
+        return $this->belongsToMany('App\Depo', 'inventories_depos', 'inventories_id', 'depos_id');
     }
 
 }

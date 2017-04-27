@@ -10,10 +10,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Login .: Teknohealth :. </title>
-    <link rel="icon" href="/assets/images/logo/logo-sm.png">
-    <link href="assets/plugins/semantic/semantic.min.css" rel="stylesheet">
-    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/plugins/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="icon" href="{{asset('assets/images/logo/logo-sm.png')}}">
+    <link href="{{asset('assets/plugins/semantic/semantic.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/plugins/fontawesome/css/font-awesome.min.css')}}" rel="stylesheet">
     <style>
       body {
       background-color: #4D545E;
@@ -36,7 +36,7 @@
     <div class="ui middle aligned center aligned grid">
         <div class="column">
         <div class="ui stacked segment">
-            <img src="assets/images/logo/logo.png" style="margin-top: 0.4px" class="image">
+            <img src="{{asset('assets/images/logo/logo.png')}}" style="margin-top: 0.4px" class="image">
         <h2 class="ui teal header">
           <div class="content">
             LOGIN
