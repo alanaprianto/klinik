@@ -256,7 +256,7 @@ class GeneralController extends Controller
     protected function getInventories(){
         $response = [];
         try {
-            $inventories = Inventory::with(['batches', 'pharmacySellers'])->get();
+            $inventories = Inventory::with(['batches', 'pharmacySellers', 'depos'])->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventories' => $inventories, 'recordsTotal' => count($inventories)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
