@@ -133,14 +133,22 @@ class ApiCheckUpController extends GeneralController
     public function postDoctor(Request $request){
         try{
             $input = $request->all();
-            $reference = Reference::find($input['reference_id']);
+            $reference = Reference::with(['register', 'register.payments'])->find($input['reference_id']);
+            $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
+            $payment_doctor = $reference->register->payments->where('type', 'doctor_service')->first();
             $reference->update([
                'staff_id' => $input['doctor_id']
             ]);
+            $payment_doctor->update([
+                'cost' => $doctor->doctorService->cost
+            ]);
+
+
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference]];
         } catch (\Exception $e){
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
+        return response()->json($response);
     }
 
     public function postMedicalRecord(Request $request){

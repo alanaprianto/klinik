@@ -11,6 +11,7 @@ class Depo extends Model
         'inventory_id',
         'parent_id',
         'amount',
+        'total',
         'stock_minimal',
         'stock_maximal',
         'unit',
@@ -21,7 +22,7 @@ class Depo extends Model
     }
 
     public function inventories(){
-        return $this->belongsToMany('App\Inventories', 'inventories_depos', 'depos_id', 'inventories_id');
+        return $this->belongsToMany('App\Inventory', 'inventories_depos', 'depos_id', 'inventories_id');
     }
 
     public function parentDepo()

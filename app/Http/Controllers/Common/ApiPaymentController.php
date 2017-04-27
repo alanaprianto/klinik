@@ -19,7 +19,7 @@ class ApiPaymentController extends Controller
     {
         $response = [];
         try {
-            $registers = Register::with(['payments', 'patient'])->get();
+            $registers = Register::with(['payments', 'patient'])->has('payments')->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['registers' => $registers, 'recordsTotal' => count($registers)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

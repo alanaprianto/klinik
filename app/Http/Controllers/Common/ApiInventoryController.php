@@ -107,7 +107,7 @@ class ApiInventoryController extends GeneralController
     {
         $response = [];
         try {
-            $inventory = Inventory::with('batches')->find($id);
+            $inventory = Inventory::with(['batches', 'depos'])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventory' => $inventory]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
