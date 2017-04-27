@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBatchesTable extends Migration
+class CreateDeposTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,18 @@ class CreateBatchesTable extends Migration
      */
     public function up()
     {
-        Schema::create('batches', function (Blueprint $table) {
+        Schema::create('depos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code')->nullable();
-            $table->string('name')->nullable();
             $table->double('amount')->nullable();
-            $table->date('expired_date')->nullable();
+            $table->double('stock_minimal')->nullable();
+            $table->double('stock_maximal')->nullable();
+            $table->string('unit')->nullable();
+            $table->integer('poly_id')->nullable()->unsigned();
+            $table->foreign('poly_id')->references('id')->on('polies')->onDelete('cascade');
             $table->integer('inventory_id')->nullable()->unsigned();
             $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
+            $table->integer('parent_id')->nullable()->unsigned();
+            $table->foreign('parent_id')->references('id')->on('depos')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +36,6 @@ class CreateBatchesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('batches');
+        Schema::dropIfExists('depos');
     }
 }

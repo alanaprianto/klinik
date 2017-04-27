@@ -18,4 +18,8 @@ class Poly extends Model
     public function doctors(){
         return $this->belongsToMany('App\Staff', 'doctors_polies', 'staff_id', 'polies_id');
     }
+
+    public function depo(){
+        return $this->hasOne('App\Depo');
+    }
 }
