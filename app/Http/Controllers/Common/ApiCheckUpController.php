@@ -66,6 +66,7 @@ class ApiCheckUpController extends GeneralController
             $input = $request->all();
             $kiosk = Kiosk::find($input['kiosk_id']);
 
+            /*update kiosk*/
             if ($kiosk) {
                 $kiosk->update([
                     'status' => 4,
@@ -73,7 +74,6 @@ class ApiCheckUpController extends GeneralController
                 ]);
             }
             $reference = Reference::with(['register', 'register.patient','payments' ,'doctor', 'doctor.doctorService', 'medicalRecords'])->find($input['reference_id']);
-
 
             /*main logic*/
             $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
