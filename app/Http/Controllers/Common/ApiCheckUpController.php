@@ -76,7 +76,7 @@ class ApiCheckUpController extends GeneralController
             /*if docter change*/
             if($input['doctor_id']){
                 $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
-                $doctor_service = $reference->register->payments->where('type', 'doctor_service')->first();
+                $doctor_service = $reference->payments->where('type', 'doctor_service')->first();
                 $doctor_service->update([
                     'cost' => $doctor->doctorService->cost
                 ]);
