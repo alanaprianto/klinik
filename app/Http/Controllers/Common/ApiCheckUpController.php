@@ -72,20 +72,13 @@ class ApiCheckUpController extends GeneralController
                     'staff_id' => Auth::user()->id
                 ]);
             }
-            $reference = Reference::with(['register', 'register.patient', 'doctor', 'doctor.doctorService', 'medicalRecords'])->find($input['reference_id']);
-            /*if docter change*/
-            if($input['doctor_id']){
-                $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
-                $doctor_service = $reference->payments->where('type', 'doctor_service')->first();
-                $doctor_service->update([
-                    'cost' => $doctor->doctorService->cost
-                ]);
-            }
+            $reference = Reference::with(['register', 'register.patient','payments' ,'doctor', 'doctor.doctorService', 'medicalRecords'])->find($input['reference_id']);
+
 
             /*main logic*/
-            $service_doctor = $reference->doctor->doctorService->cost;
+            $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
             $reference->payments()->create([
-                'total' => $service_doctor,
+                'total' => $doctor->doctorService->cost,
                 'type' => 'doctor_service',
                 'status' => 1,
             ]);
