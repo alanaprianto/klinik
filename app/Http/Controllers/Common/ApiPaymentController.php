@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Common;
 
 use App\Patient;
 use App\Payment;
+use App\Reference;
 use App\Register;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -77,26 +78,25 @@ class ApiPaymentController extends Controller
         $response = [];
         try {
             $input = $request->all();
-            $register = Register::with(['payments'])->find($input['register_id']);
-            $total_payment = 0;
-            foreach ($register->payments as $payment){
+            $reference = Reference::with(['payments'])->find($input['reference_id']);
+            foreach ($reference->payments as $payment){
+                return $payment;
                 $total_payment += $payment->total;
             }
 
             /*main logic*/
-            $result = $total_payment - $input['payment'];
+            $result = $total_payment - (int)$input['payment'];
             if($result <= 0){
-                foreach ($register->payments as $payment){
+                foreach ($input->payments as $payment){
                     $payment->update([
                         'status' => 2
                     ]);
                 }
             }
 
-            return $result;
 
 
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['payment' => $payment]];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
 
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

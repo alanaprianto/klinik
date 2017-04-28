@@ -17,7 +17,7 @@ class ApiVisitorController extends GeneralController
     {
         $response = [];
         try {
-            $patients = Patient::with(['registers', 'registers.patient', 'registers.staff', 'registers.payments' ,'registers.references', 'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])->get();
+            $patients = Patient::with(['registers', 'registers.patient', 'registers.staff' ,'registers.references', 'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['patients' => $patients, 'recordsTotal' => count($patients)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
