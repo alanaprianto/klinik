@@ -19,7 +19,15 @@ class ApiPaymentController extends Controller
     {
         $response = [];
         try {
-            $registers = Register::with(['payments', 'payments.register' , 'payments.reference', 'payments.reference.medicalRecords', 'payments.reference.medicalRecords.service', 'patient'])->has('payments')->get();
+            $registers = Register::with(['references', 'references.poly', 'references.payments', 'references.payments.service'])->get();
+            foreach ($registers as $register){
+                foreach ($register->references as $reference){
+                    $reference['reference_total_payment'] = 0;
+                    foreach ($reference->payments as $payment){
+                        $reference['reference_total_payment'] += $payment->total;
+                    }
+                }
+            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['registers' => $registers, 'recordsTotal' => count($registers)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -68,8 +76,26 @@ class ApiPaymentController extends Controller
     {
         $response = [];
         try {
-            $inputs = $request->all();
-            $payment = '';
+            $input = $request->all();
+            $register = Register::with(['payments'])->find($input['register_id']);
+            $total_payment = 0;
+            foreach ($register->payments as $payment){
+                $total_payment += $payment->total;
+            }
+
+            /*main logic*/
+            $result = $total_payment - $input['payment'];
+            if($result <= 0){
+                foreach ($register->payments as $payment){
+                    $payment->update([
+                        'status' => 2
+                    ]);
+                }
+            }
+
+            return $result;
+
+
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['payment' => $payment]];
 
         } catch (\Exception $e) {

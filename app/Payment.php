@@ -11,12 +11,14 @@ class Payment extends Model
         'total',
         'status',
         'register_id',
-        'reference_id'
+        'reference_id',
+        'service_id'
     ];
     public function reference(){
         return $this->belongsTo('App\Reference', 'reference_id', 'id');
     }
-    public function register(){
-        return $this->belongsTo('App\Register', 'register_id', 'id');
+
+    public function service(){
+        return $this->belongsTo('App\Service', 'service_id', 'id');
     }
 }

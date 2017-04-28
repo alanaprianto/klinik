@@ -25,7 +25,6 @@ class ApiCheckUpController extends GeneralController
     {
         $response = [];
         try{
-
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
         } catch (\Exception $e){
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -83,6 +82,14 @@ class ApiCheckUpController extends GeneralController
             }
 
             /*main logic*/
+            $service_doctor = $reference->doctor->doctorService->cost;
+            $reference->payments()->create([
+                'total' => $service_doctor,
+                'type' => 'doctor_service',
+                'status' => 1,
+                'register_id' => $input['register_id']
+            ]);
+
             foreach ($input['service_ids'] as $index_service => $service_id){
                 $amount = $input['service_amounts'][$index_service];
                 $service = Service::find($service_id);
@@ -96,7 +103,8 @@ class ApiCheckUpController extends GeneralController
                     'total' => $total_payments,
                     'type' => 'medical_record',
                     'status' => 1,
-                    'register_id' => $input['register_id']
+                    'register_id' => $input['register_id'],
+                    'service_id' => $service_id
                 ]);
             }
 
@@ -136,13 +144,13 @@ class ApiCheckUpController extends GeneralController
             $input = $request->all();
             $reference = Reference::with(['register', 'register.payments'])->find($input['reference_id']);
             $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
-            $payment_doctor = $reference->register->payments->where('type', 'doctor_service')->first();
+/*            $payment_doctor = $reference->register->payments->where('type', 'doctor_service')->first();*/
             $reference->update([
                'staff_id' => $input['doctor_id']
             ]);
-            $payment_doctor->update([
+/*            $payment_doctor->update([
                 'cost' => $doctor->doctorService->cost
-            ]);
+            ]);*/
 
 
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference]];

@@ -20,8 +20,8 @@ class CreatePaymentsTable extends Migration
             $table->integer('status')->nullable();
             $table->integer('reference_id')->unsigned()->nullable();
             $table->foreign('reference_id')->references('id')->on('references')->onDelete('cascade');
-            $table->integer('register_id')->unsigned()->nullable();
-            $table->foreign('register_id')->references('id')->on('registers')->onDelete('cascade');
+            $table->integer('service_id')->unsigned()->nullable();
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->timestamps();
         });
     }
