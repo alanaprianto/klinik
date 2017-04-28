@@ -10,6 +10,7 @@ class Payment extends Model
         'type',
         'total',
         'status',
+        'quantity',
         'register_id',
         'reference_id',
         'service_id'

@@ -81,6 +81,7 @@ class ApiCheckUpController extends GeneralController
                 'total' => $doctor->doctorService->cost,
                 'type' => 'doctor_service',
                 'status' => 1,
+                'quantity' => 1,
             ]);
 
 
@@ -97,7 +98,8 @@ class ApiCheckUpController extends GeneralController
                     'total' => $total_payments,
                     'type' => 'medical_record',
                     'status' => 1,
-                    'service_id' => $service_id
+                    'service_id' => $service_id,
+                    'quantity' => $amount
                 ]);
             }
 

@@ -18,6 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->string('type')->nullable();
             $table->double('total')->nullable();
             $table->integer('status')->nullable();
+            $table->integer('quantity')->nullable();
             $table->integer('reference_id')->unsigned()->nullable();
             $table->foreign('reference_id')->references('id')->on('references')->onDelete('cascade');
             $table->integer('service_id')->unsigned()->nullable();

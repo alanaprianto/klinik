@@ -20,7 +20,7 @@ class ApiPaymentController extends Controller
     {
         $response = [];
         try {
-            $registers = Register::with(['patient','references', 'references.poly', 'references.payments', 'references.payments.service'])->get();
+            $registers = Register::with(['patient','references', 'references.poly', 'references.payments', 'references.payments.service', 'references.medicalRecords'])->get();
             foreach ($registers as $register){
                 foreach ($register->references as $reference){
                     $reference['reference_total_payment'] = 0;
