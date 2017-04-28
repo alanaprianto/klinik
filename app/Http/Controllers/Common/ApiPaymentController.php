@@ -44,7 +44,7 @@ class ApiPaymentController extends Controller
     {
         $response = [];
         try {
-            $payments = Payment::with(['reference', 'reference.medicalRecords', 'reference.medicalRecords.service', 'reference.poly', 'register', 'register.patient'])->where('register_id', $request['register_id'])->get();
+            $payments = Payment::with(['reference'])->where('register_id', $request['register_id'])->get();
             $patient = Patient::whereHas('registers', function ($q) use ($request) {
                 $q->where('id', $request['register_id']);
             })->first();
