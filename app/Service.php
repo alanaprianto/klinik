@@ -15,4 +15,8 @@ class Service extends Model
     public function medicalRecords(){
         return $this->hasMany('App\MedicalRecord');
     }
+
+    public function payments(){
+        return $this->hasMany('App\Payment');
+    }
 }
