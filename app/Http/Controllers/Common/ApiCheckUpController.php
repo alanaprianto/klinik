@@ -65,14 +65,14 @@ class ApiCheckUpController extends GeneralController
         try{
             $input = $request->all();
             $kiosk = Kiosk::find($input['kiosk_id']);
+
             if ($kiosk) {
                 $kiosk->update([
                     'status' => 4,
                     'staff_id' => Auth::user()->id
                 ]);
             }
-            $reference = Reference::with(['register', 'register.patient', 'register.payments', 'doctor', 'doctor.doctorService', 'medicalRecords'])->find($input['reference_id']);
-
+            $reference = Reference::with(['register', 'register.patient', 'doctor', 'doctor.doctorService', 'medicalRecords'])->find($input['reference_id']);
             /*if docter change*/
             if($input['doctor_id']){
                 $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
@@ -89,6 +89,7 @@ class ApiCheckUpController extends GeneralController
                 'type' => 'doctor_service',
                 'status' => 1,
             ]);
+
 
             foreach ($input['service_ids'] as $index_service => $service_id){
                 $amount = $input['service_amounts'][$index_service];
@@ -129,7 +130,6 @@ class ApiCheckUpController extends GeneralController
                 default:
                     /*default 1*/
             }
-
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference]];
         } catch (\Exception $e){
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
