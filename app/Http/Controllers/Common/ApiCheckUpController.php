@@ -48,12 +48,6 @@ class ApiCheckUpController extends GeneralController
                     'status' => 3,
                     'staff_id' => Auth::user()->id
                 ]);
-
-                $filename = 'sounds/temp/' . $kiosk->queue_number . '_' . $kiosk->type . '.mp3';
-                if (file_exists($filename)) {
-                    File::delete($filename);
-                }
-
             }
 
 
@@ -70,6 +64,13 @@ class ApiCheckUpController extends GeneralController
         $response = [];
         try{
             $input = $request->all();
+            $kiosk = Kiosk::find($input['kiosk_id']);
+            if ($kiosk) {
+                $kiosk->update([
+                    'status' => 4,
+                    'staff_id' => Auth::user()->id
+                ]);
+            }
             $reference = Reference::with(['register', 'register.patient', 'register.payments', 'doctor', 'doctor.doctorService', 'medicalRecords'])->find($input['reference_id']);
 
             /*if docter change*/
