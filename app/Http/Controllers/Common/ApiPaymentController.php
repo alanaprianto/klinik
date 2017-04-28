@@ -70,12 +70,6 @@ class ApiPaymentController extends Controller
         try {
             $inputs = $request->all();
             $payment = '';
-            foreach ($inputs as $index => $input){
-                $payment = Payment::find($index);
-                $payment->update([
-                    'status' => 2
-                ]);
-            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['payment' => $payment]];
 
         } catch (\Exception $e) {
