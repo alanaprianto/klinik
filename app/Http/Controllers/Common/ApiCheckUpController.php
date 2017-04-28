@@ -87,15 +87,16 @@ class ApiCheckUpController extends GeneralController
                 $amount = $input['service_amounts'][$index_service];
                 $service = Service::find($service_id);
                 $reference->medicalRecords()->create([
-                    'type' => 'action',
+                    'type' => 'medical_record',
                     'service_id' => $service_id,
                     'quantity' => $amount
                 ]);
                 $total_payments = $service->cost * $amount;
                 $reference->payments()->create([
                     'total' => $total_payments,
-                    'type' => 'action',
-                    'status' => 1
+                    'type' => 'medical_record',
+                    'status' => 1,
+                    'register_id' => $input['register_id']
                 ]);
             }
 
