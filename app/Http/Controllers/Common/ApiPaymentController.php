@@ -21,14 +21,6 @@ class ApiPaymentController extends Controller
         $response = [];
         try {
             $registers = Register::with(['patient','references', 'references.poly', 'references.payments', 'references.payments.service', 'references.medicalRecords'])->get();
-            foreach ($registers as $register){
-                foreach ($register->references as $reference){
-                    $reference['reference_total_payment'] = 0;
-                    foreach ($reference->payments as $payment){
-                        $reference['reference_total_payment'] += $payment->total;
-                    }
-                }
-            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['registers' => $registers, 'recordsTotal' => count($registers)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -45,22 +37,7 @@ class ApiPaymentController extends Controller
     {
         $response = [];
         try {
-            $payments = Payment::with(['reference'])->where('register_id', $request['register_id'])->get();
-            $patient = Patient::whereHas('registers', function ($q) use ($request) {
-                $q->where('id', $request['register_id']);
-            })->first();
-            $total_payment = 0;
-            $remaining = 0;
-
-            foreach ($payments as $payment) {
-                if ($payment->status == 1) {
-                    $remaining += $payment->total;
-                }
-                $total_payment += $payment->total;
-            }
-
-            $payments['recordsTotal'] = count($payments);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['payments' => $payments, 'patient' => $patient, 'total_payment' => $total_payment, 'remaining' => $remaining]];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -78,26 +55,50 @@ class ApiPaymentController extends Controller
         $response = [];
         try {
             $input = $request->all();
-            $reference = Reference::with(['payments'])->find($input['reference_id']);
-            foreach ($reference->payments as $payment){
-                return $payment;
-                $total_payment += $payment->total;
-            }
-
-            /*main logic*/
-            $result = $total_payment - (int)$input['payment'];
-            if($result <= 0){
-                foreach ($input->payments as $payment){
-                    $payment->update([
-                        'status' => 2
-                    ]);
+            $register = Register::with(['references', 'references.payments', 'paymentHistories'])->find($input['register_id']);
+            $customer_payment = $input['payment'];
+            foreach ($register->references as $reference){
+                foreach ($reference->payments as $payment){
+                    $customer_payment -= $payment->total;
+                    if($customer_payment >= 0){
+                        $payment->update([
+                            'status' => 1
+                        ]);
+                    }
                 }
             }
 
+            foreach ($register->references as $reference){
+                $reference_payment_status = 1;
+                foreach ($reference->payments as $payment){
+                    if($payment->status == 0){
+                        $reference_payment_status = 0;
+                        break;
+                    }
+                }
+                $reference->update([
+                    'payment_status' => $reference_payment_status
+                ]);
+            }
 
+            $register_payment_status = 1;
+            foreach ($register->references as $reference){
+                if($reference->payment_status == 0){
+                    $register_payment_status = 0;
+                    break;
+                }
+            }
+            $register->update([
+                'payment_status' => $register_payment_status
+            ]);
 
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
+            $register->paymentHistories()->create([
+                'payment' => $input['payment']
+            ]);
 
+            $register = Register::with(['references', 'references.payments', 'paymentHistories'])->find($input['register_id']);
+
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['register' => $register]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }

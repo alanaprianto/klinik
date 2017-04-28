@@ -80,10 +80,15 @@ class ApiCheckUpController extends GeneralController
             $reference->payments()->create([
                 'total' => $doctor->doctorService->cost,
                 'type' => 'doctor_service',
-                'status' => 1,
+                'status' => 0,
                 'quantity' => 1,
             ]);
 
+            if($doctor){
+                $grand_total_payment = $doctor->doctorService->cost;
+            }else{
+                $grand_total_payment = $reference->doctor->doctorService->cost;
+            }
 
             foreach ($input['service_ids'] as $index_service => $service_id){
                 $amount = $input['service_amounts'][$index_service];
@@ -97,10 +102,12 @@ class ApiCheckUpController extends GeneralController
                 $reference->payments()->create([
                     'total' => $total_payments,
                     'type' => 'medical_record',
-                    'status' => 1,
+                    'status' => 0,
                     'service_id' => $service_id,
                     'quantity' => $amount
                 ]);
+
+                $grand_total_payment += $total_payments;
             }
 
             /*status
@@ -110,6 +117,7 @@ class ApiCheckUpController extends GeneralController
             4 = dirawat*/
 
             $reference->update([
+                'reference_total_payment' => $grand_total_payment,
                 'status' => $input['status'],
                 'notes' => $input['notes']
             ]);

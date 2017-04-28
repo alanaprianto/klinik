@@ -39,6 +39,10 @@ class Patient extends Model
         return $this->hasMany('App\Register');
     }
 
+    public function debts(){
+        return $this->registers()->where('payment_status', '=', 0)->orWhere('payment_status', '=', null);
+    }
+
     /*mutator set*/
     public function setBirthAttribute($value)
     {

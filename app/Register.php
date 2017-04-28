@@ -20,6 +20,8 @@ class Register extends Model
         'time_attend',
         'service_type',
         'first_diagnose',
+        'payment_status',
+        'total_customer_payment'
     ];
 
     public function patient(){
@@ -36,6 +38,10 @@ class Register extends Model
 
     public function payments(){
         return $this->hasMany('App\Payment');
+    }
+
+    public function paymentHistories(){
+        return $this->hasMany('App\PaymentHistory');
     }
 
     public function setTimeAttendAttribute($value)

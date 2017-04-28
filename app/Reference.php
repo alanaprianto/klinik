@@ -14,7 +14,8 @@ class Reference extends Model
         'notes',
         'staff_id',
         'is_checked',
-        'final_result'
+        'payment_status',
+        'reference_total_payment'
     ];
 
     public function register()
