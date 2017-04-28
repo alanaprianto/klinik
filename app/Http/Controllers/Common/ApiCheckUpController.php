@@ -87,7 +87,6 @@ class ApiCheckUpController extends GeneralController
                 'total' => $service_doctor,
                 'type' => 'doctor_service',
                 'status' => 1,
-                'register_id' => $input['register_id']
             ]);
 
             foreach ($input['service_ids'] as $index_service => $service_id){
@@ -103,7 +102,6 @@ class ApiCheckUpController extends GeneralController
                     'total' => $total_payments,
                     'type' => 'medical_record',
                     'status' => 1,
-                    'register_id' => $input['register_id'],
                     'service_id' => $service_id
                 ]);
             }
