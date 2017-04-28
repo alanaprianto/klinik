@@ -53,8 +53,6 @@ class ApiRegistrationController extends GeneralController
                     'status' => 3, /*1:open, 2:calling, 3:on process, 4:finished*/
                     'staff_id' => Auth::user()->id
                 ]);
-                $filename = 'sounds/temp/' . $kiosk->queue_number . '_' . $kiosk->type . '.mp3';
-                File::delete($filename);
             }
 
             /*get polies*/
@@ -155,7 +153,6 @@ class ApiRegistrationController extends GeneralController
                 $kiosk = Kiosk::find($input['kiosk_id']);
                 if ($kiosk) {
                     $kiosk->update(['status' => 4]);
-
                 }
             }
 
