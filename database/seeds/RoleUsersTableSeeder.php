@@ -22,6 +22,7 @@ class RoleUsersTableSeeder extends Seeder
         $admin_kasir = \App\User::where('username', 'admin_kasir')->first();
         $apotek = \App\User::where('username', 'apotek')->first();
         $admin_apotek = \App\User::where('username', 'admin_apotek')->first();
+        $penata_jasa = \App\User::where('username', 'penata_jasa')->first();
 
         $admin_role = \App\Role::where('name', 'admin')->first();
         $loket_role = \App\Role::where('name', 'loket')->first();
@@ -34,6 +35,7 @@ class RoleUsersTableSeeder extends Seeder
         $admin_kasir_role = \App\Role::where('name', 'admin_kasir')->first();
         $apotek_role = \App\Role::where('name', 'apotek')->first();
         $admin_apotek_role = \App\Role::where('name', 'admin_apotek')->first();
+        $penata_jasa_role = \App\Role::where('name', 'penata_jasa')->first();
 
 
         $admin->attachRole($admin_role);
@@ -42,6 +44,7 @@ class RoleUsersTableSeeder extends Seeder
         $poli_anak->attachRole($poli_anak_role);
         $kasir->attachRole($kasir_role);
         $apotek->attachRole($apotek_role);
+        $penata_jasa->attachRole($penata_jasa_role);
 
         $admin_loket->attachRoles([$loket_role->id, $admin_loket_role->id]);
         $admin_poli_umum->attachRoles([$poli_umum_role->id, $admin_poli_umum_role->id]);

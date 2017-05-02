@@ -99,7 +99,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');
     });
 
-    Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['role:poli_umum|poli_anak|admin_poli_umum|admin_poli_anak']], function () {
+    Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['role:poli_umum|poli_anak|admin_poli_umum|admin_poli_anak|penata_jasa']], function () {
         /*common used*/
         Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
         Route::resource('check-up', '\App\Http\Controllers\Common\ApiCheckUpController');

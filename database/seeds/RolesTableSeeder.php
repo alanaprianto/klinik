@@ -22,7 +22,8 @@ class RolesTableSeeder extends Seeder
         $admin_kasir_role = ['name' => 'admin_kasir', 'display_name' => 'Admin Kasir', 'description' => 'Kasir'];
         $apotek = ['name' => 'apotek', 'display_name' => 'Apotek', 'description' => 'Apotek'];
         $admin_apotek = ['name' => 'admin_apotek', 'display_name' => 'Admin Apotek', 'description' => 'Apotek'];
+        $penata_jasa = ['name' => 'penata_jasa', 'display_name' => 'Penata Jasa', 'description' => 'Penata Jasa Role'];
 
-        \Illuminate\Support\Facades\DB::table('roles')->insert([$admin_role, $loket_role, $admin_loket_role, $poli_umum, $admin_poli_umum, $poli_anak, $admin_poli_anak, $kasir_role, $admin_kasir_role, $apotek, $admin_apotek]);
+        \Illuminate\Support\Facades\DB::table('roles')->insert([$admin_role, $loket_role, $admin_loket_role, $poli_umum, $admin_poli_umum, $poli_anak, $admin_poli_anak, $kasir_role, $admin_kasir_role, $apotek, $admin_apotek, $penata_jasa]);
     }
 }

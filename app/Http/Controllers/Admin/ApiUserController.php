@@ -35,9 +35,7 @@ class ApiUserController extends GeneralController
     {
         $response = [];
         try {
-            $staffJobs = $this->getStaffJobs();
-            $staffPositions = $this->getStaffPositions();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffJobs' => $staffJobs, 'staffPositions' => $staffPositions]];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -55,6 +53,7 @@ class ApiUserController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
+            $input['password'] = bcrypt($input['password']);
             $user = User::create($input);
             $user->staff()->create([]);
             $user->attachRoles($input['role_ids']);

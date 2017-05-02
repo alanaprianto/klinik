@@ -68,6 +68,7 @@ class GeneralController extends Controller
         return $final_reference;
     }
 
+
     /*get all Model*/
     protected function getBatches(){
         $response = [];
