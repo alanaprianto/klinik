@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/doctors', 'GeneralController@getDoctors');
         Route::get('/countries', '\App\Http\Controllers\Common\ApiCommonController@getCountries');
         Route::get('/provinces', '\App\Http\Controllers\Common\ApiCommonController@getProvinces');
+        Route::get('/cities', '\App\Http\Controllers\Common\ApiCommonController@getCities');
         Route::get('/districts', '\App\Http\Controllers\Common\ApiCommonController@getDistrict');
         Route::get('/subDistricts', '\App\Http\Controllers\Common\ApiCommonController@getSubDistrict');
 

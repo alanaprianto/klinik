@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Common;
 
+use App\City;
 use App\Country;
 use App\District;
 use App\Http\Controllers\GeneralController;
@@ -69,6 +70,24 @@ class ApiCommonController extends GeneralController
             } else {
                 $provinces = Province::get();
                 $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['provinces' => $provinces, 'recordsTotal' => count($provinces)]];
+            }
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+    }
+
+    public function getCities(Request $request)
+    {
+        $response = [];
+        try {
+            $input = $request->all();
+            if (isset($input['code']) && $input['code']) {
+                $city = City::where('code', $input['code'])->first();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['city' => $city]];
+            } else {
+                $cities = City::get();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['cities' => $cities, 'recordsTotal' => count($cities)]];
             }
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
