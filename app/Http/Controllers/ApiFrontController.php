@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Kiosk;
 use Illuminate\Http\Request;
 
+// Controller utk proses yg tidak butuh login
 class ApiFrontController extends GeneralController
 {
     public function welcome(){
