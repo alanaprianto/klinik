@@ -182,14 +182,6 @@ class ApiRegistrationController extends GeneralController
             /*add reference to poly*/
             $reference = $this->addReference($input, $register);
 
-            /*assign payment for doctor / create payment for doctor*/
-/*            $doctor = Staff::with('doctorService')->find($input['doctor_id']);
-            $register->payments()->create([
-                'status' => 1,
-                'total' => $doctor->doctorService->cost,
-                'type' => 'doctor_service',
-            ]);*/
-
             /*add kiosk queue in poly*/
             $poly = Poly::find($request['poly_id']);
             $kiosk = $this->getKioskQueue($poly->name, $reference->id);
