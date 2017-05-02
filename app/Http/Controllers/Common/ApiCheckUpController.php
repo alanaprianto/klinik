@@ -110,11 +110,28 @@ class ApiCheckUpController extends GeneralController
                 $grand_total_payment += $total_payments;
             }
 
+            $new_reference = '';
+            switch ($input['status']){
+                case '2':
+                    /*selesai di periksa*/
+                    break;
+                case '3':
+                    $new_reference = $this->addReference($input, $reference->register);
+                    /*dirujuk*/
+                    break;
+                case '4':
+                    /*dirawat*/
+                    break;
+                default:
+                    /*default 1 => belum di periksa*/
+            }
+
             /*status
             1 = belum diperiksa
             2 = pulang
             3 = dirujuk
-            4 = dirawat*/
+            4 = dirawat
+            */
 
             $reference->update([
                 'reference_total_payment' => $grand_total_payment,
@@ -122,18 +139,7 @@ class ApiCheckUpController extends GeneralController
                 'notes' => $input['notes']
             ]);
 
-            switch ($input['status']){
-                case '3':
-                    /*tambah rujukan*/
-                    $this->addReference($input, $reference->register, 'create');
-                    break;
-                case '4':
-                    /*case buat dirawat*/
-                    break;
-                default:
-                    /*default 1*/
-            }
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference]];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference, 'new_reference' => $new_reference]];
         } catch (\Exception $e){
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }

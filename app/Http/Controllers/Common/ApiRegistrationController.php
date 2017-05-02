@@ -180,7 +180,7 @@ class ApiRegistrationController extends GeneralController
             $register = Register::create($input);
 
             /*add reference to poly*/
-            $reference = $this->addReference($input, $register, 'create');
+            $reference = $this->addReference($input, $register);
 
             /*assign payment for doctor / create payment for doctor*/
 /*            $doctor = Staff::with('doctorService')->find($input['doctor_id']);

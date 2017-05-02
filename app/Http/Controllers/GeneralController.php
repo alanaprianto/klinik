@@ -54,20 +54,18 @@ class GeneralController extends Controller
         return $addKiosk;
     }
 
-    protected function addReference($input, $register, $type){
-        if($type == 'create'){
-            $register_id = $register->id;
-        }else{
-            $register_id = $input['register_id'];
-        }
+    protected function addReference($input, $register){
+        $poly = Poly::find($input['poly_id']);
         $reference = Reference::create([
             'number_reference' => Carbon::now()->format('Ymdhis'),
-            'register_id' => $register_id,
-            'poly_id' => $input['poly_id'],
+            'register_id' => $register->id,
+            'poly_id' => $poly->id,
             'staff_id' => $input['doctor_id'],
             'status' => 1
         ]);
-        return $reference;
+        $final_reference = Reference::with(['poly'])->find($reference->id);
+        $final_reference['kiosk'] = $this->getKioskQueue($poly->name, $final_reference->id);
+        return $final_reference;
     }
 
     private function getNumber($number)
