@@ -94,25 +94,36 @@ Route::group(['middleware' => ['auth:api']], function () {
     });
 
     Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['role:loket|admin_loket']], function () {
+
         /*common used*/
         Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
         Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');
+        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
+        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
+
     });
 
     Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['role:poli_umum|poli_anak|admin_poli_umum|admin_poli_anak|penata_jasa']], function () {
         /*common used*/
         Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
         Route::resource('check-up', '\App\Http\Controllers\Common\ApiCheckUpController');
+        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
+        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
     });
 
     Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['role:kasir|admin_kasir']], function () {
         Route::resource('payments', '\App\Http\Controllers\Common\ApiPaymentController');
+        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
+        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
     });
 
     Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['role:apotek|admin_apotek']], function () {
         /*common used*/
         Route::resource('recipes', '\App\Http\Controllers\Common\ApiRecipeController');
         Route::resource('inventories', '\App\Http\Controllers\Common\ApiInventoryController');
+        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
+        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
+
     });
 
 });
