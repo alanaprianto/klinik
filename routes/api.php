@@ -18,6 +18,10 @@ Route::get('/display', 'ApiFrontController@getDisplay');
 Route::post('/kiosk/create', 'ApiFrontController@postKiosk');
 
 Route::group(['middleware' => ['auth:api']], function () {
+    Route::group(['prefix' => 'bridge', 'namespace' => 'Bridge'], function (){
+        Route::get('/bpjs', 'ApiBpjsController@test');
+    });
+
     Route::group(['prefix' => 'common'], function () {
         /*list all model*/
         Route::get('/batches', 'GeneralController@getBatches');
