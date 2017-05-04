@@ -73,6 +73,17 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('sellers', '\App\Http\Controllers\Common\ApiSellerController');
         Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
 
+        Route::resource('doctor-services', '\App\Http\Controllers\Admin\ApiDoctorServiceController');
+        Route::resource('permissions', '\App\Http\Controllers\Admin\ApiPermissionController');
+        Route::resource('polies', '\App\Http\Controllers\Admin\ApiPolyController');
+        Route::resource('roles', '\App\Http\Controllers\Admin\ApiRoleController');
+        Route::resource('services', '\App\Http\Controllers\Admin\ApiServiceController');
+        Route::resource('settings', '\App\Http\Controllers\Admin\ApiSettingController');
+        Route::resource('staff', '\App\Http\Controllers\Admin\ApiStaffController');
+        Route::resource('staff-jobs', '\App\Http\Controllers\Admin\ApiStaffJobController');
+        Route::resource('staff-positions', '\App\Http\Controllers\Admin\ApiStaffPositionController');
+        Route::resource('users', '\App\Http\Controllers\Admin\ApiUserController');
+
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['role:admin']], function () {
