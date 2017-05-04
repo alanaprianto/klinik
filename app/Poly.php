@@ -8,7 +8,8 @@ class Poly extends Model
 {
     protected $fillable = [
         'name',
-        'desc'
+        'desc',
+        'icon'
     ];
 
     public function references(){
