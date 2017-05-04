@@ -25,7 +25,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::group(['prefix' => 'common'], function () {
         /*list all model*/
         Route::get('/batches', 'GeneralController@getBatches');
-        Route::get('/buyers', 'GeneralController@getBuyers');
         Route::get('/doctor-services', 'GeneralController@getDoctorServices');
         Route::get('/hospital', 'GeneralController@getHospital');
         Route::get('/icd10s', 'GeneralController@getIcd10s');
@@ -35,9 +34,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/patiens', 'GeneralController@getPatients');
         Route::get('/payments', 'GeneralController@getPayments');
         Route::get('/permissions', 'GeneralController@getPermissions');
-        Route::get('/pharmacy-seller', 'GeneralController@getPharmacySeller');
         Route::get('/polies', 'GeneralController@getPolies');
-        Route::get('/recipes', 'GeneralController@getRecipes');
         Route::get('/references', 'GeneralController@getReferences');
         Route::get('/registers', 'GeneralController@getRegisters');
         Route::get('/roles', 'GeneralController@getRoles');
@@ -57,6 +54,8 @@ Route::group(['middleware' => ['auth:api']], function () {
 
         Route::get('/user-info', '\App\Http\Controllers\Common\ApiCommonController@info');
         Route::get('/icd10', '\App\Http\Controllers\Common\ApiCommonController@getIcd10');
+        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
+
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['role:admin']], function () {
@@ -91,9 +90,8 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');
         Route::resource('check-up', '\App\Http\Controllers\Common\ApiCheckUpController');
         Route::resource('payments', '\App\Http\Controllers\Common\ApiPaymentController');
-        Route::resource('recipes', '\App\Http\Controllers\Common\ApiRecipeController');
         Route::resource('inventories', '\App\Http\Controllers\Common\ApiInventoryController');
-        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
+        Route::resource('sellers', '\App\Http\Controllers\Common\ApiSellerController');
         Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
     });
 
@@ -102,7 +100,6 @@ Route::group(['middleware' => ['auth:api']], function () {
         /*common used*/
         Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
         Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');
-        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
         Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
 
     });
@@ -111,7 +108,6 @@ Route::group(['middleware' => ['auth:api']], function () {
         /*common used*/
         Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
         Route::resource('check-up', '\App\Http\Controllers\Common\ApiCheckUpController');
-        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
         Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
     });
 
@@ -123,9 +119,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['role:apotek|admin_apotek']], function () {
         /*common used*/
-        Route::resource('recipes', '\App\Http\Controllers\Common\ApiRecipeController');
         Route::resource('inventories', '\App\Http\Controllers\Common\ApiInventoryController');
-        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
         Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
 
     });

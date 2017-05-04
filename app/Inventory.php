@@ -13,19 +13,19 @@ class Inventory extends Model
         'type',
         'explain',
         'sediaan',
-        'price'
+        'price',
     ];
 
     public function batches(){
         return $this->hasMany('App\Batch');
     }
 
-    public function pharmacySellers(){
-        return $this->hasMany('App\PharmacySeller');
-    }
-
     public function depos(){
         return $this->belongsToMany('App\Depo', 'inventories_depos', 'inventories_id', 'depos_id');
+    }
+
+    public function pictures(){
+        return $this->hasMany('App\Picture');
     }
 
 }

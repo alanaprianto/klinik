@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTuslahsTable extends Migration
+class CreateDistributorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateTuslahsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tuslahs', function (Blueprint $table) {
+        Schema::create('distributors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->double('amount')->nullable();
-            $table->double('price')->nullable();
-            $table->integer('pharmacy_transaction_id')->nullable()->unsigned();
-            $table->foreign('pharmacy_transaction_id')->references('id')->on('pharmacy_transactions')->onDelete('cascade');
+            $table->text('address')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateTuslahsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tuslahs');
+        Schema::dropIfExists('distributors');
     }
 }

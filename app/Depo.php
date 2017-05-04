@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Depo extends Model
 {
     protected $fillable = [
-        'poly_id',
-        'inventory_id',
-        'parent_id',
         'amount',
         'total',
         'stock_minimal',
         'stock_maximal',
         'unit',
+        'poly_id',
+        'parent_id',
+        'pharmacy_id',
     ];
 
     public function poly(){
@@ -27,10 +27,14 @@ class Depo extends Model
 
     public function parentDepo()
     {
-        return $this->belongsTo('App\Depo', 'parent_id');
+        return $this->belongsTo('App\Depo', 'parent_id', 'id');
     }
 
-    public function subDepo(){
+    public function subDepos(){
         return $this->hasMany('App\Depo', 'parent_id');
+    }
+
+    public function pharmacy(){
+        return $this->belongsTo('App\Pharmacy', 'pharmacy_id', 'id');
     }
 }

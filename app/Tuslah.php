@@ -10,10 +10,10 @@ class Tuslah extends Model
         'name',
         'amount',
         'price',
-        'recipe_id'
+        'pharmacy_transaction_id'
     ];
 
-    public function recipe(){
-        return $this->belongsTo('App\Recipe', 'recipe_id', 'id');
+    public function pharmacyTransaction(){
+        return $this->belongsTo('App\PharmacyTransaction', 'pharmacy_transaction_id');
     }
 }

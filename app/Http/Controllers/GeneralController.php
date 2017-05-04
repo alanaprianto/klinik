@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Batch;
-use App\Buyer;
 use App\DoctorService;
 use App\Hospital;
 use App\Icd10;
@@ -13,10 +12,7 @@ use App\MedicalRecord;
 use App\Patient;
 use App\Payment;
 use App\Permission;
-use App\PharmacySeller;
 use App\Poly;
-use App\Province;
-use App\Recipe;
 use App\Reference;
 use App\Register;
 use App\Role;
@@ -28,7 +24,6 @@ use App\StaffPosition;
 use App\Tuslah;
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use File;
 
 class GeneralController extends Controller
@@ -81,17 +76,6 @@ class GeneralController extends Controller
         return response()->json($response);
     }
 
-    protected function getBuyers(){
-        $response = [];
-        try {
-            $buyers = Buyer::with(['recipe'])->get();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['buyers' => $buyers, 'recordsTotal' => count($buyers)]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
-    }
-
     protected function getDoctorServices(){
         $response = [];
         try {
@@ -128,7 +112,7 @@ class GeneralController extends Controller
     protected function getInventories(){
         $response = [];
         try {
-            $inventories = Inventory::with(['batches', 'pharmacySellers', 'depos'])->get();
+            $inventories = Inventory::with(['batches', 'depos'])->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventories' => $inventories, 'recordsTotal' => count($inventories)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -191,17 +175,6 @@ class GeneralController extends Controller
         return response()->json($response);
     }
 
-    protected function getPharmacySeller(){
-        $response = [];
-        try {
-            $pharmacySeller = PharmacySeller::with(['inventory', 'recipe'])->get();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['pharmacySeller' => $pharmacySeller, 'recordsTotal' => count($pharmacySeller)]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
-    }
-
     protected function getPolies(){
         $response = [];
         try {
@@ -213,21 +186,10 @@ class GeneralController extends Controller
         return response()->json($response);
     }
 
-    protected function getRecipes(){
-        $response = [];
-        try {
-            $recipes = Recipe::with(['reference', 'pharmacySellers', 'staff', 'tuslahs', 'buyer'])->get();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['recipes' => $recipes, 'recordsTotal' => count($recipes)]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
-    }
-
     protected function getReferences(){
         $response = [];
         try {
-            $references = Reference::with(['register', 'poly', 'doctor', 'medicalRecords', 'payments', 'recipe'])->get();
+            $references = Reference::with(['register', 'poly', 'doctor', 'medicalRecords', 'payments'])->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['references' => $references, 'recordsTotal' => count($references)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -282,7 +244,7 @@ class GeneralController extends Controller
     protected function getStaff(){
         $response = [];
         try {
-            $staff = Staff::with(['user', 'hospital', 'staffJob', 'staffPosition' , 'register', 'references', 'polies', 'medicalRecords', 'doctorService', 'recipes'])->get();
+            $staff = Staff::with(['user', 'hospital', 'staffJob', 'staffPosition' , 'register', 'references', 'polies', 'medicalRecords', 'doctorService'])->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff, 'recordsTotal' => count($staff)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -315,7 +277,7 @@ class GeneralController extends Controller
     protected function getTuslahs(){
         $response = [];
         try {
-            $tuslahs = Tuslah::with(['recipe'])->get();
+            $tuslahs = Tuslah::with()->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['tuslahs' => $tuslahs, 'recordsTotal' => count($tuslahs)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

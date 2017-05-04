@@ -16,15 +16,16 @@ class CreateDeposTable extends Migration
         Schema::create('depos', function (Blueprint $table) {
             $table->increments('id');
             $table->double('amount')->nullable();
+            $table->integer('total')->nullable();
             $table->double('stock_minimal')->nullable();
             $table->double('stock_maximal')->nullable();
             $table->string('unit')->nullable();
             $table->integer('poly_id')->nullable()->unsigned();
             $table->foreign('poly_id')->references('id')->on('polies')->onDelete('cascade');
-            $table->integer('inventory_id')->nullable()->unsigned();
-            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
             $table->integer('parent_id')->nullable()->unsigned();
             $table->foreign('parent_id')->references('id')->on('depos')->onDelete('cascade');
+            $table->integer('pharmacy_id')->nullable()->unsigned();
+            $table->foreign('pharmacy_id')->references('id')->on('pharmacies')->onDelete('cascade');
             $table->timestamps();
         });
     }
