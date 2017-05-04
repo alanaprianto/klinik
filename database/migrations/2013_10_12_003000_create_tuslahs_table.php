@@ -18,8 +18,6 @@ class CreateTuslahsTable extends Migration
             $table->string('name')->nullable();
             $table->double('amount')->nullable();
             $table->double('price')->nullable();
-            $table->integer('recipe_id')->unsigned()->nullable();
-            $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');
             $table->timestamps();
         });
     }
