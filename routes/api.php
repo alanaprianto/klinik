@@ -56,6 +56,23 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/icd10', '\App\Http\Controllers\Common\ApiCommonController@getIcd10');
         Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
 
+        /*queues*/
+        Route::post('/queues/update', '\App\Http\Controllers\Common\ApiQueueController@updateStatus');
+        Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
+
+        /*registers*/
+        Route::get('/registers/select-patient', '\App\Http\Controllers\Common\ApiRegistrationController@selectPatient');
+        Route::post('/registers/{id}', '\App\Http\Controllers\Common\ApiRegistrationController@update');
+
+        /*check-up*/
+        Route::post('/check-up/change-doctor', '\App\Http\Controllers\Common\ApiCheckUpController@postDoctor');
+        Route::post('/check-up/medical-record', '\App\Http\Controllers\Common\ApiCheckUpController@postMedicalRecord');
+
+        Route::resource('payments', '\App\Http\Controllers\Common\ApiPaymentController');
+        Route::resource('inventories', '\App\Http\Controllers\Common\ApiInventoryController');
+        Route::resource('sellers', '\App\Http\Controllers\Common\ApiSellerController');
+        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
+
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['role:admin']], function () {
