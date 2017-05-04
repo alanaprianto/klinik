@@ -30,7 +30,7 @@ class CreateStaffTable extends Migration
             $table->text('rt_rw')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('last_education')->nullable();
-            $table->enum('gender', ['male','female']);
+            $table->integer('gender')->nullable();
             $table->string('image_profile')->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -13,11 +13,25 @@ class ApiVisitorController extends GeneralController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $response = [];
         try {
-            $patients = Patient::with(['registers', 'registers.patient', 'registers.staff' ,'registers.references', 'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])->get();
+            $input = $request->all();
+            $patients = '';
+            if(isset($input['poly_id']) && $input['poly_id']){
+                $patients = Patient::with(['registers', 'registers.patient', 'registers.staff' ,'registers.references', 'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])
+                    ->whereHas('registers', function ($query) use($input){
+                        $query->whereHas('references', function ($query2) use ($input){
+                            $query2->whereHas('poly', function ($query3) use ($input){
+                                $query3->where('id', $input['poly_id']);
+                            });
+                        });
+                    })
+                    ->get();
+            }else{
+                $patients = Patient::with(['registers', 'registers.patient', 'registers.staff' ,'registers.references', 'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])->get();
+            }
             foreach ($patients as $index => $patient){
                 $patients[$index]['registersTotal'] = count($patient->registers);
                 $reference_total = 0;
