@@ -19,7 +19,7 @@ class ApiCommonController extends GeneralController
     {
         $response = [];
         try {
-            $user = User::with(['staff', 'staff.staffJob', 'staff.staffPosition', 'roles', 'roles.perms'])->find(Auth::user()->id);
+            $user = User::with(['staff', 'staff.staffJob', 'staff.staffPosition', 'roles', 'roles.perms', 'roles.perms.childs'])->find(Auth::user()->id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
