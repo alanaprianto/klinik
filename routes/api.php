@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/permissions', 'GeneralController@getPermissions');
         Route::get('/polies', 'GeneralController@getPolies');
         Route::get('/references', 'GeneralController@getReferences');
-        Route::get('/registers', 'GeneralController@getRegisters');
+/*        Route::get('/registers', 'GeneralController@getRegisters');*/
         Route::get('/roles', 'GeneralController@getRoles');
         Route::get('/services', 'GeneralController@getServices');
         Route::get('/settings', 'GeneralController@getSettings');
