@@ -11,6 +11,8 @@ class Permission extends EntrustPermission
         'name',
         'display_name',
         'description',
+        'icon',
+        'image',
         'parent_id'
     ];
 

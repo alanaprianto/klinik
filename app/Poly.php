@@ -9,7 +9,6 @@ class Poly extends Model
     protected $fillable = [
         'name',
         'desc',
-        'icon'
     ];
 
     public function references(){

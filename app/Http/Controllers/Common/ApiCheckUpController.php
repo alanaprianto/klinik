@@ -152,14 +152,9 @@ class ApiCheckUpController extends GeneralController
             $input = $request->all();
             $reference = Reference::with(['register', 'register.payments'])->find($input['reference_id']);
             $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
-/*            $payment_doctor = $reference->register->payments->where('type', 'doctor_service')->first();*/
             $reference->update([
                'staff_id' => $input['doctor_id']
             ]);
-/*            $payment_doctor->update([
-                'cost' => $doctor->doctorService->cost
-            ]);*/
-
 
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference]];
         } catch (\Exception $e){

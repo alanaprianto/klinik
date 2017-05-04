@@ -17,7 +17,6 @@ class EntrustSetupTables extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
-            $table->string('image')->nullable();
             $table->timestamps();
         });
 
@@ -40,6 +39,8 @@ class EntrustSetupTables extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('image')->nullable();
             $table->integer('parent_id')->nullable()->unsigned();
             $table->foreign('parent_id')->references('id')->on('permissions')->onDelete('cascade');
             $table->timestamps();
