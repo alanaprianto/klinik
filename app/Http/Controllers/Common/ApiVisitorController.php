@@ -19,12 +19,12 @@ class ApiVisitorController extends GeneralController
         try {
             $input = $request->all();
             $patients = '';
-            if(isset($input['poly_id']) && $input['poly_id']){
+            if(isset($input['type']) && $input['type']){
                 $patients = Patient::with(['registers', 'registers.patient', 'registers.staff' ,'registers.references', 'registers.references.medicalRecords' ,'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])
                     ->whereHas('registers', function ($query) use($input){
                         $query->whereHas('references', function ($query2) use ($input){
                             $query2->whereHas('poly', function ($query3) use ($input){
-                                $query3->where('id', $input['poly_id']);
+                                $query3->where('name', $input['type']);
                             });
                         });
                     })
