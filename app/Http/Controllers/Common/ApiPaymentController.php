@@ -20,7 +20,7 @@ class ApiPaymentController extends Controller
     {
         $response = [];
         try {
-            $registers = Register::with(['patient','references', 'paymentHistories' ,'references.poly', 'references.payments', 'references.payments.service', 'references.medicalRecords'])->get();
+            $registers = Register::with(['patient', 'references', 'paymentHistories', 'references.poly', 'references.payments', 'references.payments.service', 'references.medicalRecords'])->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['registers' => $registers, 'recordsTotal' => count($registers)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -85,20 +85,33 @@ class ApiPaymentController extends Controller
                 ]);
             }
 
-            $register_payment_status = 1;
+            $register->paymentHistories()->create([
+                'payment' => $input['payment']
+            ]);
+
+
+            $total_payment_history = 0;
+            foreach ($register->paymentHistories as $paymentHistory){
+                $total_payment_history += $paymentHistory->payment;
+            }
+            $total_must_pay = 0;
             foreach ($register->references as $reference){
-                if($reference->payment_status == 0){
-                    $register_payment_status = 0;
-                    break;
+                foreach ($reference->payments as $payment){
+                    $total_must_pay += $payment->total;
                 }
             }
+
+            $register_payment_status = 0;
+            $result = $total_must_pay - $total_payment_history;
+            if($result <= 0){
+                $register_payment_status = 1;
+            }
+
             $register->update([
                 'payment_status' => $register_payment_status
             ]);
 
-            $register->paymentHistories()->create([
-                'payment' => $input['payment']
-            ]);
+
 
             $register = Register::with(['references', 'references.payments', 'paymentHistories'])->find($input['register_id']);
 
