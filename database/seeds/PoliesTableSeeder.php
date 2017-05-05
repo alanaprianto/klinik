@@ -11,9 +11,9 @@ class PoliesTableSeeder extends Seeder
      */
     public function run()
     {
-        $poli_umum = ['name' => 'Poli Umum', 'desc' => 'Poli Umum', 'icon' => 'fa-plus-square'];
-        $poli_anak = ['name' => 'Poli Anak', 'desc' => 'Poli Anak', 'icon' => 'fa-child'];
-        $poli_gigi = ['name' => 'Poli Gigi', 'desc' => 'Poli Gigi', 'icon' => 'fa-stethoscope'];
+        $poli_umum = ['name' => 'Poli Umum', 'desc' => 'Poli Umum'];
+        $poli_anak = ['name' => 'Poli Anak', 'desc' => 'Poli Anak'];
+        $poli_gigi = ['name' => 'Poli Gigi', 'desc' => 'Poli Gigi'];
 /*        $poli_kebidanan = ['name' => 'Poli Kebidanan', 'desc' => 'Poli Kebidanan'];
         $poli_penyakit_dalam = ['name' => 'Poli Spesialis Penyakit Dalam', 'desc' => 'Poli Spesialis Penyakit Dalam'];
         $poli_mata = ['name' => 'Poli Mata', 'desc' => 'Poli Mata'];
