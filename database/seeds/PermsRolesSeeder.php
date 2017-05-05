@@ -37,18 +37,18 @@ class PermsRolesSeeder extends Seeder
         $p8 = \App\Permission::where('name', 'data_patient')->first();
 
 
-        $r1->attachPermissions(array($p1, $p2, $p3, $p4));
-        $r2->attachPermissions(array($p1));
-        $r3->attachPermissions(array($p1));
-        $r4->attachPermissions(array($p5));
-        $r5->attachPermissions(array($p5));
-        $r6->attachPermissions(array($p6));
-        $r7->attachPermissions(array($p6));
-        $r8->attachPermissions(array($p2));
-        $r9->attachPermissions(array($p2));
-        $r10->attachPermissions(array($p4));
-        $r11->attachPermissions(array($p4));
-        $r12->attachPermissions(array($p3));
-        $r13->attachPermissions(array($p7));
+        $r1->attachPermissions(array($p1, $p2, $p3, $p4, $p8));
+        $r2->attachPermissions(array($p1, $p8));
+        $r3->attachPermissions(array($p1, $p8));
+        $r4->attachPermissions(array($p5, $p8));
+        $r5->attachPermissions(array($p5, $p8));
+        $r6->attachPermissions(array($p6, $p8));
+        $r7->attachPermissions(array($p6, $p8));
+        $r8->attachPermissions(array($p2, $p8));
+        $r9->attachPermissions(array($p2, $p8));
+        $r10->attachPermissions(array($p4, $p8));
+        $r11->attachPermissions(array($p4, $p8));
+        $r12->attachPermissions(array($p3, $p8));
+        $r13->attachPermissions(array($p7, $p8));
     }
 }
