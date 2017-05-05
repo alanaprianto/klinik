@@ -48,6 +48,9 @@ class ApiServiceController extends GeneralController
         try {
             $input = $request->all();
             $service = Service::create($input);
+            if($input['inventories_ids'] != array(null)){
+                $service->inventories()->sync($input['inventories_ids']);
+            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['service' => $service]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -65,7 +68,7 @@ class ApiServiceController extends GeneralController
     {
         $response = [];
         try {
-            $service = Service::find($id);
+            $service = Service::with(['inventories'])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['service' => $service]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -83,7 +86,7 @@ class ApiServiceController extends GeneralController
     {
         $response = [];
         try {
-            $service = Service::find($id);
+            $service = Service::with(['inventories'])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['service' => $service]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -105,6 +108,9 @@ class ApiServiceController extends GeneralController
             $input = $request->all();
             $service = Service::find($id);
             $service->update($input);
+            if($input['inventories_ids'] != array(null)){
+                $service->inventories()->sync($input['inventories_ids']);
+            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['service' => $service]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
