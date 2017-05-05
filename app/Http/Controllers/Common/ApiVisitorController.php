@@ -20,7 +20,7 @@ class ApiVisitorController extends GeneralController
             $input = $request->all();
             $patients = '';
             if(isset($input['poly_id']) && $input['poly_id']){
-                $patients = Patient::with(['registers', 'registers.patient', 'registers.staff' ,'registers.references', 'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])
+                $patients = Patient::with(['registers', 'registers.patient', 'registers.staff' ,'registers.references', 'registers.references.medicalRecords' ,'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])
                     ->whereHas('registers', function ($query) use($input){
                         $query->whereHas('references', function ($query2) use ($input){
                             $query2->whereHas('poly', function ($query3) use ($input){

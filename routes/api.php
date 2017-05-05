@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('permissions', '\App\Http\Controllers\Admin\ApiPermissionController');
 /*        Route::resource('polies', '\App\Http\Controllers\Admin\ApiPolyController');*/
         Route::resource('roles', '\App\Http\Controllers\Admin\ApiRoleController');
-        Route::resource('services', '\App\Http\Controllers\Admin\ApiServiceController');
+/*        Route::resource('services', '\App\Http\Controllers\Admin\ApiServiceController');*/
         Route::resource('settings', '\App\Http\Controllers\Admin\ApiSettingController');
         Route::resource('staff', '\App\Http\Controllers\Admin\ApiStaffController');
         Route::resource('staff-jobs', '\App\Http\Controllers\Admin\ApiStaffJobController');
