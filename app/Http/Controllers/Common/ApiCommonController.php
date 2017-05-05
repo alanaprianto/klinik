@@ -32,8 +32,14 @@ class ApiCommonController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
-            $icd10s = Icd10::where('code', 'LIKE', '%' . $input['data'] . '%')
-                ->orWhere('desc', 'LIKE', '%' . $input['data'] . '%')->get();
+            if($input['take']){
+                $icd10s = Icd10::where('code', 'LIKE', '%' . $input['data'] . '%')
+                    ->orWhere('desc', 'LIKE', '%' . $input['data'] . '%')->paginate($input['take']);
+            } else{
+                $icd10s = Icd10::where('code', 'LIKE', '%' . $input['data'] . '%')
+                    ->orWhere('desc', 'LIKE', '%' . $input['data'] . '%')->get();
+            }
+
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['icd10s' => $icd10s]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
