@@ -19,4 +19,8 @@ class Service extends Model
     public function payments(){
         return $this->hasMany('App\Payment');
     }
+
+    public function inventories(){
+        return $this->belongsToMany('App\Inventory', 'services_inventories', 'services_id', 'inventories_id');
+    }
 }

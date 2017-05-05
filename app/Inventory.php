@@ -28,4 +28,7 @@ class Inventory extends Model
         return $this->hasMany('App\Picture');
     }
 
+    public function services(){
+        return $this->belongsToMany('App\Service', 'services_inventories', 'inventories_id' ,'services_id');
+    }
 }
