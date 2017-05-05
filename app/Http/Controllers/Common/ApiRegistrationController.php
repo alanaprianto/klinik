@@ -138,15 +138,20 @@ class ApiRegistrationController extends GeneralController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    private function getMedicalRecordNumber(){
+        $patient = Patient::get()->last();
+        $number = 100987654321;
+        if($patient){
+            $number = $patient->number_medical_record + 1;
+        }
+        return $number;
+    }
+
     public function store(Request $request)
     {
         $response = [];
         try {
             $input = $request->all();
-
-            // if(isset($input['register_id'])){
-            //     return $this->createReference($request);
-            // }
 
             /*update kiosk status to finished*/
             if (isset($input['kiosk_id'])) {
@@ -159,6 +164,8 @@ class ApiRegistrationController extends GeneralController
             /*add hospoital id to input for create patient*/
             $hospital = Hospital::first();
             $input['hospital_id'] = $hospital->id;
+            $input['number_medical_record'] = $this->getMedicalRecordNumber();
+
 
             /*select patient from database or create new*/
             if (isset($input['patient_id'])) {

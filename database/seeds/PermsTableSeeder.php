@@ -23,7 +23,7 @@ class PermsTableSeeder extends Seeder
         $penata_jasa = \App\Permission::where('name', 'penata_jasa')->first();
 
 
-        $p_umum = ['name' => 'poly_umum', 'display_name' => 'Poli Umum', 'description' => 'Poli Umum permission', 'parent_id' => $penata_jasa->id, 'icon' => 'fa-plus-square'];
+        $p_umum = ['name' => 'poli_umum', 'display_name' => 'Poli Umum', 'description' => 'Poli Umum permission', 'parent_id' => $penata_jasa->id, 'icon' => 'fa-plus-square'];
         $p_anak = ['name' => 'poli_anak', 'display_name' => 'Poli Anak', 'description' => 'Poli Anak Permission', 'parent_id' => $penata_jasa->id, 'icon' => 'fa-child'];
         $p_gigi = ['name' => 'poli_gigi', 'display_name' => 'Poli Gigi', 'description' => 'Poli Gigi Permission', 'parent_id' => $penata_jasa->id, 'icon' => 'fa-stethoscope'];
 
