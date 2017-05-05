@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Common;
 
 use App\Patient;
 use App\Payment;
+use App\PaymentHistory;
 use App\Reference;
 use App\Register;
 use Illuminate\Http\Request;
@@ -57,61 +58,34 @@ class ApiPaymentController extends Controller
             $input = $request->all();
             $register = Register::with(['references', 'references.payments', 'paymentHistories'])->find($input['register_id']);
             $customer_payment = $input['payment'];
-            foreach ($register->references as $reference){
-                foreach ($reference->payments as $payment){
-                    $dept_total = 0;
-                    if($payment->status == 0){
-                        $dept_total += $payment->total;
-                    }
-                    $customer_payment -= $dept_total;
-                    if($customer_payment >= 0){
-                        $payment->update([
-                            'status' => 1
-                        ]);
-                    }
-                }
-            }
 
-            foreach ($register->references as $reference){
-                $reference_payment_status = 1;
-                foreach ($reference->payments as $payment){
-                    if($payment->status == 0){
-                        $reference_payment_status = 0;
-                        break;
-                    }
+            $must_pay = 0;
+            foreach ($register->references as $reference) {
+                foreach ($reference->payments as $payment) {
+                    $must_pay += $payment->total;
                 }
-                $reference->update([
-                    'payment_status' => $reference_payment_status
-                ]);
             }
 
             $register->paymentHistories()->create([
                 'payment' => $input['payment']
             ]);
 
-
-            $total_payment_history = 0;
-            foreach ($register->paymentHistories as $paymentHistory){
-                $total_payment_history += $paymentHistory->payment;
+            $paymentHistories = PaymentHistory::where('register_id', $register->id)->get();
+            $total_payment = 0;
+            foreach ($paymentHistories as $paymentHistory) {
+                $total_payment += $paymentHistory->payment;
             }
-            $total_must_pay = 0;
-            foreach ($register->references as $reference){
-                foreach ($reference->payments as $payment){
-                    $total_must_pay += $payment->total;
+
+            $final_result = $must_pay - $total_payment;
+            if ($final_result <= 0) {
+                $register->update(['payment_status' => 1]);
+                foreach ($register->references as $reference) {
+                    $reference->update(['payment_status' => 1]);
+                    foreach ($reference->payments as $payment) {
+                        $payment->update(['status' => '1']);
+                    }
                 }
             }
-
-            $register_payment_status = 0;
-            $result = $total_must_pay - $total_payment_history;
-            if($result <= 0){
-                $register_payment_status = 1;
-            }
-
-            $register->update([
-                'payment_status' => $register_payment_status
-            ]);
-
-
 
             $register = Register::with(['references', 'references.payments', 'paymentHistories'])->find($input['register_id']);
 
