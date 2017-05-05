@@ -26,6 +26,7 @@ class CreateHospitalsTable extends Migration
             $table->string('province_name')->nullable();
             $table->string('signature_sign')->nullable();
             $table->string('image_header')->nullable();
+            $table->longText('setting')->nullable();
             $table->timestamps();
         });
     }

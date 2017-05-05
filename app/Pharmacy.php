@@ -24,4 +24,8 @@ class Pharmacy extends Model
     public function pharmacyTransactions(){
         return $this->hasMany('App\PharmacyTransaction');
     }
+
+    public function distributors(){
+        return $this->hasMany('App\Distributor');
+    }
 }

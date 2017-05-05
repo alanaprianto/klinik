@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         /*registers*/
         Route::get('/registers/select-patient', '\App\Http\Controllers\Common\ApiRegistrationController@selectPatient');
         Route::post('/registers/{id}', '\App\Http\Controllers\Common\ApiRegistrationController@update');
+        Route::post('/add-reference', '\App\Http\Controllers\Common\ApiRegistrationController@postAddReference');
 
         /*check-up*/
         Route::post('/check-up/change-doctor', '\App\Http\Controllers\Common\ApiCheckUpController@postDoctor');

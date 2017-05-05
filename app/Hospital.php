@@ -17,7 +17,8 @@ class Hospital extends Model
         'province_code',
         'province_name',
         'signature_sign',
-        'image_header'
+        'image_header',
+        'setting'
     ];
 
     public function staffs(){

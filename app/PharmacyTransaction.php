@@ -8,6 +8,7 @@ class PharmacyTransaction extends Model
 {
     protected $fillable = [
         'amount',
+        'price',
         'total_payment',
         'status',
         'type',
@@ -16,7 +17,7 @@ class PharmacyTransaction extends Model
         'tax',
         'staff_id',
         'pharmacy_id',
-        'distributor_id'
+        'distributor_id',
     ];
 
     public function staff(){
@@ -27,7 +28,7 @@ class PharmacyTransaction extends Model
         return $this->belongsTo('App\Pharmacy', 'pharmacy_id', 'id');
     }
 
-    public function distributor(){
-        return $this->belongsTo('App\Staff', 'distributor_id', 'id');
+    public function tuslahs(){
+        return $this->hasMany('App\Tuslah');
     }
 }

@@ -37,4 +37,8 @@ class Depo extends Model
     public function pharmacy(){
         return $this->belongsTo('App\Pharmacy', 'pharmacy_id', 'id');
     }
+
+    public function depoTransactions(){
+        return $this->belongsToMany('App\DepoTransaction', 'depo_transaction_id', 'id');
+    }
 }

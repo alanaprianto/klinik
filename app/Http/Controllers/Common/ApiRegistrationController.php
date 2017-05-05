@@ -210,4 +210,18 @@ class ApiRegistrationController extends GeneralController
         return response()->json($response);
     }
 
+    public function postAddReference(Request $request){
+        $response = [];
+        try{
+            $input = $request->all();
+            $register = Register::find($input['register_id']);
+            $reference = $this->addReference($input, $register);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference]];
+        } catch (\Exception $e){
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+
+        return response()->json($response);
+    }
+
 }

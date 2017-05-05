@@ -14,6 +14,6 @@ class Tuslah extends Model
     ];
 
     public function pharmacyTransaction(){
-        return $this->belongsTo('App\PharmacyTransaction', 'pharmacy_transaction_id');
+        return $this->belongsTo('App\PharmacyTransaction', 'pharmacy_transaction_id', 'id');
     }
 }
