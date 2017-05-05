@@ -36,7 +36,6 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/permissions', 'GeneralController@getPermissions');
         Route::get('/polies', 'GeneralController@getPolies');
         Route::get('/references', 'GeneralController@getReferences');
-/*        Route::get('/registers', 'GeneralController@getRegisters');*/
         Route::get('/roles', 'GeneralController@getRoles');
         Route::get('/services', 'GeneralController@getServices');
         Route::get('/settings', 'GeneralController@getSettings');
@@ -78,9 +77,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('check-up', '\App\Http\Controllers\Common\ApiCheckUpController');
         Route::resource('doctor-services', '\App\Http\Controllers\Admin\ApiDoctorServiceController');
         Route::resource('permissions', '\App\Http\Controllers\Admin\ApiPermissionController');
-/*        Route::resource('polies', '\App\Http\Controllers\Admin\ApiPolyController');*/
         Route::resource('roles', '\App\Http\Controllers\Admin\ApiRoleController');
-/*        Route::resource('services', '\App\Http\Controllers\Admin\ApiServiceController');*/
         Route::resource('settings', '\App\Http\Controllers\Admin\ApiSettingController');
         Route::resource('staff', '\App\Http\Controllers\Admin\ApiStaffController');
         Route::resource('staff-jobs', '\App\Http\Controllers\Admin\ApiStaffJobController');

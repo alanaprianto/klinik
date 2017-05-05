@@ -28,7 +28,7 @@ class ApiVisitorController extends GeneralController
                             });
                         });
                     })
-                    ->get();
+                    ->orderBy('created_at', 'desc')->get();
             }else{
                 $patients = Patient::with(['registers', 'registers.patient', 'registers.staff' ,'registers.references', 'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])->get();
             }
