@@ -16,14 +16,7 @@ class ApiServiceController extends GeneralController
      */
     public function index()
     {
-        $response = [];
-        try {
-            $services = $this->getServices();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['services' => $services]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
+        return $this->getServices();
     }
 
     /**

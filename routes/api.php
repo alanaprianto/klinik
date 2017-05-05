@@ -83,6 +83,8 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('staff-jobs', '\App\Http\Controllers\Admin\ApiStaffJobController');
         Route::resource('staff-positions', '\App\Http\Controllers\Admin\ApiStaffPositionController');
         Route::resource('users', '\App\Http\Controllers\Admin\ApiUserController');
+        Route::resource('services', '\App\Http\Controllers\Admin\ApiServiceController');
+
 
     });
 
