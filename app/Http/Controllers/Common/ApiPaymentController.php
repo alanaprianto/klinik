@@ -59,7 +59,11 @@ class ApiPaymentController extends Controller
             $customer_payment = $input['payment'];
             foreach ($register->references as $reference){
                 foreach ($reference->payments as $payment){
-                    $customer_payment -= $payment->total;
+                    $dept_total = 0;
+                    if($payment->status == 0){
+                        $dept_total += $payment->total;
+                    }
+                    $customer_payment -= $dept_total;
                     if($customer_payment >= 0){
                         $payment->update([
                             'status' => 1
