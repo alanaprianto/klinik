@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('sellers', '\App\Http\Controllers\Common\ApiSellerController');
         Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
 
+        Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');
         Route::resource('doctor-services', '\App\Http\Controllers\Admin\ApiDoctorServiceController');
         Route::resource('permissions', '\App\Http\Controllers\Admin\ApiPermissionController');
 /*        Route::resource('polies', '\App\Http\Controllers\Admin\ApiPolyController');*/
