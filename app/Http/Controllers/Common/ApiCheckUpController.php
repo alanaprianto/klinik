@@ -136,7 +136,11 @@ class ApiCheckUpController extends GeneralController
             $reference->update([
                 'reference_total_payment' => $grand_total_payment,
                 'status' => $input['status'],
-                'notes' => $input['notes']
+                'notes' => $input['notes'],
+                'payment_status' => 0
+            ]);
+            $reference->register()->update([
+                'payment_status' => 0
             ]);
 
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference, 'new_reference' => $new_reference]];
