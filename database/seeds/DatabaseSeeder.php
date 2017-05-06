@@ -25,13 +25,13 @@ class DatabaseSeeder extends Seeder
         $this->call(StaffAttachTableSeeder::class);
         $this->call(DistributorTableSeeder::class);
         $this->call(InvetoryTableSeeder::class);
-        $this->call(ProvinceTableSeeder::class);
+/*        $this->call(ProvinceTableSeeder::class);
         $this->call(Idc10TableSeeder1::class);
         $this->call(Idc10TableSeeder2::class);
         $this->call(Idc10TableSeeder3::class);
         $this->call(Idc10TableSeeder4::class);
         $this->call(Idc10TableSeeder5::class);
         $this->call(Idc10TableSeeder6::class);
-        $this->call(Idc10TableSeeder7::class);
+        $this->call(Idc10TableSeeder7::class);*/
     }
 }

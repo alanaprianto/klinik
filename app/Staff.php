@@ -69,11 +69,6 @@ class Staff extends Model
     }
 
 
-    /*receipes khusus buat staff type role = apoteker*/
-    public function pharmacyTransactions(){
-        return $this->hasMany('App\PharmacyTransaction');
-    }
-
     /*mutator*/
     public function setBirthAttribute($value)
     {

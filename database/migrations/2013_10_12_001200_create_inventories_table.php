@@ -22,6 +22,8 @@ class CreateInventoriesTable extends Migration
             $table->text('explain')->nullable();
             $table->string('sediaan')->nullable();
             $table->double('price')->nullable();
+            $table->integer('inventory_category_id')->unsigned()->nullable();
+            $table->foreign('inventory_category_id')->references('id')->on('inventory_categories')->onDelete('casecade');
             $table->timestamps();
         });
     }

@@ -24,8 +24,6 @@ class CreateDeposTable extends Migration
             $table->foreign('poly_id')->references('id')->on('polies')->onDelete('cascade');
             $table->integer('parent_id')->nullable()->unsigned();
             $table->foreign('parent_id')->references('id')->on('depos')->onDelete('cascade');
-            $table->integer('pharmacy_id')->nullable()->unsigned();
-            $table->foreign('pharmacy_id')->references('id')->on('pharmacies')->onDelete('cascade');
             $table->timestamps();
         });
     }

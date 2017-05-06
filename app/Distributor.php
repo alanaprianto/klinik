@@ -12,7 +12,4 @@ class Distributor extends Model
         'phone',
     ];
 
-    public function pharmacyTransactions(){
-        return $this->hasMany('App\PharmacyTransaction');
-    }
 }
