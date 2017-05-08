@@ -10017,7 +10017,7 @@ class SubDistrictTableSeeder1 extends Seeder
 
         foreach ($subDistricts as $subDistrict) {
             $district = \App\District::where('code', $subDistrict[1])->first();
-            \Illuminate\Support\Facades\DB::table('districts')->insert(['code' => $district[0], 'sub_code' => $district[1], 'name' => $district[2], 'district_id' => $district ? $district->id : null]);
+            \Illuminate\Support\Facades\DB::table('sub_districts')->insert(['code' => $district[0], 'sub_code' => $district[1], 'name' => $district[2], 'district_id' => $district ? $city->id : null]);
         }
     }
 }
