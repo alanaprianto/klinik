@@ -48,7 +48,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/provinces', '\App\Http\Controllers\GeneralController@getProvinces');
         Route::get('/cities', '\App\Http\Controllers\GeneralController@getCities');
         Route::get('/districts', '\App\Http\Controllers\GeneralController@getDistrict');
-        Route::get('/subDistricts', '\App\Http\Controllers\GeneralController@getSubDistrict');
+        Route::get('/subdistricts', '\App\Http\Controllers\GeneralController@getSubDistrict');
 
 
         /*route satuan */
