@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Common;
 
+use App\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,9 +13,20 @@ class ApiTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $response = [];
+        try {
+            if($request['type']){
+                $transactions = Transaction::where('type', $request['type'])->paginate(25);
+            }else{
+                $transactions = Transaction::paginate(25);
+            }
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['transactions' => $transactions, 'recordsTotal' => count($transactions)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     /**

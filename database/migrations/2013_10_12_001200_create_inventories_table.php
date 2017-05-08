@@ -17,7 +17,6 @@ class CreateInventoriesTable extends Migration
             $table->increments('id');
             $table->string('code')->nullable();
             $table->string('name')->nullable();
-            $table->enum('category', ['medicine', 'non_medicine'])->nullable();
             $table->string('type')->nullable();
             $table->text('explain')->nullable();
             $table->string('sediaan')->nullable();

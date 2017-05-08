@@ -22,69 +22,71 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/bpjs', 'ApiBpjsController@test');
     });
 
-    Route::group(['prefix' => 'common'], function () {
+    Route::group(['prefix' => 'common', 'namespace' => 'Common'], function () {
         /*list all model*/
-        Route::get('/batches', 'GeneralController@getBatches');
-        Route::get('/doctor-services', 'GeneralController@getDoctorServices');
-        Route::get('/hospital', 'GeneralController@getHospital');
-        Route::get('/inventories', 'GeneralController@getInventories');
-        Route::get('/kiosks', 'GeneralController@getKiosks');
-        Route::get('/medical-records', 'GeneralController@getMedicalRecords');
-        Route::get('/patiens', 'GeneralController@getPatients');
-        Route::get('/payments', 'GeneralController@getPayments');
-        Route::get('/permissions', 'GeneralController@getPermissions');
-        Route::get('/polies', 'GeneralController@getPolies');
-        Route::get('/references', 'GeneralController@getReferences');
-        Route::get('/roles', 'GeneralController@getRoles');
-        Route::get('/services', 'GeneralController@getServices');
-        Route::get('/settings', 'GeneralController@getSettings');
-        Route::get('/staff-jobs', 'GeneralController@getStaffJobs');
-        Route::get('/staff-positions', 'GeneralController@getStaffPositions');
-        Route::get('/tuslahs', 'GeneralController@getTuslahs');
-        Route::get('/users', 'GeneralController@getUsers');
-        Route::get('/doctors', 'GeneralController@getDoctors');
-        Route::get('/countries', '\App\Http\Controllers\Common\ApiCommonController@getCountries');
-        Route::get('/provinces', '\App\Http\Controllers\Common\ApiCommonController@getProvinces');
-        Route::get('/cities', '\App\Http\Controllers\Common\ApiCommonController@getCities');
-        Route::get('/districts', '\App\Http\Controllers\Common\ApiCommonController@getDistrict');
-        Route::get('/subDistricts', '\App\Http\Controllers\Common\ApiCommonController@getSubDistrict');
+        Route::get('/batches', '\App\Http\Controllers\GeneralController@getBatches');
+        Route::get('/doctor-services', '\App\Http\Controllers\GeneralController@getDoctorServices');
+        Route::get('/hospital', '\App\Http\Controllers\GeneralController@getHospital');
+        Route::get('/inventories', '\App\Http\Controllers\GeneralController@getInventories');
+        Route::get('/kiosks', '\App\Http\Controllers\GeneralController@getKiosks');
+        Route::get('/medical-records', '\App\Http\Controllers\GeneralController@getMedicalRecords');
+        Route::get('/patiens', '\App\Http\Controllers\GeneralController@getPatients');
+        Route::get('/payments', '\App\Http\Controllers\GeneralController@getPayments');
+        Route::get('/permissions', '\App\Http\Controllers\GeneralController@getPermissions');
+        Route::get('/polies', '\App\Http\Controllers\GeneralController@getPolies');
+        Route::get('/references', '\App\Http\Controllers\GeneralController@getReferences');
+        Route::get('/roles', '\App\Http\Controllers\GeneralController@getRoles');
+        Route::get('/services', '\App\Http\Controllers\GeneralController@getServices');
+        Route::get('/settings', '\App\Http\Controllers\GeneralController@getSettings');
+        Route::get('/staff-jobs', '\App\Http\Controllers\GeneralController@getStaffJobs');
+        Route::get('/staff-positions', '\App\Http\Controllers\GeneralController@getStaffPositions');
+        Route::get('/tuslahs', '\App\Http\Controllers\GeneralController@getTuslahs');
+        Route::get('/users', '\App\Http\Controllers\GeneralController@getUsers');
+        Route::get('/doctors', '\App\Http\Controllers\GeneralController@getDoctors');
+        Route::get('/distributors', '\App\Http\Controllers\GeneralController@getDistributors');
+        Route::get('/countries', '\App\Http\Controllers\GeneralController@ApiCommonController@getCountries');
+        Route::get('/provinces', '\App\Http\Controllers\GeneralController@ApiCommonController@getProvinces');
+        Route::get('/cities', '\App\Http\Controllers\GeneralController@ApiCommonController@getCities');
+        Route::get('/districts', '\App\Http\Controllers\GeneralController@ApiCommonController@getDistrict');
+        Route::get('/subDistricts', '\App\Http\Controllers\GeneralController@ApiCommonController@getSubDistrict');
 
 
-        Route::get('/user-info', '\App\Http\Controllers\Common\ApiCommonController@info');
-        Route::get('/icd10', '\App\Http\Controllers\Common\ApiCommonController@getIcd10');
-        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
+        /*route satuan */
+        Route::get('/user-info', 'ApiCommonController@info');
+        Route::get('/icd10', 'ApiCommonController@getIcd10');
+        Route::post('/profile', 'ApiProfileController@postProfile');
 
+        /*route before resource*/
         /*queues*/
-        Route::post('/queues/update', '\App\Http\Controllers\Common\ApiQueueController@updateStatus');
-        Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
+        Route::post('/queues/update', 'ApiQueueController@updateStatus');
 
         /*registers*/
-        Route::get('/registers/select-patient', '\App\Http\Controllers\Common\ApiRegistrationController@selectPatient');
-        Route::post('/registers/{id}', '\App\Http\Controllers\Common\ApiRegistrationController@update');
-        Route::post('/add-reference', '\App\Http\Controllers\Common\ApiRegistrationController@postAddReference');
+        Route::get('/registers/select-patient', 'ApiRegistrationController@selectPatient');
+        Route::post('/registers/{id}', 'ApiRegistrationController@update');
+        Route::post('/add-reference', 'ApiRegistrationController@postAddReference');
 
         /*check-up*/
-        Route::post('/check-up/change-doctor', '\App\Http\Controllers\Common\ApiCheckUpController@postDoctor');
-        Route::post('/check-up/medical-record', '\App\Http\Controllers\Common\ApiCheckUpController@postMedicalRecord');
+        Route::post('/check-up/change-doctor', 'ApiCheckUpController@postDoctor');
+        Route::post('/check-up/medical-record', 'ApiCheckUpController@postMedicalRecord');
 
-        Route::resource('payments', '\App\Http\Controllers\Common\ApiPaymentController');
-        Route::resource('inventories', '\App\Http\Controllers\Common\ApiInventoryController');
-        Route::resource('sellers', '\App\Http\Controllers\Common\ApiSellerController');
-        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
-
-
-        Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');
-        Route::resource('check-up', '\App\Http\Controllers\Common\ApiCheckUpController');
-        Route::resource('doctor-services', '\App\Http\Controllers\Common\ApiDoctorServiceController');
-        Route::resource('permissions', '\App\Http\Controllers\Common\ApiPermissionController');
-        Route::resource('roles', '\App\Http\Controllers\Common\ApiRoleController');
-        Route::resource('settings', '\App\Http\Controllers\Common\ApiSettingController');
-        Route::resource('staff', '\App\Http\Controllers\Common\ApiStaffController');
-        Route::resource('staff-jobs', '\App\Http\Controllers\Common\ApiStaffJobController');
-        Route::resource('staff-positions', '\App\Http\Controllers\Common\ApiStaffPositionController');
-        Route::resource('users', '\App\Http\Controllers\Common\ApiUserController');
-        Route::resource('services', '\App\Http\Controllers\Common\ApiServiceController');
-
+        /*route resource*/
+        Route::resource('queues', 'ApiQueueController');
+        Route::resource('payments', 'ApiPaymentController');
+        Route::resource('inventories', 'ApiInventoryController');
+        Route::resource('sellers', 'ApiSellerController');
+        Route::resource('visitors', 'ApiVisitorController');
+        Route::resource('registers', 'ApiRegistrationController');
+        Route::resource('check-up', 'ApiCheckUpController');
+        Route::resource('doctor-services', 'ApiDoctorServiceController');
+        Route::resource('permissions', 'ApiPermissionController');
+        Route::resource('roles', 'ApiRoleController');
+        Route::resource('settings', 'ApiSettingController');
+        Route::resource('staff', 'ApiStaffController');
+        Route::resource('staff-jobs', 'ApiStaffJobController');
+        Route::resource('staff-positions', 'ApiStaffPositionController');
+        Route::resource('users', 'ApiUserController');
+        Route::resource('services', 'ApiServiceController');
+        Route::resource('transactions', 'ApiTransactionController');
     });
 
 });

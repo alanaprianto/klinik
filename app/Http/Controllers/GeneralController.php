@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Batch;
+use App\City;
+use App\Country;
+use App\Distributor;
+use App\District;
 use App\DoctorService;
 use App\Hospital;
 use App\Icd10;
@@ -13,6 +17,7 @@ use App\Patient;
 use App\Payment;
 use App\Permission;
 use App\Poly;
+use App\Province;
 use App\Reference;
 use App\Register;
 use App\Role;
@@ -21,10 +26,12 @@ use App\Setting;
 use App\Staff;
 use App\StaffJob;
 use App\StaffPosition;
+use App\SubDistrict;
 use App\Tuslah;
 use App\User;
 use Carbon\Carbon;
 use File;
+use Illuminate\Http\Request;
 
 class GeneralController extends Controller
 {
@@ -62,7 +69,6 @@ class GeneralController extends Controller
         $final_reference['kiosk'] = $this->getKioskQueue($poly->name, $final_reference->id);
         return $final_reference;
     }
-
 
     /*get all Model*/
     protected function getBatches(){
@@ -303,6 +309,107 @@ class GeneralController extends Controller
                 $q->where('name', 'Dokter');
             })->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['doctors' => $doctors, 'recordsTotal' => count($doctors)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+    }
+
+    protected function getDistributors(){
+        $response = [];
+        try {
+            $distributors = Distributor::get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['distributors' => $distributors, 'recordsTotal' => count($distributors)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+    }
+
+    public function getCountries(Request $request)
+    {
+        $response = [];
+        try {
+            $input = $request->all();
+            if (isset($input['code']) && $input['code']) {
+                $country = Country::where('code', $input['code'])->first();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['country' => $country]];
+            } else {
+                $countries = Country::get();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['countries' => $countries, 'recordsTotal' => count($countries)]];
+            }
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+    }
+
+    public function getProvinces(Request $request)
+    {
+        $response = [];
+        try {
+            $input = $request->all();
+            if (isset($input['code']) && $input['code']) {
+                $province = Province::where('code', $input['code'])->first();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['province' => $province]];
+            } else {
+                $provinces = Province::get();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['provinces' => $provinces, 'recordsTotal' => count($provinces)]];
+            }
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+    }
+
+    public function getCities(Request $request)
+    {
+        $response = [];
+        try {
+            $input = $request->all();
+            if (isset($input['code']) && $input['code']) {
+                $city = City::where('code', $input['code'])->first();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['city' => $city]];
+            } else {
+                $cities = City::get();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['cities' => $cities, 'recordsTotal' => count($cities)]];
+            }
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+    }
+
+    public function getDistrict(Request $request)
+    {
+        $response = [];
+        try {
+            $input = $request->all();
+            if(isset($input['code']) && $input['code']){
+                $district = District::where('code', $input['code'])->first();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['district' => $district]];
+            } else{
+                $districts = District::get();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['districts' => $districts, 'recordsTotal' => count($districts)]];
+            }
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+    }
+
+    public function getSubDistrict(Request $request)
+    {
+        $response = [];
+        try {
+            $input = $request->all();
+            if(isset($input['code']) && $input['code']){
+                $subDistrict = SubDistrict::where('code', $input['code'])->first();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['subDistrict' => $subDistrict]];
+            } else{
+                $subDistrict = SubDistrict::get();
+                $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['subDistricts' => $subDistrict, 'recordsTotal' => count($subDistrict)]];
+            }
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
