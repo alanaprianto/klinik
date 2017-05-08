@@ -319,6 +319,7 @@ class ProvinceTableSeeder extends Seeder
             [94,"PAPUA"  ]
         ];
         $cities = [
+            [1101,11,"KABUPATEN SIMEULUE"  ],
             [1102,11,"KABUPATEN ACEH SINGKIL"  ],
             [1103,11,"KABUPATEN ACEH SELATAN"  ],
             [1104,11,"KABUPATEN ACEH TENGGARA"  ],
