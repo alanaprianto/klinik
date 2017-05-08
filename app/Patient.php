@@ -43,6 +43,10 @@ class Patient extends Model
         return $this->registers()->where('payment_status', '=', 0)->orWhere('payment_status', '=', null);
     }
 
+    public function transactions(){
+        return $this->hasMany('App\Transaction');
+    }
+
     /*mutator set*/
     public function setBirthAttribute($value)
     {

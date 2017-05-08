@@ -14,6 +14,7 @@ class Depo extends Model
         'unit',
         'poly_id',
         'parent_id',
+        'stock_on_hold'
     ];
 
     public function poly(){

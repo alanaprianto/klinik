@@ -20,6 +20,7 @@ class CreateDeposTable extends Migration
             $table->double('stock_minimal')->nullable();
             $table->double('stock_maximal')->nullable();
             $table->string('unit')->nullable();
+            $table->double('stock_on_hold')->nullable();
             $table->integer('poly_id')->nullable()->unsigned();
             $table->foreign('poly_id')->references('id')->on('polies')->onDelete('cascade');
             $table->integer('parent_id')->nullable()->unsigned();

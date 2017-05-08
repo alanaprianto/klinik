@@ -68,6 +68,10 @@ class Staff extends Model
         return $this->hasOne('App\DoctorService');
     }
 
+    public function transactions(){
+        return $this->hasMany('App\Transaction');
+    }
+
 
     /*mutator*/
     public function setBirthAttribute($value)
