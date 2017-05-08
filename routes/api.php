@@ -44,11 +44,11 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/users', '\App\Http\Controllers\GeneralController@getUsers');
         Route::get('/doctors', '\App\Http\Controllers\GeneralController@getDoctors');
         Route::get('/distributors', '\App\Http\Controllers\GeneralController@getDistributors');
-        Route::get('/countries', '\App\Http\Controllers\GeneralController@ApiCommonController@getCountries');
-        Route::get('/provinces', '\App\Http\Controllers\GeneralController@ApiCommonController@getProvinces');
-        Route::get('/cities', '\App\Http\Controllers\GeneralController@ApiCommonController@getCities');
-        Route::get('/districts', '\App\Http\Controllers\GeneralController@ApiCommonController@getDistrict');
-        Route::get('/subDistricts', '\App\Http\Controllers\GeneralController@ApiCommonController@getSubDistrict');
+        Route::get('/countries', '\App\Http\Controllers\GeneralController@getCountries');
+        Route::get('/provinces', '\App\Http\Controllers\GeneralController@getProvinces');
+        Route::get('/cities', '\App\Http\Controllers\GeneralController@getCities');
+        Route::get('/districts', '\App\Http\Controllers\GeneralController@getDistrict');
+        Route::get('/subDistricts', '\App\Http\Controllers\GeneralController@getSubDistrict');
 
 
         /*route satuan */
