@@ -404,7 +404,7 @@ class GeneralController extends Controller
         try {
             $input = $request->all();
             if(isset($input['code']) && $input['code']){
-                $subDistrict = SubDistrict::where('sub_code', $input['code'])->first();
+                $subDistrict = SubDistrict::where('sub_code', $input['code'])->get();
                 $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['subDistrict' => $subDistrict]];
             } else{
                 $subDistrict = SubDistrict::get();
