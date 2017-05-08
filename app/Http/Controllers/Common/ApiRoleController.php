@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\GeneralController;
-use App\User;
+use App\Role;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class ApiUserController extends GeneralController
+class ApiRoleController extends GeneralController
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,8 @@ class ApiUserController extends GeneralController
     {
         $response = [];
         try {
-            $users = User::with(['staff'])->get();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['users' => $users, 'recordsTotal' => $users]];
+            $roles = $this->getRoles();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['roles' => $roles]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -45,7 +44,7 @@ class ApiUserController extends GeneralController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -53,11 +52,8 @@ class ApiUserController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
-            $input['password'] = bcrypt($input['password']);
-            $user = User::create($input);
-            $user->staff()->create([]);
-            $user->attachRoles($input['role_ids']);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
+            $role = Role::create($input);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['role' => $role]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -67,15 +63,15 @@ class ApiUserController extends GeneralController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $response = [];
         try {
-            $user = User::find($id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
+            $role = Role::find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['role' => $role]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -85,15 +81,15 @@ class ApiUserController extends GeneralController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $response = [];
         try {
-            $user = User::find($id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
+            $role = Role::find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['role' => $role]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -103,8 +99,8 @@ class ApiUserController extends GeneralController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -112,9 +108,9 @@ class ApiUserController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
-            $user = User::find($id);
-            $user->update($input);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
+            $role = Role::find($id);
+            $role->update($input);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['role' => $role]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -124,15 +120,15 @@ class ApiUserController extends GeneralController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $response = [];
         try {
-            $user = User::find($id);
-            $user->delete();
+            $role = Role::find($id);
+            $role->delete();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

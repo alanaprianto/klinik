@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Common;
 
-use App\StaffPosition;
+use App\Http\Controllers\GeneralController;
+use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class ApiStaffPositionController extends Controller
+class ApiUserController extends GeneralController
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class ApiStaffPositionController extends Controller
     {
         $response = [];
         try {
-            $staffpositions = StaffPosition::get();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffpositions' => $staffpositions]];
+            $users = User::with(['staff'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['users' => $users, 'recordsTotal' => $users]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -52,8 +52,11 @@ class ApiStaffPositionController extends Controller
         $response = [];
         try {
             $input = $request->all();
-            $staffposition = StaffPosition::create($input);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffposition' => $staffposition]];
+            $input['password'] = bcrypt($input['password']);
+            $user = User::create($input);
+            $user->staff()->create([]);
+            $user->attachRoles($input['role_ids']);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -70,8 +73,8 @@ class ApiStaffPositionController extends Controller
     {
         $response = [];
         try {
-            $staffposition = StaffPosition::find($id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffposition' => $staffposition]];
+            $user = User::find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -88,8 +91,8 @@ class ApiStaffPositionController extends Controller
     {
         $response = [];
         try {
-            $staffposition = StaffPosition::find($id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffposition' => $staffposition]];
+            $user = User::find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -108,9 +111,9 @@ class ApiStaffPositionController extends Controller
         $response = [];
         try {
             $input = $request->all();
-            $staffposition = StaffPosition::find($id);
-            $staffposition->update($input);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffposition' => $staffposition]];
+            $user = User::find($id);
+            $user->update($input);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -127,8 +130,8 @@ class ApiStaffPositionController extends Controller
     {
         $response = [];
         try {
-            $staffposition = StaffPosition::find($id);
-            $staffposition->delete();
+            $user = User::find($id);
+            $user->delete();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\GeneralController;
 use App\Permission;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ApiPermissionController extends GeneralController
 {

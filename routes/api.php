@@ -27,7 +27,6 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/batches', 'GeneralController@getBatches');
         Route::get('/doctor-services', 'GeneralController@getDoctorServices');
         Route::get('/hospital', 'GeneralController@getHospital');
-/*        Route::get('/icd10s', 'GeneralController@getIcd10s');*/
         Route::get('/inventories', 'GeneralController@getInventories');
         Route::get('/kiosks', 'GeneralController@getKiosks');
         Route::get('/medical-records', 'GeneralController@getMedicalRecords');
@@ -76,82 +75,15 @@ Route::group(['middleware' => ['auth:api']], function () {
 
         Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');
         Route::resource('check-up', '\App\Http\Controllers\Common\ApiCheckUpController');
-        Route::resource('doctor-services', '\App\Http\Controllers\Admin\ApiDoctorServiceController');
-        Route::resource('permissions', '\App\Http\Controllers\Admin\ApiPermissionController');
-        Route::resource('roles', '\App\Http\Controllers\Admin\ApiRoleController');
-        Route::resource('settings', '\App\Http\Controllers\Admin\ApiSettingController');
-        Route::resource('staff', '\App\Http\Controllers\Admin\ApiStaffController');
-        Route::resource('staff-jobs', '\App\Http\Controllers\Admin\ApiStaffJobController');
-        Route::resource('staff-positions', '\App\Http\Controllers\Admin\ApiStaffPositionController');
-        Route::resource('users', '\App\Http\Controllers\Admin\ApiUserController');
-        Route::resource('services', '\App\Http\Controllers\Admin\ApiServiceController');
-
-
-    });
-
-    Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['role:admin']], function () {
-        Route::resource('doctor-services', 'ApiDoctorServiceController');
-        Route::resource('permissions', 'ApiPermissionController');
-        Route::resource('polies', 'ApiPolyController');
-        Route::resource('roles', 'ApiRoleController');
-        Route::resource('services', 'ApiServiceController');
-        Route::resource('settings', 'ApiSettingController');
-        Route::resource('staff', 'ApiStaffController');
-        Route::resource('staff-jobs', 'ApiStaffJobController');
-        Route::resource('staff-positions', 'ApiStaffPositionController');
-        Route::resource('users', 'ApiUserController');
-
-        /*route before resource*/
-        /*depo*/
-        Route::get('/depos/{id}', '\App\Http\Controllers\Common\ApiDepoController@getDepo');
-
-        /*registers*/
-        Route::get('/registers/select-patient', '\App\Http\Controllers\Common\ApiRegistrationController@selectPatient');
-        Route::post('/registers/{id}', '\App\Http\Controllers\Common\ApiRegistrationController@update');
-
-        /*check-up*/
-        Route::post('/check-up/change-doctor', '\App\Http\Controllers\Common\ApiCheckUpController@postDoctor');
-        Route::post('/check-up/medical-record', '\App\Http\Controllers\Common\ApiCheckUpController@postMedicalRecord');
-
-        /*queues*/
-        Route::post('/queues/update', '\App\Http\Controllers\Common\ApiQueueController@updateStatus');
-
-        /*common used*/
-        Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
-        Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');
-        Route::resource('check-up', '\App\Http\Controllers\Common\ApiCheckUpController');
-        Route::resource('payments', '\App\Http\Controllers\Common\ApiPaymentController');
-        Route::resource('inventories', '\App\Http\Controllers\Common\ApiInventoryController');
-        Route::resource('sellers', '\App\Http\Controllers\Common\ApiSellerController');
-        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
-    });
-
-    Route::group(['prefix' => 'loket', 'namespace' => 'Loket', 'middleware' => ['role:loket|admin_loket']], function () {
-
-        /*common used*/
-        Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
-        Route::resource('registers', '\App\Http\Controllers\Common\ApiRegistrationController');
-        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
-
-    });
-
-    Route::group(['prefix' => 'penata-jasa', 'namespace' => 'PenataJasa', 'middleware' => ['role:poli_umum|poli_anak|admin_poli_umum|admin_poli_anak|penata_jasa']], function () {
-        /*common used*/
-        Route::resource('queues', '\App\Http\Controllers\Common\ApiQueueController');
-        Route::resource('check-up', '\App\Http\Controllers\Common\ApiCheckUpController');
-        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
-    });
-
-    Route::group(['prefix' => 'kasir', 'namespace' => 'Kasir', 'middleware' => ['role:kasir|admin_kasir']], function () {
-        Route::resource('payments', '\App\Http\Controllers\Common\ApiPaymentController');
-        Route::resource('visitors', '\App\Http\Controllers\Common\ApiVisitorController');
-        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
-    });
-
-    Route::group(['prefix' => 'apotek', 'namespace' => 'Apotek', 'middleware' => ['role:apotek|admin_apotek']], function () {
-        /*common used*/
-        Route::resource('inventories', '\App\Http\Controllers\Common\ApiInventoryController');
-        Route::post('/profile', '\App\Http\Controllers\Common\ApiProfileController@postProfile');
+        Route::resource('doctor-services', '\App\Http\Controllers\Common\ApiDoctorServiceController');
+        Route::resource('permissions', '\App\Http\Controllers\Common\ApiPermissionController');
+        Route::resource('roles', '\App\Http\Controllers\Common\ApiRoleController');
+        Route::resource('settings', '\App\Http\Controllers\Common\ApiSettingController');
+        Route::resource('staff', '\App\Http\Controllers\Common\ApiStaffController');
+        Route::resource('staff-jobs', '\App\Http\Controllers\Common\ApiStaffJobController');
+        Route::resource('staff-positions', '\App\Http\Controllers\Common\ApiStaffPositionController');
+        Route::resource('users', '\App\Http\Controllers\Common\ApiUserController');
+        Route::resource('services', '\App\Http\Controllers\Common\ApiServiceController');
 
     });
 

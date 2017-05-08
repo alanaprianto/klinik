@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Common;
 
-use App\StaffJob;
+use App\Http\Controllers\GeneralController;
+use App\Poly;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class ApiStaffJobController extends Controller
+class ApiPolyController extends GeneralController
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class ApiStaffJobController extends Controller
     {
         $response = [];
         try {
-            $staffjob = StaffJob::get();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffjob' => $staffjob, 'recordsTotal' => count($staffjob)]];
+            $polies = $this->getPolies();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['polies' => $polies]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -52,8 +52,8 @@ class ApiStaffJobController extends Controller
         $response = [];
         try {
             $input = $request->all();
-            $staffJob = StaffJob::create($input);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffJob' => $staffJob]];
+            $poly = Poly::create($input);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -70,12 +70,13 @@ class ApiStaffJobController extends Controller
     {
         $response = [];
         try {
-            $staffjob = StaffJob::find($id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffjob' => $staffjob]];
+            $poly = Poly::find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
-        return response()->json($response);    }
+        return response()->json($response);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -87,12 +88,13 @@ class ApiStaffJobController extends Controller
     {
         $response = [];
         try {
-            $staffjob = StaffJob::find($id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffjob' => $staffjob]];
+            $poly = Poly::find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
-        return response()->json($response);    }
+        return response()->json($response);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -106,13 +108,14 @@ class ApiStaffJobController extends Controller
         $response = [];
         try {
             $input = $request->all();
-            $staffjob = StaffJob::find($id);
-            $staffjob->update($input);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffjob' => $staffjob]];
+            $poly = Poly::find($id);
+            $poly->update($input);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
-        return response()->json($response);    }
+        return response()->json($response);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -124,8 +127,8 @@ class ApiStaffJobController extends Controller
     {
         $response = [];
         try {
-            $staffjob = StaffJob::find($id);
-            $staffjob->delete();
+            $poly = Poly::find($id);
+            $poly->delete();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

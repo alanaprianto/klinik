@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\GeneralController;
-use App\Poly;
+use App\Staff;
+use App\StaffJob;
+use App\StaffPosition;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class ApiPolyController extends GeneralController
+class ApiStaffController extends GeneralController
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +19,8 @@ class ApiPolyController extends GeneralController
     {
         $response = [];
         try {
-            $polies = $this->getPolies();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['polies' => $polies]];
+            $staff = Staff::get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff, 'recordsTotal' => count($staff)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -35,7 +36,11 @@ class ApiPolyController extends GeneralController
     {
         $response = [];
         try {
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
+            $staffjobs = $this->getStaffJobs();
+            $staffpositions = StaffPosition::has('staff', '<', 1)->get();
+            $staffpositions['recordsTotal'] = count($staffpositions);
+
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffjobs' => $staffjobs, 'staffpositions' => $staffpositions]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -45,7 +50,7 @@ class ApiPolyController extends GeneralController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -53,8 +58,16 @@ class ApiPolyController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
-            $poly = Poly::create($input);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
+
+            $input['hospital_id'] = $this->getHospital()->id;
+            $staffjob = StaffJob::find($input['staff_job_id']);
+            $staffposition = StaffPosition::find($input['staff_position_id']);
+
+            $staff = Staff::create($input);
+            $staff->attachStaffjob($staffjob);
+            $staff->attachStaffposition($staffposition);
+
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -64,15 +77,15 @@ class ApiPolyController extends GeneralController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $response = [];
         try {
-            $poly = Poly::find($id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
+            $staff = Staff::find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -82,15 +95,15 @@ class ApiPolyController extends GeneralController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $response = [];
         try {
-            $poly = Poly::find($id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
+            $staff = Staff::find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -100,8 +113,8 @@ class ApiPolyController extends GeneralController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -109,9 +122,16 @@ class ApiPolyController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
-            $poly = Poly::find($id);
-            $poly->update($input);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['poly' => $poly]];
+
+            $input['hospital_id'] = $this->getHospital()->id;
+            $staffjob = StaffJob::find($input['staff_job_id']);
+            $staffposition = StaffPosition::find($input['staff_position_id']);
+
+            $staff = Staff::find($id);
+            $staff->attachStaffjob($staffjob);
+            $staff->attachStaffposition($staffposition);
+
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -121,15 +141,15 @@ class ApiPolyController extends GeneralController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $response = [];
         try {
-            $poly = Poly::find($id);
-            $poly->delete();
+            $staff = Staff::find($id);
+            $staff->delete();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
