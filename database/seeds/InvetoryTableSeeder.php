@@ -23,5 +23,17 @@ class InvetoryTableSeeder extends Seeder
         foreach ($inventories as $inventory) {
             \Illuminate\Support\Facades\DB::table('inventories')->insert(['name' => $inventory[0], 'type' => $inventory[1], 'sediaan' => $inventory[2], 'price' => $inventory[3], 'inventory_category_id' => $inventory[4]]);
         }
+
+        $i1 = \App\Inventory::where('name', 'verban besar')->first();
+        $i2 = \App\Inventory::where('name', 'verban sedang')->first();
+        $i3 = \App\Inventory::where('name', 'verban kecil')->first();
+        $i4 = \App\Inventory::where('name', 'verban besar')->first();
+        $i5 = \App\Inventory::where('name', 'cairan infus')->first();
+
+        $i1->depos()->sync([1]);
+        $i2->depos()->sync([1]);
+        $i3->depos()->sync([1]);
+        $i4->depos()->sync([1]);
+        $i5->depos()->sync([1]);
     }
 }

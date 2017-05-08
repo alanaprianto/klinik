@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Common;
 
+use App\Inventory;
 use App\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -47,7 +48,29 @@ class ApiTransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $response = [];
+        try {
+            $input = $request->all();
+            switch ($input['type']){
+                case 1 :
+                    $inventory = Inventory::find($input['inventory_id']);
+                    return $inventory;
+                    break;
+                case 2 :
+                    break;
+                case 3 :
+                    break;
+                case 4 :
+                    break;
+                case 5 :
+                    break;
+                default :
+            }
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     /**

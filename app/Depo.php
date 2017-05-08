@@ -7,14 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Depo extends Model
 {
     protected $fillable = [
-        'amount',
-        'total',
-        'stock_minimal',
-        'stock_maximal',
-        'unit',
+        'name',
+        'desc',
+        'location',
         'poly_id',
         'parent_id',
-        'stock_on_hold'
     ];
 
     public function poly(){
@@ -32,10 +29,5 @@ class Depo extends Model
 
     public function subDepos(){
         return $this->hasMany('App\Depo', 'parent_id');
-    }
-
-
-    public function depoTransactions(){
-        return $this->belongsToMany('App\DepoTransaction', 'depo_transaction_id', 'id');
     }
 }
