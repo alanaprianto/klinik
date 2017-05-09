@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Common;
 
+use App\Depo;
 use App\Http\Controllers\GeneralController;
 use App\Inventory;
 use App\User;
@@ -19,14 +20,12 @@ class ApiInventoryController extends GeneralController
     {
         $response = [];
         try {
-            if ($request['type'] && ($request['type'] == 'medicine')) {
-                $inventories = Inventory::with(['batches', 'depos'])->where('category', 'medicine')->get();
-            } elseif ($request['type'] && ($request['type'] == 'non_medicine')) {
-                $inventories = Inventory::with(['batches', 'depos'])->where('category', 'non_medicine')->get();
-            } else {
-                $inventories = Inventory::with(['batches', 'depos'])->get();
+            $inventories = '';
+            if($request['type']){
+                $inventories = Inventory::where('type', $request['type'])->paginate(25);
+            }else{
+                $inventories = Inventory::paginate(25);
             }
-
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventories' => $inventories, 'recordsTotal' => count($inventories)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -62,16 +61,9 @@ class ApiInventoryController extends GeneralController
         try {
             $input = $request->all();
             $inventory = Inventory::create($input);
-            $inventory->depos()->create($input);
-            if($input['category'] == 'medicine'){
-                $inventory->batches()->create([
-                    'code' => $input['batch_code'],
-                    'expired_date' => $input['expired_date'],
-                    'amount' => $input['amount']
-                ]);
-            }
-            $old_inventory = Inventory::with(['batches', 'depos'])->find($inventory->id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventory' => $old_inventory]];
+            $depo = Depo::where('name', 'primary_depo')->first();
+            $inventory->depos()->sync([$depo->id]);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventory' => $inventory]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -88,7 +80,12 @@ class ApiInventoryController extends GeneralController
     {
         $response = [];
         try {
-            $inventory = Inventory::with('batches')->find($id);
+            $inventory = Inventory::with(['depos' => function($q) use($id){
+                $q->where('inventories_id', $id);
+            }, 'depos.stocks' => function($q) use($id){
+                $q->where('inventory_id', $id);
+            }
+            ])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventory' => $inventory]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -107,7 +104,7 @@ class ApiInventoryController extends GeneralController
     {
         $response = [];
         try {
-            $inventory = Inventory::with(['batches', 'depos'])->find($id);
+            $inventory = Inventory::with(['depos'])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventory' => $inventory]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -130,13 +127,6 @@ class ApiInventoryController extends GeneralController
             $input = $request->all();
             $inventory = Inventory::find($id);
             $inventory->update($input);
-            if($input['category'] == 'medicine'){
-                $inventory->batches()->create([
-                    'code' => $input['batch_code'],
-                    'expired_date' => $input['expired_date'],
-                    'stock' => $input['total']
-                ]);
-            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventory' => $inventory]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

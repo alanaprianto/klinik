@@ -27,7 +27,6 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/batches', '\App\Http\Controllers\GeneralController@getBatches');
         Route::get('/doctor-services', '\App\Http\Controllers\GeneralController@getDoctorServices');
         Route::get('/hospital', '\App\Http\Controllers\GeneralController@getHospital');
-        Route::get('/inventories', '\App\Http\Controllers\GeneralController@getInventories');
         Route::get('/kiosks', '\App\Http\Controllers\GeneralController@getKiosks');
         Route::get('/medical-records', '\App\Http\Controllers\GeneralController@getMedicalRecords');
         Route::get('/patiens', '\App\Http\Controllers\GeneralController@getPatients');
