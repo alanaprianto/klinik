@@ -64,11 +64,10 @@ class ApiTransactionController extends Controller
         $response = [];
         try {
             $input = $request->all();
-            $transaction = '';
+            $transactions = [];
             switch ($input['type']) {
                 case 1 :
                     /*case ketika beli dari distributor*/
-                    $transactions = [];
                     foreach ($input['inventory_id'] as $index => $inventory_id) {
                         $inventory = Inventory::with(['depos'])->find($inventory_id);
                         $depo =  $inventory->depos()->where('name', 'primary_depo')->first();
@@ -98,56 +97,40 @@ class ApiTransactionController extends Controller
                     break;
                 case 2 :
                     /*case buat transfer stock */
-                    $from_depo = Depo::with(['inventories', 'inventories.stock'])->find($input['from_depo_id']);
-                    $to_depo = Depo::with(['inventories', 'inventories.stock'])->find($input['to_depo_id']);
-                    $form_depo_inventory = $from_depo->inventories()->find($input['inventory_id']);
-                    $form_depo_inventory->stock->update([
-                        'amount' => $form_depo_inventory->stock->amount - $input['amount']
-                    ]);
+                    $from_depo = Depo::with(['inventories', 'stocks'])->find($input['from_depo_id']);
+                    $to_depo = Depo::with(['inventories', 'stocks'])->find($input['to_depo_id']);
+                    foreach ($input['inventory_id'] as $index => $inventory_id ){
+                        $to_depo->inventories()->sync([$inventory_id]);
+                        $to_depo = Depo::with(['inventories', 'stocks'])->find($input['to_depo_id']);
+                        $stock = Stock::where('inventory_id', $inventory_id)->where('depo_id', $to_depo->id)->first();
+                        if($stock){
+                            $stock->update([
+                                'stock' => $stock->stock + $input['amount'][$index],
+                                'price' => $input['price'][$index],
+                            ]);
+                        }else{
+                            $to_depo->stocks()->create([
+                                'stock' => $input['amount'][$index],
+                                'inventory_id' => $inventory_id,
+                                'price' => $input['price'][$index],
+                            ]);
+                        }
 
-                    $to_depo_inventory = $to_depo->inventories()->where('parent_id', $input['inventory_id'])->first();
-                    if ($to_depo_inventory) {
-                        $inventory_selected = Inventory::with('stock')->find($to_depo_inventory->id);
-                        if ($inventory_selected->stock) {
-                            $inventory_selected->stock()->update([
-                                'amount' => $inventory_selected->stock->amount + $input['amount']
-                            ]);
-                        } else {
-                            $inventory_selected->stock()->create([
-                                'amount' => $input['amount']
-                            ]);
-                        }
-                    } else {
-                        $form_depo_inventory = $form_depo_inventory->toArray();
-                        $form_depo_inventory['parent_id'] = $form_depo_inventory['id'];
-                        $to_depo->inventories()->create($form_depo_inventory);
-                        $to_depo = Depo::with(['inventories', 'inventories.stock'])->find($input['to_depo_id']);
-                        $to_depo_inventory = $to_depo->inventories()->where('parent_id', $input['inventory_id'])->first();
-                        if ($to_depo_inventory) {
-                            $inventory_selected = Inventory::with('stock')->find($to_depo_inventory->id);
-                            if ($inventory_selected->stock) {
-                                $inventory_selected->stock()->update([
-                                    'amount' => $inventory_selected->stock->amount + $input['amount']
-                                ]);
-                            } else {
-                                $inventory_selected->stock()->create([
-                                    'amount' => $input['amount']
-                                ]);
-                            }
-                        }
+                        $for_input = [
+                            'type' => $input['type'],
+                            'amount' => $input['amount'][$index],
+                            'status' => 1,
+                            'price' => $input['price'][$index],
+                            'from_depo_id' => $from_depo->id,
+                            'to_depo_id' => $to_depo->id
+                        ];
+
+                        $transactions = $this->createTransactionRecord($for_input);
                     }
 
-                    $for_input = [
-                        'type' => $input['type'],
-                        'amount' => $input['amount'],
-                        'status' => 1,
-                        'from_depo_id' => $input['from_depo_id'],
-                        'to_depo_id' => $input['to_depo_id']
-                    ];
-                    $transaction = $this->createTransactionRecord($for_input);
                     break;
                 case 3 :
-                    dd($input);
+
                     break;
                 default :
             }

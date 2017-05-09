@@ -12,7 +12,9 @@ class Stock extends Model
         'stock_maximal',
         'unit',
         'stock_on_hold',
-        'depo_id'
+        'depo_id',
+        'price',
+        'inventory_id'
     ];
 
     public function depo(){
