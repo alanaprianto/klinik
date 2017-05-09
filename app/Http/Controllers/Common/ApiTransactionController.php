@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Common;
 use App\Depo;
 use App\Inventory;
 use App\Staff;
+use App\Stock;
 use App\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -67,25 +68,33 @@ class ApiTransactionController extends Controller
             switch ($input['type']) {
                 case 1 :
                     /*case ketika beli dari distributor*/
-                    $inventory = Inventory::with(['depos', 'stock'])->find($input['inventory_id']);
-                    if ($inventory) {
-                        if ($inventory->stock) {
-                            $inventory->stock()->update([
-                                'amount' => $inventory->stock->amount + $input['amount']
+                    $transactions = [];
+                    foreach ($input['inventory_id'] as $index => $inventory_id) {
+                        $inventory = Inventory::with(['depos'])->find($inventory_id);
+                        $depo =  $inventory->depos()->where('name', 'primary_depo')->first();
+                        $stock = Stock::where('inventory_id', $inventory->id)->first();
+                        if($stock){
+                            $stock->update([
+                                'stock' => $stock->stock + $input['amount'][$index],
+                                'price' => $input['price'][$index]
                             ]);
-                        } else {
-                            $inventory->stock()->create([
-                                'amount' => $input['amount']
+                        }else{
+                            $inventory->stocks()->create([
+                                'stock' => $input['amount'][$index],
+                                'price' => $input['price'][$index],
+                                'depo_id' => $depo->id
                             ]);
                         }
-                    } else {
-                        $inventory = Inventory::create($input);
-                        $inventory->depos()->sync($input['to_depo_id']);
-                        $inventory->stock()->create($input);
+                        $input['to_depo_id'] = $depo->id;
+                        $for_input = [
+                            'distributor_id' => $input['distributor_id'],
+                            'type' => $input['type'],
+                            'amount' => $input['amount'][$index],
+                            'status' => 1,
+                            'to_depo_id' => $depo->id
+                        ];
+                        array_push($transactions, $this->createTransactionRecord($for_input));
                     }
-                    $input['status'] = 1;
-                    $input['to_depo_id'] = Depo::where('name', 'primary_depo')->first()->id;
-                    $transaction = $this->createTransactionRecord($input);
                     break;
                 case 2 :
                     /*case buat transfer stock */
@@ -99,11 +108,11 @@ class ApiTransactionController extends Controller
                     $to_depo_inventory = $to_depo->inventories()->where('parent_id', $input['inventory_id'])->first();
                     if ($to_depo_inventory) {
                         $inventory_selected = Inventory::with('stock')->find($to_depo_inventory->id);
-                        if($inventory_selected->stock){
+                        if ($inventory_selected->stock) {
                             $inventory_selected->stock()->update([
                                 'amount' => $inventory_selected->stock->amount + $input['amount']
                             ]);
-                        }else{
+                        } else {
                             $inventory_selected->stock()->create([
                                 'amount' => $input['amount']
                             ]);
@@ -114,13 +123,13 @@ class ApiTransactionController extends Controller
                         $to_depo->inventories()->create($form_depo_inventory);
                         $to_depo = Depo::with(['inventories', 'inventories.stock'])->find($input['to_depo_id']);
                         $to_depo_inventory = $to_depo->inventories()->where('parent_id', $input['inventory_id'])->first();
-                        if($to_depo_inventory){
+                        if ($to_depo_inventory) {
                             $inventory_selected = Inventory::with('stock')->find($to_depo_inventory->id);
-                            if($inventory_selected->stock){
+                            if ($inventory_selected->stock) {
                                 $inventory_selected->stock()->update([
                                     'amount' => $inventory_selected->stock->amount + $input['amount']
                                 ]);
-                            }else{
+                            } else {
                                 $inventory_selected->stock()->create([
                                     'amount' => $input['amount']
                                 ]);
@@ -138,11 +147,11 @@ class ApiTransactionController extends Controller
                     $transaction = $this->createTransactionRecord($for_input);
                     break;
                 case 3 :
-                    return $input;
+                    dd($input);
                     break;
                 default :
             }
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['transaction' => $transaction]];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['transactions' => $transactions]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }

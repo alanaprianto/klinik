@@ -30,4 +30,8 @@ class Depo extends Model
     public function subDepos(){
         return $this->hasMany('App\Depo', 'parent_id');
     }
+
+    public function stocks(){
+        return $this->hasMany('App\Stock');
+    }
 }

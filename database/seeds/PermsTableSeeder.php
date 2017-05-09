@@ -17,8 +17,9 @@ class PermsTableSeeder extends Seeder
         $p3 = ['name' => 'penata_jasa', 'display_name' => 'Penata Jasa', 'description' => 'Penata Jasa Permission', 'parent_id' => null, 'image' => 'assets/images/logo/rawat-jalan.png'];
         $p4 = ['name' => 'apotek', 'display_name' => 'Apotek', 'description' => 'Apotek Permission', 'parent_id' => null, 'image' => 'assets/images/logo/farmasi-101.png'];
         $p5 = ['name' => 'data_patient', 'display_name' => 'Data Patient', 'description' => 'Data Patient', 'parent_id' => null, 'image' => 'assets/images/logo/farmasi-101.png'];
+        $p6 = ['name' => 'master_data', 'display_name' => 'Master Data', 'description' => 'Master Data', 'parent_id' => null, 'image' => 'assets/images/logo/farmasi-101.png'];
 
-        \Illuminate\Support\Facades\DB::table('permissions')->insert([$p1, $p2, $p3, $p4, $p5]);
+        \Illuminate\Support\Facades\DB::table('permissions')->insert([$p1, $p2, $p3, $p4, $p5, $p6]);
 
         $penata_jasa = \App\Permission::where('name', 'penata_jasa')->first();
 

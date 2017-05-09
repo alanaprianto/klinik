@@ -35,9 +35,10 @@ class PermsRolesSeeder extends Seeder
         $p6 = \App\Permission::where('name', 'poli_anak')->first();
         $p7 = \App\Permission::where('name', 'poli_gigi')->first();
         $p8 = \App\Permission::where('name', 'data_patient')->first();
+        $p9 = \App\Permission::where('name', 'master_data')->first();
 
 
-        $r1->attachPermissions(array($p1, $p2, $p3, $p4, $p8));
+        $r1->attachPermissions(array($p1, $p2, $p3, $p4, $p8, $p9));
         $r2->attachPermissions(array($p1, $p8));
         $r3->attachPermissions(array($p1, $p8));
         $r4->attachPermissions(array($p5, $p8));

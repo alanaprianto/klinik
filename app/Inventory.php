@@ -14,7 +14,6 @@ class Inventory extends Model
         'sediaan',
         'price',
         'inventory_category_id',
-        'parent_id'
     ];
 
     public function batches(){
@@ -45,15 +44,7 @@ class Inventory extends Model
         return $this->belongsToMany('App\Service', 'services_inventories', 'inventories_id' ,'services_id');
     }
 
-    public function stock(){
-        return $this->hasOne('App\Stock');
-    }
-
-    public function childs(){
-        return $this->hasMany('App\Inventory', 'parent_id');
-    }
-
-    public function parent(){
-        return $this->belongsTo('App\Inventory', 'parent_id', 'id');
+    public function stocks(){
+        return $this->hasMany('App\Stock');
     }
 }

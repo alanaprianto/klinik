@@ -7,15 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Stock extends Model
 {
     protected $fillable = [
-        'amount',
+        'stock',
         'stock_minimal',
         'stock_maximal',
         'unit',
         'stock_on_hold',
-        'inventory_id'
+        'depo_id'
     ];
 
+    public function depo(){
+        return $this->belongsTo('App\Depo', 'depo_id', 'id');
+    }
+
     public function inventory(){
-        return $this->belongsTo('App\Inventory', 'inventory_id', 'id');
+        return $this->belongsTo('App\Depo', 'inventory_id', 'id');
     }
 }
