@@ -15,7 +15,8 @@ class Transaction extends Model
         'status',
         'price',
         'from_depo_id',
-        'to_depo_id'
+        'to_depo_id',
+        'other'
     ];
 
     public function staff(){

@@ -131,21 +131,17 @@ class ApiTransactionController extends Controller
 
                     break;
                 case 3 :
-                    $test = [
-                        'patient_id',
-                        'type',
-                        'amount',
-                        'status',
-                        'price',
-                        'from_depo_id',
-                        'inventory_id'
-                    ];
-
                     if($input['patient_id']){
                         $patient = Patient::find($input['patient_id']);
                         if($patient){
                             $input['patient_id'] = $patient->id;
                         }
+                    }else{
+                        $data_user = [
+                            'name' => $input['name'] ? $input['name'] : null,
+                            'number_phone' => $input['number_phone'] ? $input['number_phone'] : null
+                        ];
+                        $input['other'] = json_encode($data_user, true);
                     }
 
                     foreach ($input['inventory_id'] as $index => $inventory_id){
@@ -172,6 +168,7 @@ class ApiTransactionController extends Controller
                             'status' => 1,
                             'price' => $input['amount'][$index] * $stock->price,
                             'from_depo_id' => $depo->id,
+                            'other' => $input['other']
                         ];
                         array_push($transactions, $this->createTransactionRecord($for_input));
                     }
