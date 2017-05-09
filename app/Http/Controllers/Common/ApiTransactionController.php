@@ -21,9 +21,9 @@ class ApiTransactionController extends Controller
     {
         $response = [];
         try {
-            if($request['type']){
+            if ($request['type']) {
                 $transactions = Transaction::where('type', $request['type'])->paginate(25);
-            }else{
+            } else {
                 $transactions = Transaction::paginate(25);
             }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['transactions' => $transactions, 'recordsTotal' => count($transactions)]];
@@ -43,7 +43,8 @@ class ApiTransactionController extends Controller
         //
     }
 
-    private function createTransactionRecord($input){
+    private function createTransactionRecord($input)
+    {
         $staff = Staff::where('user_id', Auth::user()->id)->first();
         $input['staff_id'] = $staff->id;
         $transaction = Transaction::create($input);
@@ -54,7 +55,7 @@ class ApiTransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -63,21 +64,21 @@ class ApiTransactionController extends Controller
         try {
             $input = $request->all();
             $transaction = '';
-            switch ($input['type']){
+            switch ($input['type']) {
                 case 1 :
                     /*case ketika beli dari distributor*/
                     $inventory = Inventory::with(['depos', 'stock'])->find($input['inventory_id']);
-                    if($inventory){
-                        if($inventory->stock){
+                    if ($inventory) {
+                        if ($inventory->stock) {
                             $inventory->stock()->update([
                                 'amount' => $inventory->stock->amount + $input['amount']
                             ]);
-                        } else{
+                        } else {
                             $inventory->stock()->create([
                                 'amount' => $input['amount']
                             ]);
                         }
-                    } else{
+                    } else {
                         $inventory = Inventory::create($input);
                         $inventory->depos()->sync($input['to_depo_id']);
                         $inventory->stock()->create($input);
@@ -89,24 +90,55 @@ class ApiTransactionController extends Controller
                 case 2 :
                     /*case buat transfer stock */
                     $from_depo = Depo::with(['inventories', 'inventories.stock'])->find($input['from_depo_id']);
-                        $to_depo = Depo::with(['inventories', 'inventories.stock'])->find($input['to_depo_id']);
-
+                    $to_depo = Depo::with(['inventories', 'inventories.stock'])->find($input['to_depo_id']);
                     $form_depo_inventory = $from_depo->inventories()->find($input['inventory_id']);
-/*                    $form_depo_inventory->stock->update([
+                    $form_depo_inventory->stock->update([
                         'amount' => $form_depo_inventory->stock->amount - $input['amount']
-                    ]);*/
+                    ]);
 
-                    $to_depo_inventory = $to_depo->inventories()->find($input['inventory_id']);
-                    if($to_depo_inventory){
-
-                    } else{
-                        $to_depo->inventories()->sync([$input['inventory_id']]);
+                    $to_depo_inventory = $to_depo->inventories()->where('parent_id', $input['inventory_id'])->first();
+                    if ($to_depo_inventory) {
+                        $inventory_selected = Inventory::with('stock')->find($to_depo_inventory->id);
+                        if($inventory_selected->stock){
+                            $inventory_selected->stock()->update([
+                                'amount' => $inventory_selected->stock->amount + $input['amount']
+                            ]);
+                        }else{
+                            $inventory_selected->stock()->create([
+                                'amount' => $input['amount']
+                            ]);
+                        }
+                    } else {
+                        $form_depo_inventory = $form_depo_inventory->toArray();
+                        $form_depo_inventory['parent_id'] = $form_depo_inventory['id'];
+                        $to_depo->inventories()->create($form_depo_inventory);
                         $to_depo = Depo::with(['inventories', 'inventories.stock'])->find($input['to_depo_id']);
-                        $to_depo_inventory = $to_depo->inventories()->find($input['inventory_id']);
-                        return $to_depo_inventory->stock;
+                        $to_depo_inventory = $to_depo->inventories()->where('parent_id', $input['inventory_id'])->first();
+                        if($to_depo_inventory){
+                            $inventory_selected = Inventory::with('stock')->find($to_depo_inventory->id);
+                            if($inventory_selected->stock){
+                                $inventory_selected->stock()->update([
+                                    'amount' => $inventory_selected->stock->amount + $input['amount']
+                                ]);
+                            }else{
+                                $inventory_selected->stock()->create([
+                                    'amount' => $input['amount']
+                                ]);
+                            }
+                        }
                     }
+
+                    $for_input = [
+                        'type' => $input['type'],
+                        'amount' => $input['amount'],
+                        'status' => 1,
+                        'from_depo_id' => $input['from_depo_id'],
+                        'to_depo_id' => $input['to_depo_id']
+                    ];
+                    $transaction = $this->createTransactionRecord($for_input);
                     break;
                 case 3 :
+                    return $input;
                     break;
                 default :
             }
@@ -120,7 +152,7 @@ class ApiTransactionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -131,7 +163,7 @@ class ApiTransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -142,8 +174,8 @@ class ApiTransactionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -154,7 +186,7 @@ class ApiTransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -13,7 +13,8 @@ class Inventory extends Model
         'explain',
         'sediaan',
         'price',
-        'inventory_category_id'
+        'inventory_category_id',
+        'parent_id'
     ];
 
     public function batches(){
@@ -45,6 +46,14 @@ class Inventory extends Model
     }
 
     public function stock(){
-        return $this->hasMany('App\Stock');
+        return $this->hasOne('App\Stock');
+    }
+
+    public function childs(){
+        return $this->hasMany('App\Inventory', 'parent_id');
+    }
+
+    public function parent(){
+        return $this->belongsTo('App\Inventory', 'parent_id', 'id');
     }
 }
