@@ -19,7 +19,8 @@ class MedicalRecord extends Model
         'anamnesa',
         'diagnosis',
         'explain',
-        'therapy'
+        'therapy',
+        'icd10'
 
     ];
 
