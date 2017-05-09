@@ -27,9 +27,9 @@ class ApiCommonController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
-            if($input['take']){
+            if($input['limit']){
                 $icd10s = Icd10::where('code', 'LIKE', '%' . $input['data'] . '%')
-                    ->orWhere('desc', 'LIKE', '%' . $input['data'] . '%')->paginate($input['take']);
+                    ->orWhere('desc', 'LIKE', '%' . $input['data'] . '%')->paginate($input['limit']);
             } else{
                 $icd10s = Icd10::where('code', 'LIKE', '%' . $input['data'] . '%')
                     ->orWhere('desc', 'LIKE', '%' . $input['data'] . '%')->get();
