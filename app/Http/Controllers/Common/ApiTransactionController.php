@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Common;
 
 use App\Depo;
 use App\Inventory;
+use App\Patient;
 use App\Staff;
 use App\Stock;
 use App\Transaction;
@@ -125,11 +126,55 @@ class ApiTransactionController extends Controller
                             'to_depo_id' => $to_depo->id
                         ];
 
-                        $transactions = $this->createTransactionRecord($for_input);
+                        array_push($transactions, $this->createTransactionRecord($for_input));
                     }
 
                     break;
                 case 3 :
+                    $test = [
+                        'patient_id',
+                        'type',
+                        'amount',
+                        'status',
+                        'price',
+                        'from_depo_id',
+                        'inventory_id'
+                    ];
+
+                    if($input['patient_id']){
+                        $patient = Patient::find($input['patient_id']);
+                        if($patient){
+                            $input['patient_id'] = $patient->id;
+                        }
+                    }
+
+                    foreach ($input['inventory_id'] as $index => $inventory_id){
+                        $inventory = Inventory::find($inventory_id);
+                        $stock = Stock::where('inventory_id', $inventory_id)->first();
+                        $stock->update([
+                            'stock' => $stock->stock - $input['amount'][$index]
+                        ]);
+
+                        $depo = Depo::with([
+                            'inventories' => function($q) use($inventory_id){
+                            $q->where('inventories_id', $inventory_id);
+                        }, 'stocks' => function($q) use($inventory_id){
+                            $q->where('inventory_id', $inventory_id);
+                        }
+                        ])->whereHas('inventories', function ($q1) use ($inventory_id){
+                           $q1->where('inventories_id', $inventory_id);
+                        })->first();
+
+                        $for_input = [
+                            'patient_id' => $input['patient_id'],
+                            'type' => $input['type'],
+                            'amount' => $input['amount'][$index],
+                            'status' => 1,
+                            'price' => $input['amount'][$index] * $stock->price,
+                            'from_depo_id' => $depo->id,
+                        ];
+                        array_push($transactions, $this->createTransactionRecord($for_input));
+                    }
 
                     break;
                 default :

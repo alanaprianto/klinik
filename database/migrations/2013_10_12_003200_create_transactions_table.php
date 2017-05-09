@@ -19,6 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->double('amount')->nullable();
             $table->integer('status')->nullable();
             $table->double('price')->nullable();
+            $table->longText('other')->nullable();
             $table->integer('from_depo_id')->nullable()->unsigned();
             $table->integer('to_depo_id')->nullable()->unsigned();
             $table->integer('staff_id')->nullable()->unsigned();
