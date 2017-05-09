@@ -42,7 +42,6 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/tuslahs', '\App\Http\Controllers\GeneralController@getTuslahs');
         Route::get('/users', '\App\Http\Controllers\GeneralController@getUsers');
         Route::get('/doctors', '\App\Http\Controllers\GeneralController@getDoctors');
-        Route::get('/distributors', '\App\Http\Controllers\GeneralController@getDistributors');
         Route::get('/countries', '\App\Http\Controllers\GeneralController@getCountries');
         Route::get('/provinces', '\App\Http\Controllers\GeneralController@getProvinces');
         Route::get('/cities', '\App\Http\Controllers\GeneralController@getCities');
@@ -86,6 +85,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('users', 'ApiUserController');
         Route::resource('services', 'ApiServiceController');
         Route::resource('transactions', 'ApiTransactionController');
+        Route::resource('distributors', 'ApiDistributorController');
     });
 
 });
