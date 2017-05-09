@@ -31,7 +31,7 @@ class Transaction extends Model
     }
 
     public function distributor(){
-        return $this->belongsTo('App\Distributor', 'ditributor_id', 'id');
+        return $this->belongsTo('App\Distributor', 'distributor_id', 'id');
     }
 
     public function patient(){

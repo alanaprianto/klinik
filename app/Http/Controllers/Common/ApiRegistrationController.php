@@ -189,8 +189,7 @@ class ApiRegistrationController extends GeneralController
             /*add reference to poly*/
             $reference = $this->addReference($input, $register);
 
-            $full_reference = Reference::with(['register', 'register.patient' ,'poly', 'doctor'])->find($reference->id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $full_reference]];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }

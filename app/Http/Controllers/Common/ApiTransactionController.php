@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Common;
 
+use App\Depo;
 use App\Inventory;
+use App\Staff;
 use App\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ApiTransactionController extends Controller
 {
@@ -40,6 +43,14 @@ class ApiTransactionController extends Controller
         //
     }
 
+    private function createTransactionRecord($input){
+        $staff = Staff::where('user_id', Auth::user()->id)->first();
+        $input['staff_id'] = $staff->id;
+        $transaction = Transaction::create($input);
+        $new_transaction = Transaction::with(['staff', 'from', 'to', 'distributor', 'patient'])->find($transaction->id);
+        return $new_transaction;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -51,22 +62,55 @@ class ApiTransactionController extends Controller
         $response = [];
         try {
             $input = $request->all();
+            $transaction = '';
             switch ($input['type']){
                 case 1 :
-                    $inventory = Inventory::find($input['inventory_id']);
-                    return $inventory;
+                    /*case ketika beli dari distributor*/
+                    $inventory = Inventory::with(['depos', 'stock'])->find($input['inventory_id']);
+                    if($inventory){
+                        if($inventory->stock){
+                            $inventory->stock()->update([
+                                'amount' => $inventory->stock->amount + $input['amount']
+                            ]);
+                        } else{
+                            $inventory->stock()->create([
+                                'amount' => $input['amount']
+                            ]);
+                        }
+                    } else{
+                        $inventory = Inventory::create($input);
+                        $inventory->depos()->sync($input['to_depo_id']);
+                        $inventory->stock()->create($input);
+                    }
+                    $input['status'] = 1;
+                    $input['to_depo_id'] = Depo::where('name', 'primary_depo')->first()->id;
+                    $transaction = $this->createTransactionRecord($input);
                     break;
                 case 2 :
+                    /*case buat transfer stock */
+                    $from_depo = Depo::with(['inventories', 'inventories.stock'])->find($input['from_depo_id']);
+                        $to_depo = Depo::with(['inventories', 'inventories.stock'])->find($input['to_depo_id']);
+
+                    $form_depo_inventory = $from_depo->inventories()->find($input['inventory_id']);
+/*                    $form_depo_inventory->stock->update([
+                        'amount' => $form_depo_inventory->stock->amount - $input['amount']
+                    ]);*/
+
+                    $to_depo_inventory = $to_depo->inventories()->find($input['inventory_id']);
+                    if($to_depo_inventory){
+
+                    } else{
+                        $to_depo->inventories()->sync([$input['inventory_id']]);
+                        $to_depo = Depo::with(['inventories', 'inventories.stock'])->find($input['to_depo_id']);
+                        $to_depo_inventory = $to_depo->inventories()->find($input['inventory_id']);
+                        return $to_depo_inventory->stock;
+                    }
                     break;
                 case 3 :
                     break;
-                case 4 :
-                    break;
-                case 5 :
-                    break;
                 default :
             }
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['transaction' => $transaction]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }

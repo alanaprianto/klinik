@@ -44,7 +44,7 @@ class Inventory extends Model
         return $this->belongsToMany('App\Service', 'services_inventories', 'inventories_id' ,'services_id');
     }
 
-    public function stocks(){
+    public function stock(){
         return $this->hasMany('App\Stock');
     }
 }
