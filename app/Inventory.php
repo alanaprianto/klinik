@@ -12,6 +12,7 @@ class Inventory extends Model
         'type',
         'explain',
         'sediaan',
+        'price',
         'inventory_category_id',
     ];
 
