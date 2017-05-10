@@ -47,8 +47,8 @@ class ApiDistributorController extends Controller
         try {
             $input = $request->all();
             $distributor = '';
-            if(isset($input['ditributor_id']) && $input['ditributor_id']){
-                $distributor = Distributor::find($input['ditributor_id']);
+            if(isset($input['distributor_id']) && $input['distributor_id']){
+                $distributor = Distributor::find($input['distributor_id']);
                 $distributor->update($input);
             }else{
                 $distributor = Distributor::create($input);
