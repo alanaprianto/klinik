@@ -15,8 +15,8 @@ class CreateStaffPositionsTable extends Migration
     {
         Schema::create('staff_positions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->text('desc');
+            $table->string('name')->nullable();
+            $table->text('desc')->nullable();
             $table->timestamps();
         });
     }
