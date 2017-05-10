@@ -6,7 +6,7 @@ use App\InventoryCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ApiInventoryCategory extends Controller
+class ApiInventoryCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.

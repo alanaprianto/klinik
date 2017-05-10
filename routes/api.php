@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         /*route resource*/
         Route::resource('queues', 'ApiQueueController');
         Route::resource('payments', 'ApiPaymentController');
-        Route::resource('inventory-categories', 'ApiInventoryCategory');
+        Route::resource('inventory-categories', 'ApiInventoryCategoryController');
         Route::resource('inventories', 'ApiInventoryController');
         Route::resource('sellers', 'ApiSellerController');
         Route::resource('visitors', 'ApiVisitorController');
