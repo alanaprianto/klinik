@@ -46,7 +46,13 @@ class ApiDistributorController extends Controller
         $response = [];
         try {
             $input = $request->all();
-            $distributor = Distributor::create($input);
+            $distributor = '';
+            if(isset($input['ditributor_id']) && $input['ditributor_id']){
+                $distributor = Distributor::find($input['ditributor_id']);
+                $distributor->update($input);
+            }else{
+                $distributor = Distributor::create($input);
+            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['distributors' => $distributor]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
