@@ -17,8 +17,8 @@ class ApiStaffJobController extends Controller
     {
         $response = [];
         try {
-            $staffjob = StaffJob::get();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffjob' => $staffjob, 'recordsTotal' => count($staffjob)]];
+            $staffjobs = StaffJob::get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffjobs' => $staffjobs, 'recordsTotal' => count($staffjobs)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }

@@ -60,9 +60,18 @@ class ApiInventoryController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
-            $inventory = Inventory::create($input);
-            $depo = Depo::where('name', 'primary_depo')->first();
-            $inventory->depos()->sync([$depo->id]);
+            $inventory = '';
+            if (isset($input['inventory_id']) && $input['inventory_id']){
+                $inventory = Inventory::find($input['inventory_id']);
+            }else{
+                $inventory = Inventory::create($input);
+                $depo = Depo::where('name', 'primary_depo')->first();
+                $inventory->depos()->sync([$depo->id]);
+            }
+
+            if(isset($input['inventory_id']) && $input['']){
+                $inventory->tuslahs()->sync($input['inventory_id']);
+            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventory' => $inventory]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
