@@ -14,6 +14,7 @@ class Inventory extends Model
         'sediaan',
         'price',
         'inventory_category_id',
+        'is_tuslah'
     ];
 
     public function batches(){

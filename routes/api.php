@@ -84,6 +84,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('staff-jobs', 'ApiStaffJobController');
         Route::resource('staff-positions', 'ApiStaffPositionController');
         Route::resource('users', 'ApiUserController');
+        Route::resource('category-services', 'ApiCategoryServiceController');
         Route::resource('services', 'ApiServiceController');
         Route::resource('transactions', 'ApiTransactionController');
         Route::resource('distributors', 'ApiDistributorController');
