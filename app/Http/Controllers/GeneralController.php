@@ -228,7 +228,7 @@ class GeneralController extends Controller
     protected function getServices(){
         $response = [];
         try {
-            $services = Service::with(['medicalRecords', 'inventories'])->get();
+            $services = Service::with(['medicalRecords', 'inventories', 'categoryService'])->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['services' => $services, 'recordsTotal' => count($services)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

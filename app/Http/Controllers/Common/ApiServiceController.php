@@ -13,9 +13,24 @@ class ApiServiceController extends GeneralController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->getServices();
+        $response = [];
+        try {
+            $input = $request->all();
+            if(isset($input['category_service_id']) && $input['category_service_id']){
+                $services = Service::with(['medicalRecords', 'inventories', 'categoryService'])
+                    ->whereHas('categoryService', function ($q)use($input){
+                        $q->where('id', $input['category_service_id']);
+                    })->get();
+            }else{
+                $services = Service::with(['medicalRecords', 'inventories', 'categoryService'])->get();
+            }
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['services' => $services, 'recordsTotal' => count($services)]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 
     /**
