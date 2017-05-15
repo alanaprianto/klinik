@@ -42,7 +42,6 @@ class ApiServiceController extends GeneralController
     {
         $response = [];
         try {
-
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -61,9 +60,11 @@ class ApiServiceController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
-            $service = Service::create($input);
-            if($input['inventories_ids'] != array(null)){
-                $service->inventories()->sync($input['inventories_ids']);
+            $service = '';
+            if(isset($input['service_id']) && $input['service_id']){
+                $service = Service::update($input);
+            }else{
+                $service = Service::create($input);
             }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['service' => $service]];
         } catch (\Exception $e) {
@@ -82,7 +83,7 @@ class ApiServiceController extends GeneralController
     {
         $response = [];
         try {
-            $service = Service::with(['inventories'])->find($id);
+            $service = Service::find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['service' => $service]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -100,7 +101,7 @@ class ApiServiceController extends GeneralController
     {
         $response = [];
         try {
-            $service = Service::with(['inventories'])->find($id);
+            $service = Service::find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['service' => $service]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -117,19 +118,7 @@ class ApiServiceController extends GeneralController
      */
     public function update(Request $request, $id)
     {
-        $response = [];
-        try {
-            $input = $request->all();
-            $service = Service::find($id);
-            $service->update($input);
-            if($input['inventories_ids'] != array(null)){
-                $service->inventories()->sync($input['inventories_ids']);
-            }
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['service' => $service]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
+
     }
 
     /**
