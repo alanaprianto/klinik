@@ -45,8 +45,13 @@ class ApiPermissionController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
-            if(isset($request['input']))
-            $permission = Permission::create($input);
+            $permission = '';
+            if(isset($input['permission_id']) && $input['permission_id']){
+                $permission = Permission::find($input['permission_id']);
+                $permission->update($input);
+            }else{
+                $permission = Permission::create($input);
+            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['permission' => $permission]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

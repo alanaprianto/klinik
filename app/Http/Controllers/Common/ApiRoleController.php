@@ -15,14 +15,7 @@ class ApiRoleController extends GeneralController
      */
     public function index()
     {
-        $response = [];
-        try {
-            $roles = $this->getRoles();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['roles' => $roles]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
+        return $this->getRoles();
     }
 
     /**
@@ -52,7 +45,15 @@ class ApiRoleController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
-            $role = Role::create($input);
+            $role = '';
+            if(isset($input['role_id']) && $input['role_id']){
+                $role = Role::find($input['role_id']);
+                $role->update($input);
+                $role->perms()->sync($input['permission_ids']);
+            }else{
+                $role = Role::create($input);
+                $role->attachPermissions($input['permission_ids']);
+            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['role' => $role]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -70,7 +71,7 @@ class ApiRoleController extends GeneralController
     {
         $response = [];
         try {
-            $role = Role::find($id);
+            $role = Role::with(['perms'])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['role' => $role]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -88,7 +89,7 @@ class ApiRoleController extends GeneralController
     {
         $response = [];
         try {
-            $role = Role::find($id);
+            $role = Role::with(['perms'])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['role' => $role]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -105,16 +106,6 @@ class ApiRoleController extends GeneralController
      */
     public function update(Request $request, $id)
     {
-        $response = [];
-        try {
-            $input = $request->all();
-            $role = Role::find($id);
-            $role->update($input);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['role' => $role]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
     }
 
     /**

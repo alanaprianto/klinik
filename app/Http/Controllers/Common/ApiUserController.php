@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\GeneralController;
+use App\Staff;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -53,9 +54,20 @@ class ApiUserController extends GeneralController
         try {
             $input = $request->all();
             $input['password'] = bcrypt($input['password']);
-            $user = User::create($input);
-            $user->staff()->create([]);
-            $user->attachRoles($input['role_ids']);
+            $user = '';
+            if(isset($input['user_id']) && $input['user_id']){
+                $user = User::find($input['user_id']);
+                $user->update($input);
+            }else{
+                $user = User::create($input);
+            }
+            $staff = Staff::find($input['staff_id']);
+            $staff->update([
+                'user_id' => $user->id
+            ]);
+
+            $user = User::with('staff')->find($user->id);
+
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -73,7 +85,7 @@ class ApiUserController extends GeneralController
     {
         $response = [];
         try {
-            $user = User::find($id);
+            $user = User::with(['staff'])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -91,7 +103,7 @@ class ApiUserController extends GeneralController
     {
         $response = [];
         try {
-            $user = User::find($id);
+            $user = User::with(['staff'])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -108,16 +120,7 @@ class ApiUserController extends GeneralController
      */
     public function update(Request $request, $id)
     {
-        $response = [];
-        try {
-            $input = $request->all();
-            $user = User::find($id);
-            $user->update($input);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['user' => $user]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
+
     }
 
     /**
