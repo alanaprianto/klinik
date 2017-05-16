@@ -86,6 +86,7 @@ class ApiTransactionController extends Controller
                             'inventory_id' => $inventory_id,
                             'amount' => $new_input['amount'][$index],
                             'price' => $new_input['price'][$index],
+                            'unit' => $new_input['unit'][$index],
                             'total' => $new_input['amount'][$index] * $new_input['price'][$index]
                         ]);
                     }

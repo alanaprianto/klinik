@@ -18,6 +18,7 @@ class CreateItemOrdersTable extends Migration
             $table->double('amount')->nullable();
             $table->double('price')->nullable();
             $table->double('total')->nullable();
+            $table->string('unit')->nullable();
             $table->integer('transaction_id')->nullable()->unsigned();
             $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
             $table->integer('inventory_id')->nullable()->unsigned();

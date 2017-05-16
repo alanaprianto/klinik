@@ -12,6 +12,7 @@ class ItemOrder extends Model
         'amount',
         'price',
         'total',
+        'unit'
     ];
 
     public function transaction(){
