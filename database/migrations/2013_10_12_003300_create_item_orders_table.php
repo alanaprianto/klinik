@@ -15,6 +15,13 @@ class CreateItemOrdersTable extends Migration
     {
         Schema::create('item_orders', function (Blueprint $table) {
             $table->increments('id');
+            $table->double('amount')->nullable();
+            $table->double('price')->nullable();
+            $table->double('total')->nullable();
+            $table->integer('transaction_id')->nullable()->unsigned();
+            $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
+            $table->integer('inventory_id')->nullable()->unsigned();
+            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -17,7 +17,11 @@ class Transaction extends Model
         'from_depo_id',
         'to_depo_id',
         'other',
-        'number_transaction'
+        'number_transaction',
+        'sub_total',
+        'tax',
+        'shipping',
+        'shipping_terms'
     ];
 
     public function staff(){

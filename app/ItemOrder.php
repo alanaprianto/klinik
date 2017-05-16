@@ -10,6 +10,15 @@ class ItemOrder extends Model
         'transaction_id',
         'inventory_id',
         'amount',
-        'price'
+        'price',
+        'total',
     ];
+
+    public function transaction(){
+        return $this->belongsTo('App\Transaction', 'transaction_id', 'id');
+    }
+
+    public function inventory(){
+        return $this->belongsTo('App\Inventory', 'inventory_id', 'id');
+    }
 }

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Common;
 
 use App\Depo;
+use App\Distributor;
 use App\Inventory;
 use App\Patient;
 use App\Staff;
 use App\Stock;
 use App\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -50,7 +52,7 @@ class ApiTransactionController extends Controller
         $staff = Staff::where('user_id', Auth::user()->id)->first();
         $input['staff_id'] = $staff->id;
         $transaction = Transaction::create($input);
-        $new_transaction = Transaction::with(['staff', 'from', 'to', 'distributor', 'patient'])->find($transaction->id);
+        $new_transaction = Transaction::with(['staff', 'from', 'to', 'distributor', 'patient', 'itemOrders'])->find($transaction->id);
         return $new_transaction;
     }
 
@@ -69,32 +71,25 @@ class ApiTransactionController extends Controller
             switch ($input['type']) {
                 case 1 :
                     /*case ketika beli dari distributor*/
-                    foreach ($input['inventory_id'] as $index => $inventory_id) {
-                        $inventory = Inventory::with(['depos'])->find($inventory_id);
-                        $depo =  $inventory->depos()->where('name', 'primary_depo')->first();
-                        $stock = Stock::where('inventory_id', $inventory->id)->first();
-                        if($stock){
-                            $stock->update([
-                                'stock' => $stock->stock + $input['amount'][$index],
-                                'price' => $input['price'][$index]
-                            ]);
-                        }else{
-                            $inventory->stocks()->create([
-                                'stock' => $input['amount'][$index],
-                                'price' => $input['price'][$index],
-                                'depo_id' => $depo->id
-                            ]);
-                        }
-                        $input['to_depo_id'] = $depo->id;
-                        $for_input = [
-                            'distributor_id' => $input['distributor_id'],
-                            'type' => $input['type'],
-                            'amount' => $input['amount'][$index],
-                            'status' => 1,
-                            'to_depo_id' => $depo->id
-                        ];
-                        array_push($transactions, $this->createTransactionRecord($for_input));
+                    $parent_depo = Depo::where('name', 'primary_depo')->first();
+                    $input['status'] = 1;
+                    $input['to_depo_id'] = $parent_depo->id;
+                    $input['number_transaction'] = Carbon::now()->format('YmdHis');
+                    unset($input['inventory_id']);
+                    unset($input['amount']);
+                    unset($input['price']);
+                    $transaction = $this->createTransactionRecord($input);
+
+                    $new_input = $request->all();
+                    foreach ($new_input['inventory_id'] as $index => $inventory_id){
+                        $transaction->itemOrders()->create([
+                            'inventory_id' => $inventory_id,
+                            'amount' => $new_input['amount'][$index],
+                            'price' => $new_input['price'][$index],
+                            'total' => $new_input['amount'][$index] * $new_input['price'][$index]
+                        ]);
                     }
+                    $transactions = Transaction::with(['itemOrders'])->find($transaction->id);
                     break;
                 case 2 :
                     /*case buat transfer stock */
