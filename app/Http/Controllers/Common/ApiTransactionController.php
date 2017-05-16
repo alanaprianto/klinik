@@ -78,7 +78,7 @@ class ApiTransactionController extends Controller
                     $transaction = $this->createTransactionRecord($input);
                     $new_input = $request->all();
                     foreach ($new_input['data'] as $data){
-                        $transaction->itemOrders()->create(json_decode($data, true));
+                        $transaction->itemOrders()->create($data);
                     }
 
                     $transactions = Transaction::with(['itemOrders'])->find($transaction->id);
