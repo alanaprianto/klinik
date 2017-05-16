@@ -26,9 +26,9 @@ class ApiTransactionController extends Controller
         $response = [];
         try {
             if ($request['type']) {
-                $transactions = Transaction::where('type', $request['type'])->paginate(25);
+                $transactions = Transaction::with(['staff', 'distributor'])->where('type', $request['type'])->paginate(25);
             } else {
-                $transactions = Transaction::paginate(25);
+                $transactions = Transaction::with(['staff', 'distributor'])->paginate(25);
             }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['transactions' => $transactions, 'recordsTotal' => count($transactions)]];
         } catch (\Exception $e) {
