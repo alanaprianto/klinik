@@ -75,21 +75,12 @@ class ApiTransactionController extends Controller
                     $input['status'] = 1;
                     $input['to_depo_id'] = $parent_depo->id;
                     $input['number_transaction'] = Carbon::now()->format('YmdHis');
-                    unset($input['inventory_id']);
-                    unset($input['amount']);
-                    unset($input['price']);
                     $transaction = $this->createTransactionRecord($input);
-
                     $new_input = $request->all();
-                    foreach ($new_input['inventory_id'] as $index => $inventory_id){
-                        $transaction->itemOrders()->create([
-                            'inventory_id' => $inventory_id,
-                            'amount' => $new_input['amount'][$index],
-                            'price' => $new_input['price'][$index],
-                            'unit' => $new_input['unit'][$index],
-                            'total' => $new_input['amount'][$index] * $new_input['price'][$index]
-                        ]);
+                    foreach ($new_input['data'] as $data){
+                        $transaction->itemOrders()->create(json_decode($data, true));
                     }
+
                     $transactions = Transaction::with(['itemOrders'])->find($transaction->id);
                     break;
                 case 2 :
