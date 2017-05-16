@@ -16,7 +16,8 @@ class Transaction extends Model
         'price',
         'from_depo_id',
         'to_depo_id',
-        'other'
+        'other',
+        'number_transaction'
     ];
 
     public function staff(){
@@ -37,5 +38,9 @@ class Transaction extends Model
 
     public function patient(){
         return $this->belongsTo('App\Patient', 'patient_id', 'id');
+    }
+
+    public function itemOrders(){
+        return $this->hasMany('App\ItemOrder');
     }
 }

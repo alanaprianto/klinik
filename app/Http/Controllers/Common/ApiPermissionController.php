@@ -15,14 +15,7 @@ class ApiPermissionController extends GeneralController
      */
     public function index()
     {
-        $response = [];
-        try {
-            $permissions = $this->getPermissions();
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['permissions' => $permissions]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
+        return $this->getPermissions();
     }
 
     /**
@@ -52,6 +45,7 @@ class ApiPermissionController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
+            if(isset($request['input']))
             $permission = Permission::create($input);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['permission' => $permission]];
         } catch (\Exception $e) {

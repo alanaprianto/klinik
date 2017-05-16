@@ -37,8 +37,8 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/roles', '\App\Http\Controllers\GeneralController@getRoles');
         Route::get('/services', '\App\Http\Controllers\GeneralController@getServices');
         Route::get('/settings', '\App\Http\Controllers\GeneralController@getSettings');
-        Route::get('/staff-jobs', '\App\Http\Controllers\GeneralController@getStaffJobs');
-        Route::get('/staff-positions', '\App\Http\Controllers\GeneralController@getStaffPositions');
+/*        Route::get('/staff-jobs', '\App\Http\Controllers\GeneralController@getStaffJobs');
+        Route::get('/staff-positions', '\App\Http\Controllers\GeneralController@getStaffPositions');*/
         Route::get('/tuslahs', '\App\Http\Controllers\GeneralController@getTuslahs');
         Route::get('/users', '\App\Http\Controllers\GeneralController@getUsers');
         Route::get('/doctors', '\App\Http\Controllers\GeneralController@getDoctors');

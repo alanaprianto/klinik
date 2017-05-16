@@ -17,7 +17,7 @@ class ApiStaffPositionController extends Controller
     {
         $response = [];
         try {
-            $staffpositions = StaffPosition::get();
+            $staffpositions = StaffPosition::has('staff', '<', 1)->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffpositions' => $staffpositions]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

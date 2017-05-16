@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Common;
 
+use App\Hospital;
 use App\Http\Controllers\GeneralController;
 use App\Staff;
 use App\StaffJob;
@@ -34,17 +35,7 @@ class ApiStaffController extends GeneralController
      */
     public function create()
     {
-        $response = [];
-        try {
-            $staffjobs = $this->getStaffJobs();
-            $staffpositions = StaffPosition::has('staff', '<', 1)->get();
-            $staffpositions['recordsTotal'] = count($staffpositions);
 
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffjobs' => $staffjobs, 'staffpositions' => $staffpositions]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
     }
 
     /**
@@ -59,11 +50,16 @@ class ApiStaffController extends GeneralController
         try {
             $input = $request->all();
 
-            $input['hospital_id'] = $this->getHospital()->id;
+            $input['hospital_id'] = Hospital::first()->id;
             $staffjob = StaffJob::find($input['staff_job_id']);
             $staffposition = StaffPosition::find($input['staff_position_id']);
 
-            $staff = Staff::create($input);
+            $staff = '';
+            if(isset($input['staff_id']) && $input['staff_id']){
+                $staff = Staff::update($input);
+            }else{
+                $staff = Staff::create($input);
+            }
             $staff->attachStaffjob($staffjob);
             $staff->attachStaffposition($staffposition);
 
@@ -84,7 +80,7 @@ class ApiStaffController extends GeneralController
     {
         $response = [];
         try {
-            $staff = Staff::find($id);
+            $staff = Staff::with(['staffJob', 'staffPosition'])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -102,7 +98,7 @@ class ApiStaffController extends GeneralController
     {
         $response = [];
         try {
-            $staff = Staff::find($id);
+            $staff = Staff::with(['staffJob', 'staffPosition'])->find($id);
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -119,23 +115,7 @@ class ApiStaffController extends GeneralController
      */
     public function update(Request $request, $id)
     {
-        $response = [];
-        try {
-            $input = $request->all();
 
-            $input['hospital_id'] = $this->getHospital()->id;
-            $staffjob = StaffJob::find($input['staff_job_id']);
-            $staffposition = StaffPosition::find($input['staff_position_id']);
-
-            $staff = Staff::find($id);
-            $staff->attachStaffjob($staffjob);
-            $staff->attachStaffposition($staffposition);
-
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staff' => $staff]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
     }
 
     /**
