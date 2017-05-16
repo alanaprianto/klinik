@@ -12,10 +12,12 @@ class Inventory extends Model
         'type',
         'explain',
         'sediaan',
-        'price',
         'inventory_category_id',
         'is_tuslah',
-        'barcode_code'
+        'barcode_code',
+        'purchase_price',
+        'is_percentage',
+        'profit'
     ];
 
     public function batches(){
