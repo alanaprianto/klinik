@@ -71,6 +71,7 @@ class ApiInventoryController extends GeneralController
             }
 
             if(isset($input['inventory_tuslah_id']) && $input['inventory_tuslah_id']){
+                $inventory->update(['is_tuslah' => true]);
                 $inventory->tuslahs()->sync($input['inventory_tuslah_id']);
             }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventory' => $inventory]];
