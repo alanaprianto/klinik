@@ -13,11 +13,16 @@ class ApiStaffPositionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $response = [];
         try {
-            $staffpositions = StaffPosition::has('staff', '<', 1)->get();
+            $input = $request->all();
+            if(isset($input['used']) && ($input['used'] ==  'true')){
+                $staffpositions = StaffPosition::has('staff', '<', 1)->get();
+            }else{
+                $staffpositions = StaffPosition::get();
+            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['staffpositions' => $staffpositions]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
