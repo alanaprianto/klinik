@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Common;
 use App\Http\Controllers\GeneralController;
 use App\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApiServiceController extends GeneralController
 {
@@ -58,6 +59,7 @@ class ApiServiceController extends GeneralController
     public function store(Request $request)
     {
         $response = [];
+        DB::beginTransaction();
         try {
             $input = $request->all();
             $service = '';
@@ -66,8 +68,10 @@ class ApiServiceController extends GeneralController
             }else{
                 $service = Service::create($input);
             }
+            DB::commit();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['service' => $service]];
         } catch (\Exception $e) {
+            DB::rollback();
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
         return response()->json($response);
