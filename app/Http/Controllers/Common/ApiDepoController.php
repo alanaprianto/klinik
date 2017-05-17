@@ -138,8 +138,7 @@ class ApiDepoController extends Controller
             }])->whereHas('depos', function ($q) use ($input) {
                 $q->where('depos_id', $input['depo_id']);
             })->get();
-            return $inventories;
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['inventories' => $inventories, 'recordsTotal' => count($inventories)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }

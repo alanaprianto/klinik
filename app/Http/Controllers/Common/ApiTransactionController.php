@@ -121,20 +121,24 @@ class ApiTransactionController extends Controller
                     break;
                 case 3 :
                     /*case POS*/
-                    if($input['patient_id']){
+                    if(isset($input['patient_id']) && $input['patient_id']){
                         $patient = Patient::find($input['patient_id']);
                         if($patient){
                             $input['patient_id'] = $patient->id;
                         }
                     }else{
                         $data_user = [
-                            'name' => $input['name'] ? $input['name'] : null,
-                            'number_phone' => $input['number_phone'] ? $input['number_phone'] : null
+                            'name' => isset($input['name']) && $input['name'] ? $input['name'] : null,
+                            'number_phone' => isset($input['number_phone']) && $input['number_phone'] ? $input['number_phone'] : null
                         ];
+                        return $data_user;
                         $input['other'] = json_encode($data_user, true);
                     }
 
-                    foreach ($input['inventory_id'] as $index => $inventory_id){
+                    foreach ($input['data'] as $data){
+
+                    }
+/*                    foreach ($input['inventory_id'] as $index => $inventory_id){
                         $inventory = Inventory::find($inventory_id);
                         $stock = Stock::where('inventory_id', $inventory_id)->first();
                         $stock->update([
@@ -143,12 +147,12 @@ class ApiTransactionController extends Controller
 
                         $depo = Depo::with([
                             'inventories' => function($q) use($inventory_id){
-                            $q->where('inventories_id', $inventory_id);
-                        }, 'stocks' => function($q) use($inventory_id){
-                            $q->where('inventory_id', $inventory_id);
-                        }
+                                $q->where('inventories_id', $inventory_id);
+                            }, 'stocks' => function($q) use($inventory_id){
+                                $q->where('inventory_id', $inventory_id);
+                            }
                         ])->whereHas('inventories', function ($q1) use ($inventory_id){
-                           $q1->where('inventories_id', $inventory_id);
+                            $q1->where('inventories_id', $inventory_id);
                         })->first();
 
                         $for_input = [
@@ -161,7 +165,7 @@ class ApiTransactionController extends Controller
                             'other' => $input['other']
                         ];
                         array_push($transactions, $this->createTransactionRecord($for_input));
-                    }
+                    }*/
 
                     break;
                 case 4:
