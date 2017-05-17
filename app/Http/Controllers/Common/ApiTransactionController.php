@@ -131,42 +131,33 @@ class ApiTransactionController extends Controller
                             'name' => isset($input['name']) && $input['name'] ? $input['name'] : null,
                             'number_phone' => isset($input['number_phone']) && $input['number_phone'] ? $input['number_phone'] : null
                         ];
-                        return $data_user;
                         $input['other'] = json_encode($data_user, true);
                     }
 
-                    foreach ($input['data'] as $data){
+                    $depo = Depo::where('name', 'primary_depo')->first();
 
-                    }
-/*                    foreach ($input['inventory_id'] as $index => $inventory_id){
-                        $inventory = Inventory::find($inventory_id);
-                        $stock = Stock::where('inventory_id', $inventory_id)->first();
+                    $for_input = [
+                        'patient_id' => isset($input['patient_id']) && $input['patient_id'] ? $input['patient_id'] : null ,
+                        'type' => $input['type'],
+                        'status' => 1,
+                        'from_depo_id' => $depo->id,
+                        'other' => isset($input['patient_id']) && $input['patient_id'] ? null : $input['other'],
+                        'number_transaction' => 'SALE_'.Carbon::now()->format('YmdHis'),
+                    ];
+                    $transaction = $this->createTransactionRecord($for_input);
+
+                    foreach ($input['data'] as $data){
+/*                        $data = json_decode($data, true);*/
+                        $stock = Stock::where('depo_id', $depo->id)->where('inventory_id', $data['inventory_id'])->first();
                         $stock->update([
-                            'stock' => $stock->stock - $input['amount'][$index]
+                            'stock' => $stock->stock - $data['amount'],
+                            'total_stock' => $stock->stock - $data['amount']
                         ]);
 
-                        $depo = Depo::with([
-                            'inventories' => function($q) use($inventory_id){
-                                $q->where('inventories_id', $inventory_id);
-                            }, 'stocks' => function($q) use($inventory_id){
-                                $q->where('inventory_id', $inventory_id);
-                            }
-                        ])->whereHas('inventories', function ($q1) use ($inventory_id){
-                            $q1->where('inventories_id', $inventory_id);
-                        })->first();
+                        $transaction->itemOrders()->create($data);
+                    }
 
-                        $for_input = [
-                            'patient_id' => $input['patient_id'],
-                            'type' => $input['type'],
-                            'amount' => $input['amount'][$index],
-                            'status' => 1,
-                            'price' => $input['amount'][$index] * $stock->price,
-                            'from_depo_id' => $depo->id,
-                            'other' => $input['other']
-                        ];
-                        array_push($transactions, $this->createTransactionRecord($for_input));
-                    }*/
-
+                    $transactions = Transaction::with(['itemOrders'])->find($transaction->id);
                     break;
                 case 4:
                     /*case receive order*/
