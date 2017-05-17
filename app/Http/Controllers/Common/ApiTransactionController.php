@@ -71,9 +71,8 @@ class ApiTransactionController extends Controller
             switch ($input['type']) {
                 case 1 :
                     /*case ketika beli dari distributor*/
-                    $parent_depo = Depo::where('name', 'primary_depo')->first();
+
                     $input['status'] = 1;
-                    $input['to_depo_id'] = $parent_depo->id;
                     $input['number_transaction'] = 'PO_'.Carbon::now()->format('YmdHis');
                     $transaction = $this->createTransactionRecord($input);
                     $new_input = $request->all();
@@ -161,24 +160,38 @@ class ApiTransactionController extends Controller
                     }
 
                     break;
+                case 4:
+                    $transaction = Transaction::where('number_transaction', $input['number_transaction'])->first();
+                    $parent_depo = Depo::where('name', 'primary_depo')->first();
+                    $input['to_depo_id'] = $parent_depo->id;
+                    $input['staff_id'] = Staff::where('user_id', Auth::user()->id)->first()->id;
+                    $ro_transaction = $transaction->childs()->create($input);
+                    foreach ($input['data'] as $data){
+                        $data = json_decode($data, true);
+                        $ro_transaction->itemOrders()->create($data);
+
+                        $inventory = Inventory::find($data['inventory_id']);
+                        $inventory->update([
+                            'purchase_price' => $data['price']
+                        ]);
+
+                        $stock = Stock::where('inventory_id', $data['inventory_id'])->where('depo_id', $parent_depo->id)->first();
+                        if($stock){
+                            $stock->update([
+                                'stock' => $stock->stock + $data['amount']
+                            ]);
+                        }else{
+                            $inventory->stocks()->create([
+                                'stock' => $data['amount'],
+                                'depo_id' => $parent_depo->id
+                            ]);
+                        }
+                    }
+                    $transactions = Transaction::with(['parent', 'itemOrders'])->find($ro_transaction->id);
+                    break;
                 default :
             }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['transactions' => $transactions]];
-        } catch (\Exception $e) {
-            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
-        }
-        return response()->json($response);
-    }
-
-    public function receiveOrder(Request $request){
-        $response = [];
-        try {
-            $input = $request->all();
-            $transaction = Transaction::where('number_transaction', $input['number_transaction'])->first();
-            $test = $transaction->childs()->create($input);
-            return $test;
-
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }

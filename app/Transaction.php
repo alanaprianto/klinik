@@ -50,7 +50,7 @@ class Transaction extends Model
     }
 
     public function childs(){
-        return $this->hasMany('App\Transaction');
+        return $this->hasMany('App\Transaction', 'parent_id');
     }
 
     public function parent(){
