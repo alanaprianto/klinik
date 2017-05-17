@@ -26,9 +26,9 @@ class ApiTransactionController extends Controller
         $response = [];
         try {
             if ($request['type']) {
-                $transactions = Transaction::where('type', $request['type'])->paginate(25);
+                $transactions = Transaction::with(['staff', 'distributor', 'itemOrders'])->where('type', $request['type'])->paginate(25);
             } else {
-                $transactions = Transaction::paginate(25);
+                $transactions = Transaction::with(['staff', 'distributor', 'itemOrders'])->paginate(25);
             }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['transactions' => $transactions, 'recordsTotal' => count($transactions)]];
         } catch (\Exception $e) {
@@ -78,7 +78,7 @@ class ApiTransactionController extends Controller
                     $transaction = $this->createTransactionRecord($input);
                     $new_input = $request->all();
                     foreach ($new_input['data'] as $data){
-                        $transaction->itemOrders()->create(json_decode($data, true));
+                        $transaction->itemOrders()->create($data);
                     }
 
                     $transactions = Transaction::with(['itemOrders'])->find($transaction->id);
