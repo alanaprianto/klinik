@@ -86,42 +86,38 @@ class ApiTransactionController extends Controller
                     /*case buat transfer stock */
                     $from_depo = Depo::with(['inventories', 'stocks'])->find($input['from_depo_id']);
                     $to_depo = Depo::with(['inventories', 'stocks'])->find($input['to_depo_id']);
+                    $for_input = [
+                        'type' => 2,
+                        'status' => 1,
+                        'from_depo_id' => $from_depo->id,
+                        'to_depo_id' => $to_depo->id,
+                        'number_transaction' => 'TRF_'.Carbon::now()->format('YmdHis'),
+                    ];
+
+                    $transaction = $this->createTransactionRecord($for_input);
+
                     foreach ($input['data'] as $data){
                         $data = json_decode($data, true);
-                        $inventory = Inventory::find($data['inventory_id']);
-                        $stock = Stock::where('depo_id', $from_depo->id)->where('inventory_id', $inventory->id)->first();
-                        return $stock;
-                    }
-
-/*                    foreach ($input['inventory_id'] as $index => $inventory_id ){
-                        $to_depo->inventories()->sync([$inventory_id]);
-                        $to_depo = Depo::with(['inventories', 'stocks'])->find($input['to_depo_id']);
-                        $stock = Stock::where('inventory_id', $inventory_id)->where('depo_id', $to_depo->id)->first();
-                        if($stock){
-                            $stock->update([
-                                'stock' => $stock->stock + $input['amount'][$index],
-                                'price' => $input['price'][$index],
+                        $stock_from_depo = Stock::where('depo_id', $from_depo->id)->where('inventory_id', $data['inventory_id'])->first();
+                        $stock_from_depo->update([
+                            'stock' => $stock_from_depo->stock - $data['amount']
+                        ]);
+                        $stock_to_depo = Stock::where('depo_id', $to_depo->id)->where('inventory_id', $data['inventory_id'])->first();
+                        if($stock_to_depo){
+                            $stock_to_depo->update([
+                                'stock' => $stock_to_depo + $data['amount']
                             ]);
                         }else{
-                            $to_depo->stocks()->create([
-                                'stock' => $input['amount'][$index],
-                                'inventory_id' => $inventory_id,
-                                'price' => $input['price'][$index],
+                            Stock::create([
+                                'stock' => $data['amount'],
+                                'inventory_id' => $data['inventory_id'],
+                                'depo_id' => $to_depo->id
                             ]);
                         }
+                        $transaction->itemOrders()->create($data);
+                    }
 
-                        $for_input = [
-                            'type' => $input['type'],
-                            'amount' => $input['amount'][$index],
-                            'status' => 1,
-                            'price' => $input['price'][$index],
-                            'from_depo_id' => $from_depo->id,
-                            'to_depo_id' => $to_depo->id
-                        ];
-
-                        array_push($transactions, $this->createTransactionRecord($for_input));
-                    }*/
-
+                    $transactions = Transaction::with(['itemOrders'])->find($transaction->id);
                     break;
                 case 3 :
                     /*case POS*/
