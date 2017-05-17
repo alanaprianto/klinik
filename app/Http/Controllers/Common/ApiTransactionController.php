@@ -162,6 +162,7 @@ class ApiTransactionController extends Controller
                     break;
                 case 4:
                     $transaction = Transaction::where('number_transaction', $input['number_transaction'])->first();
+                    $transaction->update(['status' => 3]);
                     $parent_depo = Depo::where('name', 'primary_depo')->first();
                     $input['to_depo_id'] = $parent_depo->id;
                     $input['staff_id'] = Staff::where('user_id', Auth::user()->id)->first()->id;
@@ -187,7 +188,7 @@ class ApiTransactionController extends Controller
                             ]);
                         }
                     }
-                    $transactions = Transaction::with(['parent', 'itemOrders'])->find($ro_transaction->id);
+                    $transactions = Transaction::with(['childs'])->where('number_transaction', $input['number_transaction'])->first();
                     break;
                 default :
             }
