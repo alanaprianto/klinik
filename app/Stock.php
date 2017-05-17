@@ -8,6 +8,7 @@ class Stock extends Model
 {
     protected $fillable = [
         'stock',
+        'total_stock',
         'stock_minimal',
         'stock_maximal',
         'unit',

@@ -65,6 +65,9 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::post('/check-up/change-doctor', 'ApiCheckUpController@postDoctor');
         Route::post('/check-up/medical-record', 'ApiCheckUpController@postMedicalRecord');
 
+        /*depo inventory*/
+        Route::get('/depo-inventory', 'ApiDepoController@getInventoryDepo');
+
         /*route resource*/
         Route::resource('depo', 'ApiDepoController');
         Route::resource('queues', 'ApiQueueController');

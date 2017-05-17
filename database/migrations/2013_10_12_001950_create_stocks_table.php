@@ -16,6 +16,7 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->increments('id');
             $table->double('stock')->nullable();
+            $table->double('total_stock')->nullable();
             $table->double('stock_minimal')->nullable();
             $table->double('stock_maximal')->nullable();
             $table->string('unit')->nullable();

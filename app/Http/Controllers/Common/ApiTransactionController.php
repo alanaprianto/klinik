@@ -86,7 +86,14 @@ class ApiTransactionController extends Controller
                     /*case buat transfer stock */
                     $from_depo = Depo::with(['inventories', 'stocks'])->find($input['from_depo_id']);
                     $to_depo = Depo::with(['inventories', 'stocks'])->find($input['to_depo_id']);
-                    foreach ($input['inventory_id'] as $index => $inventory_id ){
+                    foreach ($input['data'] as $data){
+                        $data = json_decode($data, true);
+                        $inventory = Inventory::find($data['inventory_id']);
+                        $stock = Stock::where('depo_id', $from_depo->id)->where('inventory_id', $inventory->id)->first();
+                        return $stock;
+                    }
+
+/*                    foreach ($input['inventory_id'] as $index => $inventory_id ){
                         $to_depo->inventories()->sync([$inventory_id]);
                         $to_depo = Depo::with(['inventories', 'stocks'])->find($input['to_depo_id']);
                         $stock = Stock::where('inventory_id', $inventory_id)->where('depo_id', $to_depo->id)->first();
@@ -113,10 +120,11 @@ class ApiTransactionController extends Controller
                         ];
 
                         array_push($transactions, $this->createTransactionRecord($for_input));
-                    }
+                    }*/
 
                     break;
                 case 3 :
+                    /*case POS*/
                     if($input['patient_id']){
                         $patient = Patient::find($input['patient_id']);
                         if($patient){
@@ -161,6 +169,7 @@ class ApiTransactionController extends Controller
 
                     break;
                 case 4:
+                    /*case receive order*/
                     $transaction = Transaction::where('number_transaction', $input['number_transaction'])->first();
                     $transaction->update(['status' => 3]);
                     $parent_depo = Depo::where('name', 'primary_depo')->first();
@@ -179,7 +188,8 @@ class ApiTransactionController extends Controller
                         $stock = Stock::where('inventory_id', $data['inventory_id'])->where('depo_id', $parent_depo->id)->first();
                         if($stock){
                             $stock->update([
-                                'stock' => $stock->stock + $data['amount']
+                                'stock' => $stock->stock + $data['amount'],
+                                'total_stock' => $stock->total_stock + + $data['amount']
                             ]);
                         }else{
                             $inventory->stocks()->create([
