@@ -74,7 +74,7 @@ class ApiTransactionController extends Controller
                     $parent_depo = Depo::where('name', 'primary_depo')->first();
                     $input['status'] = 1;
                     $input['to_depo_id'] = $parent_depo->id;
-                    $input['number_transaction'] = Carbon::now()->format('YmdHis');
+                    $input['number_transaction'] = 'PO_'.Carbon::now()->format('YmdHis');
                     $transaction = $this->createTransactionRecord($input);
                     $new_input = $request->all();
                     foreach ($new_input['data'] as $data){
@@ -170,48 +170,18 @@ class ApiTransactionController extends Controller
         return response()->json($response);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    public function receiveOrder(Request $request){
+        $response = [];
+        try {
+            $input = $request->all();
+            $transaction = Transaction::where('number_transaction', $input['number_transaction'])->first();
+            $test = $transaction->childs()->create($input);
+            return $test;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
     }
 }

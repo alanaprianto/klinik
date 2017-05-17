@@ -65,6 +65,9 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::post('/check-up/change-doctor', 'ApiCheckUpController@postDoctor');
         Route::post('/check-up/medical-record', 'ApiCheckUpController@postMedicalRecord');
 
+        /*transaction*/
+        Route::post('/transactions/receive-order', 'ApiTransactionController@receiveOrder');
+
         /*route resource*/
         Route::resource('queues', 'ApiQueueController');
         Route::resource('payments', 'ApiPaymentController');

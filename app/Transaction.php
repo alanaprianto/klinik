@@ -21,7 +21,8 @@ class Transaction extends Model
         'sub_total',
         'tax',
         'shipping',
-        'shipping_terms'
+        'shipping_terms',
+        'parent_id'
     ];
 
     public function staff(){
@@ -46,5 +47,13 @@ class Transaction extends Model
 
     public function itemOrders(){
         return $this->hasMany('App\ItemOrder');
+    }
+
+    public function childs(){
+        return $this->hasMany('App\Transaction');
+    }
+
+    public function parent(){
+        return $this->belongsTo('App\Transaction', 'parent_id', 'id');
     }
 }
