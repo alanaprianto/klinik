@@ -167,7 +167,7 @@ class ApiTransactionController extends Controller
                     $input['staff_id'] = Staff::where('user_id', Auth::user()->id)->first()->id;
                     $ro_transaction = $transaction->childs()->create($input);
                     foreach ($input['data'] as $data){
-                        $data = json_decode($data, true);
+/*                        $data = json_decode($data, true);*/
                         $ro_transaction->itemOrders()->create($data);
 
                         $inventory = Inventory::find($data['inventory_id']);
