@@ -97,7 +97,7 @@ class ApiTransactionController extends Controller
                     $transaction = $this->createTransactionRecord($for_input);
 
                     foreach ($input['data'] as $data){
-/*                        $data = json_decode($data, true);*/
+                        $data = json_decode($data, true);
                         $stock_from_depo = Stock::where('depo_id', $from_depo->id)->where('inventory_id', $data['inventory_id'])->first();
                         $stock_from_depo->update([
                             'stock' => $stock_from_depo->stock - $data['amount']
@@ -117,7 +117,7 @@ class ApiTransactionController extends Controller
                         $transaction->itemOrders()->create($data);
                     }
 
-                    $transactions = Transaction::with(['itemOrders'])->find($transaction->id);
+                    $transactions = Transaction::with(['itemOrders', 'itemOrders.inventory'])->find($transaction->id);
                     break;
                 case 3 :
                     /*case POS*/
