@@ -98,6 +98,16 @@ class ApiTransactionController extends Controller
 
                     foreach ($input['data'] as $data){
                         $data = json_decode($data, true);
+                        $inventory = Inventory::whereHas('depos', function ($q)use($to_depo){
+                            $q->where('depos_id', $to_depo->id);
+                        })->whereHas('stocks', function ($q) use($data){
+                            $q->where('inventory_id', $data['inventory_id']);
+                        })->first();
+
+                        if(!$inventory){
+                            $to_depo->inventories()->attach($data['inventory_id']);
+                        }
+
                         $stock_from_depo = Stock::where('depo_id', $from_depo->id)->where('inventory_id', $data['inventory_id'])->first();
                         $stock_from_depo->update([
                             'stock' => $stock_from_depo->stock - $data['amount']
