@@ -105,7 +105,7 @@ class ApiTransactionController extends Controller
                         $stock_to_depo = Stock::where('depo_id', $to_depo->id)->where('inventory_id', $data['inventory_id'])->first();
                         if($stock_to_depo){
                             $stock_to_depo->update([
-                                'stock' => $stock_to_depo + $data['amount']
+                                'stock' => $stock_to_depo->stock + $data['amount']
                             ]);
                         }else{
                             Stock::create([
