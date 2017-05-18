@@ -97,7 +97,7 @@ class ApiTransactionController extends Controller
                     $transaction = $this->createTransactionRecord($for_input);
 
                     foreach ($input['data'] as $data){
-                        $data = json_decode($data, true);
+/*                        $data = json_decode($data, true);*/
                         $inventory = Inventory::whereHas('depos', function ($q)use($to_depo){
                             $q->where('depos_id', $to_depo->id);
                         })->whereHas('stocks', function ($q) use($data){
