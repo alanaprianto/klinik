@@ -74,7 +74,6 @@ class ApiCheckUpController extends GeneralController
                 ]);
             }
             $reference = Reference::with(['register', 'register.patient','payments' ,'doctor', 'doctor.doctorService', 'medicalRecords'])->find($input['reference_id']);
-
             /*main logic*/
             $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
             $reference->payments()->create([

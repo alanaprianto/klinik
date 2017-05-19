@@ -22,7 +22,8 @@ class Transaction extends Model
         'tax',
         'shipping',
         'shipping_terms',
-        'parent_id'
+        'parent_id',
+        'payment_method'
     ];
 
     public function staff(){

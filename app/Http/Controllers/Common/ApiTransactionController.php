@@ -153,6 +153,8 @@ class ApiTransactionController extends Controller
                         'from_depo_id' => $depo->id,
                         'other' => isset($input['patient_id']) && $input['patient_id'] ? null : $input['other'],
                         'number_transaction' => 'SALE_'.Carbon::now()->format('YmdHis'),
+                        'total_payment' => isset($input['total_payment']) && $input['total_payment'] ? $input['total_payment'] : null,
+                        'payment_method' => isset($input['payment_method']) && $input['payment_method'] ? $input['payment_method'] : null
                     ];
                     $transaction = $this->createTransactionRecord($for_input);
 
