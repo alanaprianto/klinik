@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateObjectPricesTable extends Migration
+class CreateRoomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateObjectPricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('object_prices', function (Blueprint $table) {
+        Schema::create('rooms', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name')->nullable();
+            $table->string('display_name')->nullable();
+            $table->text('desc')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateObjectPricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('object_prices');
+        Schema::dropIfExists('rooms');
     }
 }

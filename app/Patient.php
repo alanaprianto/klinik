@@ -47,6 +47,10 @@ class Patient extends Model
         return $this->hasMany('App\Transaction');
     }
 
+    public function RegisterInpatients(){
+        return $this->hasMany('App\RegisterInpatient');
+    }
+
     /*mutator set*/
     public function setBirthAttribute($value)
     {

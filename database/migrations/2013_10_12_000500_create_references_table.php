@@ -27,6 +27,8 @@ class CreateReferencesTable extends Migration
             $table->foreign('poly_id')->references('id')->on('polies')->onDelete('cascade');
             $table->integer('staff_id')->unsigned()->nullable();
             $table->foreign('staff_id')->references('id')->on('staff')->onDelete('cascade');
+            $table->integer('room_id')->unsigned()->nullable();
+            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
             $table->timestamps();
         });
     }

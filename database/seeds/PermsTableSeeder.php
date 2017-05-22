@@ -18,8 +18,11 @@ class PermsTableSeeder extends Seeder
         $p4 = ['name' => 'apotek', 'display_name' => 'Apotek', 'description' => 'Apotek Permission', 'parent_id' => null, 'image' => 'assets/images/logo/farmasi-101.png'];
         $p5 = ['name' => 'data_patient', 'display_name' => 'Data Patient', 'description' => 'Data Patient', 'parent_id' => null, 'image' => 'assets/images/logo/farmasi-101.png'];
         $p6 = ['name' => 'master_data', 'display_name' => 'Master Data', 'description' => 'Master Data', 'parent_id' => null, 'image' => 'assets/images/logo/farmasi-101.png'];
+        $p7 = ['name' => 'rawat_inap', 'display_name' => 'Rawat Inap', 'description' => 'Rawat Inap Permissions', 'parent_id' => null, 'image' => 'assets/images/logo/rawat-inap.png'];
+        $p8 = ['name' => 'laboratorium', 'display_name' => 'Laboratorium', 'description' => 'Laboratorium Role', 'parent_id' => null, 'image' => 'assets/images/logo/lab.png'];
+        $p9 = ['name' => 'radiologi', 'display_name' => 'Radiologi', 'description' => 'Radiologi Role', 'parent_id' => null, 'image' => 'assets/images/logo/lab.png'];
 
-        \Illuminate\Support\Facades\DB::table('permissions')->insert([$p1, $p2, $p3, $p4, $p5, $p6]);
+        \Illuminate\Support\Facades\DB::table('permissions')->insert([$p1, $p2, $p3, $p4, $p5, $p6, $p7, $p8, $p9]);
 
         $penata_jasa = \App\Permission::where('name', 'penata_jasa')->first();
 

@@ -21,7 +21,8 @@ class Register extends Model
         'service_type',
         'first_diagnose',
         'payment_status',
-        'total_customer_payment'
+        'total_customer_payment',
+        'type'
     ];
 
     public function patient(){
