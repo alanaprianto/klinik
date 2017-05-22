@@ -2,29 +2,23 @@
 
 namespace App\Http\Controllers\Common;
 
-use App\Room;
+use App\ClassRoom;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ApiRoomController extends Controller
+class ApiClassRoomController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $response = [];
         try {
-            $input = $request->all();
-            $rooms = '';
-            if(isset($input['class_room_id']) && $input['class_room_id']){
-                $rooms = Room::with(['classRoom', 'beds'])->where('class_room_id', $input['class_room_id'])->get();
-            }else{
-                $rooms = Room::with(['classRoom', 'beds'])->get();
-            }
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['rooms' => $rooms], 'recordsTotal' => count($rooms)];
+            $class_rooms = ClassRoom::with(['rooms', 'rooms.beds'])->get();
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['class_rooms' => $class_rooms, 'recordsTotal' => count($class_rooms)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -52,15 +46,14 @@ class ApiRoomController extends Controller
         $response = [];
         try {
             $input = $request->all();
-            $room = '';
-            if (isset($input['room_id']) && $input['room_id']) {
-                $room = Room::find($input['room_id']);
-                $room->update($input);
+            $class_room = '';
+            if (isset($input['class_room_id']) && $input['class_room_id']) {
+                $class_room = ClassRoom::find($input['class_room_id']);
+                $class_room->update($input);
             } else {
-                $room = Room::create($input);
+                $class_room = ClassRoom::create($input);
             }
-
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['room' => $room]];
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['class_room' => $class_room]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -77,8 +70,8 @@ class ApiRoomController extends Controller
     {
         $response = [];
         try {
-            $room = Room::with(['classRoom', 'beds'])->find($id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['room' => $room]];
+            $class_room = ClassRoom::with(['rooms', 'rooms.beds'])->find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['class_room' => $class_room]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -95,8 +88,8 @@ class ApiRoomController extends Controller
     {
         $response = [];
         try {
-            $room = Room::with(['classRoom', 'beds'])->find($id);
-            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['room' => $room]];
+            $class_room = ClassRoom::with(['rooms', 'rooms.beds'])->find($id);
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['class_room' => $class_room]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
         }
@@ -125,8 +118,8 @@ class ApiRoomController extends Controller
     {
         $response = [];
         try {
-            $room = Room::find($id);
-            $room->delete();
+            $class_room = ClassRoom::with(['rooms', 'rooms.beds'])->find($id);
+            $class_room->delete();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => []];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];

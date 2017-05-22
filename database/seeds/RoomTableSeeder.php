@@ -17,26 +17,21 @@ class RoomTableSeeder extends Seeder
 
         \Illuminate\Support\Facades\DB::table('class_rooms')->insert([$cr1, $cr2, $cr3]);
 
-        $room1 = ['name' => 'melati', 'display_name' => 'Kamar Melati'];
-        $room2 = ['name' => 'anggrek', 'display_name' => 'Kamar Anggrek'];
-        $room3 = ['name' => 'tulip', 'display_name' => 'Kamar Tulip'];
-
-        \Illuminate\Support\Facades\DB::table('rooms')->insert([$room1, $room2, $room3]);
-
 
         $class1 = \App\ClassRoom::where('name', 'reguler')->first();
         $class2 = \App\ClassRoom::where('name', 'vip')->first();
         $class3 = \App\ClassRoom::where('name', 'vvip')->first();
 
+        $room1 = ['name' => 'melati', 'display_name' => 'Kamar Melati', 'class_room_id' => $class1->id];
+        $room2 = ['name' => 'anggrek', 'display_name' => 'Kamar Anggrek', 'class_room_id' => $class2->id];
+        $room3 = ['name' => 'tulip', 'display_name' => 'Kamar Tulip', 'class_room_id' => $class3->id];
+
+        \Illuminate\Support\Facades\DB::table('rooms')->insert([$room1, $room2, $room3]);
+
 
         $r1 = \App\Room::find(1);
         $r2 = \App\Room::find(2);
         $r3 = \App\Room::find(3);
-
-        $r1->classRooms()->sync([$class1->id, $class2->id, $class3->id]);
-        $r2->classRooms()->sync([$class1->id, $class2->id, $class3->id]);
-        $r3->classRooms()->sync([$class1->id, $class2->id, $class3->id]);
-
 
         $b1 = ['name' => 'bed_1', 'display_name' => 'Bed 1', 'status' => '0', 'room_id' => $r1->id];
         $b2 = ['name' => 'bed_2', 'display_name' => 'Bed 2', 'status' => '0', 'room_id' => $r1->id];

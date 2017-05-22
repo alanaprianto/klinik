@@ -19,6 +19,8 @@ class CreateRoomsTable extends Migration
             $table->string('display_name')->nullable();
             $table->text('desc')->nullable();
             $table->string('type')->nullable();
+            $table->integer('class_room_id')->unsigned()->nullable();
+            $table->foreign('class_room_id')->references('id')->on('class_rooms')->onDelete('cascade');
             $table->timestamps();
         });
     }

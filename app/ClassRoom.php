@@ -13,6 +13,6 @@ class ClassRoom extends Model
     ];
 
     public function rooms(){
-        return $this->belongsToMany('App\Room', 'class_rooms_rooms', 'rooms_id', 'class_rooms_id');
+        return $this->hasMany('App\Room');
     }
 }

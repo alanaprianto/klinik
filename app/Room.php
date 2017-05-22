@@ -10,15 +10,16 @@ class Room extends Model
         'name',
         'display_name',
         'desc',
-        'type'
+        'type',
+        'class_room_id'
     ];
 
     public function references(){
         return $this->hasMany('App\Reference');
     }
 
-    public function classRooms(){
-        return $this->belongsToMany('App\ClassRoom', 'class_rooms_rooms', 'class_rooms_id','rooms_id');
+    public function classRoom(){
+        return $this->belongsTo('App\ClassRoom', 'class_room_id', 'id');
     }
 
     public function beds(){

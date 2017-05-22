@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\CheckRegister;
 use App\Console\Commands\ClearQueue;
+use App\Console\Commands\DefaultToken;
 use Illuminate\Console\Command;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -17,7 +18,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ClearQueue::class,
-        CheckRegister::class
+        CheckRegister::class,
+        DefaultToken::class
     ];
 
     /**
