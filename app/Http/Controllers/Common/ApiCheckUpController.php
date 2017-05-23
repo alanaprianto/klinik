@@ -93,7 +93,7 @@ class ApiCheckUpController extends GeneralController
 
 
             foreach ($input['data_service'] as $data){
-                $data = json_decode($data, true);
+/*                $data = json_decode($data, true);*/
                 $service = Service::find($data['service_id']);
                 $total_payments = $service->cost * $data['amount'];
                 /*create medical record*/
@@ -114,7 +114,7 @@ class ApiCheckUpController extends GeneralController
             }
 
             foreach ($input['data_medicine'] as $data){
-                $data = json_decode($data, true);
+/*                $data = json_decode($data, true);*/
                 $inventory = Inventory::find($data['inventory_id']);
                 $total_payments = $inventory->purchase_price * $data['amount'];
                 $reference->medicalRecords()->create([
