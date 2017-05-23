@@ -29,6 +29,8 @@ class CreateMedicalRecordsTable extends Migration
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
             $table->integer('service_id')->unsigned()->nullable();
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->integer('inventory_id')->unsigned()->nullable();
+            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
             $table->timestamps();
         });
     }

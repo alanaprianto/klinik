@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\GeneralController;
+use App\Inventory;
 use App\Kiosk;
 use App\MedicalRecord;
 use App\Patient;
@@ -74,6 +75,7 @@ class ApiCheckUpController extends GeneralController
                 ]);
             }
             $reference = Reference::with(['register', 'register.patient','payments' ,'doctor', 'doctor.doctorService', 'medicalRecords'])->find($input['reference_id']);
+
             /*main logic*/
             $doctor = Staff::with(['doctorService'])->find($input['doctor_id']);
             $reference->payments()->create([
@@ -89,7 +91,50 @@ class ApiCheckUpController extends GeneralController
                 $grand_total_payment = $reference->doctor->doctorService->cost;
             }
 
-            foreach ($input['service_ids'] as $index_service => $service_id){
+
+            foreach ($input['data_service'] as $data){
+                $data = json_decode($data, true);
+                $service = Service::find($data['service_id']);
+                $total_payments = $service->cost * $data['amount'];
+                /*create medical record*/
+                $reference->medicalRecords()->create([
+                    'type' => 'medical_record_service',
+                    'service_id' => $data['service_id'],
+                    'quantity' => $data['amount']
+                ]);
+                /*create payment*/
+                $reference->payments()->create([
+                    'total' => $total_payments,
+                    'type' => 'medical_record_service',
+                    'status' => 0,
+                    'service_id' => $data['service_id'],
+                    'quantity' => $data['amount']
+                ]);
+                $grand_total_payment += $total_payments;
+            }
+
+            foreach ($input['data_medicine'] as $data){
+                $data = json_decode($data, true);
+                $inventory = Inventory::find($data['inventory_id']);
+                $total_payments = $inventory->purchase_price * $data['amount'];
+                $reference->medicalRecords()->create([
+                    'type' => 'medical_record_medicine',
+                    'inventory_id' => $data['inventory_id'],
+                    'quantity' => $data['amount']
+                ]);
+                /*create payment*/
+                $reference->payments()->create([
+                    'total' => $total_payments,
+                    'type' => 'medical_record_medicine',
+                    'status' => 0,
+                    'inventory_id' => $data['inventory_id'],
+                    'quantity' => $data['amount']
+                ]);
+                $grand_total_payment += $total_payments;
+            }
+
+
+/*            foreach ($input['service_ids'] as $index_service => $service_id){
                 $amount = $input['service_amounts'][$index_service];
                 $service = Service::find($service_id);
                 $reference->medicalRecords()->create([
@@ -107,7 +152,7 @@ class ApiCheckUpController extends GeneralController
                 ]);
 
                 $grand_total_payment += $total_payments;
-            }
+            }*/
 
             $new_reference = '';
             switch ($input['status']){

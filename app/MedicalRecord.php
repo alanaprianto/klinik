@@ -10,6 +10,7 @@ class MedicalRecord extends Model
         'reference_id',
         'patient_id',
         'service_id',
+        'inventory_id',
         'quantity',
         'subsidy',
         'total_sum',
@@ -41,5 +42,9 @@ class MedicalRecord extends Model
 
     public function service(){
         return $this->belongsTo('App\Service', 'service_id', 'id');
+    }
+
+    public function inventory(){
+        return $this->belongsTo('App\Inventory', 'inventory_id', 'id');
     }
 }
