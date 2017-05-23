@@ -23,11 +23,18 @@ class ApiRegistrationController extends GeneralController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $response = [];
         try {
-            $registers = Register::with(['patient', 'staff', 'references', 'references.poly', 'references.doctor'])->orderBy('created_at', 'desc')->get();
+            $input = $request->all();
+            $registers = '';
+            if(isset($input['type']) && $input['type']){
+                $registers = Register::with(['patient', 'staff', 'references', 'references.poly', 'references.doctor'])
+                    ->where('type', $input['type'])->orderBy('created_at', 'desc')->get();
+            }else{
+                $registers = Register::with(['patient', 'staff', 'references', 'references.poly', 'references.doctor'])->orderBy('created_at', 'desc')->get();
+            }
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['registers' => $registers, 'recordsTotal' => count($registers)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
@@ -152,7 +159,6 @@ class ApiRegistrationController extends GeneralController
         $response = [];
         try {
             $input = $request->all();
-
             /*update kiosk status to finished*/
             if (isset($input['kiosk_id'])) {
                 $kiosk = Kiosk::find($input['kiosk_id']);
@@ -168,17 +174,16 @@ class ApiRegistrationController extends GeneralController
 
 
             /*select patient from database or create new*/
-            if (isset($input['patient_id'])) {
+            if (isset($input['patient_id']) && $input['patient_id']) {
                 $patient = Patient::find($input['patient_id']);
             } else {
                 $patient = Patient::create($input);
             }
-
             /*define user logged*/
             $user = User::with('staff')->find(Auth::user()->id);
 
             /*add input data for create new register */
-            $input['register_number'] = Carbon::now()->format('Ymdhis');
+            $input['register_number'] = 'REG_'.Carbon::now()->format('Ymdhis');
             $input['staff_id'] = $user->staff->id;
             $input['patient_id'] = $patient->id;
             $input['status'] = 1;
@@ -187,7 +192,11 @@ class ApiRegistrationController extends GeneralController
             $register = Register::create($input);
 
             /*add reference to poly*/
-            $reference = $this->addReference($input, $register);
+            if(isset($input['type']) && $input['type']){
+                $reference = $this->addReferenceInpatient($input, $register);
+            }else{
+                $reference = $this->addReference($input, $register);
+            }
 
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['reference' => $reference]];
         } catch (\Exception $e) {

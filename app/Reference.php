@@ -16,7 +16,11 @@ class Reference extends Model
         'is_checked',
         'payment_status',
         'reference_total_payment',
-        'room_id'
+        'class_room_id',
+        'room_id',
+        'bed_id',
+        'check_in',
+        'check_out'
     ];
 
     public function register()
@@ -43,7 +47,15 @@ class Reference extends Model
         return $this->hasMany('App\Payment');
     }
 
+    public function classRoom(){
+        return $this->belongsTo('App\ClassRoom', 'class_room_id', 'id');
+    }
+
     public function room(){
-        return $this->belongsTo('App\ClassRoom', 'room_id', 'id');
+        return $this->belongsTo('App\Room', 'room_id', 'id');
+    }
+
+    public function bed(){
+        return $this->belongsTo('App\Bed', 'bed_id', 'id');
     }
 }

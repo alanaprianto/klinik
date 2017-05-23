@@ -15,4 +15,8 @@ class ClassRoom extends Model
     public function rooms(){
         return $this->hasMany('App\Room');
     }
+
+    public function references(){
+        return $this->hasMany('App\Reference');
+    }
 }

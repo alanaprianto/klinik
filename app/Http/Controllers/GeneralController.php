@@ -32,6 +32,7 @@ use App\User;
 use Carbon\Carbon;
 use File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GeneralController extends Controller
 {
@@ -59,7 +60,7 @@ class GeneralController extends Controller
     protected function addReference($input, $register){
         $poly = Poly::find($input['poly_id']);
         $reference = Reference::create([
-            'number_reference' => Carbon::now()->format('Ymdhis'),
+            'number_reference' => 'REF_'.Carbon::now()->format('Ymdhis'),
             'register_id' => $register->id,
             'poly_id' => $poly->id,
             'staff_id' => $input['doctor_id'],
@@ -68,6 +69,20 @@ class GeneralController extends Controller
         $final_reference = Reference::with(['poly'])->find($reference->id);
         $final_reference['kiosk'] = $this->getKioskQueue($poly->name, $final_reference->id);
         return $final_reference;
+    }
+
+    protected function addReferenceInpatient($input, $register){
+        $reference = Reference::create([
+            'number_reference' => 'REF_'.Carbon::now()->format('Ymdhis'),
+            'register_id' => $register->id,
+            'status' => 1,
+            'staff_id' => Staff::where('user_id', Auth::user()->id)->first()->id,
+            'class_room_id' => $input['class_room_id'],
+            'room_id' => $input['room_id'],
+            'bed_id' => $input['bed_id']
+        ]);
+
+        return $reference;
     }
 
     /*get all Model*/

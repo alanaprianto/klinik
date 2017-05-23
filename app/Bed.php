@@ -17,4 +17,8 @@ class Bed extends Model
     public function room(){
         return $this->belongsTo('App\Room', 'room_id', 'id');
     }
+
+    public function references(){
+        return $this->hasMany('App\Reference');
+    }
 }

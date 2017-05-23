@@ -26,6 +26,7 @@ class CreateRegistersTable extends Migration
             $table->string('service_type')->nullable();
             $table->text('first_diagnose')->nullable();
             $table->integer('payment_status')->nullable();
+            $table->integer('type')->default(0);
             $table->integer('patient_id')->unsigned()->nullable();
             $table->integer('staff_id')->unsigned()->nullable();
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');

@@ -21,6 +21,8 @@ class CreateReferencesTable extends Migration
             $table->boolean('is_checked')->default(0);
             $table->integer('payment_status')->nullable();
             $table->double('reference_total_payment')->nullable();
+            $table->timestamp('check_in')->nullable();
+            $table->timestamp('check_out')->nullable();
             $table->integer('register_id')->unsigned()->nullable();
             $table->foreign('register_id')->references('id')->on('registers')->onDelete('cascade');
             $table->integer('poly_id')->unsigned()->nullable();
@@ -29,6 +31,10 @@ class CreateReferencesTable extends Migration
             $table->foreign('staff_id')->references('id')->on('staff')->onDelete('cascade');
             $table->integer('room_id')->unsigned()->nullable();
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
+            $table->integer('class_room_id')->unsigned()->nullable();
+            $table->foreign('class_room_id')->references('id')->on('class_rooms')->onDelete('cascade');
+            $table->integer('bed_id')->unsigned()->nullable();
+            $table->foreign('bed_id')->references('id')->on('beds')->onDelete('cascade');
             $table->timestamps();
         });
     }
