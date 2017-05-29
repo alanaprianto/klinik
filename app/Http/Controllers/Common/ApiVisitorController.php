@@ -19,19 +19,28 @@ class ApiVisitorController extends GeneralController
         try {
             $input = $request->all();
             $patients = '';
-            if(isset($input['type']) && $input['type']){
-                $patients = Patient::with(['registers', 'registers.patient', 'registers.staff' ,'registers.references', 'registers.references.medicalRecords' ,'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])
-                    ->whereHas('registers', function ($query) use($input){
-                        $query->whereHas('references', function ($query2) use ($input){
-                            $query2->whereHas('poly', function ($query3) use ($input){
-                                $query3->where('name', $input['type']);
+
+            if(isset($input['reg_type']) && $input['reg_type']){
+                $patients = Patient::with(['registers', 'registers.patient', 'registers.staff', 'registers.references', 'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])
+                    ->whereHas('registers', function($query)use($input){
+                        $query->where('type', $input['reg_type']);
+                    })->orderBy('created_at', 'desc')->get();
+            }else {
+                if (isset($input['type']) && $input['type']) {
+                    $patients = Patient::with(['registers', 'registers.patient', 'registers.staff', 'registers.references', 'registers.references.medicalRecords', 'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])
+                        ->whereHas('registers', function ($query) use ($input) {
+                            $query->whereHas('references', function ($query2) use ($input) {
+                                $query2->whereHas('poly', function ($query3) use ($input) {
+                                    $query3->where('name', $input['type']);
+                                });
                             });
-                        });
-                    })
-                    ->orderBy('created_at', 'desc')->get();
-            }else{
-                $patients = Patient::with(['registers', 'registers.patient', 'registers.staff' ,'registers.references', 'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])->get();
+                        })
+                        ->orderBy('created_at', 'desc')->get();
+                } else {
+                    $patients = Patient::with(['registers', 'registers.patient', 'registers.staff', 'registers.references', 'registers.references.doctor', 'registers.references.poly', 'registers.references.medicalRecords'])->orderBy('created_at', 'desc')->get();
+                }
             }
+
             foreach ($patients as $index => $patient){
                 $patients[$index]['registersTotal'] = count($patient->registers);
                 $reference_total = 0;

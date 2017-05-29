@@ -134,26 +134,6 @@ class ApiCheckUpController extends GeneralController
             }
 
 
-/*            foreach ($input['service_ids'] as $index_service => $service_id){
-                $amount = $input['service_amounts'][$index_service];
-                $service = Service::find($service_id);
-                $reference->medicalRecords()->create([
-                    'type' => 'medical_record',
-                    'service_id' => $service_id,
-                    'quantity' => $amount
-                ]);
-                $total_payments = $service->cost * $amount;
-                $reference->payments()->create([
-                    'total' => $total_payments,
-                    'type' => 'medical_record',
-                    'status' => 0,
-                    'service_id' => $service_id,
-                    'quantity' => $amount
-                ]);
-
-                $grand_total_payment += $total_payments;
-            }*/
-
             $new_reference = '';
             switch ($input['status']){
                 case '2':
