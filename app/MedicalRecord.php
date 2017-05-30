@@ -37,7 +37,7 @@ class MedicalRecord extends Model
 
     public function staff()
     {
-        return $this->belongsToMany('App\Staff', 'staff_medical_records', 'staff_id', 'medical_records_id');
+        return $this->belongsToMany('App\Staff', 'staff_medical_records', 'medical_records_id', 'staff_id');
     }
 
     public function service(){

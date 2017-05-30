@@ -38,7 +38,7 @@ class CheckRegister extends Command
      */
     public function handle()
     {
-        $registers = Register::where('status', 1)->get();
+        $registers = Register::where('type', 0)->where('status', 1)->get();
         foreach ($registers as $register){
             $register->update([
                 'status' => 2
