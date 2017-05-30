@@ -20,7 +20,7 @@ class ApiCheckupInpatientController extends Controller
     {
         $response = [];
         try {
-            $registers = Register::with(['references', 'references.classRoom', 'references.room', 'references.bed'])->where('type', 1)->get();
+            $registers = Register::with(['patient','references', 'references.classRoom', 'references.room', 'references.bed'])->where('type', 1)->get();
             $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['registers' => $registers, 'recordsTotal' => count($registers)]];
         } catch (\Exception $e) {
             $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
