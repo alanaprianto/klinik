@@ -12,7 +12,7 @@ class Bed extends Model
         'desc',
         'status',
         'room_id',
-        'patient_id'
+        'patient_id',
     ];
 
     public function room(){

@@ -89,7 +89,10 @@ class GeneralController extends Controller
             'room_id' => $room->id
         ]);
         $bed = $room->beds()->find($input['bed_id']);
-        $bed->update(['patient_id' => $patient->id]);
+        $bed->update([
+            'patient_id' => $patient->id,
+            'status' => 1
+        ]);
 
         return $reference;
     }
