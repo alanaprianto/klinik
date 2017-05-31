@@ -27,6 +27,7 @@ class CreatePatientRelationTable extends Migration
     public function down()
     {
         Schema::table('patients', function ($table) {
+            $table->dropForeign('patients_room_id_foreign');
             $table->dropColumn('room_id');
         });
     }

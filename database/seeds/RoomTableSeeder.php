@@ -33,15 +33,15 @@ class RoomTableSeeder extends Seeder
         $r2 = \App\Room::find(2);
         $r3 = \App\Room::find(3);
 
-        $b1 = ['name' => 'bed_1', 'display_name' => 'Bed 1', 'status' => '0', 'room_id' => $r1->id];
-        $b2 = ['name' => 'bed_2', 'display_name' => 'Bed 2', 'status' => '0', 'room_id' => $r1->id];
-        $b3 = ['name' => 'bed_3', 'display_name' => 'Bed 3', 'status' => '0', 'room_id' => $r1->id];
-        $b4 = ['name' => 'bed_4', 'display_name' => 'Bed 4', 'status' => '0', 'room_id' => $r2->id];
-        $b5 = ['name' => 'bed_5', 'display_name' => 'Bed 5', 'status' => '0', 'room_id' => $r2->id];
-        $b6 = ['name' => 'bed_6', 'display_name' => 'Bed 6', 'status' => '0', 'room_id' => $r2->id];
-        $b7 = ['name' => 'bed_7', 'display_name' => 'Bed 7', 'status' => '0', 'room_id' => $r3->id];
-        $b8 = ['name' => 'bed_8', 'display_name' => 'Bed 8', 'status' => '0', 'room_id' => $r3->id];
-        $b9 = ['name' => 'bed_9', 'display_name' => 'Bed 9', 'status' => '0', 'room_id' => $r3->id];
+        $b1 = ['name' => 'bed_1', 'display_name' => 'Bed 1', 'room_id' => $r1->id];
+        $b2 = ['name' => 'bed_2', 'display_name' => 'Bed 2', 'room_id' => $r1->id];
+        $b3 = ['name' => 'bed_3', 'display_name' => 'Bed 3', 'room_id' => $r1->id];
+        $b4 = ['name' => 'bed_4', 'display_name' => 'Bed 4', 'room_id' => $r2->id];
+        $b5 = ['name' => 'bed_5', 'display_name' => 'Bed 5', 'room_id' => $r2->id];
+        $b6 = ['name' => 'bed_6', 'display_name' => 'Bed 6', 'room_id' => $r2->id];
+        $b7 = ['name' => 'bed_7', 'display_name' => 'Bed 7', 'room_id' => $r3->id];
+        $b8 = ['name' => 'bed_8', 'display_name' => 'Bed 8', 'room_id' => $r3->id];
+        $b9 = ['name' => 'bed_9', 'display_name' => 'Bed 9', 'room_id' => $r3->id];
 
         \Illuminate\Support\Facades\DB::table('beds')->insert([$b1, $b2, $b3, $b4, $b5, $b6, $b7, $b8, $b9]);
     }
