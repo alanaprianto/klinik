@@ -21,6 +21,8 @@ class CreateBedsTable extends Migration
             $table->integer('status')->nullable();
             $table->integer('room_id')->nullable()->unsigned();
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
+            $table->integer('patient_id')->nullable()->unsigned();
+            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
             $table->timestamps();
         });
     }

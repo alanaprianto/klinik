@@ -21,6 +21,7 @@ use App\Province;
 use App\Reference;
 use App\Register;
 use App\Role;
+use App\Room;
 use App\Service;
 use App\Setting;
 use App\Staff;
@@ -81,6 +82,14 @@ class GeneralController extends Controller
             'room_id' => $input['room_id'],
             'bed_id' => $input['bed_id']
         ]);
+
+        $patient = Patient::find($input['patient_id']);
+        $room = Room::find($input['room_id']);
+        $patient->update([
+            'room_id' => $room->id
+        ]);
+        $bed = $room->beds()->find($input['bed_id']);
+        $bed->update(['patient_id' => $patient->id]);
 
         return $reference;
     }

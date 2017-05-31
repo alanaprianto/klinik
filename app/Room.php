@@ -25,4 +25,9 @@ class Room extends Model
     public function beds(){
         return $this->hasMany('App\Bed');
     }
+
+    public function patients(){
+        return $this->hasMany('App\Patient');
+    }
+
 }

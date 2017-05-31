@@ -11,7 +11,8 @@ class Bed extends Model
         'display_name',
         'desc',
         'status',
-        'room_id'
+        'room_id',
+        'patient_id'
     ];
 
     public function room(){
@@ -20,5 +21,9 @@ class Bed extends Model
 
     public function references(){
         return $this->hasMany('App\Reference');
+    }
+
+    public function patient(){
+        return $this->belongsTo('App\Patient', 'patient_id', 'id');
     }
 }

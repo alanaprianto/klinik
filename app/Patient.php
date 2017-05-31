@@ -27,6 +27,7 @@ class Patient extends Model
         'last_education',
         'job',
         'askes_number',
+        'room_id'
     ];
 
 
@@ -69,4 +70,11 @@ class Patient extends Model
         return $this->attributes['number_medical_record']. ' - '. $this->attributes['full_name'];
     }
 
+    public function room(){
+        return $this->belongsTo('App\Room', 'room_id', 'id');
+    }
+
+    public function bed(){
+        return $this->hasOne('App\Bed');
+    }
 }
