@@ -10,7 +10,7 @@ class Bed extends Model
         'name',
         'display_name',
         'desc',
-        'status',
+        'available',
         'room_id',
         'patient_id',
     ];
