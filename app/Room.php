@@ -11,7 +11,8 @@ class Room extends Model
         'display_name',
         'desc',
         'type',
-        'class_room_id'
+        'class_room_id',
+        'status'
     ];
 
     public function references(){

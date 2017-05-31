@@ -9,7 +9,8 @@ class ClassRoom extends Model
     protected $fillable = [
         'name',
         'display_name',
-        'desc'
+        'desc',
+        'status'
     ];
 
     public function rooms(){

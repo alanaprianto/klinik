@@ -68,6 +68,8 @@ Route::group(['middleware' => ['auth:api']], function () {
         /*depo inventory*/
         Route::get('/depo-inventory', 'ApiDepoController@getInventoryDepo');
 
+        Route::get('/rooms-available', 'ApiRoomController@available');
+
         /*route resource*/
         Route::resource('check-up-inpatient', 'ApiCheckupInpatientController');
         Route::resource('class-rooms', 'ApiClassRoomController');

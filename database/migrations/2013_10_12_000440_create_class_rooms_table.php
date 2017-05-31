@@ -18,6 +18,7 @@ class CreateClassRoomsTable extends Migration
             $table->string('name')->nullable();
             $table->string('display_name')->nullable();
             $table->text('desc')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

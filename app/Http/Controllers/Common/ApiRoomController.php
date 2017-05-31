@@ -133,4 +133,31 @@ class ApiRoomController extends Controller
         }
         return response()->json($response);
     }
+
+    public function available(Request $request){
+        $response = [];
+        try {
+            $rooms = Room::get();
+            foreach ($rooms as $index => $room){
+                $available_bed = 0;
+                $filled_bed = 0;
+                foreach ($room->beds as $bed){
+                    if($bed['status'] == 0){
+                        $available_bed += 1;
+                    }
+
+                    if($bed['status'] == 1){
+                        $filled_bed += 1;
+                    }
+                }
+
+                $rooms[$index]['available_bed'] = $available_bed;
+                $rooms[$index]['filled_bed'] = $filled_bed;
+            }
+            $response = ['isSuccess' => true, 'message' => 'Success / Berhasil', 'datas' => ['rooms' => $rooms]];
+        } catch (\Exception $e) {
+            $response = ['isSuccess' => false, 'message' => $e->getMessage(), 'datas' => null, 'code' => $e->getCode()];
+        }
+        return response()->json($response);
+    }
 }
