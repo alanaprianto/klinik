@@ -139,6 +139,7 @@ class ApiRoomController extends Controller
         try {
             $rooms = Room::get();
             foreach ($rooms as $index => $room){
+                $rooms[$index]['class_room_name'] = $room->classRoom->name;
                 $available_bed = 0;
                 $filled_bed = 0;
                 foreach ($room->beds as $bed){
